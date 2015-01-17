@@ -1,0 +1,24 @@
+{
+  "name": "purescript-ace",
+  "license": "MIT",
+  "authors": [
+    "John A. De Goes <john@degoes.net> (http://degoes.net)"
+  ],
+  "ignore": [
+    "**/.*",
+    "bower_components",
+    "node_modules",
+    "output",
+    "tests",
+    "tmp",
+    "bower.json",
+    "Gruntfile.js",
+    "gulpfile.js",
+    "package.json"
+  ],
+  "dependencies": {
+    "ace": "~1.1.8"
+  },
+  "devDependencies": {
+  }
+}
