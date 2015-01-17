@@ -16,3 +16,7 @@ The API is a low-level, type-safe, straightforward binding to Ace:
 ## Examples
 
 The `examples` directory contains an `index.html`, which contains a variety of examples of how to embed the Ace editor and configure it using the Purescript API.
+
+## Tests
+
+This project has no tests. However, all bound functions are exercised in the examples, to ensure the bindings and necessary wrapping, unwrapping, encoding, and decoding has been performed correctly.
