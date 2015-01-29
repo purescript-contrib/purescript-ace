@@ -2,6 +2,8 @@
 
 Purescript bindings for the [Ace code editor](http://ace.c9.io).
 
+[![Build Status](https://secure.travis-ci.org/slamdata/purescript-ace.png?branch=master)](http://travis-ci.org/slamdata/purescript-ace)
+
 ## API
 
 The API is a low-level, type-safe, straightforward binding to Ace:
