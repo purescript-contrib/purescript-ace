@@ -64,8 +64,8 @@ function sequence () {
     }
 }
 
-gulp.task('browser', function() {
-    return compile(purescript.psc, [paths.src].concat(paths.bowerSrc), {})
+gulp.task('example', function() {
+    return compile(purescript.psc, [paths.src].concat(paths.bowerSrc).concat(paths.exampleSrc), {})
         .pipe(gulp.dest('example'))
 });
 
@@ -82,11 +82,11 @@ gulp.task('test', function() {
 gulp.task('docs', docs('all'));
 
 gulp.task('watch-browser', function() {
-    gulp.watch(paths.src, sequence('browser', 'docs'));
+    gulp.watch(paths.src, sequence('example', 'docs'));
 });
 
 gulp.task('watch-make', function() {
     gulp.watch(paths.src, sequence('make', 'docs'));
 });
 
-gulp.task('default', sequence('make', 'docs', 'browser'));
+gulp.task('default', sequence('make', 'docs', 'example'));
