@@ -2,8 +2,6 @@
 
 Purescript bindings for the [Ace code editor](http://ace.c9.io).
 
-**Note**: *SlamData is offering a $2K bounty to whoever authors the first Pull Request that we merge into this repository. This is a great way to learn some Purescript, as well as contribute to a 100% open source library released under a commercial-friendly MIT license.*
-
 ## API
 
 The API is a low-level, type-safe, straightforward binding to Ace:
@@ -19,4 +17,4 @@ The `examples` directory contains an `index.html`, which contains a variety of e
 
 ## Tests
 
-This project has no tests. However, all bound functions are exercised in the examples, to ensure the bindings and necessary wrapping, unwrapping, encoding, and decoding has been performed correctly.
+This project has no real tests. However, most bound functions are exercised in the examples, to ensure the bindings and necessary wrapping, unwrapping, encoding, and decoding has been performed correctly.
