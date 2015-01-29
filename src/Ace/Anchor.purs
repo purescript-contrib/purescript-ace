@@ -10,12 +10,11 @@ module Ace.Anchor
 import Prelude hiding (compare)
 
 import Data.Maybe
-import Data.Function hiding (on)
+import Data.Function
 
 import Control.Monad.Eff
 
 import Ace.Types
-import Ace.Internal
 
 foreign import onChangeImpl
   "function onChangeImpl(self, fn) {\

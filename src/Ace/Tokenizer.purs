@@ -9,7 +9,6 @@ import Data.Function
 import Control.Monad.Eff
 
 import Ace.Types
-import Ace.Internal
 
 foreign import getLineTokensImpl
   "function getLineTokensImpl(self) {\

@@ -843,20 +843,6 @@
     unsetStyle :: forall eff. Editor -> Eff (ace :: EAce | eff) Unit
 
 
-## Module Ace.Internal
-
-### Types
-
-
-    data Nullable :: * -> *
-
-
-### Values
-
-
-    toNullable :: forall a. Maybe a -> Nullable a
-
-
 ## Module Ace.Range
 
 ### Values

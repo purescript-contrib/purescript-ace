@@ -70,7 +70,7 @@ import Data.Function hiding (on)
 import Control.Monad.Eff
 
 import Ace.Types
-import Ace.Internal
+import Data.Nullable
 
 foreign import getCharacterWidth
   "function getCharacterWidth(value) {\

@@ -116,7 +116,7 @@ import Control.Monad.Eff
 import Control.Monad.ST
 
 import Ace.Types
-import Ace.Internal
+import Data.Nullable
 
 foreign import getBackgroundTokenizer
   "function getBackgroundTokenizer(value) {\

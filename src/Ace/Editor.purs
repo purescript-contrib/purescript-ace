@@ -127,7 +127,7 @@ import Data.Function
 import Control.Monad.Eff
 
 import Ace.Types
-import Ace.Internal
+import Data.Nullable
 
 foreign import onImpl
   "function onImpl(event, fn, self) {\

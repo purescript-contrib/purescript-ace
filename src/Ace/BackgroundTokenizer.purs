@@ -18,7 +18,6 @@ import Data.Function hiding (on)
 import Control.Monad.Eff
 
 import Ace.Types
-import Ace.Internal
 
 foreign import onUpdateImpl
   "function onUpdateImpl(self, fn) {\
