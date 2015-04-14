@@ -11,6 +11,7 @@ import Data.Function
 import Control.Monad.Eff
 
 import Ace.Types
+import Data.DOM.Simple.Types
 
 foreign import ace :: Ace
 
@@ -29,9 +30,9 @@ foreign import editNodeImpl
   \  return function() {\
   \    return self.edit(el);\
   \  };\
-  \}" :: forall eff. Fn2 DOM.Node Ace (Eff (ace :: EAce | eff) Editor)
+  \}" :: forall eff. Fn2 HTMLElement Ace (Eff (ace :: EAce | eff) Editor)
 
-editNode :: forall eff. DOM.Node -> Ace -> Eff (ace :: EAce | eff) Editor
+editNode :: forall eff. HTMLElement -> Ace -> Eff (ace :: EAce | eff) Editor
 editNode el self = runFn2 editNodeImpl el self
 
 foreign import createEditSessionForDocumentImpl

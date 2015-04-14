@@ -127,6 +127,7 @@ import Data.Function
 import Control.Monad.Eff
 
 import Ace.Types
+import Data.DOM.Simple.Types
 import Data.Nullable
 
 foreign import onImpl
@@ -202,7 +203,7 @@ foreign import getContainer
   \  return function() {\
   \    return self.container;\
   \  };\
-  \}" :: forall eff. Editor -> Eff (ace :: EAce | eff) DOM.Node
+  \}" :: forall eff. Editor -> Eff (ace :: EAce | eff) HTMLElement
 
 foreign import setKeyboardHandlerImpl
   "function setKeyboardHandlerImpl(keyboardHandler, self) {\

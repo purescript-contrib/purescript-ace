@@ -116,6 +116,7 @@ import Control.Monad.Eff
 import Control.Monad.ST
 
 import Ace.Types
+import Data.DOM.Simple.Types
 import Data.Nullable
 
 foreign import getBackgroundTokenizer
@@ -506,7 +507,7 @@ foreign import addMarkerImpl
 addMarker :: forall eff. Range -> String -> String -> Boolean -> EditSession -> Eff (ace :: EAce | eff) Unit
 addMarker range clazz _type inFront self = runFn5 addMarkerImpl range clazz _type inFront self
 
-type DynamicMarker eff a = forall h. STArray h String -> DOM.Node -> Eff (st :: ST h | eff) a
+type DynamicMarker eff a = forall h. STArray h String -> HTMLElement -> Eff (st :: ST h | eff) a
 
 foreign import addDynamicMarkerImpl
   "function addDynamicMarkerImpl(marker, inFront, self) {\

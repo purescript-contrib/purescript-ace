@@ -70,6 +70,7 @@ import Data.Function hiding (on)
 import Control.Monad.Eff
 
 import Ace.Types
+import Data.DOM.Simple.Types
 import Data.Nullable
 
 foreign import getCharacterWidth
@@ -267,9 +268,9 @@ foreign import getContainerElementImpl
   \  return function() {\
   \    return self.getContainerElement();\
   \  };\
-  \}" :: forall eff. Fn1 VirtualRenderer (Eff (ace :: EAce | eff) DOM.Node)
+  \}" :: forall eff. Fn1 VirtualRenderer (Eff (ace :: EAce | eff) HTMLElement)
 
-getContainerElement :: forall eff. VirtualRenderer -> Eff (ace :: EAce | eff) DOM.Node
+getContainerElement :: forall eff. VirtualRenderer -> Eff (ace :: EAce | eff) HTMLElement
 getContainerElement self = runFn1 getContainerElementImpl self
 
 foreign import getMouseEventTargetImpl
@@ -277,9 +278,9 @@ foreign import getMouseEventTargetImpl
   \  return function() {\
   \    return self.getMouseEventTarget();\
   \  };\
-  \}" :: forall eff. Fn1 VirtualRenderer (Eff (ace :: EAce | eff) DOM.Node)
+  \}" :: forall eff. Fn1 VirtualRenderer (Eff (ace :: EAce | eff) HTMLElement)
 
-getMouseEventTarget :: forall eff. VirtualRenderer -> Eff (ace :: EAce | eff) DOM.Node
+getMouseEventTarget :: forall eff. VirtualRenderer -> Eff (ace :: EAce | eff) HTMLElement
 getMouseEventTarget self = runFn1 getMouseEventTargetImpl self
 
 foreign import getTextAreaContainerImpl
@@ -287,9 +288,9 @@ foreign import getTextAreaContainerImpl
   \  return function() {\
   \    return self.getTextAreaContainer();\
   \  };\
-  \}" :: forall eff. Fn1 VirtualRenderer (Eff (ace :: EAce | eff) DOM.Node)
+  \}" :: forall eff. Fn1 VirtualRenderer (Eff (ace :: EAce | eff) HTMLElement)
 
-getTextAreaContainer :: forall eff. VirtualRenderer -> Eff (ace :: EAce | eff) DOM.Node
+getTextAreaContainer :: forall eff. VirtualRenderer -> Eff (ace :: EAce | eff) HTMLElement
 getTextAreaContainer self = runFn1 getTextAreaContainerImpl self
 
 foreign import getFirstVisibleRowImpl
@@ -678,7 +679,7 @@ foreign import createImpl
   \    var VirtualRenderer = ace.require('ace/virtual_renderer').VirtualRenderer;\
   \    return new VirtualRenderer(container, theme);\
   \  };\
-  \}" :: forall eff. Fn2 DOM.Node (Nullable String) (Eff (ace :: EAce | eff) VirtualRenderer)
+  \}" :: forall eff. Fn2 HTMLElement (Nullable String) (Eff (ace :: EAce | eff) VirtualRenderer)
 
-create :: forall eff. DOM.Node -> Maybe String -> Eff (ace :: EAce | eff) VirtualRenderer
+create :: forall eff. HTMLElement -> Maybe String -> Eff (ace :: EAce | eff) VirtualRenderer
 create container theme = runFn2 createImpl container (toNullable theme)

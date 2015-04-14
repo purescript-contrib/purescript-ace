@@ -19,7 +19,7 @@ edit :: forall eff. String -> Ace -> Eff (ace :: EAce | eff) Editor
 #### `editNode`
 
 ``` purescript
-editNode :: forall eff. DOM.Node -> Ace -> Eff (ace :: EAce | eff) Editor
+editNode :: forall eff. HTMLElement -> Ace -> Eff (ace :: EAce | eff) Editor
 ```
 
 
@@ -327,6 +327,744 @@ createFromLines :: forall eff. [String] -> Eff (ace :: EAce | eff) Document
 
 
 
+## Module Ace.EditSession
+
+#### `getBackgroundTokenizer`
+
+``` purescript
+getBackgroundTokenizer :: forall eff. EditSession -> Eff (ace :: EAce | eff) BackgroundTokenizer
+```
+
+
+#### `onChange`
+
+``` purescript
+onChange :: forall eff a. EditSession -> Eff (ace :: EAce | eff) a -> Eff (ace :: EAce | eff) Unit
+```
+
+
+#### `onChangeAnnotation`
+
+``` purescript
+onChangeAnnotation :: forall eff a. EditSession -> Eff (ace :: EAce | eff) a -> Eff (ace :: EAce | eff) Unit
+```
+
+
+#### `onChangeBackMarker`
+
+``` purescript
+onChangeBackMarker :: forall eff a. EditSession -> Eff (ace :: EAce | eff) a -> Eff (ace :: EAce | eff) Unit
+```
+
+
+#### `onChangeBreakpoint`
+
+``` purescript
+onChangeBreakpoint :: forall eff a. EditSession -> Eff (ace :: EAce | eff) a -> Eff (ace :: EAce | eff) Unit
+```
+
+
+#### `onChangeFold`
+
+``` purescript
+onChangeFold :: forall eff a. EditSession -> Eff (ace :: EAce | eff) a -> Eff (ace :: EAce | eff) Unit
+```
+
+
+#### `onChangeFrontMarker`
+
+``` purescript
+onChangeFrontMarker :: forall eff a. EditSession -> Eff (ace :: EAce | eff) a -> Eff (ace :: EAce | eff) Unit
+```
+
+
+#### `onChangeMode`
+
+``` purescript
+onChangeMode :: forall eff a. EditSession -> Eff (ace :: EAce | eff) a -> Eff (ace :: EAce | eff) Unit
+```
+
+
+#### `onChangeOverwrite`
+
+``` purescript
+onChangeOverwrite :: forall eff a. EditSession -> Eff (ace :: EAce | eff) a -> Eff (ace :: EAce | eff) Unit
+```
+
+
+#### `onChangeScrollLeft`
+
+``` purescript
+onChangeScrollLeft :: forall eff a. EditSession -> (Number -> Eff (ace :: EAce | eff) a) -> Eff (ace :: EAce | eff) Unit
+```
+
+
+#### `onChangeScrollTop`
+
+``` purescript
+onChangeScrollTop :: forall eff a. EditSession -> (Number -> Eff (ace :: EAce | eff) a) -> Eff (ace :: EAce | eff) Unit
+```
+
+
+#### `onChangeTabSize`
+
+``` purescript
+onChangeTabSize :: forall eff a. EditSession -> Eff (ace :: EAce | eff) a -> Eff (ace :: EAce | eff) Unit
+```
+
+
+#### `onChangeWrapLimit`
+
+``` purescript
+onChangeWrapLimit :: forall eff a. EditSession -> Eff (ace :: EAce | eff) a -> Eff (ace :: EAce | eff) Unit
+```
+
+
+#### `onChangeWrapMode`
+
+``` purescript
+onChangeWrapMode :: forall eff a. EditSession -> Eff (ace :: EAce | eff) a -> Eff (ace :: EAce | eff) Unit
+```
+
+
+#### `onTokenizerUpdate`
+
+``` purescript
+onTokenizerUpdate :: forall eff a. EditSession -> Eff (ace :: EAce | eff) a -> Eff (ace :: EAce | eff) Unit
+```
+
+
+#### `findMatchingBracket`
+
+``` purescript
+findMatchingBracket :: forall eff. Position -> EditSession -> Eff (ace :: EAce | eff) Unit
+```
+
+
+#### `addFold`
+
+``` purescript
+addFold :: forall eff. String -> Range -> EditSession -> Eff (ace :: EAce | eff) Unit
+```
+
+
+#### `screenToDocumentColumn`
+
+``` purescript
+screenToDocumentColumn :: forall eff. Number -> Number -> EditSession -> Eff (ace :: EAce | eff) Unit
+```
+
+
+#### `highlight`
+
+``` purescript
+highlight :: forall eff. String -> EditSession -> Eff (ace :: EAce | eff) Unit
+```
+
+
+#### `setDocument`
+
+``` purescript
+setDocument :: forall eff. Document -> EditSession -> Eff (ace :: EAce | eff) Unit
+```
+
+
+#### `getDocument`
+
+``` purescript
+getDocument :: forall eff. EditSession -> Eff (ace :: EAce | eff) Document
+```
+
+
+#### `resetRowCache`
+
+``` purescript
+resetRowCache :: forall eff. Number -> EditSession -> Eff (ace :: EAce | eff) Unit
+```
+
+
+#### `setValue`
+
+``` purescript
+setValue :: forall eff. String -> EditSession -> Eff (ace :: EAce | eff) Unit
+```
+
+
+#### `setMode`
+
+``` purescript
+setMode :: forall eff. String -> EditSession -> Eff (ace :: EAce | eff) Unit
+```
+
+
+#### `getValue`
+
+``` purescript
+getValue :: forall eff. EditSession -> Eff (ace :: EAce | eff) String
+```
+
+
+#### `getSelection`
+
+``` purescript
+getSelection :: forall eff. EditSession -> Eff (ace :: EAce | eff) Selection
+```
+
+
+#### `getState`
+
+``` purescript
+getState :: forall eff. Number -> EditSession -> Eff (ace :: EAce | eff) String
+```
+
+
+#### `getTokens`
+
+``` purescript
+getTokens :: forall eff. Number -> EditSession -> Eff (ace :: EAce | eff) [TokenInfo]
+```
+
+
+#### `getTokenAt`
+
+``` purescript
+getTokenAt :: forall eff. Number -> Number -> EditSession -> Eff (ace :: EAce | eff) TokenInfo
+```
+
+
+#### `setUndoManager`
+
+``` purescript
+setUndoManager :: forall eff. UndoManager -> EditSession -> Eff (ace :: EAce | eff) Unit
+```
+
+
+#### `getUndoManager`
+
+``` purescript
+getUndoManager :: forall eff. EditSession -> Eff (ace :: EAce | eff) UndoManager
+```
+
+
+#### `getTabString`
+
+``` purescript
+getTabString :: forall eff. EditSession -> Eff (ace :: EAce | eff) String
+```
+
+
+#### `setUseSoftTabs`
+
+``` purescript
+setUseSoftTabs :: forall eff. Boolean -> EditSession -> Eff (ace :: EAce | eff) Unit
+```
+
+
+#### `getUseSoftTabs`
+
+``` purescript
+getUseSoftTabs :: forall eff. EditSession -> Eff (ace :: EAce | eff) Boolean
+```
+
+
+#### `setTabSize`
+
+``` purescript
+setTabSize :: forall eff. Number -> EditSession -> Eff (ace :: EAce | eff) Unit
+```
+
+
+#### `getTabSize`
+
+``` purescript
+getTabSize :: forall eff. EditSession -> Eff (ace :: EAce | eff) String
+```
+
+
+#### `isTabStop`
+
+``` purescript
+isTabStop :: forall eff. Position -> EditSession -> Eff (ace :: EAce | eff) Boolean
+```
+
+
+#### `setOverwrite`
+
+``` purescript
+setOverwrite :: forall eff. Boolean -> EditSession -> Eff (ace :: EAce | eff) Unit
+```
+
+
+#### `getOverwrite`
+
+``` purescript
+getOverwrite :: forall eff. EditSession -> Eff (ace :: EAce | eff) Boolean
+```
+
+
+#### `toggleOverwrite`
+
+``` purescript
+toggleOverwrite :: forall eff. EditSession -> Eff (ace :: EAce | eff) Unit
+```
+
+
+#### `addGutterDecoration`
+
+``` purescript
+addGutterDecoration :: forall eff. Number -> String -> EditSession -> Eff (ace :: EAce | eff) Unit
+```
+
+
+#### `removeGutterDecoration`
+
+``` purescript
+removeGutterDecoration :: forall eff. Number -> String -> EditSession -> Eff (ace :: EAce | eff) Unit
+```
+
+
+#### `getBreakpoints`
+
+``` purescript
+getBreakpoints :: forall eff. EditSession -> Eff (ace :: EAce | eff) [Number]
+```
+
+
+#### `setBreakpoints`
+
+``` purescript
+setBreakpoints :: forall eff. [Number] -> EditSession -> Eff (ace :: EAce | eff) Unit
+```
+
+
+#### `clearBreakpoints`
+
+``` purescript
+clearBreakpoints :: forall eff. EditSession -> Eff (ace :: EAce | eff) Unit
+```
+
+
+#### `setBreakpoint`
+
+``` purescript
+setBreakpoint :: forall eff. Number -> String -> EditSession -> Eff (ace :: EAce | eff) Unit
+```
+
+
+#### `clearBreakpoint`
+
+``` purescript
+clearBreakpoint :: forall eff. Number -> EditSession -> Eff (ace :: EAce | eff) Unit
+```
+
+
+#### `addMarker`
+
+``` purescript
+addMarker :: forall eff. Range -> String -> String -> Boolean -> EditSession -> Eff (ace :: EAce | eff) Unit
+```
+
+
+#### `DynamicMarker`
+
+``` purescript
+type DynamicMarker eff a = forall h. STArray h String -> HTMLElement -> Eff (st :: ST h | eff) a
+```
+
+
+#### `addDynamicMarker`
+
+``` purescript
+addDynamicMarker :: forall eff a. DynamicMarker (ace :: EAce | eff) a -> Boolean -> EditSession -> Eff (ace :: EAce | eff) Unit
+```
+
+
+#### `removeMarker`
+
+``` purescript
+removeMarker :: forall eff. Number -> EditSession -> Eff (ace :: EAce | eff) Unit
+```
+
+
+#### `setAnnotations`
+
+``` purescript
+setAnnotations :: forall eff. [Annotation] -> EditSession -> Eff (ace :: EAce | eff) Unit
+```
+
+
+#### `getAnnotations`
+
+``` purescript
+getAnnotations :: forall eff. EditSession -> Eff (ace :: EAce | eff) [Annotation]
+```
+
+
+#### `clearAnnotations`
+
+``` purescript
+clearAnnotations :: forall eff. EditSession -> Eff (ace :: EAce | eff) Unit
+```
+
+
+#### `detectNewLine`
+
+``` purescript
+detectNewLine :: forall eff. String -> EditSession -> Eff (ace :: EAce | eff) Unit
+```
+
+
+#### `getWordRange`
+
+``` purescript
+getWordRange :: forall eff. Number -> Number -> EditSession -> Eff (ace :: EAce | eff) Range
+```
+
+
+#### `getAWordRange`
+
+``` purescript
+getAWordRange :: forall eff. Number -> Number -> EditSession -> Eff (ace :: EAce | eff) Range
+```
+
+
+#### `setNewLineMode`
+
+``` purescript
+setNewLineMode :: forall eff. String -> EditSession -> Eff (ace :: EAce | eff) Unit
+```
+
+
+#### `getNewLineMode`
+
+``` purescript
+getNewLineMode :: forall eff. EditSession -> Eff (ace :: EAce | eff) String
+```
+
+
+#### `setUseWorker`
+
+``` purescript
+setUseWorker :: forall eff. Boolean -> EditSession -> Eff (ace :: EAce | eff) Unit
+```
+
+
+#### `getUseWorker`
+
+``` purescript
+getUseWorker :: forall eff. EditSession -> Eff (ace :: EAce | eff) Boolean
+```
+
+
+#### `onReloadTokenizer`
+
+``` purescript
+onReloadTokenizer :: forall eff. EditSession -> Eff (ace :: EAce | eff) Unit
+```
+
+
+#### `mode`
+
+``` purescript
+mode :: forall eff. TextMode -> EditSession -> Eff (ace :: EAce | eff) Unit
+```
+
+
+#### `getMode`
+
+``` purescript
+getMode :: forall eff. EditSession -> Eff (ace :: EAce | eff) TextMode
+```
+
+
+#### `setScrollTop`
+
+``` purescript
+setScrollTop :: forall eff. Number -> EditSession -> Eff (ace :: EAce | eff) Unit
+```
+
+
+#### `getScrollTop`
+
+``` purescript
+getScrollTop :: forall eff. EditSession -> Eff (ace :: EAce | eff) Number
+```
+
+
+#### `setScrollLeft`
+
+``` purescript
+setScrollLeft :: forall eff. EditSession -> Eff (ace :: EAce | eff) Unit
+```
+
+
+#### `getScrollLeft`
+
+``` purescript
+getScrollLeft :: forall eff. EditSession -> Eff (ace :: EAce | eff) Number
+```
+
+
+#### `getScreenWidth`
+
+``` purescript
+getScreenWidth :: forall eff. EditSession -> Eff (ace :: EAce | eff) Number
+```
+
+
+#### `getLine`
+
+``` purescript
+getLine :: forall eff. Number -> EditSession -> Eff (ace :: EAce | eff) String
+```
+
+
+#### `getLines`
+
+``` purescript
+getLines :: forall eff. Number -> Number -> EditSession -> Eff (ace :: EAce | eff) [String]
+```
+
+
+#### `getLength`
+
+``` purescript
+getLength :: forall eff. EditSession -> Eff (ace :: EAce | eff) Number
+```
+
+
+#### `getTextRange`
+
+``` purescript
+getTextRange :: forall eff. Range -> EditSession -> Eff (ace :: EAce | eff) String
+```
+
+
+#### `insert`
+
+``` purescript
+insert :: forall eff. Position -> String -> EditSession -> Eff (ace :: EAce | eff) Unit
+```
+
+
+#### `remove`
+
+``` purescript
+remove :: forall eff. Range -> EditSession -> Eff (ace :: EAce | eff) Unit
+```
+
+
+#### `setUndoSelect`
+
+``` purescript
+setUndoSelect :: forall eff. Boolean -> EditSession -> Eff (ace :: EAce | eff) Unit
+```
+
+
+#### `replace`
+
+``` purescript
+replace :: forall eff. Range -> String -> EditSession -> Eff (ace :: EAce | eff) Unit
+```
+
+
+#### `moveText`
+
+``` purescript
+moveText :: forall eff. Range -> Position -> EditSession -> Eff (ace :: EAce | eff) Range
+```
+
+
+#### `indentRows`
+
+``` purescript
+indentRows :: forall eff. Number -> Number -> String -> EditSession -> Eff (ace :: EAce | eff) Unit
+```
+
+
+#### `outdentRows`
+
+``` purescript
+outdentRows :: forall eff. Range -> EditSession -> Eff (ace :: EAce | eff) Unit
+```
+
+
+#### `moveLinesUp`
+
+``` purescript
+moveLinesUp :: forall eff. Number -> Number -> EditSession -> Eff (ace :: EAce | eff) Number
+```
+
+
+#### `moveLinesDown`
+
+``` purescript
+moveLinesDown :: forall eff. Number -> Number -> EditSession -> Eff (ace :: EAce | eff) Number
+```
+
+
+#### `duplicateLines`
+
+``` purescript
+duplicateLines :: forall eff. Number -> Number -> EditSession -> Eff (ace :: EAce | eff) Number
+```
+
+
+#### `setUseWrapMode`
+
+``` purescript
+setUseWrapMode :: forall eff. Boolean -> EditSession -> Eff (ace :: EAce | eff) Unit
+```
+
+
+#### `getUseWrapMode`
+
+``` purescript
+getUseWrapMode :: forall eff. EditSession -> Eff (ace :: EAce | eff) Boolean
+```
+
+
+#### `setWrapLimitRange`
+
+``` purescript
+setWrapLimitRange :: forall eff. Number -> Number -> EditSession -> Eff (ace :: EAce | eff) Unit
+```
+
+
+#### `adjustWrapLimit`
+
+``` purescript
+adjustWrapLimit :: forall eff. Number -> EditSession -> Eff (ace :: EAce | eff) Boolean
+```
+
+
+#### `getWrapLimit`
+
+``` purescript
+getWrapLimit :: forall eff. EditSession -> Eff (ace :: EAce | eff) Number
+```
+
+
+#### `getWrapLimitRange`
+
+``` purescript
+getWrapLimitRange :: forall eff. EditSession -> Eff (ace :: EAce | eff) { max :: Number, min :: Number }
+```
+
+
+#### `getDisplayTokens`
+
+``` purescript
+getDisplayTokens :: forall eff. String -> Number -> EditSession -> Eff (ace :: EAce | eff) Unit
+```
+
+
+#### `getStringScreenWidth`
+
+``` purescript
+getStringScreenWidth :: forall eff. String -> Number -> Number -> EditSession -> Eff (ace :: EAce | eff) [Number]
+```
+
+
+#### `getRowLength`
+
+``` purescript
+getRowLength :: forall eff. Number -> EditSession -> Eff (ace :: EAce | eff) Number
+```
+
+
+#### `getScreenLastRowColumn`
+
+``` purescript
+getScreenLastRowColumn :: forall eff. Number -> EditSession -> Eff (ace :: EAce | eff) Number
+```
+
+
+#### `getDocumentLastRowColumn`
+
+``` purescript
+getDocumentLastRowColumn :: forall eff. Number -> Number -> EditSession -> Eff (ace :: EAce | eff) Number
+```
+
+
+#### `getDocumentLastRowColumnPosition`
+
+``` purescript
+getDocumentLastRowColumnPosition :: forall eff. Number -> Number -> EditSession -> Eff (ace :: EAce | eff) Number
+```
+
+
+#### `getRowSplitData`
+
+``` purescript
+getRowSplitData :: forall eff. EditSession -> Eff (ace :: EAce | eff) String
+```
+
+
+#### `getScreenTabSize`
+
+``` purescript
+getScreenTabSize :: forall eff. Number -> EditSession -> Eff (ace :: EAce | eff) Number
+```
+
+
+#### `screenToDocumentPosition`
+
+``` purescript
+screenToDocumentPosition :: forall eff. Number -> Number -> EditSession -> Eff (ace :: EAce | eff) Position
+```
+
+
+#### `documentToScreenPosition`
+
+``` purescript
+documentToScreenPosition :: forall eff. Number -> Number -> EditSession -> Eff (ace :: EAce | eff) Position
+```
+
+
+#### `documentToScreenColumn`
+
+``` purescript
+documentToScreenColumn :: forall eff. Number -> Number -> EditSession -> Eff (ace :: EAce | eff) Number
+```
+
+
+#### `documentToScreenRow`
+
+``` purescript
+documentToScreenRow :: forall eff. Number -> Number -> EditSession -> Eff (ace :: EAce | eff) Unit
+```
+
+
+#### `getScreenLength`
+
+``` purescript
+getScreenLength :: forall eff. EditSession -> Eff (ace :: EAce | eff) Number
+```
+
+
+#### `createWithMode`
+
+``` purescript
+createWithMode :: forall eff. String -> Maybe TextMode -> Eff (ace :: EAce | eff) EditSession
+```
+
+
+#### `create`
+
+``` purescript
+create :: forall eff. String -> Maybe String -> Eff (ace :: EAce | eff) EditSession
+```
+
+
+#### `createFromLines`
+
+``` purescript
+createFromLines :: forall eff. [String] -> Maybe String -> Eff (ace :: EAce | eff) EditSession
+```
+
+
+
 ## Module Ace.Editor
 
 #### `onBlur`
@@ -409,7 +1147,7 @@ selectMoreLines :: forall eff. Number -> Editor -> Eff (ace :: EAce | eff) Unit
 #### `getContainer`
 
 ``` purescript
-getContainer :: forall eff. Editor -> Eff (ace :: EAce | eff) DOM.Node
+getContainer :: forall eff. Editor -> Eff (ace :: EAce | eff) HTMLElement
 ```
 
 
@@ -1170,744 +1908,6 @@ create :: forall eff. VirtualRenderer -> Maybe EditSession -> Eff (ace :: EAce |
 
 
 
-## Module Ace.EditSession
-
-#### `getBackgroundTokenizer`
-
-``` purescript
-getBackgroundTokenizer :: forall eff. EditSession -> Eff (ace :: EAce | eff) BackgroundTokenizer
-```
-
-
-#### `onChange`
-
-``` purescript
-onChange :: forall eff a. EditSession -> Eff (ace :: EAce | eff) a -> Eff (ace :: EAce | eff) Unit
-```
-
-
-#### `onChangeAnnotation`
-
-``` purescript
-onChangeAnnotation :: forall eff a. EditSession -> Eff (ace :: EAce | eff) a -> Eff (ace :: EAce | eff) Unit
-```
-
-
-#### `onChangeBackMarker`
-
-``` purescript
-onChangeBackMarker :: forall eff a. EditSession -> Eff (ace :: EAce | eff) a -> Eff (ace :: EAce | eff) Unit
-```
-
-
-#### `onChangeBreakpoint`
-
-``` purescript
-onChangeBreakpoint :: forall eff a. EditSession -> Eff (ace :: EAce | eff) a -> Eff (ace :: EAce | eff) Unit
-```
-
-
-#### `onChangeFold`
-
-``` purescript
-onChangeFold :: forall eff a. EditSession -> Eff (ace :: EAce | eff) a -> Eff (ace :: EAce | eff) Unit
-```
-
-
-#### `onChangeFrontMarker`
-
-``` purescript
-onChangeFrontMarker :: forall eff a. EditSession -> Eff (ace :: EAce | eff) a -> Eff (ace :: EAce | eff) Unit
-```
-
-
-#### `onChangeMode`
-
-``` purescript
-onChangeMode :: forall eff a. EditSession -> Eff (ace :: EAce | eff) a -> Eff (ace :: EAce | eff) Unit
-```
-
-
-#### `onChangeOverwrite`
-
-``` purescript
-onChangeOverwrite :: forall eff a. EditSession -> Eff (ace :: EAce | eff) a -> Eff (ace :: EAce | eff) Unit
-```
-
-
-#### `onChangeScrollLeft`
-
-``` purescript
-onChangeScrollLeft :: forall eff a. EditSession -> (Number -> Eff (ace :: EAce | eff) a) -> Eff (ace :: EAce | eff) Unit
-```
-
-
-#### `onChangeScrollTop`
-
-``` purescript
-onChangeScrollTop :: forall eff a. EditSession -> (Number -> Eff (ace :: EAce | eff) a) -> Eff (ace :: EAce | eff) Unit
-```
-
-
-#### `onChangeTabSize`
-
-``` purescript
-onChangeTabSize :: forall eff a. EditSession -> Eff (ace :: EAce | eff) a -> Eff (ace :: EAce | eff) Unit
-```
-
-
-#### `onChangeWrapLimit`
-
-``` purescript
-onChangeWrapLimit :: forall eff a. EditSession -> Eff (ace :: EAce | eff) a -> Eff (ace :: EAce | eff) Unit
-```
-
-
-#### `onChangeWrapMode`
-
-``` purescript
-onChangeWrapMode :: forall eff a. EditSession -> Eff (ace :: EAce | eff) a -> Eff (ace :: EAce | eff) Unit
-```
-
-
-#### `onTokenizerUpdate`
-
-``` purescript
-onTokenizerUpdate :: forall eff a. EditSession -> Eff (ace :: EAce | eff) a -> Eff (ace :: EAce | eff) Unit
-```
-
-
-#### `findMatchingBracket`
-
-``` purescript
-findMatchingBracket :: forall eff. Position -> EditSession -> Eff (ace :: EAce | eff) Unit
-```
-
-
-#### `addFold`
-
-``` purescript
-addFold :: forall eff. String -> Range -> EditSession -> Eff (ace :: EAce | eff) Unit
-```
-
-
-#### `screenToDocumentColumn`
-
-``` purescript
-screenToDocumentColumn :: forall eff. Number -> Number -> EditSession -> Eff (ace :: EAce | eff) Unit
-```
-
-
-#### `highlight`
-
-``` purescript
-highlight :: forall eff. String -> EditSession -> Eff (ace :: EAce | eff) Unit
-```
-
-
-#### `setDocument`
-
-``` purescript
-setDocument :: forall eff. Document -> EditSession -> Eff (ace :: EAce | eff) Unit
-```
-
-
-#### `getDocument`
-
-``` purescript
-getDocument :: forall eff. EditSession -> Eff (ace :: EAce | eff) Document
-```
-
-
-#### `resetRowCache`
-
-``` purescript
-resetRowCache :: forall eff. Number -> EditSession -> Eff (ace :: EAce | eff) Unit
-```
-
-
-#### `setValue`
-
-``` purescript
-setValue :: forall eff. String -> EditSession -> Eff (ace :: EAce | eff) Unit
-```
-
-
-#### `setMode`
-
-``` purescript
-setMode :: forall eff. String -> EditSession -> Eff (ace :: EAce | eff) Unit
-```
-
-
-#### `getValue`
-
-``` purescript
-getValue :: forall eff. EditSession -> Eff (ace :: EAce | eff) String
-```
-
-
-#### `getSelection`
-
-``` purescript
-getSelection :: forall eff. EditSession -> Eff (ace :: EAce | eff) Selection
-```
-
-
-#### `getState`
-
-``` purescript
-getState :: forall eff. Number -> EditSession -> Eff (ace :: EAce | eff) String
-```
-
-
-#### `getTokens`
-
-``` purescript
-getTokens :: forall eff. Number -> EditSession -> Eff (ace :: EAce | eff) [TokenInfo]
-```
-
-
-#### `getTokenAt`
-
-``` purescript
-getTokenAt :: forall eff. Number -> Number -> EditSession -> Eff (ace :: EAce | eff) TokenInfo
-```
-
-
-#### `setUndoManager`
-
-``` purescript
-setUndoManager :: forall eff. UndoManager -> EditSession -> Eff (ace :: EAce | eff) Unit
-```
-
-
-#### `getUndoManager`
-
-``` purescript
-getUndoManager :: forall eff. EditSession -> Eff (ace :: EAce | eff) UndoManager
-```
-
-
-#### `getTabString`
-
-``` purescript
-getTabString :: forall eff. EditSession -> Eff (ace :: EAce | eff) String
-```
-
-
-#### `setUseSoftTabs`
-
-``` purescript
-setUseSoftTabs :: forall eff. Boolean -> EditSession -> Eff (ace :: EAce | eff) Unit
-```
-
-
-#### `getUseSoftTabs`
-
-``` purescript
-getUseSoftTabs :: forall eff. EditSession -> Eff (ace :: EAce | eff) Boolean
-```
-
-
-#### `setTabSize`
-
-``` purescript
-setTabSize :: forall eff. Number -> EditSession -> Eff (ace :: EAce | eff) Unit
-```
-
-
-#### `getTabSize`
-
-``` purescript
-getTabSize :: forall eff. EditSession -> Eff (ace :: EAce | eff) String
-```
-
-
-#### `isTabStop`
-
-``` purescript
-isTabStop :: forall eff. Position -> EditSession -> Eff (ace :: EAce | eff) Boolean
-```
-
-
-#### `setOverwrite`
-
-``` purescript
-setOverwrite :: forall eff. Boolean -> EditSession -> Eff (ace :: EAce | eff) Unit
-```
-
-
-#### `getOverwrite`
-
-``` purescript
-getOverwrite :: forall eff. EditSession -> Eff (ace :: EAce | eff) Boolean
-```
-
-
-#### `toggleOverwrite`
-
-``` purescript
-toggleOverwrite :: forall eff. EditSession -> Eff (ace :: EAce | eff) Unit
-```
-
-
-#### `addGutterDecoration`
-
-``` purescript
-addGutterDecoration :: forall eff. Number -> String -> EditSession -> Eff (ace :: EAce | eff) Unit
-```
-
-
-#### `removeGutterDecoration`
-
-``` purescript
-removeGutterDecoration :: forall eff. Number -> String -> EditSession -> Eff (ace :: EAce | eff) Unit
-```
-
-
-#### `getBreakpoints`
-
-``` purescript
-getBreakpoints :: forall eff. EditSession -> Eff (ace :: EAce | eff) [Number]
-```
-
-
-#### `setBreakpoints`
-
-``` purescript
-setBreakpoints :: forall eff. [Number] -> EditSession -> Eff (ace :: EAce | eff) Unit
-```
-
-
-#### `clearBreakpoints`
-
-``` purescript
-clearBreakpoints :: forall eff. EditSession -> Eff (ace :: EAce | eff) Unit
-```
-
-
-#### `setBreakpoint`
-
-``` purescript
-setBreakpoint :: forall eff. Number -> String -> EditSession -> Eff (ace :: EAce | eff) Unit
-```
-
-
-#### `clearBreakpoint`
-
-``` purescript
-clearBreakpoint :: forall eff. Number -> EditSession -> Eff (ace :: EAce | eff) Unit
-```
-
-
-#### `addMarker`
-
-``` purescript
-addMarker :: forall eff. Range -> String -> String -> Boolean -> EditSession -> Eff (ace :: EAce | eff) Unit
-```
-
-
-#### `DynamicMarker`
-
-``` purescript
-type DynamicMarker eff a = forall h. STArray h String -> DOM.Node -> Eff (st :: ST h | eff) a
-```
-
-
-#### `addDynamicMarker`
-
-``` purescript
-addDynamicMarker :: forall eff a. DynamicMarker (ace :: EAce | eff) a -> Boolean -> EditSession -> Eff (ace :: EAce | eff) Unit
-```
-
-
-#### `removeMarker`
-
-``` purescript
-removeMarker :: forall eff. Number -> EditSession -> Eff (ace :: EAce | eff) Unit
-```
-
-
-#### `setAnnotations`
-
-``` purescript
-setAnnotations :: forall eff. [Annotation] -> EditSession -> Eff (ace :: EAce | eff) Unit
-```
-
-
-#### `getAnnotations`
-
-``` purescript
-getAnnotations :: forall eff. EditSession -> Eff (ace :: EAce | eff) [Annotation]
-```
-
-
-#### `clearAnnotations`
-
-``` purescript
-clearAnnotations :: forall eff. EditSession -> Eff (ace :: EAce | eff) Unit
-```
-
-
-#### `detectNewLine`
-
-``` purescript
-detectNewLine :: forall eff. String -> EditSession -> Eff (ace :: EAce | eff) Unit
-```
-
-
-#### `getWordRange`
-
-``` purescript
-getWordRange :: forall eff. Number -> Number -> EditSession -> Eff (ace :: EAce | eff) Range
-```
-
-
-#### `getAWordRange`
-
-``` purescript
-getAWordRange :: forall eff. Number -> Number -> EditSession -> Eff (ace :: EAce | eff) Range
-```
-
-
-#### `setNewLineMode`
-
-``` purescript
-setNewLineMode :: forall eff. String -> EditSession -> Eff (ace :: EAce | eff) Unit
-```
-
-
-#### `getNewLineMode`
-
-``` purescript
-getNewLineMode :: forall eff. EditSession -> Eff (ace :: EAce | eff) String
-```
-
-
-#### `setUseWorker`
-
-``` purescript
-setUseWorker :: forall eff. Boolean -> EditSession -> Eff (ace :: EAce | eff) Unit
-```
-
-
-#### `getUseWorker`
-
-``` purescript
-getUseWorker :: forall eff. EditSession -> Eff (ace :: EAce | eff) Boolean
-```
-
-
-#### `onReloadTokenizer`
-
-``` purescript
-onReloadTokenizer :: forall eff. EditSession -> Eff (ace :: EAce | eff) Unit
-```
-
-
-#### `mode`
-
-``` purescript
-mode :: forall eff. TextMode -> EditSession -> Eff (ace :: EAce | eff) Unit
-```
-
-
-#### `getMode`
-
-``` purescript
-getMode :: forall eff. EditSession -> Eff (ace :: EAce | eff) TextMode
-```
-
-
-#### `setScrollTop`
-
-``` purescript
-setScrollTop :: forall eff. Number -> EditSession -> Eff (ace :: EAce | eff) Unit
-```
-
-
-#### `getScrollTop`
-
-``` purescript
-getScrollTop :: forall eff. EditSession -> Eff (ace :: EAce | eff) Number
-```
-
-
-#### `setScrollLeft`
-
-``` purescript
-setScrollLeft :: forall eff. EditSession -> Eff (ace :: EAce | eff) Unit
-```
-
-
-#### `getScrollLeft`
-
-``` purescript
-getScrollLeft :: forall eff. EditSession -> Eff (ace :: EAce | eff) Number
-```
-
-
-#### `getScreenWidth`
-
-``` purescript
-getScreenWidth :: forall eff. EditSession -> Eff (ace :: EAce | eff) Number
-```
-
-
-#### `getLine`
-
-``` purescript
-getLine :: forall eff. Number -> EditSession -> Eff (ace :: EAce | eff) String
-```
-
-
-#### `getLines`
-
-``` purescript
-getLines :: forall eff. Number -> Number -> EditSession -> Eff (ace :: EAce | eff) [String]
-```
-
-
-#### `getLength`
-
-``` purescript
-getLength :: forall eff. EditSession -> Eff (ace :: EAce | eff) Number
-```
-
-
-#### `getTextRange`
-
-``` purescript
-getTextRange :: forall eff. Range -> EditSession -> Eff (ace :: EAce | eff) String
-```
-
-
-#### `insert`
-
-``` purescript
-insert :: forall eff. Position -> String -> EditSession -> Eff (ace :: EAce | eff) Unit
-```
-
-
-#### `remove`
-
-``` purescript
-remove :: forall eff. Range -> EditSession -> Eff (ace :: EAce | eff) Unit
-```
-
-
-#### `setUndoSelect`
-
-``` purescript
-setUndoSelect :: forall eff. Boolean -> EditSession -> Eff (ace :: EAce | eff) Unit
-```
-
-
-#### `replace`
-
-``` purescript
-replace :: forall eff. Range -> String -> EditSession -> Eff (ace :: EAce | eff) Unit
-```
-
-
-#### `moveText`
-
-``` purescript
-moveText :: forall eff. Range -> Position -> EditSession -> Eff (ace :: EAce | eff) Range
-```
-
-
-#### `indentRows`
-
-``` purescript
-indentRows :: forall eff. Number -> Number -> String -> EditSession -> Eff (ace :: EAce | eff) Unit
-```
-
-
-#### `outdentRows`
-
-``` purescript
-outdentRows :: forall eff. Range -> EditSession -> Eff (ace :: EAce | eff) Unit
-```
-
-
-#### `moveLinesUp`
-
-``` purescript
-moveLinesUp :: forall eff. Number -> Number -> EditSession -> Eff (ace :: EAce | eff) Number
-```
-
-
-#### `moveLinesDown`
-
-``` purescript
-moveLinesDown :: forall eff. Number -> Number -> EditSession -> Eff (ace :: EAce | eff) Number
-```
-
-
-#### `duplicateLines`
-
-``` purescript
-duplicateLines :: forall eff. Number -> Number -> EditSession -> Eff (ace :: EAce | eff) Number
-```
-
-
-#### `setUseWrapMode`
-
-``` purescript
-setUseWrapMode :: forall eff. Boolean -> EditSession -> Eff (ace :: EAce | eff) Unit
-```
-
-
-#### `getUseWrapMode`
-
-``` purescript
-getUseWrapMode :: forall eff. EditSession -> Eff (ace :: EAce | eff) Boolean
-```
-
-
-#### `setWrapLimitRange`
-
-``` purescript
-setWrapLimitRange :: forall eff. Number -> Number -> EditSession -> Eff (ace :: EAce | eff) Unit
-```
-
-
-#### `adjustWrapLimit`
-
-``` purescript
-adjustWrapLimit :: forall eff. Number -> EditSession -> Eff (ace :: EAce | eff) Boolean
-```
-
-
-#### `getWrapLimit`
-
-``` purescript
-getWrapLimit :: forall eff. EditSession -> Eff (ace :: EAce | eff) Number
-```
-
-
-#### `getWrapLimitRange`
-
-``` purescript
-getWrapLimitRange :: forall eff. EditSession -> Eff (ace :: EAce | eff) { max :: Number, min :: Number }
-```
-
-
-#### `getDisplayTokens`
-
-``` purescript
-getDisplayTokens :: forall eff. String -> Number -> EditSession -> Eff (ace :: EAce | eff) Unit
-```
-
-
-#### `getStringScreenWidth`
-
-``` purescript
-getStringScreenWidth :: forall eff. String -> Number -> Number -> EditSession -> Eff (ace :: EAce | eff) [Number]
-```
-
-
-#### `getRowLength`
-
-``` purescript
-getRowLength :: forall eff. Number -> EditSession -> Eff (ace :: EAce | eff) Number
-```
-
-
-#### `getScreenLastRowColumn`
-
-``` purescript
-getScreenLastRowColumn :: forall eff. Number -> EditSession -> Eff (ace :: EAce | eff) Number
-```
-
-
-#### `getDocumentLastRowColumn`
-
-``` purescript
-getDocumentLastRowColumn :: forall eff. Number -> Number -> EditSession -> Eff (ace :: EAce | eff) Number
-```
-
-
-#### `getDocumentLastRowColumnPosition`
-
-``` purescript
-getDocumentLastRowColumnPosition :: forall eff. Number -> Number -> EditSession -> Eff (ace :: EAce | eff) Number
-```
-
-
-#### `getRowSplitData`
-
-``` purescript
-getRowSplitData :: forall eff. EditSession -> Eff (ace :: EAce | eff) String
-```
-
-
-#### `getScreenTabSize`
-
-``` purescript
-getScreenTabSize :: forall eff. Number -> EditSession -> Eff (ace :: EAce | eff) Number
-```
-
-
-#### `screenToDocumentPosition`
-
-``` purescript
-screenToDocumentPosition :: forall eff. Number -> Number -> EditSession -> Eff (ace :: EAce | eff) Position
-```
-
-
-#### `documentToScreenPosition`
-
-``` purescript
-documentToScreenPosition :: forall eff. Number -> Number -> EditSession -> Eff (ace :: EAce | eff) Position
-```
-
-
-#### `documentToScreenColumn`
-
-``` purescript
-documentToScreenColumn :: forall eff. Number -> Number -> EditSession -> Eff (ace :: EAce | eff) Number
-```
-
-
-#### `documentToScreenRow`
-
-``` purescript
-documentToScreenRow :: forall eff. Number -> Number -> EditSession -> Eff (ace :: EAce | eff) Unit
-```
-
-
-#### `getScreenLength`
-
-``` purescript
-getScreenLength :: forall eff. EditSession -> Eff (ace :: EAce | eff) Number
-```
-
-
-#### `createWithMode`
-
-``` purescript
-createWithMode :: forall eff. String -> Maybe TextMode -> Eff (ace :: EAce | eff) EditSession
-```
-
-
-#### `create`
-
-``` purescript
-create :: forall eff. String -> Maybe String -> Eff (ace :: EAce | eff) EditSession
-```
-
-
-#### `createFromLines`
-
-``` purescript
-createFromLines :: forall eff. [String] -> Maybe String -> Eff (ace :: EAce | eff) EditSession
-```
-
-
-
 ## Module Ace.Range
 
 #### `getStartColumn`
@@ -2161,7 +2161,7 @@ setScrollTop :: forall eff. Number -> ScrollBar -> Eff (ace :: EAce | eff) Unit
 #### `create`
 
 ``` purescript
-create :: forall eff. DOM.Node -> VirtualRenderer -> Eff (ace :: EAce | eff) ScrollBar
+create :: forall eff. HTMLElement -> VirtualRenderer -> Eff (ace :: EAce | eff) ScrollBar
 ```
 
 
@@ -3051,21 +3051,21 @@ setShowGutter :: forall eff. Boolean -> VirtualRenderer -> Eff (ace :: EAce | ef
 #### `getContainerElement`
 
 ``` purescript
-getContainerElement :: forall eff. VirtualRenderer -> Eff (ace :: EAce | eff) DOM.Node
+getContainerElement :: forall eff. VirtualRenderer -> Eff (ace :: EAce | eff) HTMLElement
 ```
 
 
 #### `getMouseEventTarget`
 
 ``` purescript
-getMouseEventTarget :: forall eff. VirtualRenderer -> Eff (ace :: EAce | eff) DOM.Node
+getMouseEventTarget :: forall eff. VirtualRenderer -> Eff (ace :: EAce | eff) HTMLElement
 ```
 
 
 #### `getTextAreaContainer`
 
 ``` purescript
-getTextAreaContainer :: forall eff. VirtualRenderer -> Eff (ace :: EAce | eff) DOM.Node
+getTextAreaContainer :: forall eff. VirtualRenderer -> Eff (ace :: EAce | eff) HTMLElement
 ```
 
 
@@ -3338,7 +3338,7 @@ destroy :: forall eff. VirtualRenderer -> Eff (ace :: EAce | eff) Unit
 #### `create`
 
 ``` purescript
-create :: forall eff. DOM.Node -> Maybe String -> Eff (ace :: EAce | eff) VirtualRenderer
+create :: forall eff. HTMLElement -> Maybe String -> Eff (ace :: EAce | eff) VirtualRenderer
 ```
 
 
