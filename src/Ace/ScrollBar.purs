@@ -14,6 +14,7 @@ import Data.Function
 import Control.Monad.Eff
 
 import Ace.Types
+import Data.DOM.Simple.Types
 
 foreign import onScrollImpl
   "function onScrollImpl(self, fn) {\
@@ -73,7 +74,7 @@ foreign import createImpl
   \    var ScrollBar = ace.require('ace/scrollbar').ScrollBar;\
   \    return new ScrollBar(parent, vr);\
   \  };\
-  \}" :: forall eff. Fn2 DOM.Node VirtualRenderer (Eff (ace :: EAce | eff) ScrollBar)
+  \}" :: forall eff. Fn2 HTMLElement VirtualRenderer (Eff (ace :: EAce | eff) ScrollBar)
 
-create :: forall eff. DOM.Node -> VirtualRenderer -> Eff (ace :: EAce | eff) ScrollBar
+create :: forall eff. HTMLElement -> VirtualRenderer -> Eff (ace :: EAce | eff) ScrollBar
 create parent vr = runFn2 createImpl parent vr
