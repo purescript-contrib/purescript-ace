@@ -1,4 +1,4 @@
-module Ace.Tokenizer 
+module Ace.Tokenizer
   ( create
   , getLineTokens
   ) where
@@ -15,9 +15,9 @@ foreign import getLineTokensImpl
   \  return function() {\
   \    return self.getLineTokens();\
   \  };\
-  \}" :: forall eff. Fn1 Tokenizer (Eff (ace :: EAce | eff) { tokens :: [TokenInfo], state :: String })
+  \}" :: forall eff. Fn1 Tokenizer (Eff (ace :: ACE | eff) { tokens :: [TokenInfo], state :: String })
 
-getLineTokens :: forall eff. Tokenizer -> Eff (ace :: EAce | eff) { tokens :: [TokenInfo], state :: String }
+getLineTokens :: forall eff. Tokenizer -> Eff (ace :: ACE | eff) { tokens :: [TokenInfo], state :: String }
 getLineTokens self = runFn1 getLineTokensImpl self
 
 foreign import createImpl
@@ -26,7 +26,7 @@ foreign import createImpl
   \    var Tokenizer = ace.require('ace/tokenizer').Tokenizer;\
   \    return new Tokenizer(rules, flag);\
   \  };\
-  \}" :: forall eff. Fn2 Rules String (Eff (ace :: EAce | eff) Tokenizer)
+  \}" :: forall eff. Fn2 Rules String (Eff (ace :: ACE | eff) Tokenizer)
 
-create :: forall eff. Rules -> String -> Eff (ace :: EAce | eff) Tokenizer
+create :: forall eff. Rules -> String -> Eff (ace :: ACE | eff) Tokenizer
 create rules flag = runFn2 createImpl rules flag

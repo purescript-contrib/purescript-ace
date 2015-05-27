@@ -1,4 +1,4 @@
-module Ace.Selection 
+module Ace.Selection
   ( addRange
   , clearSelection
   , create
@@ -67,12 +67,12 @@ foreign import onImpl
   \      fn();\
   \    });\
   \  };\
-  \}" :: forall eff a. Fn3 String (Eff (ace :: EAce | eff) a) Selection (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff a. Fn3 String (Eff (ace :: ACE | eff) a) Selection (Eff (ace :: ACE | eff) Unit)
 
-onChangeCursor :: forall eff a. Selection -> Eff (ace :: EAce | eff) a -> Eff (ace :: EAce | eff) Unit
+onChangeCursor :: forall eff a. Selection -> Eff (ace :: ACE | eff) a -> Eff (ace :: ACE | eff) Unit
 onChangeCursor self fn = runFn3 onImpl "changeCursor" fn self
 
-onChangeSelection :: forall eff a. Selection -> Eff (ace :: EAce | eff) a -> Eff (ace :: EAce | eff) Unit
+onChangeSelection :: forall eff a. Selection -> Eff (ace :: ACE | eff) a -> Eff (ace :: ACE | eff) Unit
 onChangeSelection self fn = runFn3 onImpl "changeSelection" fn self
 
 foreign import moveCursorWordLeftImpl
@@ -80,9 +80,9 @@ foreign import moveCursorWordLeftImpl
   \  return function() {\
   \    return self.moveCursorWordLeft();\
   \  };\
-  \}" :: forall eff. Fn1 Selection (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Selection (Eff (ace :: ACE | eff) Unit)
 
-moveCursorWordLeft :: forall eff. Selection -> Eff (ace :: EAce | eff) Unit
+moveCursorWordLeft :: forall eff. Selection -> Eff (ace :: ACE | eff) Unit
 moveCursorWordLeft self = runFn1 moveCursorWordLeftImpl self
 
 foreign import moveCursorWordRightImpl
@@ -90,9 +90,9 @@ foreign import moveCursorWordRightImpl
   \  return function() {\
   \    return self.moveCursorWordRight();\
   \  };\
-  \}" :: forall eff. Fn1 Selection (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Selection (Eff (ace :: ACE | eff) Unit)
 
-moveCursorWordRight :: forall eff. Selection -> Eff (ace :: EAce | eff) Unit
+moveCursorWordRight :: forall eff. Selection -> Eff (ace :: ACE | eff) Unit
 moveCursorWordRight self = runFn1 moveCursorWordRightImpl self
 
 foreign import fromOrientedRangeImpl
@@ -100,9 +100,9 @@ foreign import fromOrientedRangeImpl
   \  return function() {\
   \    return self.fromOrientedRange(range);\
   \  };\
-  \}" :: forall eff. Fn2 Range Selection (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 Range Selection (Eff (ace :: ACE | eff) Unit)
 
-fromOrientedRange :: forall eff. Range -> Selection -> Eff (ace :: EAce | eff) Unit
+fromOrientedRange :: forall eff. Range -> Selection -> Eff (ace :: ACE | eff) Unit
 fromOrientedRange range self = runFn2 fromOrientedRangeImpl range self
 
 foreign import setSelectionRangeImpl
@@ -110,9 +110,9 @@ foreign import setSelectionRangeImpl
   \  return function() {\
   \    return self.setSelectionRange(match);\
   \  };\
-  \}" :: forall eff. Fn2 Range Selection (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 Range Selection (Eff (ace :: ACE | eff) Unit)
 
-setSelectionRange :: forall eff. Range -> Selection -> Eff (ace :: EAce | eff) Unit
+setSelectionRange :: forall eff. Range -> Selection -> Eff (ace :: ACE | eff) Unit
 setSelectionRange match self = runFn2 setSelectionRangeImpl match self
 
 foreign import getAllRangesImpl
@@ -120,9 +120,9 @@ foreign import getAllRangesImpl
   \  return function() {\
   \    return self.getAllRanges();\
   \  };\
-  \}" :: forall eff. Fn1 Selection (Eff (ace :: EAce | eff) [Range])
+  \}" :: forall eff. Fn1 Selection (Eff (ace :: ACE | eff) [Range])
 
-getAllRanges :: forall eff. Selection -> Eff (ace :: EAce | eff) [Range]
+getAllRanges :: forall eff. Selection -> Eff (ace :: ACE | eff) [Range]
 getAllRanges self = runFn1 getAllRangesImpl self
 
 foreign import addRangeImpl
@@ -130,9 +130,9 @@ foreign import addRangeImpl
   \  return function() {\
   \    return self.addRange(range);\
   \  };\
-  \}" :: forall eff. Fn2 Range Selection (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 Range Selection (Eff (ace :: ACE | eff) Unit)
 
-addRange :: forall eff. Range -> Selection -> Eff (ace :: EAce | eff) Unit
+addRange :: forall eff. Range -> Selection -> Eff (ace :: ACE | eff) Unit
 addRange range self = runFn2 addRangeImpl range self
 
 foreign import isEmptyImpl
@@ -140,9 +140,9 @@ foreign import isEmptyImpl
   \  return function() {\
   \    return self.isEmpty();\
   \  };\
-  \}" :: forall eff. Fn1 Selection (Eff (ace :: EAce | eff) Boolean)
+  \}" :: forall eff. Fn1 Selection (Eff (ace :: ACE | eff) Boolean)
 
-isEmpty :: forall eff. Selection -> Eff (ace :: EAce | eff) Boolean
+isEmpty :: forall eff. Selection -> Eff (ace :: ACE | eff) Boolean
 isEmpty self = runFn1 isEmptyImpl self
 
 foreign import isMultiLineImpl
@@ -150,9 +150,9 @@ foreign import isMultiLineImpl
   \  return function() {\
   \    return self.isMultiLine();\
   \  };\
-  \}" :: forall eff. Fn1 Selection (Eff (ace :: EAce | eff) Boolean)
+  \}" :: forall eff. Fn1 Selection (Eff (ace :: ACE | eff) Boolean)
 
-isMultiLine :: forall eff. Selection -> Eff (ace :: EAce | eff) Boolean
+isMultiLine :: forall eff. Selection -> Eff (ace :: ACE | eff) Boolean
 isMultiLine self = runFn1 isMultiLineImpl self
 
 foreign import getCursorImpl
@@ -160,9 +160,9 @@ foreign import getCursorImpl
   \  return function() {\
   \    return self.getCursor();\
   \  };\
-  \}" :: forall eff. Fn1 Selection (Eff (ace :: EAce | eff) Position)
+  \}" :: forall eff. Fn1 Selection (Eff (ace :: ACE | eff) Position)
 
-getCursor :: forall eff. Selection -> Eff (ace :: EAce | eff) Position
+getCursor :: forall eff. Selection -> Eff (ace :: ACE | eff) Position
 getCursor self = runFn1 getCursorImpl self
 
 foreign import setSelectionAnchorImpl
@@ -170,9 +170,9 @@ foreign import setSelectionAnchorImpl
   \  return function() {\
   \    return self.setSelectionAnchor(row, column);\
   \  };\
-  \}" :: forall eff. Fn3 Number Number Selection (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn3 Number Number Selection (Eff (ace :: ACE | eff) Unit)
 
-setSelectionAnchor :: forall eff. Number -> Number -> Selection -> Eff (ace :: EAce | eff) Unit
+setSelectionAnchor :: forall eff. Number -> Number -> Selection -> Eff (ace :: ACE | eff) Unit
 setSelectionAnchor row column self = runFn3 setSelectionAnchorImpl row column self
 
 foreign import getSelectionAnchorImpl
@@ -180,9 +180,9 @@ foreign import getSelectionAnchorImpl
   \  return function() {\
   \    return self.getSelectionAnchor();\
   \  };\
-  \}" :: forall eff. Fn1 Selection (Eff (ace :: EAce | eff) Position)
+  \}" :: forall eff. Fn1 Selection (Eff (ace :: ACE | eff) Position)
 
-getSelectionAnchor :: forall eff. Selection -> Eff (ace :: EAce | eff) Position
+getSelectionAnchor :: forall eff. Selection -> Eff (ace :: ACE | eff) Position
 getSelectionAnchor self = runFn1 getSelectionAnchorImpl self
 
 foreign import getSelectionLeadImpl
@@ -190,9 +190,9 @@ foreign import getSelectionLeadImpl
   \  return function() {\
   \    return self.getSelectionLead();\
   \  };\
-  \}" :: forall eff. Fn1 Selection (Eff (ace :: EAce | eff) Position)
+  \}" :: forall eff. Fn1 Selection (Eff (ace :: ACE | eff) Position)
 
-getSelectionLead :: forall eff. Selection -> Eff (ace :: EAce | eff) Position
+getSelectionLead :: forall eff. Selection -> Eff (ace :: ACE | eff) Position
 getSelectionLead self = runFn1 getSelectionLeadImpl self
 
 foreign import shiftSelectionImpl
@@ -200,9 +200,9 @@ foreign import shiftSelectionImpl
   \  return function() {\
   \    return self.shiftSelection(columns);\
   \  };\
-  \}" :: forall eff. Fn2 Number Selection (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 Number Selection (Eff (ace :: ACE | eff) Unit)
 
-shiftSelection :: forall eff. Number -> Selection -> Eff (ace :: EAce | eff) Unit
+shiftSelection :: forall eff. Number -> Selection -> Eff (ace :: ACE | eff) Unit
 shiftSelection columns self = runFn2 shiftSelectionImpl columns self
 
 foreign import isBackwardsImpl
@@ -210,9 +210,9 @@ foreign import isBackwardsImpl
   \  return function() {\
   \    return self.isBackwards();\
   \  };\
-  \}" :: forall eff. Fn1 Selection (Eff (ace :: EAce | eff) Boolean)
+  \}" :: forall eff. Fn1 Selection (Eff (ace :: ACE | eff) Boolean)
 
-isBackwards :: forall eff. Selection -> Eff (ace :: EAce | eff) Boolean
+isBackwards :: forall eff. Selection -> Eff (ace :: ACE | eff) Boolean
 isBackwards self = runFn1 isBackwardsImpl self
 
 foreign import getRangeImpl
@@ -220,9 +220,9 @@ foreign import getRangeImpl
   \  return function() {\
   \    return self.getRange();\
   \  };\
-  \}" :: forall eff. Fn1 Selection (Eff (ace :: EAce | eff) Range)
+  \}" :: forall eff. Fn1 Selection (Eff (ace :: ACE | eff) Range)
 
-getRange :: forall eff. Selection -> Eff (ace :: EAce | eff) Range
+getRange :: forall eff. Selection -> Eff (ace :: ACE | eff) Range
 getRange self = runFn1 getRangeImpl self
 
 foreign import clearSelectionImpl
@@ -230,9 +230,9 @@ foreign import clearSelectionImpl
   \  return function() {\
   \    return self.clearSelection();\
   \  };\
-  \}" :: forall eff. Fn1 Selection (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Selection (Eff (ace :: ACE | eff) Unit)
 
-clearSelection :: forall eff. Selection -> Eff (ace :: EAce | eff) Unit
+clearSelection :: forall eff. Selection -> Eff (ace :: ACE | eff) Unit
 clearSelection self = runFn1 clearSelectionImpl self
 
 foreign import selectAllImpl
@@ -240,9 +240,9 @@ foreign import selectAllImpl
   \  return function() {\
   \    return self.selectAll();\
   \  };\
-  \}" :: forall eff. Fn1 Selection (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Selection (Eff (ace :: ACE | eff) Unit)
 
-selectAll :: forall eff. Selection -> Eff (ace :: EAce | eff) Unit
+selectAll :: forall eff. Selection -> Eff (ace :: ACE | eff) Unit
 selectAll self = runFn1 selectAllImpl self
 
 foreign import setRangeImpl
@@ -250,9 +250,9 @@ foreign import setRangeImpl
   \  return function() {\
   \    return self.setRange(range, reverse);\
   \  };\
-  \}" :: forall eff. Fn3 Range Boolean Selection (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn3 Range Boolean Selection (Eff (ace :: ACE | eff) Unit)
 
-setRange :: forall eff. Range -> Boolean -> Selection -> Eff (ace :: EAce | eff) Unit
+setRange :: forall eff. Range -> Boolean -> Selection -> Eff (ace :: ACE | eff) Unit
 setRange range reverse self = runFn3 setRangeImpl range reverse self
 
 foreign import selectToImpl
@@ -260,9 +260,9 @@ foreign import selectToImpl
   \  return function() {\
   \    return self.selectTo(row, column);\
   \  };\
-  \}" :: forall eff. Fn3 Number Number Selection (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn3 Number Number Selection (Eff (ace :: ACE | eff) Unit)
 
-selectTo :: forall eff. Number -> Number -> Selection -> Eff (ace :: EAce | eff) Unit
+selectTo :: forall eff. Number -> Number -> Selection -> Eff (ace :: ACE | eff) Unit
 selectTo row column self = runFn3 selectToImpl row column self
 
 foreign import selectToPositionImpl
@@ -270,9 +270,9 @@ foreign import selectToPositionImpl
   \  return function() {\
   \    return self.selectToPosition(pos);\
   \  };\
-  \}" :: forall eff. Fn2 Position Selection (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 Position Selection (Eff (ace :: ACE | eff) Unit)
 
-selectToPosition :: forall eff. Position -> Selection -> Eff (ace :: EAce | eff) Unit
+selectToPosition :: forall eff. Position -> Selection -> Eff (ace :: ACE | eff) Unit
 selectToPosition pos self = runFn2 selectToPositionImpl pos self
 
 foreign import selectUpImpl
@@ -280,9 +280,9 @@ foreign import selectUpImpl
   \  return function() {\
   \    return self.selectUp();\
   \  };\
-  \}" :: forall eff. Fn1 Selection (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Selection (Eff (ace :: ACE | eff) Unit)
 
-selectUp :: forall eff. Selection -> Eff (ace :: EAce | eff) Unit
+selectUp :: forall eff. Selection -> Eff (ace :: ACE | eff) Unit
 selectUp self = runFn1 selectUpImpl self
 
 foreign import selectDownImpl
@@ -290,9 +290,9 @@ foreign import selectDownImpl
   \  return function() {\
   \    return self.selectDown();\
   \  };\
-  \}" :: forall eff. Fn1 Selection (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Selection (Eff (ace :: ACE | eff) Unit)
 
-selectDown :: forall eff. Selection -> Eff (ace :: EAce | eff) Unit
+selectDown :: forall eff. Selection -> Eff (ace :: ACE | eff) Unit
 selectDown self = runFn1 selectDownImpl self
 
 foreign import selectRightImpl
@@ -300,9 +300,9 @@ foreign import selectRightImpl
   \  return function() {\
   \    return self.selectRight();\
   \  };\
-  \}" :: forall eff. Fn1 Selection (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Selection (Eff (ace :: ACE | eff) Unit)
 
-selectRight :: forall eff. Selection -> Eff (ace :: EAce | eff) Unit
+selectRight :: forall eff. Selection -> Eff (ace :: ACE | eff) Unit
 selectRight self = runFn1 selectRightImpl self
 
 foreign import selectLeftImpl
@@ -310,9 +310,9 @@ foreign import selectLeftImpl
   \  return function() {\
   \    return self.selectLeft();\
   \  };\
-  \}" :: forall eff. Fn1 Selection (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Selection (Eff (ace :: ACE | eff) Unit)
 
-selectLeft :: forall eff. Selection -> Eff (ace :: EAce | eff) Unit
+selectLeft :: forall eff. Selection -> Eff (ace :: ACE | eff) Unit
 selectLeft self = runFn1 selectLeftImpl self
 
 foreign import selectLineStartImpl
@@ -320,9 +320,9 @@ foreign import selectLineStartImpl
   \  return function() {\
   \    return self.selectLineStart();\
   \  };\
-  \}" :: forall eff. Fn1 Selection (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Selection (Eff (ace :: ACE | eff) Unit)
 
-selectLineStart :: forall eff. Selection -> Eff (ace :: EAce | eff) Unit
+selectLineStart :: forall eff. Selection -> Eff (ace :: ACE | eff) Unit
 selectLineStart self = runFn1 selectLineStartImpl self
 
 foreign import selectLineEndImpl
@@ -330,9 +330,9 @@ foreign import selectLineEndImpl
   \  return function() {\
   \    return self.selectLineEnd();\
   \  };\
-  \}" :: forall eff. Fn1 Selection (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Selection (Eff (ace :: ACE | eff) Unit)
 
-selectLineEnd :: forall eff. Selection -> Eff (ace :: EAce | eff) Unit
+selectLineEnd :: forall eff. Selection -> Eff (ace :: ACE | eff) Unit
 selectLineEnd self = runFn1 selectLineEndImpl self
 
 foreign import selectFileEndImpl
@@ -340,9 +340,9 @@ foreign import selectFileEndImpl
   \  return function() {\
   \    return self.selectFileEnd();\
   \  };\
-  \}" :: forall eff. Fn1 Selection (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Selection (Eff (ace :: ACE | eff) Unit)
 
-selectFileEnd :: forall eff. Selection -> Eff (ace :: EAce | eff) Unit
+selectFileEnd :: forall eff. Selection -> Eff (ace :: ACE | eff) Unit
 selectFileEnd self = runFn1 selectFileEndImpl self
 
 foreign import selectFileStartImpl
@@ -350,9 +350,9 @@ foreign import selectFileStartImpl
   \  return function() {\
   \    return self.selectFileStart();\
   \  };\
-  \}" :: forall eff. Fn1 Selection (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Selection (Eff (ace :: ACE | eff) Unit)
 
-selectFileStart :: forall eff. Selection -> Eff (ace :: EAce | eff) Unit
+selectFileStart :: forall eff. Selection -> Eff (ace :: ACE | eff) Unit
 selectFileStart self = runFn1 selectFileStartImpl self
 
 foreign import selectWordRightImpl
@@ -360,9 +360,9 @@ foreign import selectWordRightImpl
   \  return function() {\
   \    return self.selectWordRight();\
   \  };\
-  \}" :: forall eff. Fn1 Selection (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Selection (Eff (ace :: ACE | eff) Unit)
 
-selectWordRight :: forall eff. Selection -> Eff (ace :: EAce | eff) Unit
+selectWordRight :: forall eff. Selection -> Eff (ace :: ACE | eff) Unit
 selectWordRight self = runFn1 selectWordRightImpl self
 
 foreign import selectWordLeftImpl
@@ -370,9 +370,9 @@ foreign import selectWordLeftImpl
   \  return function() {\
   \    return self.selectWordLeft();\
   \  };\
-  \}" :: forall eff. Fn1 Selection (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Selection (Eff (ace :: ACE | eff) Unit)
 
-selectWordLeft :: forall eff. Selection -> Eff (ace :: EAce | eff) Unit
+selectWordLeft :: forall eff. Selection -> Eff (ace :: ACE | eff) Unit
 selectWordLeft self = runFn1 selectWordLeftImpl self
 
 foreign import getWordRangeImpl
@@ -380,9 +380,9 @@ foreign import getWordRangeImpl
   \  return function() {\
   \    return self.getWordRange();\
   \  };\
-  \}" :: forall eff. Fn1 Selection (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Selection (Eff (ace :: ACE | eff) Unit)
 
-getWordRange :: forall eff. Selection -> Eff (ace :: EAce | eff) Unit
+getWordRange :: forall eff. Selection -> Eff (ace :: ACE | eff) Unit
 getWordRange self = runFn1 getWordRangeImpl self
 
 foreign import selectWordImpl
@@ -390,9 +390,9 @@ foreign import selectWordImpl
   \  return function() {\
   \    return self.selectWord();\
   \  };\
-  \}" :: forall eff. Fn1 Selection (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Selection (Eff (ace :: ACE | eff) Unit)
 
-selectWord :: forall eff. Selection -> Eff (ace :: EAce | eff) Unit
+selectWord :: forall eff. Selection -> Eff (ace :: ACE | eff) Unit
 selectWord self = runFn1 selectWordImpl self
 
 foreign import selectAWordImpl
@@ -400,9 +400,9 @@ foreign import selectAWordImpl
   \  return function() {\
   \    return self.selectAWord();\
   \  };\
-  \}" :: forall eff. Fn1 Selection (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Selection (Eff (ace :: ACE | eff) Unit)
 
-selectAWord :: forall eff. Selection -> Eff (ace :: EAce | eff) Unit
+selectAWord :: forall eff. Selection -> Eff (ace :: ACE | eff) Unit
 selectAWord self = runFn1 selectAWordImpl self
 
 foreign import selectLineImpl
@@ -410,9 +410,9 @@ foreign import selectLineImpl
   \  return function() {\
   \    return self.selectLine();\
   \  };\
-  \}" :: forall eff. Fn1 Selection (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Selection (Eff (ace :: ACE | eff) Unit)
 
-selectLine :: forall eff. Selection -> Eff (ace :: EAce | eff) Unit
+selectLine :: forall eff. Selection -> Eff (ace :: ACE | eff) Unit
 selectLine self = runFn1 selectLineImpl self
 
 foreign import moveCursorUpImpl
@@ -420,9 +420,9 @@ foreign import moveCursorUpImpl
   \  return function() {\
   \    return self.moveCursorUp();\
   \  };\
-  \}" :: forall eff. Fn1 Selection (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Selection (Eff (ace :: ACE | eff) Unit)
 
-moveCursorUp :: forall eff. Selection -> Eff (ace :: EAce | eff) Unit
+moveCursorUp :: forall eff. Selection -> Eff (ace :: ACE | eff) Unit
 moveCursorUp self = runFn1 moveCursorUpImpl self
 
 foreign import moveCursorDownImpl
@@ -430,9 +430,9 @@ foreign import moveCursorDownImpl
   \  return function() {\
   \    return self.moveCursorDown();\
   \  };\
-  \}" :: forall eff. Fn1 Selection (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Selection (Eff (ace :: ACE | eff) Unit)
 
-moveCursorDown :: forall eff. Selection -> Eff (ace :: EAce | eff) Unit
+moveCursorDown :: forall eff. Selection -> Eff (ace :: ACE | eff) Unit
 moveCursorDown self = runFn1 moveCursorDownImpl self
 
 foreign import moveCursorLeftImpl
@@ -440,9 +440,9 @@ foreign import moveCursorLeftImpl
   \  return function() {\
   \    return self.moveCursorLeft();\
   \  };\
-  \}" :: forall eff. Fn1 Selection (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Selection (Eff (ace :: ACE | eff) Unit)
 
-moveCursorLeft :: forall eff. Selection -> Eff (ace :: EAce | eff) Unit
+moveCursorLeft :: forall eff. Selection -> Eff (ace :: ACE | eff) Unit
 moveCursorLeft self = runFn1 moveCursorLeftImpl self
 
 foreign import moveCursorRightImpl
@@ -450,9 +450,9 @@ foreign import moveCursorRightImpl
   \  return function() {\
   \    return self.moveCursorRight();\
   \  };\
-  \}" :: forall eff. Fn1 Selection (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Selection (Eff (ace :: ACE | eff) Unit)
 
-moveCursorRight :: forall eff. Selection -> Eff (ace :: EAce | eff) Unit
+moveCursorRight :: forall eff. Selection -> Eff (ace :: ACE | eff) Unit
 moveCursorRight self = runFn1 moveCursorRightImpl self
 
 foreign import moveCursorLineStartImpl
@@ -460,9 +460,9 @@ foreign import moveCursorLineStartImpl
   \  return function() {\
   \    return self.moveCursorLineStart();\
   \  };\
-  \}" :: forall eff. Fn1 Selection (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Selection (Eff (ace :: ACE | eff) Unit)
 
-moveCursorLineStart :: forall eff. Selection -> Eff (ace :: EAce | eff) Unit
+moveCursorLineStart :: forall eff. Selection -> Eff (ace :: ACE | eff) Unit
 moveCursorLineStart self = runFn1 moveCursorLineStartImpl self
 
 foreign import moveCursorLineEndImpl
@@ -470,9 +470,9 @@ foreign import moveCursorLineEndImpl
   \  return function() {\
   \    return self.moveCursorLineEnd();\
   \  };\
-  \}" :: forall eff. Fn1 Selection (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Selection (Eff (ace :: ACE | eff) Unit)
 
-moveCursorLineEnd :: forall eff. Selection -> Eff (ace :: EAce | eff) Unit
+moveCursorLineEnd :: forall eff. Selection -> Eff (ace :: ACE | eff) Unit
 moveCursorLineEnd self = runFn1 moveCursorLineEndImpl self
 
 foreign import moveCursorFileEndImpl
@@ -480,9 +480,9 @@ foreign import moveCursorFileEndImpl
   \  return function() {\
   \    return self.moveCursorFileEnd();\
   \  };\
-  \}" :: forall eff. Fn1 Selection (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Selection (Eff (ace :: ACE | eff) Unit)
 
-moveCursorFileEnd :: forall eff. Selection -> Eff (ace :: EAce | eff) Unit
+moveCursorFileEnd :: forall eff. Selection -> Eff (ace :: ACE | eff) Unit
 moveCursorFileEnd self = runFn1 moveCursorFileEndImpl self
 
 foreign import moveCursorFileStartImpl
@@ -490,9 +490,9 @@ foreign import moveCursorFileStartImpl
   \  return function() {\
   \    return self.moveCursorFileStart();\
   \  };\
-  \}" :: forall eff. Fn1 Selection (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Selection (Eff (ace :: ACE | eff) Unit)
 
-moveCursorFileStart :: forall eff. Selection -> Eff (ace :: EAce | eff) Unit
+moveCursorFileStart :: forall eff. Selection -> Eff (ace :: ACE | eff) Unit
 moveCursorFileStart self = runFn1 moveCursorFileStartImpl self
 
 foreign import moveCursorLongWordRightImpl
@@ -500,9 +500,9 @@ foreign import moveCursorLongWordRightImpl
   \  return function() {\
   \    return self.moveCursorLongWordRight();\
   \  };\
-  \}" :: forall eff. Fn1 Selection (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Selection (Eff (ace :: ACE | eff) Unit)
 
-moveCursorLongWordRight :: forall eff. Selection -> Eff (ace :: EAce | eff) Unit
+moveCursorLongWordRight :: forall eff. Selection -> Eff (ace :: ACE | eff) Unit
 moveCursorLongWordRight self = runFn1 moveCursorLongWordRightImpl self
 
 foreign import moveCursorLongWordLeftImpl
@@ -510,9 +510,9 @@ foreign import moveCursorLongWordLeftImpl
   \  return function() {\
   \    return self.moveCursorLongWordLeft();\
   \  };\
-  \}" :: forall eff. Fn1 Selection (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Selection (Eff (ace :: ACE | eff) Unit)
 
-moveCursorLongWordLeft :: forall eff. Selection -> Eff (ace :: EAce | eff) Unit
+moveCursorLongWordLeft :: forall eff. Selection -> Eff (ace :: ACE | eff) Unit
 moveCursorLongWordLeft self = runFn1 moveCursorLongWordLeftImpl self
 
 foreign import moveCursorByImpl
@@ -520,9 +520,9 @@ foreign import moveCursorByImpl
   \  return function() {\
   \    return self.moveCursorBy(rows, chars);\
   \  };\
-  \}" :: forall eff. Fn3 Number Number Selection (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn3 Number Number Selection (Eff (ace :: ACE | eff) Unit)
 
-moveCursorBy :: forall eff. Number -> Number -> Selection -> Eff (ace :: EAce | eff) Unit
+moveCursorBy :: forall eff. Number -> Number -> Selection -> Eff (ace :: ACE | eff) Unit
 moveCursorBy rows chars self = runFn3 moveCursorByImpl rows chars self
 
 foreign import moveCursorToPositionImpl
@@ -530,9 +530,9 @@ foreign import moveCursorToPositionImpl
   \  return function() {\
   \    return self.moveCursorToPosition(position);\
   \  };\
-  \}" :: forall eff. Fn2 Position Selection (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 Position Selection (Eff (ace :: ACE | eff) Unit)
 
-moveCursorToPosition :: forall eff. Position -> Selection -> Eff (ace :: EAce | eff) Unit
+moveCursorToPosition :: forall eff. Position -> Selection -> Eff (ace :: ACE | eff) Unit
 moveCursorToPosition position self = runFn2 moveCursorToPositionImpl position self
 
 foreign import moveCursorToImpl
@@ -540,9 +540,9 @@ foreign import moveCursorToImpl
   \  return function() {\
   \    return self.moveCursorTo(row, column, keepDesiredColumn);\
   \  };\
-  \}" :: forall eff. Fn4 Number Number (Nullable Boolean) Selection (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn4 Number Number (Nullable Boolean) Selection (Eff (ace :: ACE | eff) Unit)
 
-moveCursorTo :: forall eff. Number -> Number -> Maybe Boolean -> Selection -> Eff (ace :: EAce | eff) Unit
+moveCursorTo :: forall eff. Number -> Number -> Maybe Boolean -> Selection -> Eff (ace :: ACE | eff) Unit
 moveCursorTo row column keepDesiredColumn self = runFn4 moveCursorToImpl row column (toNullable keepDesiredColumn) self
 
 foreign import moveCursorToScreenImpl
@@ -550,9 +550,9 @@ foreign import moveCursorToScreenImpl
   \  return function() {\
   \    return self.moveCursorToScreen(row, column, keepDesiredColumn);\
   \  };\
-  \}" :: forall eff. Fn4 Number Number Boolean Selection (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn4 Number Number Boolean Selection (Eff (ace :: ACE | eff) Unit)
 
-moveCursorToScreen :: forall eff. Number -> Number -> Boolean -> Selection -> Eff (ace :: EAce | eff) Unit
+moveCursorToScreen :: forall eff. Number -> Number -> Boolean -> Selection -> Eff (ace :: ACE | eff) Unit
 moveCursorToScreen row column keepDesiredColumn self = runFn4 moveCursorToScreenImpl row column keepDesiredColumn self
 
 foreign import createImpl
@@ -561,7 +561,7 @@ foreign import createImpl
   \    var Selection = ace.require('ace/selection').Selection;\
   \    return new Selection(session);\
   \  };\
-  \}" :: forall eff. Fn1 EditSession (Eff (ace :: EAce | eff) Selection)
+  \}" :: forall eff. Fn1 EditSession (Eff (ace :: ACE | eff) Selection)
 
-create :: forall eff. EditSession -> Eff (ace :: EAce | eff) Selection
+create :: forall eff. EditSession -> Eff (ace :: ACE | eff) Selection
 create session = runFn1 createImpl session

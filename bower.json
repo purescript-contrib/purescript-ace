@@ -17,11 +17,13 @@
     "package.json"
   ],
   "dependencies": {
-    "ace": "~1.1.8",
     "purescript-maybe": "~0.2.1",
     "purescript-arrays": "~0.3.0",
     "purescript-foreign": "~0.4.0",
     "purescript-simple-dom": "~0.0.2",
     "purescript-nullable": "~0.1.0"
+  },
+  "devDependencies": {
+    "ace-builds": "~1.1.9"
   }
 }

@@ -1,4 +1,4 @@
-module Ace.UndoManager 
+module Ace.UndoManager
   ( create
   , hasUndo
   , hasRedo
@@ -20,9 +20,9 @@ foreign import undoImpl
   \  return function() {\
   \    return self.undo(dontSelect);\
   \  };\
-  \}" :: forall eff. Fn2 (Nullable Boolean) UndoManager (Eff (ace :: EAce | eff) Range)
+  \}" :: forall eff. Fn2 (Nullable Boolean) UndoManager (Eff (ace :: ACE | eff) Range)
 
-undo :: forall eff. Maybe Boolean -> UndoManager -> Eff (ace :: EAce | eff) Range
+undo :: forall eff. Maybe Boolean -> UndoManager -> Eff (ace :: ACE | eff) Range
 undo dontSelect self = runFn2 undoImpl (toNullable dontSelect) self
 
 foreign import redoImpl
@@ -30,9 +30,9 @@ foreign import redoImpl
   \  return function() {\
   \    return self.redo(dontSelect);\
   \  };\
-  \}" :: forall eff. Fn2 Boolean UndoManager (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 Boolean UndoManager (Eff (ace :: ACE | eff) Unit)
 
-redo :: forall eff. Boolean -> UndoManager -> Eff (ace :: EAce | eff) Unit
+redo :: forall eff. Boolean -> UndoManager -> Eff (ace :: ACE | eff) Unit
 redo dontSelect self = runFn2 redoImpl dontSelect self
 
 foreign import resetImpl
@@ -40,9 +40,9 @@ foreign import resetImpl
   \  return function() {\
   \    return self.reset();\
   \  };\
-  \}" :: forall eff. Fn1 UndoManager (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 UndoManager (Eff (ace :: ACE | eff) Unit)
 
-reset :: forall eff. UndoManager -> Eff (ace :: EAce | eff) Unit
+reset :: forall eff. UndoManager -> Eff (ace :: ACE | eff) Unit
 reset self = runFn1 resetImpl self
 
 foreign import hasUndoImpl
@@ -50,9 +50,9 @@ foreign import hasUndoImpl
   \  return function() {\
   \    return self.hasUndo();\
   \  };\
-  \}" :: forall eff. Fn1 UndoManager (Eff (ace :: EAce | eff) Boolean)
+  \}" :: forall eff. Fn1 UndoManager (Eff (ace :: ACE | eff) Boolean)
 
-hasUndo :: forall eff. UndoManager -> Eff (ace :: EAce | eff) Boolean
+hasUndo :: forall eff. UndoManager -> Eff (ace :: ACE | eff) Boolean
 hasUndo self = runFn1 hasUndoImpl self
 
 foreign import hasRedoImpl
@@ -60,9 +60,9 @@ foreign import hasRedoImpl
   \  return function() {\
   \    return self.hasRedo();\
   \  };\
-  \}" :: forall eff. Fn1 UndoManager (Eff (ace :: EAce | eff) Boolean)
+  \}" :: forall eff. Fn1 UndoManager (Eff (ace :: ACE | eff) Boolean)
 
-hasRedo :: forall eff. UndoManager -> Eff (ace :: EAce | eff) Boolean
+hasRedo :: forall eff. UndoManager -> Eff (ace :: ACE | eff) Boolean
 hasRedo self = runFn1 hasRedoImpl self
 
 foreign import createImpl
@@ -71,7 +71,7 @@ foreign import createImpl
   \    var UndoManager = ace.require('ace/undomanager').UndoManager;\
   \    return new UndoManager();\
   \  };\
-  \}" :: forall eff. Fn0 (Eff (ace :: EAce | eff) UndoManager)
+  \}" :: forall eff. Fn0 (Eff (ace :: ACE | eff) UndoManager)
 
-create :: forall eff. Eff (ace :: EAce | eff) UndoManager
-create = runFn0 createImpl 
+create :: forall eff. Eff (ace :: ACE | eff) UndoManager
+create = runFn0 createImpl

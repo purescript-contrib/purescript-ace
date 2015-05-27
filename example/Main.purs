@@ -1,30 +1,31 @@
 module Main where
-    
-import Data.Maybe
-import Data.Array (map)   
-import Data.Array.ST (pushSTArray)   
 
-import Control.Monad.Eff 
-    
-import Debug.Trace    
-    
+import Data.Maybe
+import Data.Array (map)
+import Data.Array.ST (pushSTArray)
+
+import Control.Monad.Eff
+
+import Debug.Trace
+
 import Ace
 import Ace.Types
 
+import qualified Ace.Config as Config
 import qualified Ace.Editor as Editor
-import qualified Ace.EditSession as Session  
-import qualified Ace.Anchor as Anchor   
+import qualified Ace.EditSession as Session
+import qualified Ace.Anchor as Anchor
 import qualified Ace.BackgroundTokenizer as BackgroundTokenizer
 import qualified Ace.Document as Document
 import qualified Ace.Range as Range
 import qualified Ace.ScrollBar as ScrollBar
 import qualified Ace.Search as Search
 import qualified Ace.Selection as Selection
-import qualified Ace.Tokenizer as Tokenizer   
+import qualified Ace.Tokenizer as Tokenizer
 import qualified Ace.TokenIterator as TokenIterator
-import qualified Ace.UndoManager as UndoManager   
-import qualified Ace.VirtualRenderer as VirtualRenderer   
-    
+import qualified Ace.UndoManager as UndoManager
+import qualified Ace.VirtualRenderer as VirtualRenderer
+
 foreign import rules """
   var rules = {
       "start": [
@@ -34,38 +35,41 @@ foreign import rules """
         }
       ]
   }
-  """ :: Rules    
-    
+  """ :: Rules
+
 main = do
+
+  Config.set Config.basePath "foo"
+
   -- Create an editor
   editor <- Ace.edit "editor" ace
-  
+
   -- Set the theme
-  Editor.setTheme "ace/theme/monokai" editor
-  
+  Editor.setTheme "ace/theme/chrome" editor
+
   -- Log some events
   editor `Editor.onCopy` \s -> trace ("Text copied: " ++ s)
   editor `Editor.onPaste` \_ -> trace "Text pasted."
   editor `Editor.onBlur` trace "Editor lost focus."
   editor `Editor.onFocus` trace "Editor gained focus."
-  
+
   -- Get the editor session
   session <- Editor.getSession editor
-  
+
   -- Set the mode
   Session.setMode "ace/mode/javascript" session
   -- Get the mode
   mode <- Session.getMode session
   -- Create another edit session with this mode
   session1 <- Ace.createEditSession "" mode ace
-  
+
   -- Get the document for the session
   document <- Session.getDocument session
   document `Document.onChange` \(DocumentEvent ty _ _ _ _) -> trace ("Document changed: " ++ showDocumentEventType ty)
   Document.setNewLineMode Windows document
-  
+
   -- Add an anchor at the start of the document and listen for updates
-  anchor <- Document.createAnchor 0 0 document 
+  anchor <- Document.createAnchor 0 0 document
   -- Assert position is correct
   { row: 0, column: 0 } <- Anchor.getPosition anchor
   -- Update the anchor position
@@ -75,23 +79,23 @@ main = do
     trace ("New anchor position: " ++ show e.value.row ++ ", " ++ show e.value.column)
     -- Unlisten
     Anchor.detach anchor
-  
+
   -- Add a dynamic marker
   Session.addDynamicMarker (\html _ -> pushSTArray html "<i>!</i>") true session
-  
+
   -- Get the background tokenizer and trace the tokens and state on the first line
   backgroundTokenizer <- Session.getBackgroundTokenizer session
   tokens <- BackgroundTokenizer.getTokens 0 backgroundTokenizer
   print $ map (\o -> o.value) tokens
   state <- BackgroundTokenizer.getState 0 backgroundTokenizer
   trace state
-  
-  -- Create a scroll bar and apply it to 
+
+  -- Create a scroll bar and apply it to
   ctr <- Editor.getContainer editor
   vr <- Editor.getRenderer editor
   scrollBar <- ScrollBar.create ctr vr
   scrollBar `ScrollBar.onScroll` trace "Scrolled"
-  
+
   -- Create a search class
   search <- Search.create
   Search.set { needle: "to the console"
@@ -104,61 +108,61 @@ main = do
              } search
   range <- Search.find session search
   Session.addFold "fold" range session
-  
+
   -- Gutter decorations
   Session.addGutterDecoration 0 "?" session
-  
+
   -- Markers
   Session.addMarker range "1" "2" false session
-  
+
   -- Wrap limit
   Session.adjustWrapLimit 20 session
-  
+
   -- Move the cursor
   Editor.moveCursorTo 0 Nothing Nothing editor
-  
+
   -- Misc. Tests
   miscTests
- 
+
 miscTests = do
   editor <- Ace.edit "tests" ace
   session <- Editor.getSession editor
   document <- Session.getDocument session
-  
+
   range <- Range.create 0 0 0 1
-  
+
   ctr <- Editor.getContainer editor
   vr <- Editor.getRenderer editor
   scrollBar <- ScrollBar.create ctr vr
-  
+
   search <- Search.create
-  
+
   backgroundTokenizer <- Session.getBackgroundTokenizer session
-  
+
   anchor <- Document.createAnchor 0 0 document
-    
+
   Anchor.getPosition anchor
   Anchor.getDocument anchor
   Anchor.setPosition 0 0 true anchor
   Anchor.detach anchor
-  
+
   position <- Document.indexToPosition 0 0 document
-  
+
   tokenIterator <- TokenIterator.create session 0 0
-  
+
   TokenIterator.stepForward tokenIterator
   TokenIterator.stepBackward tokenIterator
   TokenIterator.getCurrentToken tokenIterator
   TokenIterator.getCurrentTokenRow tokenIterator
   TokenIterator.getCurrentTokenColumn tokenIterator
-  
+
   BackgroundTokenizer.setDocument document backgroundTokenizer
   BackgroundTokenizer.fireUpdateEvent 0 0 backgroundTokenizer
   BackgroundTokenizer.start 0 backgroundTokenizer
   BackgroundTokenizer.stop backgroundTokenizer
   BackgroundTokenizer.getTokens 0 backgroundTokenizer
   BackgroundTokenizer.getState 0 backgroundTokenizer
-  
+
   Document.getValue document
   Document.createAnchor 0 0 document
   Document.getNewLineCharacter document
@@ -178,10 +182,10 @@ miscTests = do
   Document.replace range "" document
   Document.indexToPosition 0 0 document
   Document.positionToIndex position 0 document
-  
-  
+
+
   undoManager <- UndoManager.create
-  
+
   Session.findMatchingBracket position session
   Session.screenToDocumentColumn 0 0 session
   Session.highlight "" session
@@ -261,7 +265,7 @@ miscTests = do
   Session.documentToScreenColumn 0 0 session
   Session.documentToScreenRow 0 0 session
   Session.getScreenLength session
-  
+
   Editor.selectMoreLines 0 editor
   Editor.setKeyboardHandler "" editor
   Editor.getKeyboardHandler editor
@@ -369,7 +373,7 @@ miscTests = do
   Editor.undo editor
   Editor.redo editor
   Editor.destroy editor
-  
+
   Range.isEmpty range
   Range.isEqual range range
   Range.toString range
@@ -396,18 +400,18 @@ miscTests = do
   Range.collapseRows range
   Range.toScreenRange session range
   Range.fromPoints range range
-  
+
   ScrollBar.getWidth scrollBar
   ScrollBar.setHeight 0 scrollBar
   ScrollBar.setInnerHeight 0 scrollBar
   ScrollBar.setScrollTop 0 scrollBar
-  
+
   Search.find session search
   Search.findAll session search
   Search.replace "" "" search
-  
+
   selection <- Session.getSelection session
-  
+
   Selection.moveCursorWordLeft selection
   Selection.moveCursorWordRight selection
   Selection.fromOrientedRange range selection
@@ -453,7 +457,7 @@ miscTests = do
   Selection.moveCursorBy 0 0 selection
   Selection.moveCursorTo 0 0 Nothing selection
   Selection.moveCursorToScreen 0 0 true selection
-  
+
   UndoManager.undo Nothing undoManager
   UndoManager.redo true undoManager
   UndoManager.reset undoManager
