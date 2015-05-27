@@ -1,4 +1,4 @@
-module Ace.Range 
+module Ace.Range
   ( clipRows
   , clone
   , collapseRows
@@ -45,51 +45,51 @@ foreign import getStartRow
   \  return function() {\
   \    return value.startRow;\
   \  };\
-  \}" :: forall eff. Range -> Eff (ace :: EAce | eff) Number
+  \}" :: forall eff. Range -> Eff (ace :: ACE | eff) Number
 
 foreign import getStartColumn
   "function getStartColumn(value) {\
   \  return function() {\
   \    return value.startColumn;\
   \  };\
-  \}" :: forall eff. Range -> Eff (ace :: EAce | eff) Number
+  \}" :: forall eff. Range -> Eff (ace :: ACE | eff) Number
 
 foreign import getEndRow
   "function getEndRow(value) {\
   \  return function() {\
   \    return value.endRow;\
   \  };\
-  \}" :: forall eff. Range -> Eff (ace :: EAce | eff) Number
+  \}" :: forall eff. Range -> Eff (ace :: ACE | eff) Number
 
 foreign import getEndColumn
   "function getEndColumn(value) {\
   \  return function() {\
   \    return value.endColumn;\
   \  };\
-  \}" :: forall eff. Range -> Eff (ace :: EAce | eff) Number
+  \}" :: forall eff. Range -> Eff (ace :: ACE | eff) Number
 
 foreign import getStart
   "function getStart(value) {\
   \  return function() {\
   \    return value.start;\
   \  };\
-  \}" :: forall eff. Range -> Eff (ace :: EAce | eff) Position
+  \}" :: forall eff. Range -> Eff (ace :: ACE | eff) Position
 
 foreign import getEnd
   "function getEnd(value) {\
   \  return function() {\
   \    return value.end;\
   \  };\
-  \}" :: forall eff. Range -> Eff (ace :: EAce | eff) Position
+  \}" :: forall eff. Range -> Eff (ace :: ACE | eff) Position
 
 foreign import isEmptyImpl
   "function isEmptyImpl(self) {\
   \  return function() {\
   \    return self.isEmpty();\
   \  };\
-  \}" :: forall eff. Fn1 Range (Eff (ace :: EAce | eff) Boolean)
+  \}" :: forall eff. Fn1 Range (Eff (ace :: ACE | eff) Boolean)
 
-isEmpty :: forall eff. Range -> Eff (ace :: EAce | eff) Boolean
+isEmpty :: forall eff. Range -> Eff (ace :: ACE | eff) Boolean
 isEmpty self = runFn1 isEmptyImpl self
 
 foreign import isEqualImpl
@@ -97,9 +97,9 @@ foreign import isEqualImpl
   \  return function() {\
   \    return self.isEqual(range);\
   \  };\
-  \}" :: forall eff. Fn2 Range Range (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 Range Range (Eff (ace :: ACE | eff) Unit)
 
-isEqual :: forall eff. Range -> Range -> Eff (ace :: EAce | eff) Unit
+isEqual :: forall eff. Range -> Range -> Eff (ace :: ACE | eff) Unit
 isEqual range self = runFn2 isEqualImpl range self
 
 foreign import toStringImpl
@@ -107,9 +107,9 @@ foreign import toStringImpl
   \  return function() {\
   \    return self.toString();\
   \  };\
-  \}" :: forall eff. Fn1 Range (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Range (Eff (ace :: ACE | eff) Unit)
 
-toString :: forall eff. Range -> Eff (ace :: EAce | eff) Unit
+toString :: forall eff. Range -> Eff (ace :: ACE | eff) Unit
 toString self = runFn1 toStringImpl self
 
 foreign import containsImpl
@@ -117,9 +117,9 @@ foreign import containsImpl
   \  return function() {\
   \    return self.contains(row, column);\
   \  };\
-  \}" :: forall eff. Fn3 Number Number Range (Eff (ace :: EAce | eff) Boolean)
+  \}" :: forall eff. Fn3 Number Number Range (Eff (ace :: ACE | eff) Boolean)
 
-contains :: forall eff. Number -> Number -> Range -> Eff (ace :: EAce | eff) Boolean
+contains :: forall eff. Number -> Number -> Range -> Eff (ace :: ACE | eff) Boolean
 contains row column self = runFn3 containsImpl row column self
 
 foreign import compareRangeImpl
@@ -127,9 +127,9 @@ foreign import compareRangeImpl
   \  return function() {\
   \    return self.compareRange(range);\
   \  };\
-  \}" :: forall eff. Fn2 Range Range (Eff (ace :: EAce | eff) Number)
+  \}" :: forall eff. Fn2 Range Range (Eff (ace :: ACE | eff) Number)
 
-compareRange :: forall eff. Range -> Range -> Eff (ace :: EAce | eff) Number
+compareRange :: forall eff. Range -> Range -> Eff (ace :: ACE | eff) Number
 compareRange range self = runFn2 compareRangeImpl range self
 
 foreign import comparePointImpl
@@ -137,9 +137,9 @@ foreign import comparePointImpl
   \  return function() {\
   \    return self.comparePoint(p);\
   \  };\
-  \}" :: forall eff. Fn2 Range Range (Eff (ace :: EAce | eff) Number)
+  \}" :: forall eff. Fn2 Range Range (Eff (ace :: ACE | eff) Number)
 
-comparePoint :: forall eff. Range -> Range -> Eff (ace :: EAce | eff) Number
+comparePoint :: forall eff. Range -> Range -> Eff (ace :: ACE | eff) Number
 comparePoint p self = runFn2 comparePointImpl p self
 
 foreign import containsRangeImpl
@@ -147,9 +147,9 @@ foreign import containsRangeImpl
   \  return function() {\
   \    return self.containsRange(range);\
   \  };\
-  \}" :: forall eff. Fn2 Range Range (Eff (ace :: EAce | eff) Boolean)
+  \}" :: forall eff. Fn2 Range Range (Eff (ace :: ACE | eff) Boolean)
 
-containsRange :: forall eff. Range -> Range -> Eff (ace :: EAce | eff) Boolean
+containsRange :: forall eff. Range -> Range -> Eff (ace :: ACE | eff) Boolean
 containsRange range self = runFn2 containsRangeImpl range self
 
 foreign import intersectsImpl
@@ -157,9 +157,9 @@ foreign import intersectsImpl
   \  return function() {\
   \    return self.intersects(range);\
   \  };\
-  \}" :: forall eff. Fn2 Range Range (Eff (ace :: EAce | eff) Boolean)
+  \}" :: forall eff. Fn2 Range Range (Eff (ace :: ACE | eff) Boolean)
 
-intersects :: forall eff. Range -> Range -> Eff (ace :: EAce | eff) Boolean
+intersects :: forall eff. Range -> Range -> Eff (ace :: ACE | eff) Boolean
 intersects range self = runFn2 intersectsImpl range self
 
 foreign import isEndImpl
@@ -167,9 +167,9 @@ foreign import isEndImpl
   \  return function() {\
   \    return self.isEnd(row, column);\
   \  };\
-  \}" :: forall eff. Fn3 Number Number Range (Eff (ace :: EAce | eff) Boolean)
+  \}" :: forall eff. Fn3 Number Number Range (Eff (ace :: ACE | eff) Boolean)
 
-isEnd :: forall eff. Number -> Number -> Range -> Eff (ace :: EAce | eff) Boolean
+isEnd :: forall eff. Number -> Number -> Range -> Eff (ace :: ACE | eff) Boolean
 isEnd row column self = runFn3 isEndImpl row column self
 
 foreign import isStartImpl
@@ -177,9 +177,9 @@ foreign import isStartImpl
   \  return function() {\
   \    return self.isStart(row, column);\
   \  };\
-  \}" :: forall eff. Fn3 Number Number Range (Eff (ace :: EAce | eff) Boolean)
+  \}" :: forall eff. Fn3 Number Number Range (Eff (ace :: ACE | eff) Boolean)
 
-isStart :: forall eff. Number -> Number -> Range -> Eff (ace :: EAce | eff) Boolean
+isStart :: forall eff. Number -> Number -> Range -> Eff (ace :: ACE | eff) Boolean
 isStart row column self = runFn3 isStartImpl row column self
 
 foreign import setStartImpl
@@ -187,9 +187,9 @@ foreign import setStartImpl
   \  return function() {\
   \    return self.setStart(row, column);\
   \  };\
-  \}" :: forall eff. Fn3 Number Number Range (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn3 Number Number Range (Eff (ace :: ACE | eff) Unit)
 
-setStart :: forall eff. Number -> Number -> Range -> Eff (ace :: EAce | eff) Unit
+setStart :: forall eff. Number -> Number -> Range -> Eff (ace :: ACE | eff) Unit
 setStart row column self = runFn3 setStartImpl row column self
 
 foreign import setEndImpl
@@ -197,9 +197,9 @@ foreign import setEndImpl
   \  return function() {\
   \    return self.setEnd(row, column);\
   \  };\
-  \}" :: forall eff. Fn3 Number Number Range (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn3 Number Number Range (Eff (ace :: ACE | eff) Unit)
 
-setEnd :: forall eff. Number -> Number -> Range -> Eff (ace :: EAce | eff) Unit
+setEnd :: forall eff. Number -> Number -> Range -> Eff (ace :: ACE | eff) Unit
 setEnd row column self = runFn3 setEndImpl row column self
 
 foreign import insideImpl
@@ -207,9 +207,9 @@ foreign import insideImpl
   \  return function() {\
   \    return self.inside(row, column);\
   \  };\
-  \}" :: forall eff. Fn3 Number Number Range (Eff (ace :: EAce | eff) Boolean)
+  \}" :: forall eff. Fn3 Number Number Range (Eff (ace :: ACE | eff) Boolean)
 
-inside :: forall eff. Number -> Number -> Range -> Eff (ace :: EAce | eff) Boolean
+inside :: forall eff. Number -> Number -> Range -> Eff (ace :: ACE | eff) Boolean
 inside row column self = runFn3 insideImpl row column self
 
 foreign import insideStartImpl
@@ -217,9 +217,9 @@ foreign import insideStartImpl
   \  return function() {\
   \    return self.insideStart(row, column);\
   \  };\
-  \}" :: forall eff. Fn3 Number Number Range (Eff (ace :: EAce | eff) Boolean)
+  \}" :: forall eff. Fn3 Number Number Range (Eff (ace :: ACE | eff) Boolean)
 
-insideStart :: forall eff. Number -> Number -> Range -> Eff (ace :: EAce | eff) Boolean
+insideStart :: forall eff. Number -> Number -> Range -> Eff (ace :: ACE | eff) Boolean
 insideStart row column self = runFn3 insideStartImpl row column self
 
 foreign import insideEndImpl
@@ -227,9 +227,9 @@ foreign import insideEndImpl
   \  return function() {\
   \    return self.insideEnd(row, column);\
   \  };\
-  \}" :: forall eff. Fn3 Number Number Range (Eff (ace :: EAce | eff) Boolean)
+  \}" :: forall eff. Fn3 Number Number Range (Eff (ace :: ACE | eff) Boolean)
 
-insideEnd :: forall eff. Number -> Number -> Range -> Eff (ace :: EAce | eff) Boolean
+insideEnd :: forall eff. Number -> Number -> Range -> Eff (ace :: ACE | eff) Boolean
 insideEnd row column self = runFn3 insideEndImpl row column self
 
 foreign import compareImpl
@@ -237,9 +237,9 @@ foreign import compareImpl
   \  return function() {\
   \    return self.compare(row, column);\
   \  };\
-  \}" :: forall eff. Fn3 Number Number Range (Eff (ace :: EAce | eff) Number)
+  \}" :: forall eff. Fn3 Number Number Range (Eff (ace :: ACE | eff) Number)
 
-compare :: forall eff. Number -> Number -> Range -> Eff (ace :: EAce | eff) Number
+compare :: forall eff. Number -> Number -> Range -> Eff (ace :: ACE | eff) Number
 compare row column self = runFn3 compareImpl row column self
 
 foreign import compareStartImpl
@@ -247,9 +247,9 @@ foreign import compareStartImpl
   \  return function() {\
   \    return self.compareStart(row, column);\
   \  };\
-  \}" :: forall eff. Fn3 Number Number Range (Eff (ace :: EAce | eff) Number)
+  \}" :: forall eff. Fn3 Number Number Range (Eff (ace :: ACE | eff) Number)
 
-compareStart :: forall eff. Number -> Number -> Range -> Eff (ace :: EAce | eff) Number
+compareStart :: forall eff. Number -> Number -> Range -> Eff (ace :: ACE | eff) Number
 compareStart row column self = runFn3 compareStartImpl row column self
 
 foreign import compareEndImpl
@@ -257,9 +257,9 @@ foreign import compareEndImpl
   \  return function() {\
   \    return self.compareEnd(row, column);\
   \  };\
-  \}" :: forall eff. Fn3 Number Number Range (Eff (ace :: EAce | eff) Number)
+  \}" :: forall eff. Fn3 Number Number Range (Eff (ace :: ACE | eff) Number)
 
-compareEnd :: forall eff. Number -> Number -> Range -> Eff (ace :: EAce | eff) Number
+compareEnd :: forall eff. Number -> Number -> Range -> Eff (ace :: ACE | eff) Number
 compareEnd row column self = runFn3 compareEndImpl row column self
 
 foreign import compareInsideImpl
@@ -267,9 +267,9 @@ foreign import compareInsideImpl
   \  return function() {\
   \    return self.compareInside(row, column);\
   \  };\
-  \}" :: forall eff. Fn3 Number Number Range (Eff (ace :: EAce | eff) Number)
+  \}" :: forall eff. Fn3 Number Number Range (Eff (ace :: ACE | eff) Number)
 
-compareInside :: forall eff. Number -> Number -> Range -> Eff (ace :: EAce | eff) Number
+compareInside :: forall eff. Number -> Number -> Range -> Eff (ace :: ACE | eff) Number
 compareInside row column self = runFn3 compareInsideImpl row column self
 
 foreign import clipRowsImpl
@@ -277,9 +277,9 @@ foreign import clipRowsImpl
   \  return function() {\
   \    return self.clipRows(firstRow, lastRow);\
   \  };\
-  \}" :: forall eff. Fn3 Number Number Range (Eff (ace :: EAce | eff) Range)
+  \}" :: forall eff. Fn3 Number Number Range (Eff (ace :: ACE | eff) Range)
 
-clipRows :: forall eff. Number -> Number -> Range -> Eff (ace :: EAce | eff) Range
+clipRows :: forall eff. Number -> Number -> Range -> Eff (ace :: ACE | eff) Range
 clipRows firstRow lastRow self = runFn3 clipRowsImpl firstRow lastRow self
 
 foreign import extendImpl
@@ -287,9 +287,9 @@ foreign import extendImpl
   \  return function() {\
   \    return self.extend(row, column);\
   \  };\
-  \}" :: forall eff. Fn3 Number Number Range (Eff (ace :: EAce | eff) Range)
+  \}" :: forall eff. Fn3 Number Number Range (Eff (ace :: ACE | eff) Range)
 
-extend :: forall eff. Number -> Number -> Range -> Eff (ace :: EAce | eff) Range
+extend :: forall eff. Number -> Number -> Range -> Eff (ace :: ACE | eff) Range
 extend row column self = runFn3 extendImpl row column self
 
 foreign import isMultiLineImpl
@@ -297,9 +297,9 @@ foreign import isMultiLineImpl
   \  return function() {\
   \    return self.isMultiLine();\
   \  };\
-  \}" :: forall eff. Fn1 Range (Eff (ace :: EAce | eff) Boolean)
+  \}" :: forall eff. Fn1 Range (Eff (ace :: ACE | eff) Boolean)
 
-isMultiLine :: forall eff. Range -> Eff (ace :: EAce | eff) Boolean
+isMultiLine :: forall eff. Range -> Eff (ace :: ACE | eff) Boolean
 isMultiLine self = runFn1 isMultiLineImpl self
 
 foreign import cloneImpl
@@ -307,9 +307,9 @@ foreign import cloneImpl
   \  return function() {\
   \    return self.clone();\
   \  };\
-  \}" :: forall eff. Fn1 Range (Eff (ace :: EAce | eff) Range)
+  \}" :: forall eff. Fn1 Range (Eff (ace :: ACE | eff) Range)
 
-clone :: forall eff. Range -> Eff (ace :: EAce | eff) Range
+clone :: forall eff. Range -> Eff (ace :: ACE | eff) Range
 clone self = runFn1 cloneImpl self
 
 foreign import collapseRowsImpl
@@ -317,9 +317,9 @@ foreign import collapseRowsImpl
   \  return function() {\
   \    return self.collapseRows();\
   \  };\
-  \}" :: forall eff. Fn1 Range (Eff (ace :: EAce | eff) Range)
+  \}" :: forall eff. Fn1 Range (Eff (ace :: ACE | eff) Range)
 
-collapseRows :: forall eff. Range -> Eff (ace :: EAce | eff) Range
+collapseRows :: forall eff. Range -> Eff (ace :: ACE | eff) Range
 collapseRows self = runFn1 collapseRowsImpl self
 
 foreign import toScreenRangeImpl
@@ -327,9 +327,9 @@ foreign import toScreenRangeImpl
   \  return function() {\
   \    return self.toScreenRange(session);\
   \  };\
-  \}" :: forall eff. Fn2 EditSession Range (Eff (ace :: EAce | eff) Range)
+  \}" :: forall eff. Fn2 EditSession Range (Eff (ace :: ACE | eff) Range)
 
-toScreenRange :: forall eff. EditSession -> Range -> Eff (ace :: EAce | eff) Range
+toScreenRange :: forall eff. EditSession -> Range -> Eff (ace :: ACE | eff) Range
 toScreenRange session self = runFn2 toScreenRangeImpl session self
 
 foreign import fromPointsImpl
@@ -338,9 +338,9 @@ foreign import fromPointsImpl
   \    var Range = ace.require('ace/range').Range;\
   \    return Range.fromPoints(start, end);\
   \  };\
-  \}" :: forall eff. Fn2 Range Range (Eff (ace :: EAce | eff) Range)
+  \}" :: forall eff. Fn2 Range Range (Eff (ace :: ACE | eff) Range)
 
-fromPoints :: forall eff. Range -> Range -> Eff (ace :: EAce | eff) Range
+fromPoints :: forall eff. Range -> Range -> Eff (ace :: ACE | eff) Range
 fromPoints start end = runFn2 fromPointsImpl start end
 
 foreign import createImpl
@@ -349,7 +349,7 @@ foreign import createImpl
   \    var Range = ace.require('ace/range').Range;\
   \    return new Range(startRow, startColumn, endRow, endColumn);\
   \  };\
-  \}" :: forall eff. Fn4 Number Number Number Number (Eff (ace :: EAce | eff) Range)
+  \}" :: forall eff. Fn4 Number Number Number Number (Eff (ace :: ACE | eff) Range)
 
-create :: forall eff. Number -> Number -> Number -> Number -> Eff (ace :: EAce | eff) Range
+create :: forall eff. Number -> Number -> Number -> Number -> Eff (ace :: ACE | eff) Range
 create startRow startColumn endRow endColumn = runFn4 createImpl startRow startColumn endRow endColumn

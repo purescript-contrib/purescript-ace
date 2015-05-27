@@ -20,9 +20,9 @@ foreign import setImpl
   \  return function() {\
   \    return self.set(options);\
   \  };\
-  \}" :: forall eff. Fn2 SearchOptions Search (Eff (ace :: EAce | eff) Search)
+  \}" :: forall eff. Fn2 SearchOptions Search (Eff (ace :: ACE | eff) Search)
 
-set :: forall eff. SearchOptions -> Search -> Eff (ace :: EAce | eff) Search
+set :: forall eff. SearchOptions -> Search -> Eff (ace :: ACE | eff) Search
 set options self = runFn2 setImpl options self
 
 foreign import findImpl
@@ -30,9 +30,9 @@ foreign import findImpl
   \  return function() {\
   \    return self.find(session);\
   \  };\
-  \}" :: forall eff. Fn2 EditSession Search (Eff (ace :: EAce | eff) Range)
+  \}" :: forall eff. Fn2 EditSession Search (Eff (ace :: ACE | eff) Range)
 
-find :: forall eff. EditSession -> Search -> Eff (ace :: EAce | eff) Range
+find :: forall eff. EditSession -> Search -> Eff (ace :: ACE | eff) Range
 find session self = runFn2 findImpl session self
 
 foreign import findAllImpl
@@ -40,9 +40,9 @@ foreign import findAllImpl
   \  return function() {\
   \    return self.findAll(session);\
   \  };\
-  \}" :: forall eff. Fn2 EditSession Search (Eff (ace :: EAce | eff) [Range])
+  \}" :: forall eff. Fn2 EditSession Search (Eff (ace :: ACE | eff) [Range])
 
-findAll :: forall eff. EditSession -> Search -> Eff (ace :: EAce | eff) [Range]
+findAll :: forall eff. EditSession -> Search -> Eff (ace :: ACE | eff) [Range]
 findAll session self = runFn2 findAllImpl session self
 
 foreign import replaceImpl
@@ -50,9 +50,9 @@ foreign import replaceImpl
   \  return function() {\
   \    return self.replace(input, replacement);\
   \  };\
-  \}" :: forall eff. Fn3 String String Search (Eff (ace :: EAce | eff) String)
+  \}" :: forall eff. Fn3 String String Search (Eff (ace :: ACE | eff) String)
 
-replace :: forall eff. String -> String -> Search -> Eff (ace :: EAce | eff) String
+replace :: forall eff. String -> String -> Search -> Eff (ace :: ACE | eff) String
 replace input replacement self = runFn3 replaceImpl input replacement self
 
 foreign import createImpl
@@ -61,7 +61,7 @@ foreign import createImpl
   \    var Search = ace.require('ace/search').Search;\
   \    return new Search();\
   \  };\
-  \}" :: forall eff. Fn0 (Eff (ace :: EAce | eff) Search)
+  \}" :: forall eff. Fn0 (Eff (ace :: ACE | eff) Search)
 
-create :: forall eff. Eff (ace :: EAce | eff) Search
-create = runFn0 createImpl 
+create :: forall eff. Eff (ace :: ACE | eff) Search
+create = runFn0 createImpl

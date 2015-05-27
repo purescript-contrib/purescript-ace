@@ -1,4 +1,4 @@
-module Ace.Document 
+module Ace.Document
   ( onChange
   , setValue
   , getValue
@@ -44,9 +44,9 @@ foreign import onChangeImpl
   \      fn(e.data)();\
   \    });\
   \  };\
-  \}" :: forall eff a. Fn2 Document (Foreign -> Eff (ace :: EAce | eff) a) (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff a. Fn2 Document (Foreign -> Eff (ace :: ACE | eff) a) (Eff (ace :: ACE | eff) Unit)
 
-onChange :: forall eff a. Document -> (DocumentEvent -> Eff (ace :: EAce | eff) a) -> Eff (ace :: EAce | eff) Unit
+onChange :: forall eff a. Document -> (DocumentEvent -> Eff (ace :: ACE | eff) a) -> Eff (ace :: ACE | eff) Unit
 onChange self fn = runFn2 onChangeImpl self (fn <<< readResult <<< read)
   where
   readResult :: forall a. F a -> a
@@ -57,9 +57,9 @@ foreign import setValueImpl
   \  return function() {\
   \    return self.setValue(text);\
   \  };\
-  \}" :: forall eff. Fn2 String Document (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 String Document (Eff (ace :: ACE | eff) Unit)
 
-setValue :: forall eff. String -> Document -> Eff (ace :: EAce | eff) Unit
+setValue :: forall eff. String -> Document -> Eff (ace :: ACE | eff) Unit
 setValue text self = runFn2 setValueImpl text self
 
 foreign import getValueImpl
@@ -67,9 +67,9 @@ foreign import getValueImpl
   \  return function() {\
   \    return self.getValue();\
   \  };\
-  \}" :: forall eff. Fn1 Document (Eff (ace :: EAce | eff) String)
+  \}" :: forall eff. Fn1 Document (Eff (ace :: ACE | eff) String)
 
-getValue :: forall eff. Document -> Eff (ace :: EAce | eff) String
+getValue :: forall eff. Document -> Eff (ace :: ACE | eff) String
 getValue self = runFn1 getValueImpl self
 
 foreign import createAnchorImpl
@@ -77,9 +77,9 @@ foreign import createAnchorImpl
   \  return function() {\
   \    return self.createAnchor(row, column);\
   \  };\
-  \}" :: forall eff. Fn3 Number Number Document (Eff (ace :: EAce | eff) Anchor)
+  \}" :: forall eff. Fn3 Number Number Document (Eff (ace :: ACE | eff) Anchor)
 
-createAnchor :: forall eff. Number -> Number -> Document -> Eff (ace :: EAce | eff) Anchor
+createAnchor :: forall eff. Number -> Number -> Document -> Eff (ace :: ACE | eff) Anchor
 createAnchor row column self = runFn3 createAnchorImpl row column self
 
 foreign import getNewLineCharacterImpl
@@ -87,9 +87,9 @@ foreign import getNewLineCharacterImpl
   \  return function() {\
   \    return self.getNewLineCharacter();\
   \  };\
-  \}" :: forall eff. Fn1 Document (Eff (ace :: EAce | eff) String)
+  \}" :: forall eff. Fn1 Document (Eff (ace :: ACE | eff) String)
 
-getNewLineCharacter :: forall eff. Document -> Eff (ace :: EAce | eff) String
+getNewLineCharacter :: forall eff. Document -> Eff (ace :: ACE | eff) String
 getNewLineCharacter self = runFn1 getNewLineCharacterImpl self
 
 foreign import setNewLineModeImpl
@@ -97,9 +97,9 @@ foreign import setNewLineModeImpl
   \  return function() {\
   \    return self.setNewLineMode(newLineMode);\
   \  };\
-  \}" :: forall eff. Fn2 String Document (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 String Document (Eff (ace :: ACE | eff) Unit)
 
-setNewLineMode :: forall eff. NewlineMode -> Document -> Eff (ace :: EAce | eff) Unit
+setNewLineMode :: forall eff. NewlineMode -> Document -> Eff (ace :: ACE | eff) Unit
 setNewLineMode newLineMode self = runFn2 setNewLineModeImpl (showNewlineMode newLineMode) self
 
 foreign import getNewLineModeImpl
@@ -107,9 +107,9 @@ foreign import getNewLineModeImpl
   \  return function() {\
   \    return self.getNewLineMode();\
   \  };\
-  \}" :: forall eff. Fn1 Document (Eff (ace :: EAce | eff) String)
+  \}" :: forall eff. Fn1 Document (Eff (ace :: ACE | eff) String)
 
-getNewLineMode :: forall eff. Document -> Eff (ace :: EAce | eff) NewlineMode
+getNewLineMode :: forall eff. Document -> Eff (ace :: ACE | eff) NewlineMode
 getNewLineMode self = readNewlineMode <$> runFn1 getNewLineModeImpl self
 
 foreign import isNewLineImpl
@@ -117,9 +117,9 @@ foreign import isNewLineImpl
   \  return function() {\
   \    return self.isNewLine(text);\
   \  };\
-  \}" :: forall eff. Fn2 String Document (Eff (ace :: EAce | eff) Boolean)
+  \}" :: forall eff. Fn2 String Document (Eff (ace :: ACE | eff) Boolean)
 
-isNewLine :: forall eff. String -> Document -> Eff (ace :: EAce | eff) Boolean
+isNewLine :: forall eff. String -> Document -> Eff (ace :: ACE | eff) Boolean
 isNewLine text self = runFn2 isNewLineImpl text self
 
 foreign import getLineImpl
@@ -127,9 +127,9 @@ foreign import getLineImpl
   \  return function() {\
   \    return self.getLine(row);\
   \  };\
-  \}" :: forall eff. Fn2 Number Document (Eff (ace :: EAce | eff) String)
+  \}" :: forall eff. Fn2 Number Document (Eff (ace :: ACE | eff) String)
 
-getLine :: forall eff. Number -> Document -> Eff (ace :: EAce | eff) String
+getLine :: forall eff. Number -> Document -> Eff (ace :: ACE | eff) String
 getLine row self = runFn2 getLineImpl row self
 
 foreign import getLinesImpl
@@ -137,9 +137,9 @@ foreign import getLinesImpl
   \  return function() {\
   \    return self.getLines(firstRow, lastRow);\
   \  };\
-  \}" :: forall eff. Fn3 Number Number Document (Eff (ace :: EAce | eff) [String])
+  \}" :: forall eff. Fn3 Number Number Document (Eff (ace :: ACE | eff) [String])
 
-getLines :: forall eff. Number -> Number -> Document -> Eff (ace :: EAce | eff) [String]
+getLines :: forall eff. Number -> Number -> Document -> Eff (ace :: ACE | eff) [String]
 getLines firstRow lastRow self = runFn3 getLinesImpl firstRow lastRow self
 
 foreign import getAllLinesImpl
@@ -147,9 +147,9 @@ foreign import getAllLinesImpl
   \  return function() {\
   \    return self.getAllLines();\
   \  };\
-  \}" :: forall eff. Fn1 Document (Eff (ace :: EAce | eff) [String])
+  \}" :: forall eff. Fn1 Document (Eff (ace :: ACE | eff) [String])
 
-getAllLines :: forall eff. Document -> Eff (ace :: EAce | eff) [String]
+getAllLines :: forall eff. Document -> Eff (ace :: ACE | eff) [String]
 getAllLines self = runFn1 getAllLinesImpl self
 
 foreign import getLengthImpl
@@ -157,9 +157,9 @@ foreign import getLengthImpl
   \  return function() {\
   \    return self.getLength();\
   \  };\
-  \}" :: forall eff. Fn1 Document (Eff (ace :: EAce | eff) Number)
+  \}" :: forall eff. Fn1 Document (Eff (ace :: ACE | eff) Number)
 
-getLength :: forall eff. Document -> Eff (ace :: EAce | eff) Number
+getLength :: forall eff. Document -> Eff (ace :: ACE | eff) Number
 getLength self = runFn1 getLengthImpl self
 
 foreign import getTextRangeImpl
@@ -167,9 +167,9 @@ foreign import getTextRangeImpl
   \  return function() {\
   \    return self.getTextRange(range);\
   \  };\
-  \}" :: forall eff. Fn2 Range Document (Eff (ace :: EAce | eff) String)
+  \}" :: forall eff. Fn2 Range Document (Eff (ace :: ACE | eff) String)
 
-getTextRange :: forall eff. Range -> Document -> Eff (ace :: EAce | eff) String
+getTextRange :: forall eff. Range -> Document -> Eff (ace :: ACE | eff) String
 getTextRange range self = runFn2 getTextRangeImpl range self
 
 foreign import insertImpl
@@ -177,9 +177,9 @@ foreign import insertImpl
   \  return function() {\
   \    return self.insert(position, text);\
   \  };\
-  \}" :: forall eff. Fn3 Position String Document (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn3 Position String Document (Eff (ace :: ACE | eff) Unit)
 
-insert :: forall eff. Position -> String -> Document -> Eff (ace :: EAce | eff) Unit
+insert :: forall eff. Position -> String -> Document -> Eff (ace :: ACE | eff) Unit
 insert position text self = runFn3 insertImpl position text self
 
 foreign import insertLinesImpl
@@ -187,9 +187,9 @@ foreign import insertLinesImpl
   \  return function() {\
   \    return self.insertLines(row, lines);\
   \  };\
-  \}" :: forall eff. Fn3 Number [String] Document (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn3 Number [String] Document (Eff (ace :: ACE | eff) Unit)
 
-insertLines :: forall eff. Number -> [String] -> Document -> Eff (ace :: EAce | eff) Unit
+insertLines :: forall eff. Number -> [String] -> Document -> Eff (ace :: ACE | eff) Unit
 insertLines row lines self = runFn3 insertLinesImpl row lines self
 
 foreign import insertNewLineImpl
@@ -197,9 +197,9 @@ foreign import insertNewLineImpl
   \  return function() {\
   \    return self.insertNewLine(position);\
   \  };\
-  \}" :: forall eff. Fn2 Position Document (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 Position Document (Eff (ace :: ACE | eff) Unit)
 
-insertNewLine :: forall eff. Position -> Document -> Eff (ace :: EAce | eff) Unit
+insertNewLine :: forall eff. Position -> Document -> Eff (ace :: ACE | eff) Unit
 insertNewLine position self = runFn2 insertNewLineImpl position self
 
 foreign import insertInLineImpl
@@ -207,9 +207,9 @@ foreign import insertInLineImpl
   \  return function() {\
   \    return self.insertInLine(position, text);\
   \  };\
-  \}" :: forall eff. Fn3 Position String Document (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn3 Position String Document (Eff (ace :: ACE | eff) Unit)
 
-insertInLine :: forall eff. Position -> String -> Document -> Eff (ace :: EAce | eff) Unit
+insertInLine :: forall eff. Position -> String -> Document -> Eff (ace :: ACE | eff) Unit
 insertInLine position text self = runFn3 insertInLineImpl position text self
 
 foreign import removeImpl
@@ -217,9 +217,9 @@ foreign import removeImpl
   \  return function() {\
   \    return self.remove(range);\
   \  };\
-  \}" :: forall eff. Fn2 Range Document (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 Range Document (Eff (ace :: ACE | eff) Unit)
 
-remove :: forall eff. Range -> Document -> Eff (ace :: EAce | eff) Unit
+remove :: forall eff. Range -> Document -> Eff (ace :: ACE | eff) Unit
 remove range self = runFn2 removeImpl range self
 
 foreign import removeInLineImpl
@@ -227,9 +227,9 @@ foreign import removeInLineImpl
   \  return function() {\
   \    return self.removeInLine(row, startColumn, endColumn);\
   \  };\
-  \}" :: forall eff. Fn4 Number Number Number Document (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn4 Number Number Number Document (Eff (ace :: ACE | eff) Unit)
 
-removeInLine :: forall eff. Number -> Number -> Number -> Document -> Eff (ace :: EAce | eff) Unit
+removeInLine :: forall eff. Number -> Number -> Number -> Document -> Eff (ace :: ACE | eff) Unit
 removeInLine row startColumn endColumn self = runFn4 removeInLineImpl row startColumn endColumn self
 
 foreign import removeLinesImpl
@@ -237,9 +237,9 @@ foreign import removeLinesImpl
   \  return function() {\
   \    return self.removeLines(firstRow, lastRow);\
   \  };\
-  \}" :: forall eff. Fn3 Number Number Document (Eff (ace :: EAce | eff) [String])
+  \}" :: forall eff. Fn3 Number Number Document (Eff (ace :: ACE | eff) [String])
 
-removeLines :: forall eff. Number -> Number -> Document -> Eff (ace :: EAce | eff) [String]
+removeLines :: forall eff. Number -> Number -> Document -> Eff (ace :: ACE | eff) [String]
 removeLines firstRow lastRow self = runFn3 removeLinesImpl firstRow lastRow self
 
 foreign import removeNewLineImpl
@@ -247,9 +247,9 @@ foreign import removeNewLineImpl
   \  return function() {\
   \    return self.removeNewLine(row);\
   \  };\
-  \}" :: forall eff. Fn2 Number Document (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 Number Document (Eff (ace :: ACE | eff) Unit)
 
-removeNewLine :: forall eff. Number -> Document -> Eff (ace :: EAce | eff) Unit
+removeNewLine :: forall eff. Number -> Document -> Eff (ace :: ACE | eff) Unit
 removeNewLine row self = runFn2 removeNewLineImpl row self
 
 foreign import replaceImpl
@@ -257,9 +257,9 @@ foreign import replaceImpl
   \  return function() {\
   \    return self.replace(range, text);\
   \  };\
-  \}" :: forall eff. Fn3 Range String Document (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn3 Range String Document (Eff (ace :: ACE | eff) Unit)
 
-replace :: forall eff. Range -> String -> Document -> Eff (ace :: EAce | eff) Unit
+replace :: forall eff. Range -> String -> Document -> Eff (ace :: ACE | eff) Unit
 replace range text self = runFn3 replaceImpl range text self
 
 foreign import indexToPositionImpl
@@ -267,9 +267,9 @@ foreign import indexToPositionImpl
   \  return function() {\
   \    return self.indexToPosition(index, startRow);\
   \  };\
-  \}" :: forall eff. Fn3 Number Number Document (Eff (ace :: EAce | eff) Position)
+  \}" :: forall eff. Fn3 Number Number Document (Eff (ace :: ACE | eff) Position)
 
-indexToPosition :: forall eff. Number -> Number -> Document -> Eff (ace :: EAce | eff) Position
+indexToPosition :: forall eff. Number -> Number -> Document -> Eff (ace :: ACE | eff) Position
 indexToPosition index startRow self = runFn3 indexToPositionImpl index startRow self
 
 foreign import positionToIndexImpl
@@ -277,9 +277,9 @@ foreign import positionToIndexImpl
   \  return function() {\
   \    return self.positionToIndex(pos, startRow);\
   \  };\
-  \}" :: forall eff. Fn3 Position Number Document (Eff (ace :: EAce | eff) Number)
+  \}" :: forall eff. Fn3 Position Number Document (Eff (ace :: ACE | eff) Number)
 
-positionToIndex :: forall eff. Position -> Number -> Document -> Eff (ace :: EAce | eff) Number
+positionToIndex :: forall eff. Position -> Number -> Document -> Eff (ace :: ACE | eff) Number
 positionToIndex pos startRow self = runFn3 positionToIndexImpl pos startRow self
 
 foreign import createImpl
@@ -288,9 +288,9 @@ foreign import createImpl
   \    var Document = ace.require('ace/document').Document;\
   \    return new Document(text);\
   \  };\
-  \}" :: forall eff. Fn1 (Nullable String) (Eff (ace :: EAce | eff) Document)
+  \}" :: forall eff. Fn1 (Nullable String) (Eff (ace :: ACE | eff) Document)
 
-create :: forall eff. Maybe String -> Eff (ace :: EAce | eff) Document
+create :: forall eff. Maybe String -> Eff (ace :: ACE | eff) Document
 create text = runFn1 createImpl (toNullable text)
 
 foreign import createFromLinesImpl
@@ -299,7 +299,7 @@ foreign import createFromLinesImpl
   \    var Document = ace.require('ace/document').Document;\
   \    return new Document(text);\
   \  };\
-  \}" :: forall eff. Fn1 [String] (Eff (ace :: EAce | eff) Document)
+  \}" :: forall eff. Fn1 [String] (Eff (ace :: ACE | eff) Document)
 
-createFromLines :: forall eff. [String] -> Eff (ace :: EAce | eff) Document
+createFromLines :: forall eff. [String] -> Eff (ace :: ACE | eff) Document
 createFromLines text = runFn1 createFromLinesImpl text

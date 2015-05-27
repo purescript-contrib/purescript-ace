@@ -1,4 +1,4 @@
-module Ace.EditSession 
+module Ace.EditSession
   ( DynamicMarker()
   , addDynamicMarker
   , addFold
@@ -124,7 +124,7 @@ foreign import getBackgroundTokenizer
   \  return function() {\
   \    return value.bgTokenizer;\
   \  };\
-  \}" :: forall eff. EditSession -> Eff (ace :: EAce | eff) BackgroundTokenizer
+  \}" :: forall eff. EditSession -> Eff (ace :: ACE | eff) BackgroundTokenizer
 
 foreign import onImpl
   "function onImpl(event, fn, self) {\
@@ -133,48 +133,48 @@ foreign import onImpl
   \      fn(e)();\
   \    });\
   \  };\
-  \}" :: forall ev eff a. Fn3 String (ev -> Eff (ace :: EAce | eff) a) EditSession (Eff (ace :: EAce | eff) Unit)                                              
-  
-onChange :: forall eff a. EditSession -> Eff (ace :: EAce | eff) a -> Eff (ace :: EAce | eff) Unit
+  \}" :: forall ev eff a. Fn3 String (ev -> Eff (ace :: ACE | eff) a) EditSession (Eff (ace :: ACE | eff) Unit)
+
+onChange :: forall eff a. EditSession -> Eff (ace :: ACE | eff) a -> Eff (ace :: ACE | eff) Unit
 onChange self fn = runFn3 onImpl "change" (\_ -> fn) self
 
-onChangeAnnotation :: forall eff a. EditSession -> Eff (ace :: EAce | eff) a -> Eff (ace :: EAce | eff) Unit
+onChangeAnnotation :: forall eff a. EditSession -> Eff (ace :: ACE | eff) a -> Eff (ace :: ACE | eff) Unit
 onChangeAnnotation self fn = runFn3 onImpl "changeAnnotation" (\_ -> fn) self
 
-onChangeBackMarker :: forall eff a. EditSession -> Eff (ace :: EAce | eff) a -> Eff (ace :: EAce | eff) Unit
+onChangeBackMarker :: forall eff a. EditSession -> Eff (ace :: ACE | eff) a -> Eff (ace :: ACE | eff) Unit
 onChangeBackMarker self fn = runFn3 onImpl "changeBackMarker" (\_ -> fn) self
 
-onChangeBreakpoint :: forall eff a. EditSession -> Eff (ace :: EAce | eff) a -> Eff (ace :: EAce | eff) Unit
+onChangeBreakpoint :: forall eff a. EditSession -> Eff (ace :: ACE | eff) a -> Eff (ace :: ACE | eff) Unit
 onChangeBreakpoint self fn = runFn3 onImpl "changeBreakpoint" (\_ -> fn) self
 
-onChangeFold :: forall eff a. EditSession -> Eff (ace :: EAce | eff) a -> Eff (ace :: EAce | eff) Unit
+onChangeFold :: forall eff a. EditSession -> Eff (ace :: ACE | eff) a -> Eff (ace :: ACE | eff) Unit
 onChangeFold self fn = runFn3 onImpl "changeFold" (\_ -> fn) self
 
-onChangeFrontMarker :: forall eff a. EditSession -> Eff (ace :: EAce | eff) a -> Eff (ace :: EAce | eff) Unit
+onChangeFrontMarker :: forall eff a. EditSession -> Eff (ace :: ACE | eff) a -> Eff (ace :: ACE | eff) Unit
 onChangeFrontMarker self fn = runFn3 onImpl "changeFrontMarker" (\_ -> fn) self
 
-onChangeMode :: forall eff a. EditSession -> Eff (ace :: EAce | eff) a -> Eff (ace :: EAce | eff) Unit
+onChangeMode :: forall eff a. EditSession -> Eff (ace :: ACE | eff) a -> Eff (ace :: ACE | eff) Unit
 onChangeMode self fn = runFn3 onImpl "changeMode" (\_ -> fn) self
 
-onChangeOverwrite :: forall eff a. EditSession -> Eff (ace :: EAce | eff) a -> Eff (ace :: EAce | eff) Unit
+onChangeOverwrite :: forall eff a. EditSession -> Eff (ace :: ACE | eff) a -> Eff (ace :: ACE | eff) Unit
 onChangeOverwrite self fn = runFn3 onImpl "changeOverwrite" (\_ -> fn) self
 
-onChangeScrollLeft :: forall eff a. EditSession -> (Number -> Eff (ace :: EAce | eff) a) -> Eff (ace :: EAce | eff) Unit
+onChangeScrollLeft :: forall eff a. EditSession -> (Number -> Eff (ace :: ACE | eff) a) -> Eff (ace :: ACE | eff) Unit
 onChangeScrollLeft self fn = runFn3 onImpl "changeScrollLeft" fn self
 
-onChangeScrollTop :: forall eff a. EditSession -> (Number -> Eff (ace :: EAce | eff) a) -> Eff (ace :: EAce | eff) Unit
+onChangeScrollTop :: forall eff a. EditSession -> (Number -> Eff (ace :: ACE | eff) a) -> Eff (ace :: ACE | eff) Unit
 onChangeScrollTop self fn = runFn3 onImpl "changeScrollTop" fn self
 
-onChangeTabSize :: forall eff a. EditSession -> Eff (ace :: EAce | eff) a -> Eff (ace :: EAce | eff) Unit
+onChangeTabSize :: forall eff a. EditSession -> Eff (ace :: ACE | eff) a -> Eff (ace :: ACE | eff) Unit
 onChangeTabSize self fn = runFn3 onImpl "changeTabSize" (\_ -> fn) self
 
-onChangeWrapLimit :: forall eff a. EditSession -> Eff (ace :: EAce | eff) a -> Eff (ace :: EAce | eff) Unit
+onChangeWrapLimit :: forall eff a. EditSession -> Eff (ace :: ACE | eff) a -> Eff (ace :: ACE | eff) Unit
 onChangeWrapLimit self fn = runFn3 onImpl "changeWrapLimit" (\_ -> fn) self
 
-onChangeWrapMode :: forall eff a. EditSession -> Eff (ace :: EAce | eff) a -> Eff (ace :: EAce | eff) Unit
+onChangeWrapMode :: forall eff a. EditSession -> Eff (ace :: ACE | eff) a -> Eff (ace :: ACE | eff) Unit
 onChangeWrapMode self fn = runFn3 onImpl "changeWrapMode" (\_ -> fn) self
 
-onTokenizerUpdate :: forall eff a. EditSession -> Eff (ace :: EAce | eff) a -> Eff (ace :: EAce | eff) Unit
+onTokenizerUpdate :: forall eff a. EditSession -> Eff (ace :: ACE | eff) a -> Eff (ace :: ACE | eff) Unit
 onTokenizerUpdate self fn = runFn3 onImpl "tokenizerUpdate" (\_ -> fn) self
 
 foreign import findMatchingBracketImpl
@@ -182,9 +182,9 @@ foreign import findMatchingBracketImpl
   \  return function() {\
   \    return self.findMatchingBracket(position);\
   \  };\
-  \}" :: forall eff. Fn2 Position EditSession (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 Position EditSession (Eff (ace :: ACE | eff) Unit)
 
-findMatchingBracket :: forall eff. Position -> EditSession -> Eff (ace :: EAce | eff) Unit
+findMatchingBracket :: forall eff. Position -> EditSession -> Eff (ace :: ACE | eff) Unit
 findMatchingBracket position self = runFn2 findMatchingBracketImpl position self
 
 foreign import addFoldImpl
@@ -192,9 +192,9 @@ foreign import addFoldImpl
   \  return function() {\
   \    return self.addFold(text, range);\
   \  };\
-  \}" :: forall eff. Fn3 String Range EditSession (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn3 String Range EditSession (Eff (ace :: ACE | eff) Unit)
 
-addFold :: forall eff. String -> Range -> EditSession -> Eff (ace :: EAce | eff) Unit
+addFold :: forall eff. String -> Range -> EditSession -> Eff (ace :: ACE | eff) Unit
 addFold text range self = runFn3 addFoldImpl text range self
 
 foreign import screenToDocumentColumnImpl
@@ -202,9 +202,9 @@ foreign import screenToDocumentColumnImpl
   \  return function() {\
   \    return self.screenToDocumentColumn(row, column);\
   \  };\
-  \}" :: forall eff. Fn3 Number Number EditSession (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn3 Number Number EditSession (Eff (ace :: ACE | eff) Unit)
 
-screenToDocumentColumn :: forall eff. Number -> Number -> EditSession -> Eff (ace :: EAce | eff) Unit
+screenToDocumentColumn :: forall eff. Number -> Number -> EditSession -> Eff (ace :: ACE | eff) Unit
 screenToDocumentColumn row column self = runFn3 screenToDocumentColumnImpl row column self
 
 foreign import highlightImpl
@@ -212,9 +212,9 @@ foreign import highlightImpl
   \  return function() {\
   \    return self.highlight(text);\
   \  };\
-  \}" :: forall eff. Fn2 String EditSession (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 String EditSession (Eff (ace :: ACE | eff) Unit)
 
-highlight :: forall eff. String -> EditSession -> Eff (ace :: EAce | eff) Unit
+highlight :: forall eff. String -> EditSession -> Eff (ace :: ACE | eff) Unit
 highlight text self = runFn2 highlightImpl text self
 
 foreign import setDocumentImpl
@@ -222,9 +222,9 @@ foreign import setDocumentImpl
   \  return function() {\
   \    return self.setDocument(doc);\
   \  };\
-  \}" :: forall eff. Fn2 Document EditSession (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 Document EditSession (Eff (ace :: ACE | eff) Unit)
 
-setDocument :: forall eff. Document -> EditSession -> Eff (ace :: EAce | eff) Unit
+setDocument :: forall eff. Document -> EditSession -> Eff (ace :: ACE | eff) Unit
 setDocument doc self = runFn2 setDocumentImpl doc self
 
 foreign import getDocumentImpl
@@ -232,9 +232,9 @@ foreign import getDocumentImpl
   \  return function() {\
   \    return self.getDocument();\
   \  };\
-  \}" :: forall eff. Fn1 EditSession (Eff (ace :: EAce | eff) Document)
+  \}" :: forall eff. Fn1 EditSession (Eff (ace :: ACE | eff) Document)
 
-getDocument :: forall eff. EditSession -> Eff (ace :: EAce | eff) Document
+getDocument :: forall eff. EditSession -> Eff (ace :: ACE | eff) Document
 getDocument self = runFn1 getDocumentImpl self
 
 foreign import resetRowCacheImpl
@@ -242,9 +242,9 @@ foreign import resetRowCacheImpl
   \  return function() {\
   \    return self.$resetRowCache(row);\
   \  };\
-  \}" :: forall eff. Fn2 Number EditSession (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 Number EditSession (Eff (ace :: ACE | eff) Unit)
 
-resetRowCache :: forall eff. Number -> EditSession -> Eff (ace :: EAce | eff) Unit
+resetRowCache :: forall eff. Number -> EditSession -> Eff (ace :: ACE | eff) Unit
 resetRowCache row self = runFn2 resetRowCacheImpl row self
 
 foreign import setValueImpl
@@ -252,9 +252,9 @@ foreign import setValueImpl
   \  return function() {\
   \    return self.setValue(text);\
   \  };\
-  \}" :: forall eff. Fn2 String EditSession (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 String EditSession (Eff (ace :: ACE | eff) Unit)
 
-setValue :: forall eff. String -> EditSession -> Eff (ace :: EAce | eff) Unit
+setValue :: forall eff. String -> EditSession -> Eff (ace :: ACE | eff) Unit
 setValue text self = runFn2 setValueImpl text self
 
 foreign import setModeImpl
@@ -262,9 +262,9 @@ foreign import setModeImpl
   \  return function() {\
   \    return self.setMode(mode);\
   \  };\
-  \}" :: forall eff. Fn2 String EditSession (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 String EditSession (Eff (ace :: ACE | eff) Unit)
 
-setMode :: forall eff. String -> EditSession -> Eff (ace :: EAce | eff) Unit
+setMode :: forall eff. String -> EditSession -> Eff (ace :: ACE | eff) Unit
 setMode mode self = runFn2 setModeImpl mode self
 
 foreign import getValueImpl
@@ -272,9 +272,9 @@ foreign import getValueImpl
   \  return function() {\
   \    return self.getValue();\
   \  };\
-  \}" :: forall eff. Fn1 EditSession (Eff (ace :: EAce | eff) String)
+  \}" :: forall eff. Fn1 EditSession (Eff (ace :: ACE | eff) String)
 
-getValue :: forall eff. EditSession -> Eff (ace :: EAce | eff) String
+getValue :: forall eff. EditSession -> Eff (ace :: ACE | eff) String
 getValue self = runFn1 getValueImpl self
 
 foreign import getSelectionImpl
@@ -282,9 +282,9 @@ foreign import getSelectionImpl
   \  return function() {\
   \    return self.getSelection();\
   \  };\
-  \}" :: forall eff. Fn1 EditSession (Eff (ace :: EAce | eff) Selection)
+  \}" :: forall eff. Fn1 EditSession (Eff (ace :: ACE | eff) Selection)
 
-getSelection :: forall eff. EditSession -> Eff (ace :: EAce | eff) Selection
+getSelection :: forall eff. EditSession -> Eff (ace :: ACE | eff) Selection
 getSelection self = runFn1 getSelectionImpl self
 
 foreign import getStateImpl
@@ -292,9 +292,9 @@ foreign import getStateImpl
   \  return function() {\
   \    return self.getState(row);\
   \  };\
-  \}" :: forall eff. Fn2 Number EditSession (Eff (ace :: EAce | eff) String)
+  \}" :: forall eff. Fn2 Number EditSession (Eff (ace :: ACE | eff) String)
 
-getState :: forall eff. Number -> EditSession -> Eff (ace :: EAce | eff) String
+getState :: forall eff. Number -> EditSession -> Eff (ace :: ACE | eff) String
 getState row self = runFn2 getStateImpl row self
 
 foreign import getTokensImpl
@@ -302,9 +302,9 @@ foreign import getTokensImpl
   \  return function() {\
   \    return self.getTokens(row);\
   \  };\
-  \}" :: forall eff. Fn2 Number EditSession (Eff (ace :: EAce | eff) [TokenInfo])
+  \}" :: forall eff. Fn2 Number EditSession (Eff (ace :: ACE | eff) [TokenInfo])
 
-getTokens :: forall eff. Number -> EditSession -> Eff (ace :: EAce | eff) [TokenInfo]
+getTokens :: forall eff. Number -> EditSession -> Eff (ace :: ACE | eff) [TokenInfo]
 getTokens row self = runFn2 getTokensImpl row self
 
 foreign import getTokenAtImpl
@@ -312,9 +312,9 @@ foreign import getTokenAtImpl
   \  return function() {\
   \    return self.getTokenAt(row, column);\
   \  };\
-  \}" :: forall eff. Fn3 Number Number EditSession (Eff (ace :: EAce | eff) TokenInfo)
+  \}" :: forall eff. Fn3 Number Number EditSession (Eff (ace :: ACE | eff) TokenInfo)
 
-getTokenAt :: forall eff. Number -> Number -> EditSession -> Eff (ace :: EAce | eff) TokenInfo
+getTokenAt :: forall eff. Number -> Number -> EditSession -> Eff (ace :: ACE | eff) TokenInfo
 getTokenAt row column self = runFn3 getTokenAtImpl row column self
 
 foreign import setUndoManagerImpl
@@ -322,9 +322,9 @@ foreign import setUndoManagerImpl
   \  return function() {\
   \    return self.setUndoManager(undoManager);\
   \  };\
-  \}" :: forall eff. Fn2 UndoManager EditSession (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 UndoManager EditSession (Eff (ace :: ACE | eff) Unit)
 
-setUndoManager :: forall eff. UndoManager -> EditSession -> Eff (ace :: EAce | eff) Unit
+setUndoManager :: forall eff. UndoManager -> EditSession -> Eff (ace :: ACE | eff) Unit
 setUndoManager undoManager self = runFn2 setUndoManagerImpl undoManager self
 
 foreign import getUndoManagerImpl
@@ -332,9 +332,9 @@ foreign import getUndoManagerImpl
   \  return function() {\
   \    return self.getUndoManager();\
   \  };\
-  \}" :: forall eff. Fn1 EditSession (Eff (ace :: EAce | eff) UndoManager)
+  \}" :: forall eff. Fn1 EditSession (Eff (ace :: ACE | eff) UndoManager)
 
-getUndoManager :: forall eff. EditSession -> Eff (ace :: EAce | eff) UndoManager
+getUndoManager :: forall eff. EditSession -> Eff (ace :: ACE | eff) UndoManager
 getUndoManager self = runFn1 getUndoManagerImpl self
 
 foreign import getTabStringImpl
@@ -342,9 +342,9 @@ foreign import getTabStringImpl
   \  return function() {\
   \    return self.getTabString();\
   \  };\
-  \}" :: forall eff. Fn1 EditSession (Eff (ace :: EAce | eff) String)
+  \}" :: forall eff. Fn1 EditSession (Eff (ace :: ACE | eff) String)
 
-getTabString :: forall eff. EditSession -> Eff (ace :: EAce | eff) String
+getTabString :: forall eff. EditSession -> Eff (ace :: ACE | eff) String
 getTabString self = runFn1 getTabStringImpl self
 
 foreign import setUseSoftTabsImpl
@@ -352,9 +352,9 @@ foreign import setUseSoftTabsImpl
   \  return function() {\
   \    return self.setUseSoftTabs(useSoftTabs);\
   \  };\
-  \}" :: forall eff. Fn2 Boolean EditSession (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 Boolean EditSession (Eff (ace :: ACE | eff) Unit)
 
-setUseSoftTabs :: forall eff. Boolean -> EditSession -> Eff (ace :: EAce | eff) Unit
+setUseSoftTabs :: forall eff. Boolean -> EditSession -> Eff (ace :: ACE | eff) Unit
 setUseSoftTabs useSoftTabs self = runFn2 setUseSoftTabsImpl useSoftTabs self
 
 foreign import getUseSoftTabsImpl
@@ -362,9 +362,9 @@ foreign import getUseSoftTabsImpl
   \  return function() {\
   \    return self.getUseSoftTabs();\
   \  };\
-  \}" :: forall eff. Fn1 EditSession (Eff (ace :: EAce | eff) Boolean)
+  \}" :: forall eff. Fn1 EditSession (Eff (ace :: ACE | eff) Boolean)
 
-getUseSoftTabs :: forall eff. EditSession -> Eff (ace :: EAce | eff) Boolean
+getUseSoftTabs :: forall eff. EditSession -> Eff (ace :: ACE | eff) Boolean
 getUseSoftTabs self = runFn1 getUseSoftTabsImpl self
 
 foreign import setTabSizeImpl
@@ -372,9 +372,9 @@ foreign import setTabSizeImpl
   \  return function() {\
   \    return self.setTabSize(tabSize);\
   \  };\
-  \}" :: forall eff. Fn2 Number EditSession (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 Number EditSession (Eff (ace :: ACE | eff) Unit)
 
-setTabSize :: forall eff. Number -> EditSession -> Eff (ace :: EAce | eff) Unit
+setTabSize :: forall eff. Number -> EditSession -> Eff (ace :: ACE | eff) Unit
 setTabSize tabSize self = runFn2 setTabSizeImpl tabSize self
 
 foreign import getTabSizeImpl
@@ -382,9 +382,9 @@ foreign import getTabSizeImpl
   \  return function() {\
   \    return self.getTabSize();\
   \  };\
-  \}" :: forall eff. Fn1 EditSession (Eff (ace :: EAce | eff) String)
+  \}" :: forall eff. Fn1 EditSession (Eff (ace :: ACE | eff) String)
 
-getTabSize :: forall eff. EditSession -> Eff (ace :: EAce | eff) String
+getTabSize :: forall eff. EditSession -> Eff (ace :: ACE | eff) String
 getTabSize self = runFn1 getTabSizeImpl self
 
 foreign import isTabStopImpl
@@ -392,9 +392,9 @@ foreign import isTabStopImpl
   \  return function() {\
   \    return self.isTabStop(position);\
   \  };\
-  \}" :: forall eff. Fn2 Position EditSession (Eff (ace :: EAce | eff) Boolean)
+  \}" :: forall eff. Fn2 Position EditSession (Eff (ace :: ACE | eff) Boolean)
 
-isTabStop :: forall eff. Position -> EditSession -> Eff (ace :: EAce | eff) Boolean
+isTabStop :: forall eff. Position -> EditSession -> Eff (ace :: ACE | eff) Boolean
 isTabStop position self = runFn2 isTabStopImpl position self
 
 foreign import setOverwriteImpl
@@ -402,9 +402,9 @@ foreign import setOverwriteImpl
   \  return function() {\
   \    return self.setOverwrite(overwrite);\
   \  };\
-  \}" :: forall eff. Fn2 Boolean EditSession (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 Boolean EditSession (Eff (ace :: ACE | eff) Unit)
 
-setOverwrite :: forall eff. Boolean -> EditSession -> Eff (ace :: EAce | eff) Unit
+setOverwrite :: forall eff. Boolean -> EditSession -> Eff (ace :: ACE | eff) Unit
 setOverwrite overwrite self = runFn2 setOverwriteImpl overwrite self
 
 foreign import getOverwriteImpl
@@ -412,9 +412,9 @@ foreign import getOverwriteImpl
   \  return function() {\
   \    return self.getOverwrite();\
   \  };\
-  \}" :: forall eff. Fn1 EditSession (Eff (ace :: EAce | eff) Boolean)
+  \}" :: forall eff. Fn1 EditSession (Eff (ace :: ACE | eff) Boolean)
 
-getOverwrite :: forall eff. EditSession -> Eff (ace :: EAce | eff) Boolean
+getOverwrite :: forall eff. EditSession -> Eff (ace :: ACE | eff) Boolean
 getOverwrite self = runFn1 getOverwriteImpl self
 
 foreign import toggleOverwriteImpl
@@ -422,9 +422,9 @@ foreign import toggleOverwriteImpl
   \  return function() {\
   \    return self.toggleOverwrite();\
   \  };\
-  \}" :: forall eff. Fn1 EditSession (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 EditSession (Eff (ace :: ACE | eff) Unit)
 
-toggleOverwrite :: forall eff. EditSession -> Eff (ace :: EAce | eff) Unit
+toggleOverwrite :: forall eff. EditSession -> Eff (ace :: ACE | eff) Unit
 toggleOverwrite self = runFn1 toggleOverwriteImpl self
 
 foreign import addGutterDecorationImpl
@@ -432,9 +432,9 @@ foreign import addGutterDecorationImpl
   \  return function() {\
   \    return self.addGutterDecoration(row, className);\
   \  };\
-  \}" :: forall eff. Fn3 Number String EditSession (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn3 Number String EditSession (Eff (ace :: ACE | eff) Unit)
 
-addGutterDecoration :: forall eff. Number -> String -> EditSession -> Eff (ace :: EAce | eff) Unit
+addGutterDecoration :: forall eff. Number -> String -> EditSession -> Eff (ace :: ACE | eff) Unit
 addGutterDecoration row className self = runFn3 addGutterDecorationImpl row className self
 
 foreign import removeGutterDecorationImpl
@@ -442,9 +442,9 @@ foreign import removeGutterDecorationImpl
   \  return function() {\
   \    return self.removeGutterDecoration(row, className);\
   \  };\
-  \}" :: forall eff. Fn3 Number String EditSession (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn3 Number String EditSession (Eff (ace :: ACE | eff) Unit)
 
-removeGutterDecoration :: forall eff. Number -> String -> EditSession -> Eff (ace :: EAce | eff) Unit
+removeGutterDecoration :: forall eff. Number -> String -> EditSession -> Eff (ace :: ACE | eff) Unit
 removeGutterDecoration row className self = runFn3 removeGutterDecorationImpl row className self
 
 foreign import getBreakpointsImpl
@@ -452,9 +452,9 @@ foreign import getBreakpointsImpl
   \  return function() {\
   \    return self.getBreakpoints();\
   \  };\
-  \}" :: forall eff. Fn1 EditSession (Eff (ace :: EAce | eff) [Number])
+  \}" :: forall eff. Fn1 EditSession (Eff (ace :: ACE | eff) [Number])
 
-getBreakpoints :: forall eff. EditSession -> Eff (ace :: EAce | eff) [Number]
+getBreakpoints :: forall eff. EditSession -> Eff (ace :: ACE | eff) [Number]
 getBreakpoints self = runFn1 getBreakpointsImpl self
 
 foreign import setBreakpointsImpl
@@ -462,9 +462,9 @@ foreign import setBreakpointsImpl
   \  return function() {\
   \    return self.setBreakpoints(rows);\
   \  };\
-  \}" :: forall eff. Fn2 [Number] EditSession (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 [Number] EditSession (Eff (ace :: ACE | eff) Unit)
 
-setBreakpoints :: forall eff. [Number] -> EditSession -> Eff (ace :: EAce | eff) Unit
+setBreakpoints :: forall eff. [Number] -> EditSession -> Eff (ace :: ACE | eff) Unit
 setBreakpoints rows self = runFn2 setBreakpointsImpl rows self
 
 foreign import clearBreakpointsImpl
@@ -472,9 +472,9 @@ foreign import clearBreakpointsImpl
   \  return function() {\
   \    return self.clearBreakpoints();\
   \  };\
-  \}" :: forall eff. Fn1 EditSession (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 EditSession (Eff (ace :: ACE | eff) Unit)
 
-clearBreakpoints :: forall eff. EditSession -> Eff (ace :: EAce | eff) Unit
+clearBreakpoints :: forall eff. EditSession -> Eff (ace :: ACE | eff) Unit
 clearBreakpoints self = runFn1 clearBreakpointsImpl self
 
 foreign import setBreakpointImpl
@@ -482,9 +482,9 @@ foreign import setBreakpointImpl
   \  return function() {\
   \    return self.setBreakpoint(row, className);\
   \  };\
-  \}" :: forall eff. Fn3 Number String EditSession (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn3 Number String EditSession (Eff (ace :: ACE | eff) Unit)
 
-setBreakpoint :: forall eff. Number -> String -> EditSession -> Eff (ace :: EAce | eff) Unit
+setBreakpoint :: forall eff. Number -> String -> EditSession -> Eff (ace :: ACE | eff) Unit
 setBreakpoint row className self = runFn3 setBreakpointImpl row className self
 
 foreign import clearBreakpointImpl
@@ -492,9 +492,9 @@ foreign import clearBreakpointImpl
   \  return function() {\
   \    return self.clearBreakpoint(row);\
   \  };\
-  \}" :: forall eff. Fn2 Number EditSession (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 Number EditSession (Eff (ace :: ACE | eff) Unit)
 
-clearBreakpoint :: forall eff. Number -> EditSession -> Eff (ace :: EAce | eff) Unit
+clearBreakpoint :: forall eff. Number -> EditSession -> Eff (ace :: ACE | eff) Unit
 clearBreakpoint row self = runFn2 clearBreakpointImpl row self
 
 foreign import addMarkerImpl
@@ -502,9 +502,9 @@ foreign import addMarkerImpl
   \  return function() {\
   \    return self.addMarker(range, clazz, type, inFront);\
   \  };\
-  \}" :: forall eff. Fn5 Range String String Boolean EditSession (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn5 Range String String Boolean EditSession (Eff (ace :: ACE | eff) Unit)
 
-addMarker :: forall eff. Range -> String -> String -> Boolean -> EditSession -> Eff (ace :: EAce | eff) Unit
+addMarker :: forall eff. Range -> String -> String -> Boolean -> EditSession -> Eff (ace :: ACE | eff) Unit
 addMarker range clazz _type inFront self = runFn5 addMarkerImpl range clazz _type inFront self
 
 type DynamicMarker eff a = forall h. STArray h String -> HTMLElement -> Eff (st :: ST h | eff) a
@@ -518,9 +518,9 @@ foreign import addDynamicMarkerImpl
   \      }\
   \    }, inFront);\
   \  };\
-  \}" :: forall eff a. Fn3 (DynamicMarker (ace :: EAce | eff) a) Boolean EditSession (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff a. Fn3 (DynamicMarker (ace :: ACE | eff) a) Boolean EditSession (Eff (ace :: ACE | eff) Unit)
 
-addDynamicMarker :: forall eff a. (DynamicMarker (ace :: EAce | eff) a) -> Boolean -> EditSession -> Eff (ace :: EAce | eff) Unit
+addDynamicMarker :: forall eff a. (DynamicMarker (ace :: ACE | eff) a) -> Boolean -> EditSession -> Eff (ace :: ACE | eff) Unit
 addDynamicMarker marker inFront self = runFn3 addDynamicMarkerImpl marker inFront self
 
 foreign import removeMarkerImpl
@@ -528,9 +528,9 @@ foreign import removeMarkerImpl
   \  return function() {\
   \    return self.removeMarker(markerId);\
   \  };\
-  \}" :: forall eff. Fn2 Number EditSession (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 Number EditSession (Eff (ace :: ACE | eff) Unit)
 
-removeMarker :: forall eff. Number -> EditSession -> Eff (ace :: EAce | eff) Unit
+removeMarker :: forall eff. Number -> EditSession -> Eff (ace :: ACE | eff) Unit
 removeMarker markerId self = runFn2 removeMarkerImpl markerId self
 
 foreign import setAnnotationsImpl
@@ -538,9 +538,9 @@ foreign import setAnnotationsImpl
   \  return function() {\
   \    return self.setAnnotations(annotations);\
   \  };\
-  \}" :: forall eff. Fn2 [Annotation] EditSession (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 [Annotation] EditSession (Eff (ace :: ACE | eff) Unit)
 
-setAnnotations :: forall eff. [Annotation] -> EditSession -> Eff (ace :: EAce | eff) Unit
+setAnnotations :: forall eff. [Annotation] -> EditSession -> Eff (ace :: ACE | eff) Unit
 setAnnotations annotations self = runFn2 setAnnotationsImpl annotations self
 
 foreign import getAnnotationsImpl
@@ -548,9 +548,9 @@ foreign import getAnnotationsImpl
   \  return function() {\
   \    return self.getAnnotations();\
   \  };\
-  \}" :: forall eff. Fn1 EditSession (Eff (ace :: EAce | eff) [Annotation])
+  \}" :: forall eff. Fn1 EditSession (Eff (ace :: ACE | eff) [Annotation])
 
-getAnnotations :: forall eff. EditSession -> Eff (ace :: EAce | eff) [Annotation]
+getAnnotations :: forall eff. EditSession -> Eff (ace :: ACE | eff) [Annotation]
 getAnnotations self = runFn1 getAnnotationsImpl self
 
 foreign import clearAnnotationsImpl
@@ -558,9 +558,9 @@ foreign import clearAnnotationsImpl
   \  return function() {\
   \    return self.clearAnnotations();\
   \  };\
-  \}" :: forall eff. Fn1 EditSession (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 EditSession (Eff (ace :: ACE | eff) Unit)
 
-clearAnnotations :: forall eff. EditSession -> Eff (ace :: EAce | eff) Unit
+clearAnnotations :: forall eff. EditSession -> Eff (ace :: ACE | eff) Unit
 clearAnnotations self = runFn1 clearAnnotationsImpl self
 
 foreign import detectNewLineImpl
@@ -568,9 +568,9 @@ foreign import detectNewLineImpl
   \  return function() {\
   \    return self.$detectNewLine(text);\
   \  };\
-  \}" :: forall eff. Fn2 String EditSession (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 String EditSession (Eff (ace :: ACE | eff) Unit)
 
-detectNewLine :: forall eff. String -> EditSession -> Eff (ace :: EAce | eff) Unit
+detectNewLine :: forall eff. String -> EditSession -> Eff (ace :: ACE | eff) Unit
 detectNewLine text self = runFn2 detectNewLineImpl text self
 
 foreign import getWordRangeImpl
@@ -578,9 +578,9 @@ foreign import getWordRangeImpl
   \  return function() {\
   \    return self.getWordRange(row, column);\
   \  };\
-  \}" :: forall eff. Fn3 Number Number EditSession (Eff (ace :: EAce | eff) Range)
+  \}" :: forall eff. Fn3 Number Number EditSession (Eff (ace :: ACE | eff) Range)
 
-getWordRange :: forall eff. Number -> Number -> EditSession -> Eff (ace :: EAce | eff) Range
+getWordRange :: forall eff. Number -> Number -> EditSession -> Eff (ace :: ACE | eff) Range
 getWordRange row column self = runFn3 getWordRangeImpl row column self
 
 foreign import getAWordRangeImpl
@@ -588,9 +588,9 @@ foreign import getAWordRangeImpl
   \  return function() {\
   \    return self.getAWordRange(row, column);\
   \  };\
-  \}" :: forall eff. Fn3 Number Number EditSession (Eff (ace :: EAce | eff) Range)
+  \}" :: forall eff. Fn3 Number Number EditSession (Eff (ace :: ACE | eff) Range)
 
-getAWordRange :: forall eff. Number -> Number -> EditSession -> Eff (ace :: EAce | eff) Range
+getAWordRange :: forall eff. Number -> Number -> EditSession -> Eff (ace :: ACE | eff) Range
 getAWordRange row column self = runFn3 getAWordRangeImpl row column self
 
 foreign import setNewLineModeImpl
@@ -598,9 +598,9 @@ foreign import setNewLineModeImpl
   \  return function() {\
   \    return self.setNewLineMode(newLineMode);\
   \  };\
-  \}" :: forall eff. Fn2 String EditSession (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 String EditSession (Eff (ace :: ACE | eff) Unit)
 
-setNewLineMode :: forall eff. String -> EditSession -> Eff (ace :: EAce | eff) Unit
+setNewLineMode :: forall eff. String -> EditSession -> Eff (ace :: ACE | eff) Unit
 setNewLineMode newLineMode self = runFn2 setNewLineModeImpl newLineMode self
 
 foreign import getNewLineModeImpl
@@ -608,9 +608,9 @@ foreign import getNewLineModeImpl
   \  return function() {\
   \    return self.getNewLineMode();\
   \  };\
-  \}" :: forall eff. Fn1 EditSession (Eff (ace :: EAce | eff) String)
+  \}" :: forall eff. Fn1 EditSession (Eff (ace :: ACE | eff) String)
 
-getNewLineMode :: forall eff. EditSession -> Eff (ace :: EAce | eff) String
+getNewLineMode :: forall eff. EditSession -> Eff (ace :: ACE | eff) String
 getNewLineMode self = runFn1 getNewLineModeImpl self
 
 foreign import setUseWorkerImpl
@@ -618,9 +618,9 @@ foreign import setUseWorkerImpl
   \  return function() {\
   \    return self.setUseWorker(useWorker);\
   \  };\
-  \}" :: forall eff. Fn2 Boolean EditSession (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 Boolean EditSession (Eff (ace :: ACE | eff) Unit)
 
-setUseWorker :: forall eff. Boolean -> EditSession -> Eff (ace :: EAce | eff) Unit
+setUseWorker :: forall eff. Boolean -> EditSession -> Eff (ace :: ACE | eff) Unit
 setUseWorker useWorker self = runFn2 setUseWorkerImpl useWorker self
 
 foreign import getUseWorkerImpl
@@ -628,9 +628,9 @@ foreign import getUseWorkerImpl
   \  return function() {\
   \    return self.getUseWorker();\
   \  };\
-  \}" :: forall eff. Fn1 EditSession (Eff (ace :: EAce | eff) Boolean)
+  \}" :: forall eff. Fn1 EditSession (Eff (ace :: ACE | eff) Boolean)
 
-getUseWorker :: forall eff. EditSession -> Eff (ace :: EAce | eff) Boolean
+getUseWorker :: forall eff. EditSession -> Eff (ace :: ACE | eff) Boolean
 getUseWorker self = runFn1 getUseWorkerImpl self
 
 foreign import onReloadTokenizerImpl
@@ -638,9 +638,9 @@ foreign import onReloadTokenizerImpl
   \  return function() {\
   \    return self.onReloadTokenizer();\
   \  };\
-  \}" :: forall eff. Fn1 EditSession (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 EditSession (Eff (ace :: ACE | eff) Unit)
 
-onReloadTokenizer :: forall eff. EditSession -> Eff (ace :: EAce | eff) Unit
+onReloadTokenizer :: forall eff. EditSession -> Eff (ace :: ACE | eff) Unit
 onReloadTokenizer self = runFn1 onReloadTokenizerImpl self
 
 foreign import modeImpl
@@ -648,9 +648,9 @@ foreign import modeImpl
   \  return function() {\
   \    return self.$mode(mode);\
   \  };\
-  \}" :: forall eff. Fn2 TextMode EditSession (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 TextMode EditSession (Eff (ace :: ACE | eff) Unit)
 
-mode :: forall eff. TextMode -> EditSession -> Eff (ace :: EAce | eff) Unit
+mode :: forall eff. TextMode -> EditSession -> Eff (ace :: ACE | eff) Unit
 mode mode self = runFn2 modeImpl mode self
 
 foreign import getModeImpl
@@ -658,9 +658,9 @@ foreign import getModeImpl
   \  return function() {\
   \    return self.getMode();\
   \  };\
-  \}" :: forall eff. Fn1 EditSession (Eff (ace :: EAce | eff) TextMode)
+  \}" :: forall eff. Fn1 EditSession (Eff (ace :: ACE | eff) TextMode)
 
-getMode :: forall eff. EditSession -> Eff (ace :: EAce | eff) TextMode
+getMode :: forall eff. EditSession -> Eff (ace :: ACE | eff) TextMode
 getMode self = runFn1 getModeImpl self
 
 foreign import setScrollTopImpl
@@ -668,9 +668,9 @@ foreign import setScrollTopImpl
   \  return function() {\
   \    return self.setScrollTop(scrollTop);\
   \  };\
-  \}" :: forall eff. Fn2 Number EditSession (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 Number EditSession (Eff (ace :: ACE | eff) Unit)
 
-setScrollTop :: forall eff. Number -> EditSession -> Eff (ace :: EAce | eff) Unit
+setScrollTop :: forall eff. Number -> EditSession -> Eff (ace :: ACE | eff) Unit
 setScrollTop scrollTop self = runFn2 setScrollTopImpl scrollTop self
 
 foreign import getScrollTopImpl
@@ -678,9 +678,9 @@ foreign import getScrollTopImpl
   \  return function() {\
   \    return self.getScrollTop();\
   \  };\
-  \}" :: forall eff. Fn1 EditSession (Eff (ace :: EAce | eff) Number)
+  \}" :: forall eff. Fn1 EditSession (Eff (ace :: ACE | eff) Number)
 
-getScrollTop :: forall eff. EditSession -> Eff (ace :: EAce | eff) Number
+getScrollTop :: forall eff. EditSession -> Eff (ace :: ACE | eff) Number
 getScrollTop self = runFn1 getScrollTopImpl self
 
 foreign import setScrollLeftImpl
@@ -688,9 +688,9 @@ foreign import setScrollLeftImpl
   \  return function() {\
   \    return self.setScrollLeft();\
   \  };\
-  \}" :: forall eff. Fn1 EditSession (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 EditSession (Eff (ace :: ACE | eff) Unit)
 
-setScrollLeft :: forall eff. EditSession -> Eff (ace :: EAce | eff) Unit
+setScrollLeft :: forall eff. EditSession -> Eff (ace :: ACE | eff) Unit
 setScrollLeft self = runFn1 setScrollLeftImpl self
 
 foreign import getScrollLeftImpl
@@ -698,9 +698,9 @@ foreign import getScrollLeftImpl
   \  return function() {\
   \    return self.getScrollLeft();\
   \  };\
-  \}" :: forall eff. Fn1 EditSession (Eff (ace :: EAce | eff) Number)
+  \}" :: forall eff. Fn1 EditSession (Eff (ace :: ACE | eff) Number)
 
-getScrollLeft :: forall eff. EditSession -> Eff (ace :: EAce | eff) Number
+getScrollLeft :: forall eff. EditSession -> Eff (ace :: ACE | eff) Number
 getScrollLeft self = runFn1 getScrollLeftImpl self
 
 foreign import getScreenWidthImpl
@@ -708,9 +708,9 @@ foreign import getScreenWidthImpl
   \  return function() {\
   \    return self.getScreenWidth();\
   \  };\
-  \}" :: forall eff. Fn1 EditSession (Eff (ace :: EAce | eff) Number)
+  \}" :: forall eff. Fn1 EditSession (Eff (ace :: ACE | eff) Number)
 
-getScreenWidth :: forall eff. EditSession -> Eff (ace :: EAce | eff) Number
+getScreenWidth :: forall eff. EditSession -> Eff (ace :: ACE | eff) Number
 getScreenWidth self = runFn1 getScreenWidthImpl self
 
 foreign import getLineImpl
@@ -718,9 +718,9 @@ foreign import getLineImpl
   \  return function() {\
   \    return self.getLine(row);\
   \  };\
-  \}" :: forall eff. Fn2 Number EditSession (Eff (ace :: EAce | eff) String)
+  \}" :: forall eff. Fn2 Number EditSession (Eff (ace :: ACE | eff) String)
 
-getLine :: forall eff. Number -> EditSession -> Eff (ace :: EAce | eff) String
+getLine :: forall eff. Number -> EditSession -> Eff (ace :: ACE | eff) String
 getLine row self = runFn2 getLineImpl row self
 
 foreign import getLinesImpl
@@ -728,9 +728,9 @@ foreign import getLinesImpl
   \  return function() {\
   \    return self.getLines(firstRow, lastRow);\
   \  };\
-  \}" :: forall eff. Fn3 Number Number EditSession (Eff (ace :: EAce | eff) [String])
+  \}" :: forall eff. Fn3 Number Number EditSession (Eff (ace :: ACE | eff) [String])
 
-getLines :: forall eff. Number -> Number -> EditSession -> Eff (ace :: EAce | eff) [String]
+getLines :: forall eff. Number -> Number -> EditSession -> Eff (ace :: ACE | eff) [String]
 getLines firstRow lastRow self = runFn3 getLinesImpl firstRow lastRow self
 
 foreign import getLengthImpl
@@ -738,9 +738,9 @@ foreign import getLengthImpl
   \  return function() {\
   \    return self.getLength();\
   \  };\
-  \}" :: forall eff. Fn1 EditSession (Eff (ace :: EAce | eff) Number)
+  \}" :: forall eff. Fn1 EditSession (Eff (ace :: ACE | eff) Number)
 
-getLength :: forall eff. EditSession -> Eff (ace :: EAce | eff) Number
+getLength :: forall eff. EditSession -> Eff (ace :: ACE | eff) Number
 getLength self = runFn1 getLengthImpl self
 
 foreign import getTextRangeImpl
@@ -748,9 +748,9 @@ foreign import getTextRangeImpl
   \  return function() {\
   \    return self.getTextRange(range);\
   \  };\
-  \}" :: forall eff. Fn2 Range EditSession (Eff (ace :: EAce | eff) String)
+  \}" :: forall eff. Fn2 Range EditSession (Eff (ace :: ACE | eff) String)
 
-getTextRange :: forall eff. Range -> EditSession -> Eff (ace :: EAce | eff) String
+getTextRange :: forall eff. Range -> EditSession -> Eff (ace :: ACE | eff) String
 getTextRange range self = runFn2 getTextRangeImpl range self
 
 foreign import insertImpl
@@ -758,9 +758,9 @@ foreign import insertImpl
   \  return function() {\
   \    return self.insert(position, text);\
   \  };\
-  \}" :: forall eff. Fn3 Position String EditSession (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn3 Position String EditSession (Eff (ace :: ACE | eff) Unit)
 
-insert :: forall eff. Position -> String -> EditSession -> Eff (ace :: EAce | eff) Unit
+insert :: forall eff. Position -> String -> EditSession -> Eff (ace :: ACE | eff) Unit
 insert position text self = runFn3 insertImpl position text self
 
 foreign import removeImpl
@@ -768,9 +768,9 @@ foreign import removeImpl
   \  return function() {\
   \    return self.remove(range);\
   \  };\
-  \}" :: forall eff. Fn2 Range EditSession (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 Range EditSession (Eff (ace :: ACE | eff) Unit)
 
-remove :: forall eff. Range -> EditSession -> Eff (ace :: EAce | eff) Unit
+remove :: forall eff. Range -> EditSession -> Eff (ace :: ACE | eff) Unit
 remove range self = runFn2 removeImpl range self
 
 foreign import setUndoSelectImpl
@@ -778,9 +778,9 @@ foreign import setUndoSelectImpl
   \  return function() {\
   \    return self.setUndoSelect(enable);\
   \  };\
-  \}" :: forall eff. Fn2 Boolean EditSession (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 Boolean EditSession (Eff (ace :: ACE | eff) Unit)
 
-setUndoSelect :: forall eff. Boolean -> EditSession -> Eff (ace :: EAce | eff) Unit
+setUndoSelect :: forall eff. Boolean -> EditSession -> Eff (ace :: ACE | eff) Unit
 setUndoSelect enable self = runFn2 setUndoSelectImpl enable self
 
 foreign import replaceImpl
@@ -788,9 +788,9 @@ foreign import replaceImpl
   \  return function() {\
   \    return self.replace(range, text);\
   \  };\
-  \}" :: forall eff. Fn3 Range String EditSession (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn3 Range String EditSession (Eff (ace :: ACE | eff) Unit)
 
-replace :: forall eff. Range -> String -> EditSession -> Eff (ace :: EAce | eff) Unit
+replace :: forall eff. Range -> String -> EditSession -> Eff (ace :: ACE | eff) Unit
 replace range text self = runFn3 replaceImpl range text self
 
 foreign import moveTextImpl
@@ -798,9 +798,9 @@ foreign import moveTextImpl
   \  return function() {\
   \    return self.moveText(fromRange, toPosition);\
   \  };\
-  \}" :: forall eff. Fn3 Range Position EditSession (Eff (ace :: EAce | eff) Range)
+  \}" :: forall eff. Fn3 Range Position EditSession (Eff (ace :: ACE | eff) Range)
 
-moveText :: forall eff. Range -> Position -> EditSession -> Eff (ace :: EAce | eff) Range
+moveText :: forall eff. Range -> Position -> EditSession -> Eff (ace :: ACE | eff) Range
 moveText fromRange toPosition self = runFn3 moveTextImpl fromRange toPosition self
 
 foreign import indentRowsImpl
@@ -808,9 +808,9 @@ foreign import indentRowsImpl
   \  return function() {\
   \    return self.indentRows(startRow, endRow, indentString);\
   \  };\
-  \}" :: forall eff. Fn4 Number Number String EditSession (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn4 Number Number String EditSession (Eff (ace :: ACE | eff) Unit)
 
-indentRows :: forall eff. Number -> Number -> String -> EditSession -> Eff (ace :: EAce | eff) Unit
+indentRows :: forall eff. Number -> Number -> String -> EditSession -> Eff (ace :: ACE | eff) Unit
 indentRows startRow endRow indentString self = runFn4 indentRowsImpl startRow endRow indentString self
 
 foreign import outdentRowsImpl
@@ -818,9 +818,9 @@ foreign import outdentRowsImpl
   \  return function() {\
   \    return self.outdentRows(range);\
   \  };\
-  \}" :: forall eff. Fn2 Range EditSession (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 Range EditSession (Eff (ace :: ACE | eff) Unit)
 
-outdentRows :: forall eff. Range -> EditSession -> Eff (ace :: EAce | eff) Unit
+outdentRows :: forall eff. Range -> EditSession -> Eff (ace :: ACE | eff) Unit
 outdentRows range self = runFn2 outdentRowsImpl range self
 
 foreign import moveLinesUpImpl
@@ -828,9 +828,9 @@ foreign import moveLinesUpImpl
   \  return function() {\
   \    return self.moveLinesUp(firstRow, lastRow);\
   \  };\
-  \}" :: forall eff. Fn3 Number Number EditSession (Eff (ace :: EAce | eff) Number)
+  \}" :: forall eff. Fn3 Number Number EditSession (Eff (ace :: ACE | eff) Number)
 
-moveLinesUp :: forall eff. Number -> Number -> EditSession -> Eff (ace :: EAce | eff) Number
+moveLinesUp :: forall eff. Number -> Number -> EditSession -> Eff (ace :: ACE | eff) Number
 moveLinesUp firstRow lastRow self = runFn3 moveLinesUpImpl firstRow lastRow self
 
 foreign import moveLinesDownImpl
@@ -838,9 +838,9 @@ foreign import moveLinesDownImpl
   \  return function() {\
   \    return self.moveLinesDown(firstRow, lastRow);\
   \  };\
-  \}" :: forall eff. Fn3 Number Number EditSession (Eff (ace :: EAce | eff) Number)
+  \}" :: forall eff. Fn3 Number Number EditSession (Eff (ace :: ACE | eff) Number)
 
-moveLinesDown :: forall eff. Number -> Number -> EditSession -> Eff (ace :: EAce | eff) Number
+moveLinesDown :: forall eff. Number -> Number -> EditSession -> Eff (ace :: ACE | eff) Number
 moveLinesDown firstRow lastRow self = runFn3 moveLinesDownImpl firstRow lastRow self
 
 foreign import duplicateLinesImpl
@@ -848,9 +848,9 @@ foreign import duplicateLinesImpl
   \  return function() {\
   \    return self.duplicateLines(firstRow, lastRow);\
   \  };\
-  \}" :: forall eff. Fn3 Number Number EditSession (Eff (ace :: EAce | eff) Number)
+  \}" :: forall eff. Fn3 Number Number EditSession (Eff (ace :: ACE | eff) Number)
 
-duplicateLines :: forall eff. Number -> Number -> EditSession -> Eff (ace :: EAce | eff) Number
+duplicateLines :: forall eff. Number -> Number -> EditSession -> Eff (ace :: ACE | eff) Number
 duplicateLines firstRow lastRow self = runFn3 duplicateLinesImpl firstRow lastRow self
 
 foreign import setUseWrapModeImpl
@@ -858,9 +858,9 @@ foreign import setUseWrapModeImpl
   \  return function() {\
   \    return self.setUseWrapMode(useWrapMode);\
   \  };\
-  \}" :: forall eff. Fn2 Boolean EditSession (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 Boolean EditSession (Eff (ace :: ACE | eff) Unit)
 
-setUseWrapMode :: forall eff. Boolean -> EditSession -> Eff (ace :: EAce | eff) Unit
+setUseWrapMode :: forall eff. Boolean -> EditSession -> Eff (ace :: ACE | eff) Unit
 setUseWrapMode useWrapMode self = runFn2 setUseWrapModeImpl useWrapMode self
 
 foreign import getUseWrapModeImpl
@@ -868,9 +868,9 @@ foreign import getUseWrapModeImpl
   \  return function() {\
   \    return self.getUseWrapMode();\
   \  };\
-  \}" :: forall eff. Fn1 EditSession (Eff (ace :: EAce | eff) Boolean)
+  \}" :: forall eff. Fn1 EditSession (Eff (ace :: ACE | eff) Boolean)
 
-getUseWrapMode :: forall eff. EditSession -> Eff (ace :: EAce | eff) Boolean
+getUseWrapMode :: forall eff. EditSession -> Eff (ace :: ACE | eff) Boolean
 getUseWrapMode self = runFn1 getUseWrapModeImpl self
 
 foreign import setWrapLimitRangeImpl
@@ -878,9 +878,9 @@ foreign import setWrapLimitRangeImpl
   \  return function() {\
   \    return self.setWrapLimitRange(min, max);\
   \  };\
-  \}" :: forall eff. Fn3 Number Number EditSession (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn3 Number Number EditSession (Eff (ace :: ACE | eff) Unit)
 
-setWrapLimitRange :: forall eff. Number -> Number -> EditSession -> Eff (ace :: EAce | eff) Unit
+setWrapLimitRange :: forall eff. Number -> Number -> EditSession -> Eff (ace :: ACE | eff) Unit
 setWrapLimitRange min max self = runFn3 setWrapLimitRangeImpl min max self
 
 foreign import adjustWrapLimitImpl
@@ -888,9 +888,9 @@ foreign import adjustWrapLimitImpl
   \  return function() {\
   \    return self.adjustWrapLimit(desiredLimit);\
   \  };\
-  \}" :: forall eff. Fn2 Number EditSession (Eff (ace :: EAce | eff) Boolean)
+  \}" :: forall eff. Fn2 Number EditSession (Eff (ace :: ACE | eff) Boolean)
 
-adjustWrapLimit :: forall eff. Number -> EditSession -> Eff (ace :: EAce | eff) Boolean
+adjustWrapLimit :: forall eff. Number -> EditSession -> Eff (ace :: ACE | eff) Boolean
 adjustWrapLimit desiredLimit self = runFn2 adjustWrapLimitImpl desiredLimit self
 
 foreign import getWrapLimitImpl
@@ -898,9 +898,9 @@ foreign import getWrapLimitImpl
   \  return function() {\
   \    return self.getWrapLimit();\
   \  };\
-  \}" :: forall eff. Fn1 EditSession (Eff (ace :: EAce | eff) Number)
+  \}" :: forall eff. Fn1 EditSession (Eff (ace :: ACE | eff) Number)
 
-getWrapLimit :: forall eff. EditSession -> Eff (ace :: EAce | eff) Number
+getWrapLimit :: forall eff. EditSession -> Eff (ace :: ACE | eff) Number
 getWrapLimit self = runFn1 getWrapLimitImpl self
 
 foreign import getWrapLimitRangeImpl
@@ -908,9 +908,9 @@ foreign import getWrapLimitRangeImpl
   \  return function() {\
   \    return self.getWrapLimitRange();\
   \  };\
-  \}" :: forall eff. Fn1 EditSession (Eff (ace :: EAce | eff) { min :: Number, max :: Number })
+  \}" :: forall eff. Fn1 EditSession (Eff (ace :: ACE | eff) { min :: Number, max :: Number })
 
-getWrapLimitRange :: forall eff. EditSession -> Eff (ace :: EAce | eff) { min :: Number, max :: Number }
+getWrapLimitRange :: forall eff. EditSession -> Eff (ace :: ACE | eff) { min :: Number, max :: Number }
 getWrapLimitRange self = runFn1 getWrapLimitRangeImpl self
 
 foreign import getDisplayTokensImpl
@@ -918,9 +918,9 @@ foreign import getDisplayTokensImpl
   \  return function() {\
   \    return self.$getDisplayTokens(str, offset);\
   \  };\
-  \}" :: forall eff. Fn3 String Number EditSession (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn3 String Number EditSession (Eff (ace :: ACE | eff) Unit)
 
-getDisplayTokens :: forall eff. String -> Number -> EditSession -> Eff (ace :: EAce | eff) Unit
+getDisplayTokens :: forall eff. String -> Number -> EditSession -> Eff (ace :: ACE | eff) Unit
 getDisplayTokens str offset self = runFn3 getDisplayTokensImpl str offset self
 
 foreign import getStringScreenWidthImpl
@@ -928,9 +928,9 @@ foreign import getStringScreenWidthImpl
   \  return function() {\
   \    return self.$getStringScreenWidth(str, maxScreenColumn, screenColumn);\
   \  };\
-  \}" :: forall eff. Fn4 String Number Number EditSession (Eff (ace :: EAce | eff) [Number])
+  \}" :: forall eff. Fn4 String Number Number EditSession (Eff (ace :: ACE | eff) [Number])
 
-getStringScreenWidth :: forall eff. String -> Number -> Number -> EditSession -> Eff (ace :: EAce | eff) [Number]
+getStringScreenWidth :: forall eff. String -> Number -> Number -> EditSession -> Eff (ace :: ACE | eff) [Number]
 getStringScreenWidth str maxScreenColumn screenColumn self = runFn4 getStringScreenWidthImpl str maxScreenColumn screenColumn self
 
 foreign import getRowLengthImpl
@@ -938,9 +938,9 @@ foreign import getRowLengthImpl
   \  return function() {\
   \    return self.getRowLength(row);\
   \  };\
-  \}" :: forall eff. Fn2 Number EditSession (Eff (ace :: EAce | eff) Number)
+  \}" :: forall eff. Fn2 Number EditSession (Eff (ace :: ACE | eff) Number)
 
-getRowLength :: forall eff. Number -> EditSession -> Eff (ace :: EAce | eff) Number
+getRowLength :: forall eff. Number -> EditSession -> Eff (ace :: ACE | eff) Number
 getRowLength row self = runFn2 getRowLengthImpl row self
 
 foreign import getScreenLastRowColumnImpl
@@ -948,9 +948,9 @@ foreign import getScreenLastRowColumnImpl
   \  return function() {\
   \    return self.getScreenLastRowColumn(screenRow);\
   \  };\
-  \}" :: forall eff. Fn2 Number EditSession (Eff (ace :: EAce | eff) Number)
+  \}" :: forall eff. Fn2 Number EditSession (Eff (ace :: ACE | eff) Number)
 
-getScreenLastRowColumn :: forall eff. Number -> EditSession -> Eff (ace :: EAce | eff) Number
+getScreenLastRowColumn :: forall eff. Number -> EditSession -> Eff (ace :: ACE | eff) Number
 getScreenLastRowColumn screenRow self = runFn2 getScreenLastRowColumnImpl screenRow self
 
 foreign import getDocumentLastRowColumnImpl
@@ -958,9 +958,9 @@ foreign import getDocumentLastRowColumnImpl
   \  return function() {\
   \    return self.getDocumentLastRowColumn(docRow, docColumn);\
   \  };\
-  \}" :: forall eff. Fn3 Number Number EditSession (Eff (ace :: EAce | eff) Number)
+  \}" :: forall eff. Fn3 Number Number EditSession (Eff (ace :: ACE | eff) Number)
 
-getDocumentLastRowColumn :: forall eff. Number -> Number -> EditSession -> Eff (ace :: EAce | eff) Number
+getDocumentLastRowColumn :: forall eff. Number -> Number -> EditSession -> Eff (ace :: ACE | eff) Number
 getDocumentLastRowColumn docRow docColumn self = runFn3 getDocumentLastRowColumnImpl docRow docColumn self
 
 foreign import getDocumentLastRowColumnPositionImpl
@@ -968,9 +968,9 @@ foreign import getDocumentLastRowColumnPositionImpl
   \  return function() {\
   \    return self.getDocumentLastRowColumnPosition(docRow, docColumn);\
   \  };\
-  \}" :: forall eff. Fn3 Number Number EditSession (Eff (ace :: EAce | eff) Number)
+  \}" :: forall eff. Fn3 Number Number EditSession (Eff (ace :: ACE | eff) Number)
 
-getDocumentLastRowColumnPosition :: forall eff. Number -> Number -> EditSession -> Eff (ace :: EAce | eff) Number
+getDocumentLastRowColumnPosition :: forall eff. Number -> Number -> EditSession -> Eff (ace :: ACE | eff) Number
 getDocumentLastRowColumnPosition docRow docColumn self = runFn3 getDocumentLastRowColumnPositionImpl docRow docColumn self
 
 foreign import getRowSplitDataImpl
@@ -978,9 +978,9 @@ foreign import getRowSplitDataImpl
   \  return function() {\
   \    return self.getRowSplitData();\
   \  };\
-  \}" :: forall eff. Fn1 EditSession (Eff (ace :: EAce | eff) String)
+  \}" :: forall eff. Fn1 EditSession (Eff (ace :: ACE | eff) String)
 
-getRowSplitData :: forall eff. EditSession -> Eff (ace :: EAce | eff) String
+getRowSplitData :: forall eff. EditSession -> Eff (ace :: ACE | eff) String
 getRowSplitData self = runFn1 getRowSplitDataImpl self
 
 foreign import getScreenTabSizeImpl
@@ -988,9 +988,9 @@ foreign import getScreenTabSizeImpl
   \  return function() {\
   \    return self.getScreenTabSize(screenColumn);\
   \  };\
-  \}" :: forall eff. Fn2 Number EditSession (Eff (ace :: EAce | eff) Number)
+  \}" :: forall eff. Fn2 Number EditSession (Eff (ace :: ACE | eff) Number)
 
-getScreenTabSize :: forall eff. Number -> EditSession -> Eff (ace :: EAce | eff) Number
+getScreenTabSize :: forall eff. Number -> EditSession -> Eff (ace :: ACE | eff) Number
 getScreenTabSize screenColumn self = runFn2 getScreenTabSizeImpl screenColumn self
 
 foreign import screenToDocumentPositionImpl
@@ -998,9 +998,9 @@ foreign import screenToDocumentPositionImpl
   \  return function() {\
   \    return self.screenToDocumentPosition(screenRow, screenColumn);\
   \  };\
-  \}" :: forall eff. Fn3 Number Number EditSession (Eff (ace :: EAce | eff) Position)
+  \}" :: forall eff. Fn3 Number Number EditSession (Eff (ace :: ACE | eff) Position)
 
-screenToDocumentPosition :: forall eff. Number -> Number -> EditSession -> Eff (ace :: EAce | eff) Position
+screenToDocumentPosition :: forall eff. Number -> Number -> EditSession -> Eff (ace :: ACE | eff) Position
 screenToDocumentPosition screenRow screenColumn self = runFn3 screenToDocumentPositionImpl screenRow screenColumn self
 
 foreign import documentToScreenPositionImpl
@@ -1008,9 +1008,9 @@ foreign import documentToScreenPositionImpl
   \  return function() {\
   \    return self.documentToScreenPosition(docRow, docColumn);\
   \  };\
-  \}" :: forall eff. Fn3 Number Number EditSession (Eff (ace :: EAce | eff) Position)
+  \}" :: forall eff. Fn3 Number Number EditSession (Eff (ace :: ACE | eff) Position)
 
-documentToScreenPosition :: forall eff. Number -> Number -> EditSession -> Eff (ace :: EAce | eff) Position
+documentToScreenPosition :: forall eff. Number -> Number -> EditSession -> Eff (ace :: ACE | eff) Position
 documentToScreenPosition docRow docColumn self = runFn3 documentToScreenPositionImpl docRow docColumn self
 
 foreign import documentToScreenColumnImpl
@@ -1018,9 +1018,9 @@ foreign import documentToScreenColumnImpl
   \  return function() {\
   \    return self.documentToScreenColumn(row, docColumn);\
   \  };\
-  \}" :: forall eff. Fn3 Number Number EditSession (Eff (ace :: EAce | eff) Number)
+  \}" :: forall eff. Fn3 Number Number EditSession (Eff (ace :: ACE | eff) Number)
 
-documentToScreenColumn :: forall eff. Number -> Number -> EditSession -> Eff (ace :: EAce | eff) Number
+documentToScreenColumn :: forall eff. Number -> Number -> EditSession -> Eff (ace :: ACE | eff) Number
 documentToScreenColumn row docColumn self = runFn3 documentToScreenColumnImpl row docColumn self
 
 foreign import documentToScreenRowImpl
@@ -1028,9 +1028,9 @@ foreign import documentToScreenRowImpl
   \  return function() {\
   \    return self.documentToScreenRow(docRow, docColumn);\
   \  };\
-  \}" :: forall eff. Fn3 Number Number EditSession (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn3 Number Number EditSession (Eff (ace :: ACE | eff) Unit)
 
-documentToScreenRow :: forall eff. Number -> Number -> EditSession -> Eff (ace :: EAce | eff) Unit
+documentToScreenRow :: forall eff. Number -> Number -> EditSession -> Eff (ace :: ACE | eff) Unit
 documentToScreenRow docRow docColumn self = runFn3 documentToScreenRowImpl docRow docColumn self
 
 foreign import getScreenLengthImpl
@@ -1038,9 +1038,9 @@ foreign import getScreenLengthImpl
   \  return function() {\
   \    return self.getScreenLength();\
   \  };\
-  \}" :: forall eff. Fn1 EditSession (Eff (ace :: EAce | eff) Number)
+  \}" :: forall eff. Fn1 EditSession (Eff (ace :: ACE | eff) Number)
 
-getScreenLength :: forall eff. EditSession -> Eff (ace :: EAce | eff) Number
+getScreenLength :: forall eff. EditSession -> Eff (ace :: ACE | eff) Number
 getScreenLength self = runFn1 getScreenLengthImpl self
 
 foreign import createWithModeImpl
@@ -1049,9 +1049,9 @@ foreign import createWithModeImpl
   \    var EditSession = ace.require('ace/edit_session').EditSession;\
   \    return new EditSession(text, mode);\
   \  };\
-  \}" :: forall eff. Fn2 String (Nullable TextMode) (Eff (ace :: EAce | eff) EditSession)
+  \}" :: forall eff. Fn2 String (Nullable TextMode) (Eff (ace :: ACE | eff) EditSession)
 
-createWithMode :: forall eff. String -> Maybe TextMode -> Eff (ace :: EAce | eff) EditSession
+createWithMode :: forall eff. String -> Maybe TextMode -> Eff (ace :: ACE | eff) EditSession
 createWithMode text mode = runFn2 createWithModeImpl text (toNullable mode)
 
 foreign import createImpl
@@ -1060,9 +1060,9 @@ foreign import createImpl
   \    var EditSession = ace.require('ace/edit_session').EditSession;\
   \    return new EditSession(content, mode);\
   \  };\
-  \}" :: forall eff. Fn2 String (Nullable String) (Eff (ace :: EAce | eff) EditSession)
+  \}" :: forall eff. Fn2 String (Nullable String) (Eff (ace :: ACE | eff) EditSession)
 
-create :: forall eff. String -> Maybe String -> Eff (ace :: EAce | eff) EditSession
+create :: forall eff. String -> Maybe String -> Eff (ace :: ACE | eff) EditSession
 create content mode = runFn2 createImpl content (toNullable mode)
 
 foreign import createFromLinesImpl
@@ -1071,7 +1071,7 @@ foreign import createFromLinesImpl
   \    var EditSession = ace.require('ace/edit_session').EditSession;\
   \    return new EditSession(text, mode);\
   \  };\
-  \}" :: forall eff. Fn2 [String] (Nullable String) (Eff (ace :: EAce | eff) EditSession)
+  \}" :: forall eff. Fn2 [String] (Nullable String) (Eff (ace :: ACE | eff) EditSession)
 
-createFromLines :: forall eff. [String] -> Maybe String -> Eff (ace :: EAce | eff) EditSession
+createFromLines :: forall eff. [String] -> Maybe String -> Eff (ace :: ACE | eff) EditSession
 createFromLines text mode = runFn2 createFromLinesImpl text (toNullable mode)

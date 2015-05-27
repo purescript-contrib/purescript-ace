@@ -1,4 +1,4 @@
-module Ace.Anchor 
+module Ace.Anchor
   ( onChange
   , getPosition
   , getDocument
@@ -23,9 +23,9 @@ foreign import onChangeImpl
   \      fn(e)();\
   \    });\
   \  };\
-  \}" :: forall eff a. Fn2 Anchor (AnchorEvent -> Eff (ace :: EAce | eff) a) (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff a. Fn2 Anchor (AnchorEvent -> Eff (ace :: ACE | eff) a) (Eff (ace :: ACE | eff) Unit)
 
-onChange :: forall eff a. Anchor -> (AnchorEvent -> Eff (ace :: EAce | eff) a) -> Eff (ace :: EAce | eff) Unit
+onChange :: forall eff a. Anchor -> (AnchorEvent -> Eff (ace :: ACE | eff) a) -> Eff (ace :: ACE | eff) Unit
 onChange self fn = runFn2 onChangeImpl self fn
 
 foreign import getPositionImpl
@@ -33,9 +33,9 @@ foreign import getPositionImpl
   \  return function() {\
   \    return self.getPosition();\
   \  };\
-  \}" :: forall eff. Fn1 Anchor (Eff (ace :: EAce | eff) Position)
+  \}" :: forall eff. Fn1 Anchor (Eff (ace :: ACE | eff) Position)
 
-getPosition :: forall eff. Anchor -> Eff (ace :: EAce | eff) Position
+getPosition :: forall eff. Anchor -> Eff (ace :: ACE | eff) Position
 getPosition self = runFn1 getPositionImpl self
 
 foreign import getDocumentImpl
@@ -43,9 +43,9 @@ foreign import getDocumentImpl
   \  return function() {\
   \    return self.getDocument();\
   \  };\
-  \}" :: forall eff. Fn1 Anchor (Eff (ace :: EAce | eff) Document)
+  \}" :: forall eff. Fn1 Anchor (Eff (ace :: ACE | eff) Document)
 
-getDocument :: forall eff. Anchor -> Eff (ace :: EAce | eff) Document
+getDocument :: forall eff. Anchor -> Eff (ace :: ACE | eff) Document
 getDocument self = runFn1 getDocumentImpl self
 
 foreign import setPositionImpl
@@ -53,9 +53,9 @@ foreign import setPositionImpl
   \  return function() {\
   \    return self.setPosition(row, column, noClip);\
   \  };\
-  \}" :: forall eff. Fn4 Number Number Boolean Anchor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn4 Number Number Boolean Anchor (Eff (ace :: ACE | eff) Unit)
 
-setPosition :: forall eff. Number -> Number -> Boolean -> Anchor -> Eff (ace :: EAce | eff) Unit
+setPosition :: forall eff. Number -> Number -> Boolean -> Anchor -> Eff (ace :: ACE | eff) Unit
 setPosition row column noClip self = runFn4 setPositionImpl row column noClip self
 
 foreign import detachImpl
@@ -63,9 +63,9 @@ foreign import detachImpl
   \  return function() {\
   \    return self.detach();\
   \  };\
-  \}" :: forall eff. Fn1 Anchor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Anchor (Eff (ace :: ACE | eff) Unit)
 
-detach :: forall eff. Anchor -> Eff (ace :: EAce | eff) Unit
+detach :: forall eff. Anchor -> Eff (ace :: ACE | eff) Unit
 detach self = runFn1 detachImpl self
 
 foreign import createImpl
@@ -74,7 +74,7 @@ foreign import createImpl
   \    var Anchor = ace.require('ace/anchor').Anchor;\
   \    return new Anchor(doc, row, column);\
   \  };\
-  \}" :: forall eff. Fn3 Document Number Number (Eff (ace :: EAce | eff) Anchor)
+  \}" :: forall eff. Fn3 Document Number Number (Eff (ace :: ACE | eff) Anchor)
 
-create :: forall eff. Document -> Number -> Number -> Eff (ace :: EAce | eff) Anchor
+create :: forall eff. Document -> Number -> Number -> Eff (ace :: ACE | eff) Anchor
 create doc row column = runFn3 createImpl doc row column

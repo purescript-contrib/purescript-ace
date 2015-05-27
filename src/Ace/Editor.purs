@@ -137,18 +137,18 @@ foreign import onImpl
   \      fn(e)();\
   \    });\
   \  };\
-  \}" :: forall ev eff a. Fn3 String (ev -> Eff (ace :: EAce | eff) a) Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall ev eff a. Fn3 String (ev -> Eff (ace :: ACE | eff) a) Editor (Eff (ace :: ACE | eff) Unit)
 
-onBlur :: forall eff a. Editor -> (Eff (ace :: EAce | eff) a) -> Eff (ace :: EAce | eff) Unit
+onBlur :: forall eff a. Editor -> (Eff (ace :: ACE | eff) a) -> Eff (ace :: ACE | eff) Unit
 onBlur self fn = runFn3 onImpl "blur" (\_ -> fn) self
 
-onFocus :: forall eff a. Editor -> (Eff (ace :: EAce | eff) a) -> Eff (ace :: EAce | eff) Unit
+onFocus :: forall eff a. Editor -> (Eff (ace :: ACE | eff) a) -> Eff (ace :: ACE | eff) Unit
 onFocus self fn = runFn3 onImpl "focus" (\_ -> fn) self
 
-onCopy :: forall eff a. Editor -> (String -> Eff (ace :: EAce | eff) a) -> Eff (ace :: EAce | eff) Unit
+onCopy :: forall eff a. Editor -> (String -> Eff (ace :: ACE | eff) a) -> Eff (ace :: ACE | eff) Unit
 onCopy self fn = runFn3 onImpl "copy" fn self
 
-onPaste :: forall eff a. Editor -> (PasteEvent -> Eff (ace :: EAce | eff) a) -> Eff (ace :: EAce | eff) Unit
+onPaste :: forall eff a. Editor -> (PasteEvent -> Eff (ace :: ACE | eff) a) -> Eff (ace :: ACE | eff) Unit
 onPaste self fn = runFn3 onImpl "paste" fn self
 
 foreign import getPasteEventText
@@ -156,22 +156,22 @@ foreign import getPasteEventText
   \  return function() {\
   \    return e.text;\
   \  };\
-  \}" :: forall eff. PasteEvent -> Eff (ace :: EAce | eff) String
+  \}" :: forall eff. PasteEvent -> Eff (ace :: ACE | eff) String
 
 foreign import setPasteEventTextImpl
   "function setPasteEventTextImpl(text, e) {\
   \  return function() {\
   \    e.text = text;\
   \  };\
-  \}" :: forall eff. Fn2 String PasteEvent (Eff (ace :: EAce | eff) Unit)
-  
-setPasteEventText :: forall eff. String -> PasteEvent -> Eff (ace :: EAce | eff) Unit
+  \}" :: forall eff. Fn2 String PasteEvent (Eff (ace :: ACE | eff) Unit)
+
+setPasteEventText :: forall eff. String -> PasteEvent -> Eff (ace :: ACE | eff) Unit
 setPasteEventText text e = runFn2 setPasteEventTextImpl text e
 
-onChangeSession :: forall eff. Editor -> ({ oldSession :: EditSession, session :: EditSession } -> Eff (ace :: EAce | eff) Unit) -> Eff (ace :: EAce | eff) Unit
+onChangeSession :: forall eff. Editor -> ({ oldSession :: EditSession, session :: EditSession } -> Eff (ace :: ACE | eff) Unit) -> Eff (ace :: ACE | eff) Unit
 onChangeSession self fn = runFn3 onImpl "changeSession" fn self
 
-onChangeSelectionStyle :: forall eff. Editor -> Eff (ace :: EAce | eff) Unit -> Eff (ace :: EAce | eff) Unit
+onChangeSelectionStyle :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit -> Eff (ace :: ACE | eff) Unit
 onChangeSelectionStyle self fn = runFn3 onImpl "changeSelectionStyle" (\_ -> fn) self
 
 foreign import getRenderer
@@ -179,23 +179,23 @@ foreign import getRenderer
   \  return function() {\
   \    return self.renderer;\
   \  };\
-  \}" :: forall eff. Editor -> Eff (ace :: EAce | eff) VirtualRenderer
-  
+  \}" :: forall eff. Editor -> Eff (ace :: ACE | eff) VirtualRenderer
+
 foreign import isInMultiSelectMode
   "function isInMultiSelectMode(self) {\
   \  return function() {\
   \    return self.inMultiSelectMode;\
   \  };\
-  \}" :: forall eff. Editor -> Eff (ace :: EAce | eff) Boolean
+  \}" :: forall eff. Editor -> Eff (ace :: ACE | eff) Boolean
 
 foreign import selectMoreLinesImpl
   "function selectMoreLinesImpl(n, self) {\
   \  return function() {\
   \    return self.selectMoreLines(n);\
   \  };\
-  \}" :: forall eff. Fn2 Number Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 Number Editor (Eff (ace :: ACE | eff) Unit)
 
-selectMoreLines :: forall eff. Number -> Editor -> Eff (ace :: EAce | eff) Unit
+selectMoreLines :: forall eff. Number -> Editor -> Eff (ace :: ACE | eff) Unit
 selectMoreLines n self = runFn2 selectMoreLinesImpl n self
 
 foreign import getContainer
@@ -203,16 +203,16 @@ foreign import getContainer
   \  return function() {\
   \    return self.container;\
   \  };\
-  \}" :: forall eff. Editor -> Eff (ace :: EAce | eff) HTMLElement
+  \}" :: forall eff. Editor -> Eff (ace :: ACE | eff) HTMLElement
 
 foreign import setKeyboardHandlerImpl
   "function setKeyboardHandlerImpl(keyboardHandler, self) {\
   \  return function() {\
   \    return self.setKeyboardHandler(keyboardHandler);\
   \  };\
-  \}" :: forall eff. Fn2 String Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 String Editor (Eff (ace :: ACE | eff) Unit)
 
-setKeyboardHandler :: forall eff. String -> Editor -> Eff (ace :: EAce | eff) Unit
+setKeyboardHandler :: forall eff. String -> Editor -> Eff (ace :: ACE | eff) Unit
 setKeyboardHandler keyboardHandler self = runFn2 setKeyboardHandlerImpl keyboardHandler self
 
 foreign import getKeyboardHandlerImpl
@@ -220,9 +220,9 @@ foreign import getKeyboardHandlerImpl
   \  return function() {\
   \    return self.getKeyboardHandler();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) String)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) String)
 
-getKeyboardHandler :: forall eff. Editor -> Eff (ace :: EAce | eff) String
+getKeyboardHandler :: forall eff. Editor -> Eff (ace :: ACE | eff) String
 getKeyboardHandler self = runFn1 getKeyboardHandlerImpl self
 
 foreign import setSessionImpl
@@ -230,9 +230,9 @@ foreign import setSessionImpl
   \  return function() {\
   \    return self.setSession(session);\
   \  };\
-  \}" :: forall eff. Fn2 EditSession Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 EditSession Editor (Eff (ace :: ACE | eff) Unit)
 
-setSession :: forall eff. EditSession -> Editor -> Eff (ace :: EAce | eff) Unit
+setSession :: forall eff. EditSession -> Editor -> Eff (ace :: ACE | eff) Unit
 setSession session self = runFn2 setSessionImpl session self
 
 foreign import getSessionImpl
@@ -240,9 +240,9 @@ foreign import getSessionImpl
   \  return function() {\
   \    return self.getSession();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) EditSession)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) EditSession)
 
-getSession :: forall eff. Editor -> Eff (ace :: EAce | eff) EditSession
+getSession :: forall eff. Editor -> Eff (ace :: ACE | eff) EditSession
 getSession self = runFn1 getSessionImpl self
 
 foreign import setValueImpl
@@ -250,9 +250,9 @@ foreign import setValueImpl
   \  return function() {\
   \    return self.setValue(val, cursorPos);\
   \  };\
-  \}" :: forall eff. Fn3 String (Nullable Number) Editor (Eff (ace :: EAce | eff) String)
+  \}" :: forall eff. Fn3 String (Nullable Number) Editor (Eff (ace :: ACE | eff) String)
 
-setValue :: forall eff. String -> Maybe Number -> Editor -> Eff (ace :: EAce | eff) String
+setValue :: forall eff. String -> Maybe Number -> Editor -> Eff (ace :: ACE | eff) String
 setValue val cursorPos self = runFn3 setValueImpl val (toNullable cursorPos) self
 
 foreign import getValueImpl
@@ -260,9 +260,9 @@ foreign import getValueImpl
   \  return function() {\
   \    return self.getValue();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) String)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) String)
 
-getValue :: forall eff. Editor -> Eff (ace :: EAce | eff) String
+getValue :: forall eff. Editor -> Eff (ace :: ACE | eff) String
 getValue self = runFn1 getValueImpl self
 
 foreign import getSelectionImpl
@@ -270,9 +270,9 @@ foreign import getSelectionImpl
   \  return function() {\
   \    return self.getSelection();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) Selection)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) Selection)
 
-getSelection :: forall eff. Editor -> Eff (ace :: EAce | eff) Selection
+getSelection :: forall eff. Editor -> Eff (ace :: ACE | eff) Selection
 getSelection self = runFn1 getSelectionImpl self
 
 foreign import resizeImpl
@@ -280,9 +280,9 @@ foreign import resizeImpl
   \  return function() {\
   \    return self.resize(force);\
   \  };\
-  \}" :: forall eff. Fn2 (Nullable Boolean) Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 (Nullable Boolean) Editor (Eff (ace :: ACE | eff) Unit)
 
-resize :: forall eff. Maybe Boolean -> Editor -> Eff (ace :: EAce | eff) Unit
+resize :: forall eff. Maybe Boolean -> Editor -> Eff (ace :: ACE | eff) Unit
 resize force self = runFn2 resizeImpl (toNullable force) self
 
 foreign import setThemeImpl
@@ -290,9 +290,9 @@ foreign import setThemeImpl
   \  return function() {\
   \    return self.setTheme(theme);\
   \  };\
-  \}" :: forall eff. Fn2 String Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 String Editor (Eff (ace :: ACE | eff) Unit)
 
-setTheme :: forall eff. String -> Editor -> Eff (ace :: EAce | eff) Unit
+setTheme :: forall eff. String -> Editor -> Eff (ace :: ACE | eff) Unit
 setTheme theme self = runFn2 setThemeImpl theme self
 
 foreign import getThemeImpl
@@ -300,9 +300,9 @@ foreign import getThemeImpl
   \  return function() {\
   \    return self.getTheme();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) String)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) String)
 
-getTheme :: forall eff. Editor -> Eff (ace :: EAce | eff) String
+getTheme :: forall eff. Editor -> Eff (ace :: ACE | eff) String
 getTheme self = runFn1 getThemeImpl self
 
 foreign import setStyleImpl
@@ -310,9 +310,9 @@ foreign import setStyleImpl
   \  return function() {\
   \    return self.setStyle(style);\
   \  };\
-  \}" :: forall eff. Fn2 String Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 String Editor (Eff (ace :: ACE | eff) Unit)
 
-setStyle :: forall eff. String -> Editor -> Eff (ace :: EAce | eff) Unit
+setStyle :: forall eff. String -> Editor -> Eff (ace :: ACE | eff) Unit
 setStyle style self = runFn2 setStyleImpl style self
 
 foreign import unsetStyleImpl
@@ -320,9 +320,9 @@ foreign import unsetStyleImpl
   \  return function() {\
   \    return self.unsetStyle();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) Unit)
 
-unsetStyle :: forall eff. Editor -> Eff (ace :: EAce | eff) Unit
+unsetStyle :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
 unsetStyle self = runFn1 unsetStyleImpl self
 
 foreign import setFontSizeImpl
@@ -330,9 +330,9 @@ foreign import setFontSizeImpl
   \  return function() {\
   \    return self.setFontSize(size);\
   \  };\
-  \}" :: forall eff. Fn2 String Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 String Editor (Eff (ace :: ACE | eff) Unit)
 
-setFontSize :: forall eff. String -> Editor -> Eff (ace :: EAce | eff) Unit
+setFontSize :: forall eff. String -> Editor -> Eff (ace :: ACE | eff) Unit
 setFontSize size self = runFn2 setFontSizeImpl size self
 
 foreign import focusImpl
@@ -340,9 +340,9 @@ foreign import focusImpl
   \  return function() {\
   \    return self.focus();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) Unit)
 
-focus :: forall eff. Editor -> Eff (ace :: EAce | eff) Unit
+focus :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
 focus self = runFn1 focusImpl self
 
 foreign import isFocusedImpl
@@ -350,9 +350,9 @@ foreign import isFocusedImpl
   \  return function() {\
   \    return self.isFocused();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) Unit)
 
-isFocused :: forall eff. Editor -> Eff (ace :: EAce | eff) Unit
+isFocused :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
 isFocused self = runFn1 isFocusedImpl self
 
 foreign import blurImpl
@@ -360,9 +360,9 @@ foreign import blurImpl
   \  return function() {\
   \    return self.blur();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) Unit)
 
-blur :: forall eff. Editor -> Eff (ace :: EAce | eff) Unit
+blur :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
 blur self = runFn1 blurImpl self
 
 foreign import getCopyTextImpl
@@ -370,9 +370,9 @@ foreign import getCopyTextImpl
   \  return function() {\
   \    return self.getCopyText();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) String)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) String)
 
-getCopyText :: forall eff. Editor -> Eff (ace :: EAce | eff) String
+getCopyText :: forall eff. Editor -> Eff (ace :: ACE | eff) String
 getCopyText self = runFn1 getCopyTextImpl self
 
 foreign import insertImpl
@@ -380,9 +380,9 @@ foreign import insertImpl
   \  return function() {\
   \    return self.insert(text);\
   \  };\
-  \}" :: forall eff. Fn2 String Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 String Editor (Eff (ace :: ACE | eff) Unit)
 
-insert :: forall eff. String -> Editor -> Eff (ace :: EAce | eff) Unit
+insert :: forall eff. String -> Editor -> Eff (ace :: ACE | eff) Unit
 insert text self = runFn2 insertImpl text self
 
 foreign import setOverwriteImpl
@@ -390,9 +390,9 @@ foreign import setOverwriteImpl
   \  return function() {\
   \    return self.setOverwrite(overwrite);\
   \  };\
-  \}" :: forall eff. Fn2 Boolean Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 Boolean Editor (Eff (ace :: ACE | eff) Unit)
 
-setOverwrite :: forall eff. Boolean -> Editor -> Eff (ace :: EAce | eff) Unit
+setOverwrite :: forall eff. Boolean -> Editor -> Eff (ace :: ACE | eff) Unit
 setOverwrite overwrite self = runFn2 setOverwriteImpl overwrite self
 
 foreign import getOverwriteImpl
@@ -400,9 +400,9 @@ foreign import getOverwriteImpl
   \  return function() {\
   \    return self.getOverwrite();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) Boolean)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) Boolean)
 
-getOverwrite :: forall eff. Editor -> Eff (ace :: EAce | eff) Boolean
+getOverwrite :: forall eff. Editor -> Eff (ace :: ACE | eff) Boolean
 getOverwrite self = runFn1 getOverwriteImpl self
 
 foreign import toggleOverwriteImpl
@@ -410,9 +410,9 @@ foreign import toggleOverwriteImpl
   \  return function() {\
   \    return self.toggleOverwrite();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) Unit)
 
-toggleOverwrite :: forall eff. Editor -> Eff (ace :: EAce | eff) Unit
+toggleOverwrite :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
 toggleOverwrite self = runFn1 toggleOverwriteImpl self
 
 foreign import setScrollSpeedImpl
@@ -420,9 +420,9 @@ foreign import setScrollSpeedImpl
   \  return function() {\
   \    return self.setScrollSpeed(speed);\
   \  };\
-  \}" :: forall eff. Fn2 Number Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 Number Editor (Eff (ace :: ACE | eff) Unit)
 
-setScrollSpeed :: forall eff. Number -> Editor -> Eff (ace :: EAce | eff) Unit
+setScrollSpeed :: forall eff. Number -> Editor -> Eff (ace :: ACE | eff) Unit
 setScrollSpeed speed self = runFn2 setScrollSpeedImpl speed self
 
 foreign import getScrollSpeedImpl
@@ -430,9 +430,9 @@ foreign import getScrollSpeedImpl
   \  return function() {\
   \    return self.getScrollSpeed();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) Number)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) Number)
 
-getScrollSpeed :: forall eff. Editor -> Eff (ace :: EAce | eff) Number
+getScrollSpeed :: forall eff. Editor -> Eff (ace :: ACE | eff) Number
 getScrollSpeed self = runFn1 getScrollSpeedImpl self
 
 foreign import setDragDelayImpl
@@ -440,9 +440,9 @@ foreign import setDragDelayImpl
   \  return function() {\
   \    return self.setDragDelay(dragDelay);\
   \  };\
-  \}" :: forall eff. Fn2 Number Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 Number Editor (Eff (ace :: ACE | eff) Unit)
 
-setDragDelay :: forall eff. Number -> Editor -> Eff (ace :: EAce | eff) Unit
+setDragDelay :: forall eff. Number -> Editor -> Eff (ace :: ACE | eff) Unit
 setDragDelay dragDelay self = runFn2 setDragDelayImpl dragDelay self
 
 foreign import getDragDelayImpl
@@ -450,9 +450,9 @@ foreign import getDragDelayImpl
   \  return function() {\
   \    return self.getDragDelay();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) Number)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) Number)
 
-getDragDelay :: forall eff. Editor -> Eff (ace :: EAce | eff) Number
+getDragDelay :: forall eff. Editor -> Eff (ace :: ACE | eff) Number
 getDragDelay self = runFn1 getDragDelayImpl self
 
 foreign import setSelectionStyleImpl
@@ -460,9 +460,9 @@ foreign import setSelectionStyleImpl
   \  return function() {\
   \    return self.setSelectionStyle(style);\
   \  };\
-  \}" :: forall eff. Fn2 String Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 String Editor (Eff (ace :: ACE | eff) Unit)
 
-setSelectionStyle :: forall eff. String -> Editor -> Eff (ace :: EAce | eff) Unit
+setSelectionStyle :: forall eff. String -> Editor -> Eff (ace :: ACE | eff) Unit
 setSelectionStyle style self = runFn2 setSelectionStyleImpl style self
 
 foreign import getSelectionStyleImpl
@@ -470,9 +470,9 @@ foreign import getSelectionStyleImpl
   \  return function() {\
   \    return self.getSelectionStyle();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) String)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) String)
 
-getSelectionStyle :: forall eff. Editor -> Eff (ace :: EAce | eff) String
+getSelectionStyle :: forall eff. Editor -> Eff (ace :: ACE | eff) String
 getSelectionStyle self = runFn1 getSelectionStyleImpl self
 
 foreign import setHighlightActiveLineImpl
@@ -480,9 +480,9 @@ foreign import setHighlightActiveLineImpl
   \  return function() {\
   \    return self.setHighlightActiveLine(shouldHighlight);\
   \  };\
-  \}" :: forall eff. Fn2 Boolean Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 Boolean Editor (Eff (ace :: ACE | eff) Unit)
 
-setHighlightActiveLine :: forall eff. Boolean -> Editor -> Eff (ace :: EAce | eff) Unit
+setHighlightActiveLine :: forall eff. Boolean -> Editor -> Eff (ace :: ACE | eff) Unit
 setHighlightActiveLine shouldHighlight self = runFn2 setHighlightActiveLineImpl shouldHighlight self
 
 foreign import getHighlightActiveLineImpl
@@ -490,9 +490,9 @@ foreign import getHighlightActiveLineImpl
   \  return function() {\
   \    return self.getHighlightActiveLine();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) Unit)
 
-getHighlightActiveLine :: forall eff. Editor -> Eff (ace :: EAce | eff) Unit
+getHighlightActiveLine :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
 getHighlightActiveLine self = runFn1 getHighlightActiveLineImpl self
 
 foreign import setHighlightSelectedWordImpl
@@ -500,9 +500,9 @@ foreign import setHighlightSelectedWordImpl
   \  return function() {\
   \    return self.setHighlightSelectedWord(shouldHighlight);\
   \  };\
-  \}" :: forall eff. Fn2 Boolean Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 Boolean Editor (Eff (ace :: ACE | eff) Unit)
 
-setHighlightSelectedWord :: forall eff. Boolean -> Editor -> Eff (ace :: EAce | eff) Unit
+setHighlightSelectedWord :: forall eff. Boolean -> Editor -> Eff (ace :: ACE | eff) Unit
 setHighlightSelectedWord shouldHighlight self = runFn2 setHighlightSelectedWordImpl shouldHighlight self
 
 foreign import getHighlightSelectedWordImpl
@@ -510,9 +510,9 @@ foreign import getHighlightSelectedWordImpl
   \  return function() {\
   \    return self.getHighlightSelectedWord();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) Boolean)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) Boolean)
 
-getHighlightSelectedWord :: forall eff. Editor -> Eff (ace :: EAce | eff) Boolean
+getHighlightSelectedWord :: forall eff. Editor -> Eff (ace :: ACE | eff) Boolean
 getHighlightSelectedWord self = runFn1 getHighlightSelectedWordImpl self
 
 foreign import setShowInvisiblesImpl
@@ -520,9 +520,9 @@ foreign import setShowInvisiblesImpl
   \  return function() {\
   \    return self.setShowInvisibles(showInvisibles);\
   \  };\
-  \}" :: forall eff. Fn2 Boolean Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 Boolean Editor (Eff (ace :: ACE | eff) Unit)
 
-setShowInvisibles :: forall eff. Boolean -> Editor -> Eff (ace :: EAce | eff) Unit
+setShowInvisibles :: forall eff. Boolean -> Editor -> Eff (ace :: ACE | eff) Unit
 setShowInvisibles showInvisibles self = runFn2 setShowInvisiblesImpl showInvisibles self
 
 foreign import getShowInvisiblesImpl
@@ -530,9 +530,9 @@ foreign import getShowInvisiblesImpl
   \  return function() {\
   \    return self.getShowInvisibles();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) Boolean)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) Boolean)
 
-getShowInvisibles :: forall eff. Editor -> Eff (ace :: EAce | eff) Boolean
+getShowInvisibles :: forall eff. Editor -> Eff (ace :: ACE | eff) Boolean
 getShowInvisibles self = runFn1 getShowInvisiblesImpl self
 
 foreign import setShowPrintMarginImpl
@@ -540,9 +540,9 @@ foreign import setShowPrintMarginImpl
   \  return function() {\
   \    return self.setShowPrintMargin(showPrintMargin);\
   \  };\
-  \}" :: forall eff. Fn2 Boolean Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 Boolean Editor (Eff (ace :: ACE | eff) Unit)
 
-setShowPrintMargin :: forall eff. Boolean -> Editor -> Eff (ace :: EAce | eff) Unit
+setShowPrintMargin :: forall eff. Boolean -> Editor -> Eff (ace :: ACE | eff) Unit
 setShowPrintMargin showPrintMargin self = runFn2 setShowPrintMarginImpl showPrintMargin self
 
 foreign import getShowPrintMarginImpl
@@ -550,9 +550,9 @@ foreign import getShowPrintMarginImpl
   \  return function() {\
   \    return self.getShowPrintMargin();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) Boolean)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) Boolean)
 
-getShowPrintMargin :: forall eff. Editor -> Eff (ace :: EAce | eff) Boolean
+getShowPrintMargin :: forall eff. Editor -> Eff (ace :: ACE | eff) Boolean
 getShowPrintMargin self = runFn1 getShowPrintMarginImpl self
 
 foreign import setPrintMarginColumnImpl
@@ -560,9 +560,9 @@ foreign import setPrintMarginColumnImpl
   \  return function() {\
   \    return self.setPrintMarginColumn(showPrintMargin);\
   \  };\
-  \}" :: forall eff. Fn2 Number Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 Number Editor (Eff (ace :: ACE | eff) Unit)
 
-setPrintMarginColumn :: forall eff. Number -> Editor -> Eff (ace :: EAce | eff) Unit
+setPrintMarginColumn :: forall eff. Number -> Editor -> Eff (ace :: ACE | eff) Unit
 setPrintMarginColumn showPrintMargin self = runFn2 setPrintMarginColumnImpl showPrintMargin self
 
 foreign import getPrintMarginColumnImpl
@@ -570,9 +570,9 @@ foreign import getPrintMarginColumnImpl
   \  return function() {\
   \    return self.getPrintMarginColumn();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) Number)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) Number)
 
-getPrintMarginColumn :: forall eff. Editor -> Eff (ace :: EAce | eff) Number
+getPrintMarginColumn :: forall eff. Editor -> Eff (ace :: ACE | eff) Number
 getPrintMarginColumn self = runFn1 getPrintMarginColumnImpl self
 
 foreign import setReadOnlyImpl
@@ -580,9 +580,9 @@ foreign import setReadOnlyImpl
   \  return function() {\
   \    return self.setReadOnly(readOnly);\
   \  };\
-  \}" :: forall eff. Fn2 Boolean Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 Boolean Editor (Eff (ace :: ACE | eff) Unit)
 
-setReadOnly :: forall eff. Boolean -> Editor -> Eff (ace :: EAce | eff) Unit
+setReadOnly :: forall eff. Boolean -> Editor -> Eff (ace :: ACE | eff) Unit
 setReadOnly readOnly self = runFn2 setReadOnlyImpl readOnly self
 
 foreign import getReadOnlyImpl
@@ -590,9 +590,9 @@ foreign import getReadOnlyImpl
   \  return function() {\
   \    return self.getReadOnly();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) Boolean)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) Boolean)
 
-getReadOnly :: forall eff. Editor -> Eff (ace :: EAce | eff) Boolean
+getReadOnly :: forall eff. Editor -> Eff (ace :: ACE | eff) Boolean
 getReadOnly self = runFn1 getReadOnlyImpl self
 
 foreign import setBehavioursEnabledImpl
@@ -600,9 +600,9 @@ foreign import setBehavioursEnabledImpl
   \  return function() {\
   \    return self.setBehavioursEnabled(enabled);\
   \  };\
-  \}" :: forall eff. Fn2 Boolean Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 Boolean Editor (Eff (ace :: ACE | eff) Unit)
 
-setBehavioursEnabled :: forall eff. Boolean -> Editor -> Eff (ace :: EAce | eff) Unit
+setBehavioursEnabled :: forall eff. Boolean -> Editor -> Eff (ace :: ACE | eff) Unit
 setBehavioursEnabled enabled self = runFn2 setBehavioursEnabledImpl enabled self
 
 foreign import getBehavioursEnabledImpl
@@ -610,9 +610,9 @@ foreign import getBehavioursEnabledImpl
   \  return function() {\
   \    return self.getBehavioursEnabled();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) Boolean)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) Boolean)
 
-getBehavioursEnabled :: forall eff. Editor -> Eff (ace :: EAce | eff) Boolean
+getBehavioursEnabled :: forall eff. Editor -> Eff (ace :: ACE | eff) Boolean
 getBehavioursEnabled self = runFn1 getBehavioursEnabledImpl self
 
 foreign import setWrapBehavioursEnabledImpl
@@ -620,9 +620,9 @@ foreign import setWrapBehavioursEnabledImpl
   \  return function() {\
   \    return self.setWrapBehavioursEnabled(enabled);\
   \  };\
-  \}" :: forall eff. Fn2 Boolean Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 Boolean Editor (Eff (ace :: ACE | eff) Unit)
 
-setWrapBehavioursEnabled :: forall eff. Boolean -> Editor -> Eff (ace :: EAce | eff) Unit
+setWrapBehavioursEnabled :: forall eff. Boolean -> Editor -> Eff (ace :: ACE | eff) Unit
 setWrapBehavioursEnabled enabled self = runFn2 setWrapBehavioursEnabledImpl enabled self
 
 foreign import getWrapBehavioursEnabledImpl
@@ -630,9 +630,9 @@ foreign import getWrapBehavioursEnabledImpl
   \  return function() {\
   \    return self.getWrapBehavioursEnabled();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) Unit)
 
-getWrapBehavioursEnabled :: forall eff. Editor -> Eff (ace :: EAce | eff) Unit
+getWrapBehavioursEnabled :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
 getWrapBehavioursEnabled self = runFn1 getWrapBehavioursEnabledImpl self
 
 foreign import setShowFoldWidgetsImpl
@@ -640,9 +640,9 @@ foreign import setShowFoldWidgetsImpl
   \  return function() {\
   \    return self.setShowFoldWidgets(show);\
   \  };\
-  \}" :: forall eff. Fn2 Boolean Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 Boolean Editor (Eff (ace :: ACE | eff) Unit)
 
-setShowFoldWidgets :: forall eff. Boolean -> Editor -> Eff (ace :: EAce | eff) Unit
+setShowFoldWidgets :: forall eff. Boolean -> Editor -> Eff (ace :: ACE | eff) Unit
 setShowFoldWidgets show self = runFn2 setShowFoldWidgetsImpl show self
 
 foreign import getShowFoldWidgetsImpl
@@ -650,9 +650,9 @@ foreign import getShowFoldWidgetsImpl
   \  return function() {\
   \    return self.getShowFoldWidgets();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) Unit)
 
-getShowFoldWidgets :: forall eff. Editor -> Eff (ace :: EAce | eff) Unit
+getShowFoldWidgets :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
 getShowFoldWidgets self = runFn1 getShowFoldWidgetsImpl self
 
 foreign import removeImpl
@@ -660,9 +660,9 @@ foreign import removeImpl
   \  return function() {\
   \    return self.remove(dir);\
   \  };\
-  \}" :: forall eff. Fn2 String Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 String Editor (Eff (ace :: ACE | eff) Unit)
 
-remove :: forall eff. String -> Editor -> Eff (ace :: EAce | eff) Unit
+remove :: forall eff. String -> Editor -> Eff (ace :: ACE | eff) Unit
 remove dir self = runFn2 removeImpl dir self
 
 foreign import removeWordRightImpl
@@ -670,9 +670,9 @@ foreign import removeWordRightImpl
   \  return function() {\
   \    return self.removeWordRight();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) Unit)
 
-removeWordRight :: forall eff. Editor -> Eff (ace :: EAce | eff) Unit
+removeWordRight :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
 removeWordRight self = runFn1 removeWordRightImpl self
 
 foreign import removeWordLeftImpl
@@ -680,9 +680,9 @@ foreign import removeWordLeftImpl
   \  return function() {\
   \    return self.removeWordLeft();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) Unit)
 
-removeWordLeft :: forall eff. Editor -> Eff (ace :: EAce | eff) Unit
+removeWordLeft :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
 removeWordLeft self = runFn1 removeWordLeftImpl self
 
 foreign import removeToLineStartImpl
@@ -690,9 +690,9 @@ foreign import removeToLineStartImpl
   \  return function() {\
   \    return self.removeToLineStart();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) Unit)
 
-removeToLineStart :: forall eff. Editor -> Eff (ace :: EAce | eff) Unit
+removeToLineStart :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
 removeToLineStart self = runFn1 removeToLineStartImpl self
 
 foreign import removeToLineEndImpl
@@ -700,9 +700,9 @@ foreign import removeToLineEndImpl
   \  return function() {\
   \    return self.removeToLineEnd();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) Unit)
 
-removeToLineEnd :: forall eff. Editor -> Eff (ace :: EAce | eff) Unit
+removeToLineEnd :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
 removeToLineEnd self = runFn1 removeToLineEndImpl self
 
 foreign import splitLineImpl
@@ -710,9 +710,9 @@ foreign import splitLineImpl
   \  return function() {\
   \    return self.splitLine();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) Unit)
 
-splitLine :: forall eff. Editor -> Eff (ace :: EAce | eff) Unit
+splitLine :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
 splitLine self = runFn1 splitLineImpl self
 
 foreign import transposeLettersImpl
@@ -720,9 +720,9 @@ foreign import transposeLettersImpl
   \  return function() {\
   \    return self.transposeLetters();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) Unit)
 
-transposeLetters :: forall eff. Editor -> Eff (ace :: EAce | eff) Unit
+transposeLetters :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
 transposeLetters self = runFn1 transposeLettersImpl self
 
 foreign import toLowerCaseImpl
@@ -730,9 +730,9 @@ foreign import toLowerCaseImpl
   \  return function() {\
   \    return self.toLowerCase();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) Unit)
 
-toLowerCase :: forall eff. Editor -> Eff (ace :: EAce | eff) Unit
+toLowerCase :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
 toLowerCase self = runFn1 toLowerCaseImpl self
 
 foreign import toUpperCaseImpl
@@ -740,9 +740,9 @@ foreign import toUpperCaseImpl
   \  return function() {\
   \    return self.toUpperCase();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) Unit)
 
-toUpperCase :: forall eff. Editor -> Eff (ace :: EAce | eff) Unit
+toUpperCase :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
 toUpperCase self = runFn1 toUpperCaseImpl self
 
 foreign import indentImpl
@@ -750,9 +750,9 @@ foreign import indentImpl
   \  return function() {\
   \    return self.indent();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) Unit)
 
-indent :: forall eff. Editor -> Eff (ace :: EAce | eff) Unit
+indent :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
 indent self = runFn1 indentImpl self
 
 foreign import blockIndentImpl
@@ -760,9 +760,9 @@ foreign import blockIndentImpl
   \  return function() {\
   \    return self.blockIndent();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) Unit)
 
-blockIndent :: forall eff. Editor -> Eff (ace :: EAce | eff) Unit
+blockIndent :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
 blockIndent self = runFn1 blockIndentImpl self
 
 foreign import blockOutdentImpl
@@ -770,9 +770,9 @@ foreign import blockOutdentImpl
   \  return function() {\
   \    return self.blockOutdent(arg);\
   \  };\
-  \}" :: forall eff. Fn2 (Nullable String) Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 (Nullable String) Editor (Eff (ace :: ACE | eff) Unit)
 
-blockOutdent :: forall eff. Maybe String -> Editor -> Eff (ace :: EAce | eff) Unit
+blockOutdent :: forall eff. Maybe String -> Editor -> Eff (ace :: ACE | eff) Unit
 blockOutdent arg self = runFn2 blockOutdentImpl (toNullable arg) self
 
 foreign import toggleCommentLinesImpl
@@ -780,9 +780,9 @@ foreign import toggleCommentLinesImpl
   \  return function() {\
   \    return self.toggleCommentLines();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) Unit)
 
-toggleCommentLines :: forall eff. Editor -> Eff (ace :: EAce | eff) Unit
+toggleCommentLines :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
 toggleCommentLines self = runFn1 toggleCommentLinesImpl self
 
 foreign import getNumberAtImpl
@@ -790,9 +790,9 @@ foreign import getNumberAtImpl
   \  return function() {\
   \    return self.getNumberAt();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) Number)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) Number)
 
-getNumberAt :: forall eff. Editor -> Eff (ace :: EAce | eff) Number
+getNumberAt :: forall eff. Editor -> Eff (ace :: ACE | eff) Number
 getNumberAt self = runFn1 getNumberAtImpl self
 
 foreign import modifyNumberImpl
@@ -800,9 +800,9 @@ foreign import modifyNumberImpl
   \  return function() {\
   \    return self.modifyNumber(amount);\
   \  };\
-  \}" :: forall eff. Fn2 Number Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 Number Editor (Eff (ace :: ACE | eff) Unit)
 
-modifyNumber :: forall eff. Number -> Editor -> Eff (ace :: EAce | eff) Unit
+modifyNumber :: forall eff. Number -> Editor -> Eff (ace :: ACE | eff) Unit
 modifyNumber amount self = runFn2 modifyNumberImpl amount self
 
 foreign import removeLinesImpl
@@ -810,9 +810,9 @@ foreign import removeLinesImpl
   \  return function() {\
   \    return self.removeLines();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) Unit)
 
-removeLines :: forall eff. Editor -> Eff (ace :: EAce | eff) Unit
+removeLines :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
 removeLines self = runFn1 removeLinesImpl self
 
 foreign import moveLinesDownImpl
@@ -820,9 +820,9 @@ foreign import moveLinesDownImpl
   \  return function() {\
   \    return self.moveLinesDown();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) Number)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) Number)
 
-moveLinesDown :: forall eff. Editor -> Eff (ace :: EAce | eff) Number
+moveLinesDown :: forall eff. Editor -> Eff (ace :: ACE | eff) Number
 moveLinesDown self = runFn1 moveLinesDownImpl self
 
 foreign import moveLinesUpImpl
@@ -830,9 +830,9 @@ foreign import moveLinesUpImpl
   \  return function() {\
   \    return self.moveLinesUp();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) Number)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) Number)
 
-moveLinesUp :: forall eff. Editor -> Eff (ace :: EAce | eff) Number
+moveLinesUp :: forall eff. Editor -> Eff (ace :: ACE | eff) Number
 moveLinesUp self = runFn1 moveLinesUpImpl self
 
 foreign import copyLinesUpImpl
@@ -840,9 +840,9 @@ foreign import copyLinesUpImpl
   \  return function() {\
   \    return self.copyLinesUp();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) Number)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) Number)
 
-copyLinesUp :: forall eff. Editor -> Eff (ace :: EAce | eff) Number
+copyLinesUp :: forall eff. Editor -> Eff (ace :: ACE | eff) Number
 copyLinesUp self = runFn1 copyLinesUpImpl self
 
 foreign import copyLinesDownImpl
@@ -850,9 +850,9 @@ foreign import copyLinesDownImpl
   \  return function() {\
   \    return self.copyLinesDown();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) Number)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) Number)
 
-copyLinesDown :: forall eff. Editor -> Eff (ace :: EAce | eff) Number
+copyLinesDown :: forall eff. Editor -> Eff (ace :: ACE | eff) Number
 copyLinesDown self = runFn1 copyLinesDownImpl self
 
 foreign import getFirstVisibleRowImpl
@@ -860,9 +860,9 @@ foreign import getFirstVisibleRowImpl
   \  return function() {\
   \    return self.getFirstVisibleRow();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) Number)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) Number)
 
-getFirstVisibleRow :: forall eff. Editor -> Eff (ace :: EAce | eff) Number
+getFirstVisibleRow :: forall eff. Editor -> Eff (ace :: ACE | eff) Number
 getFirstVisibleRow self = runFn1 getFirstVisibleRowImpl self
 
 foreign import getLastVisibleRowImpl
@@ -870,9 +870,9 @@ foreign import getLastVisibleRowImpl
   \  return function() {\
   \    return self.getLastVisibleRow();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) Number)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) Number)
 
-getLastVisibleRow :: forall eff. Editor -> Eff (ace :: EAce | eff) Number
+getLastVisibleRow :: forall eff. Editor -> Eff (ace :: ACE | eff) Number
 getLastVisibleRow self = runFn1 getLastVisibleRowImpl self
 
 foreign import isRowVisibleImpl
@@ -880,9 +880,9 @@ foreign import isRowVisibleImpl
   \  return function() {\
   \    return self.isRowVisible(row);\
   \  };\
-  \}" :: forall eff. Fn2 Number Editor (Eff (ace :: EAce | eff) Boolean)
+  \}" :: forall eff. Fn2 Number Editor (Eff (ace :: ACE | eff) Boolean)
 
-isRowVisible :: forall eff. Number -> Editor -> Eff (ace :: EAce | eff) Boolean
+isRowVisible :: forall eff. Number -> Editor -> Eff (ace :: ACE | eff) Boolean
 isRowVisible row self = runFn2 isRowVisibleImpl row self
 
 foreign import isRowFullyVisibleImpl
@@ -890,9 +890,9 @@ foreign import isRowFullyVisibleImpl
   \  return function() {\
   \    return self.isRowFullyVisible(row);\
   \  };\
-  \}" :: forall eff. Fn2 Number Editor (Eff (ace :: EAce | eff) Boolean)
+  \}" :: forall eff. Fn2 Number Editor (Eff (ace :: ACE | eff) Boolean)
 
-isRowFullyVisible :: forall eff. Number -> Editor -> Eff (ace :: EAce | eff) Boolean
+isRowFullyVisible :: forall eff. Number -> Editor -> Eff (ace :: ACE | eff) Boolean
 isRowFullyVisible row self = runFn2 isRowFullyVisibleImpl row self
 
 foreign import selectPageDownImpl
@@ -900,9 +900,9 @@ foreign import selectPageDownImpl
   \  return function() {\
   \    return self.selectPageDown();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) Unit)
 
-selectPageDown :: forall eff. Editor -> Eff (ace :: EAce | eff) Unit
+selectPageDown :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
 selectPageDown self = runFn1 selectPageDownImpl self
 
 foreign import selectPageUpImpl
@@ -910,9 +910,9 @@ foreign import selectPageUpImpl
   \  return function() {\
   \    return self.selectPageUp();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) Unit)
 
-selectPageUp :: forall eff. Editor -> Eff (ace :: EAce | eff) Unit
+selectPageUp :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
 selectPageUp self = runFn1 selectPageUpImpl self
 
 foreign import gotoPageDownImpl
@@ -920,9 +920,9 @@ foreign import gotoPageDownImpl
   \  return function() {\
   \    return self.gotoPageDown();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) Unit)
 
-gotoPageDown :: forall eff. Editor -> Eff (ace :: EAce | eff) Unit
+gotoPageDown :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
 gotoPageDown self = runFn1 gotoPageDownImpl self
 
 foreign import gotoPageUpImpl
@@ -930,9 +930,9 @@ foreign import gotoPageUpImpl
   \  return function() {\
   \    return self.gotoPageUp();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) Unit)
 
-gotoPageUp :: forall eff. Editor -> Eff (ace :: EAce | eff) Unit
+gotoPageUp :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
 gotoPageUp self = runFn1 gotoPageUpImpl self
 
 foreign import scrollPageDownImpl
@@ -940,9 +940,9 @@ foreign import scrollPageDownImpl
   \  return function() {\
   \    return self.scrollPageDown();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) Unit)
 
-scrollPageDown :: forall eff. Editor -> Eff (ace :: EAce | eff) Unit
+scrollPageDown :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
 scrollPageDown self = runFn1 scrollPageDownImpl self
 
 foreign import scrollPageUpImpl
@@ -950,9 +950,9 @@ foreign import scrollPageUpImpl
   \  return function() {\
   \    return self.scrollPageUp();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) Unit)
 
-scrollPageUp :: forall eff. Editor -> Eff (ace :: EAce | eff) Unit
+scrollPageUp :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
 scrollPageUp self = runFn1 scrollPageUpImpl self
 
 foreign import scrollToRowImpl
@@ -960,9 +960,9 @@ foreign import scrollToRowImpl
   \  return function() {\
   \    return self.scrollToRow();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) Unit)
 
-scrollToRow :: forall eff. Editor -> Eff (ace :: EAce | eff) Unit
+scrollToRow :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
 scrollToRow self = runFn1 scrollToRowImpl self
 
 foreign import scrollToLineImpl
@@ -970,9 +970,9 @@ foreign import scrollToLineImpl
   \  return function() {\
   \    return self.scrollToLine(line, center, animate, callback);\
   \  };\
-  \}" :: forall eff. Fn5 Number Boolean Boolean (Eff (ace :: EAce | eff) Unit) Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn5 Number Boolean Boolean (Eff (ace :: ACE | eff) Unit) Editor (Eff (ace :: ACE | eff) Unit)
 
-scrollToLine :: forall eff. Number -> Boolean -> Boolean -> Eff (ace :: EAce | eff) Unit -> Editor -> Eff (ace :: EAce | eff) Unit
+scrollToLine :: forall eff. Number -> Boolean -> Boolean -> Eff (ace :: ACE | eff) Unit -> Editor -> Eff (ace :: ACE | eff) Unit
 scrollToLine line center animate callback self = runFn5 scrollToLineImpl line center animate callback self
 
 foreign import centerSelectionImpl
@@ -980,9 +980,9 @@ foreign import centerSelectionImpl
   \  return function() {\
   \    return self.centerSelection();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) Unit)
 
-centerSelection :: forall eff. Editor -> Eff (ace :: EAce | eff) Unit
+centerSelection :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
 centerSelection self = runFn1 centerSelectionImpl self
 
 foreign import getCursorPositionImpl
@@ -990,9 +990,9 @@ foreign import getCursorPositionImpl
   \  return function() {\
   \    return self.getCursorPosition();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) Position)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) Position)
 
-getCursorPosition :: forall eff. Editor -> Eff (ace :: EAce | eff) Position
+getCursorPosition :: forall eff. Editor -> Eff (ace :: ACE | eff) Position
 getCursorPosition self = runFn1 getCursorPositionImpl self
 
 foreign import getCursorPositionScreenImpl
@@ -1000,9 +1000,9 @@ foreign import getCursorPositionScreenImpl
   \  return function() {\
   \    return self.getCursorPositionScreen();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) Number)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) Number)
 
-getCursorPositionScreen :: forall eff. Editor -> Eff (ace :: EAce | eff) Number
+getCursorPositionScreen :: forall eff. Editor -> Eff (ace :: ACE | eff) Number
 getCursorPositionScreen self = runFn1 getCursorPositionScreenImpl self
 
 foreign import getSelectionRangeImpl
@@ -1010,9 +1010,9 @@ foreign import getSelectionRangeImpl
   \  return function() {\
   \    return self.getSelectionRange();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) Range)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) Range)
 
-getSelectionRange :: forall eff. Editor -> Eff (ace :: EAce | eff) Range
+getSelectionRange :: forall eff. Editor -> Eff (ace :: ACE | eff) Range
 getSelectionRange self = runFn1 getSelectionRangeImpl self
 
 foreign import selectAllImpl
@@ -1020,9 +1020,9 @@ foreign import selectAllImpl
   \  return function() {\
   \    return self.selectAll();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) Unit)
 
-selectAll :: forall eff. Editor -> Eff (ace :: EAce | eff) Unit
+selectAll :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
 selectAll self = runFn1 selectAllImpl self
 
 foreign import clearSelectionImpl
@@ -1030,9 +1030,9 @@ foreign import clearSelectionImpl
   \  return function() {\
   \    return self.clearSelection();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) Unit)
 
-clearSelection :: forall eff. Editor -> Eff (ace :: EAce | eff) Unit
+clearSelection :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
 clearSelection self = runFn1 clearSelectionImpl self
 
 foreign import moveCursorToImpl
@@ -1040,9 +1040,9 @@ foreign import moveCursorToImpl
   \  return function() {\
   \    return self.moveCursorTo(row, column, animate);\
   \  };\
-  \}" :: forall eff. Fn4 Number (Nullable Number) (Nullable Boolean) Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn4 Number (Nullable Number) (Nullable Boolean) Editor (Eff (ace :: ACE | eff) Unit)
 
-moveCursorTo :: forall eff. Number -> Maybe Number -> Maybe Boolean -> Editor -> Eff (ace :: EAce | eff) Unit
+moveCursorTo :: forall eff. Number -> Maybe Number -> Maybe Boolean -> Editor -> Eff (ace :: ACE | eff) Unit
 moveCursorTo row column animate self = runFn4 moveCursorToImpl row (toNullable column) (toNullable animate) self
 
 foreign import moveCursorToPositionImpl
@@ -1050,9 +1050,9 @@ foreign import moveCursorToPositionImpl
   \  return function() {\
   \    return self.moveCursorToPosition(position);\
   \  };\
-  \}" :: forall eff. Fn2 Position Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 Position Editor (Eff (ace :: ACE | eff) Unit)
 
-moveCursorToPosition :: forall eff. Position -> Editor -> Eff (ace :: EAce | eff) Unit
+moveCursorToPosition :: forall eff. Position -> Editor -> Eff (ace :: ACE | eff) Unit
 moveCursorToPosition position self = runFn2 moveCursorToPositionImpl position self
 
 foreign import jumpToMatchingImpl
@@ -1060,9 +1060,9 @@ foreign import jumpToMatchingImpl
   \  return function() {\
   \    return self.jumpToMatching();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) Unit)
 
-jumpToMatching :: forall eff. Editor -> Eff (ace :: EAce | eff) Unit
+jumpToMatching :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
 jumpToMatching self = runFn1 jumpToMatchingImpl self
 
 foreign import gotoLineImpl
@@ -1070,9 +1070,9 @@ foreign import gotoLineImpl
   \  return function() {\
   \    return self.gotoLine(lineNumber, column, animate);\
   \  };\
-  \}" :: forall eff. Fn4 Number (Nullable Number) (Nullable Boolean) Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn4 Number (Nullable Number) (Nullable Boolean) Editor (Eff (ace :: ACE | eff) Unit)
 
-gotoLine :: forall eff. Number -> Maybe Number -> Maybe Boolean -> Editor -> Eff (ace :: EAce | eff) Unit
+gotoLine :: forall eff. Number -> Maybe Number -> Maybe Boolean -> Editor -> Eff (ace :: ACE | eff) Unit
 gotoLine lineNumber column animate self = runFn4 gotoLineImpl lineNumber (toNullable column) (toNullable animate) self
 
 foreign import navigateToImpl
@@ -1080,9 +1080,9 @@ foreign import navigateToImpl
   \  return function() {\
   \    return self.navigateTo(row, column);\
   \  };\
-  \}" :: forall eff. Fn3 Number Number Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn3 Number Number Editor (Eff (ace :: ACE | eff) Unit)
 
-navigateTo :: forall eff. Number -> Number -> Editor -> Eff (ace :: EAce | eff) Unit
+navigateTo :: forall eff. Number -> Number -> Editor -> Eff (ace :: ACE | eff) Unit
 navigateTo row column self = runFn3 navigateToImpl row column self
 
 foreign import navigateUpImpl
@@ -1090,9 +1090,9 @@ foreign import navigateUpImpl
   \  return function() {\
   \    return self.navigateUp(times);\
   \  };\
-  \}" :: forall eff. Fn2 (Nullable Number) Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 (Nullable Number) Editor (Eff (ace :: ACE | eff) Unit)
 
-navigateUp :: forall eff. Maybe Number -> Editor -> Eff (ace :: EAce | eff) Unit
+navigateUp :: forall eff. Maybe Number -> Editor -> Eff (ace :: ACE | eff) Unit
 navigateUp times self = runFn2 navigateUpImpl (toNullable times) self
 
 foreign import navigateDownImpl
@@ -1100,9 +1100,9 @@ foreign import navigateDownImpl
   \  return function() {\
   \    return self.navigateDown(times);\
   \  };\
-  \}" :: forall eff. Fn2 (Nullable Number) Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 (Nullable Number) Editor (Eff (ace :: ACE | eff) Unit)
 
-navigateDown :: forall eff. Maybe Number -> Editor -> Eff (ace :: EAce | eff) Unit
+navigateDown :: forall eff. Maybe Number -> Editor -> Eff (ace :: ACE | eff) Unit
 navigateDown times self = runFn2 navigateDownImpl (toNullable times) self
 
 foreign import navigateLeftImpl
@@ -1110,9 +1110,9 @@ foreign import navigateLeftImpl
   \  return function() {\
   \    return self.navigateLeft(times);\
   \  };\
-  \}" :: forall eff. Fn2 (Nullable Number) Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 (Nullable Number) Editor (Eff (ace :: ACE | eff) Unit)
 
-navigateLeft :: forall eff. Maybe Number -> Editor -> Eff (ace :: EAce | eff) Unit
+navigateLeft :: forall eff. Maybe Number -> Editor -> Eff (ace :: ACE | eff) Unit
 navigateLeft times self = runFn2 navigateLeftImpl (toNullable times) self
 
 foreign import navigateRightImpl
@@ -1120,9 +1120,9 @@ foreign import navigateRightImpl
   \  return function() {\
   \    return self.navigateRight(times);\
   \  };\
-  \}" :: forall eff. Fn2 Number Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn2 Number Editor (Eff (ace :: ACE | eff) Unit)
 
-navigateRight :: forall eff. Number -> Editor -> Eff (ace :: EAce | eff) Unit
+navigateRight :: forall eff. Number -> Editor -> Eff (ace :: ACE | eff) Unit
 navigateRight times self = runFn2 navigateRightImpl times self
 
 foreign import navigateLineStartImpl
@@ -1130,9 +1130,9 @@ foreign import navigateLineStartImpl
   \  return function() {\
   \    return self.navigateLineStart();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) Unit)
 
-navigateLineStart :: forall eff. Editor -> Eff (ace :: EAce | eff) Unit
+navigateLineStart :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
 navigateLineStart self = runFn1 navigateLineStartImpl self
 
 foreign import navigateLineEndImpl
@@ -1140,9 +1140,9 @@ foreign import navigateLineEndImpl
   \  return function() {\
   \    return self.navigateLineEnd();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) Unit)
 
-navigateLineEnd :: forall eff. Editor -> Eff (ace :: EAce | eff) Unit
+navigateLineEnd :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
 navigateLineEnd self = runFn1 navigateLineEndImpl self
 
 foreign import navigateFileEndImpl
@@ -1150,9 +1150,9 @@ foreign import navigateFileEndImpl
   \  return function() {\
   \    return self.navigateFileEnd();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) Unit)
 
-navigateFileEnd :: forall eff. Editor -> Eff (ace :: EAce | eff) Unit
+navigateFileEnd :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
 navigateFileEnd self = runFn1 navigateFileEndImpl self
 
 foreign import navigateFileStartImpl
@@ -1160,9 +1160,9 @@ foreign import navigateFileStartImpl
   \  return function() {\
   \    return self.navigateFileStart();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) Unit)
 
-navigateFileStart :: forall eff. Editor -> Eff (ace :: EAce | eff) Unit
+navigateFileStart :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
 navigateFileStart self = runFn1 navigateFileStartImpl self
 
 foreign import navigateWordRightImpl
@@ -1170,9 +1170,9 @@ foreign import navigateWordRightImpl
   \  return function() {\
   \    return self.navigateWordRight();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) Unit)
 
-navigateWordRight :: forall eff. Editor -> Eff (ace :: EAce | eff) Unit
+navigateWordRight :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
 navigateWordRight self = runFn1 navigateWordRightImpl self
 
 foreign import navigateWordLeftImpl
@@ -1180,9 +1180,9 @@ foreign import navigateWordLeftImpl
   \  return function() {\
   \    return self.navigateWordLeft();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) Unit)
 
-navigateWordLeft :: forall eff. Editor -> Eff (ace :: EAce | eff) Unit
+navigateWordLeft :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
 navigateWordLeft self = runFn1 navigateWordLeftImpl self
 
 foreign import replaceImpl
@@ -1190,9 +1190,9 @@ foreign import replaceImpl
   \  return function() {\
   \    return self.replace(replacement, options);\
   \  };\
-  \}" :: forall eff. Fn3 String (Nullable SearchOptions) Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn3 String (Nullable SearchOptions) Editor (Eff (ace :: ACE | eff) Unit)
 
-replace :: forall eff. String -> Maybe SearchOptions -> Editor -> Eff (ace :: EAce | eff) Unit
+replace :: forall eff. String -> Maybe SearchOptions -> Editor -> Eff (ace :: ACE | eff) Unit
 replace replacement options self = runFn3 replaceImpl replacement (toNullable options) self
 
 foreign import replaceAllImpl
@@ -1200,9 +1200,9 @@ foreign import replaceAllImpl
   \  return function() {\
   \    return self.replaceAll(replacement, options);\
   \  };\
-  \}" :: forall eff. Fn3 String (Nullable SearchOptions) Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn3 String (Nullable SearchOptions) Editor (Eff (ace :: ACE | eff) Unit)
 
-replaceAll :: forall eff. String -> Maybe SearchOptions -> Editor -> Eff (ace :: EAce | eff) Unit
+replaceAll :: forall eff. String -> Maybe SearchOptions -> Editor -> Eff (ace :: ACE | eff) Unit
 replaceAll replacement options self = runFn3 replaceAllImpl replacement (toNullable options) self
 
 foreign import getLastSearchOptionsImpl
@@ -1210,9 +1210,9 @@ foreign import getLastSearchOptionsImpl
   \  return function() {\
   \    return self.getLastSearchOptions();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) SearchOptions)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) SearchOptions)
 
-getLastSearchOptions :: forall eff. Editor -> Eff (ace :: EAce | eff) SearchOptions
+getLastSearchOptions :: forall eff. Editor -> Eff (ace :: ACE | eff) SearchOptions
 getLastSearchOptions self = runFn1 getLastSearchOptionsImpl self
 
 foreign import findImpl
@@ -1220,9 +1220,9 @@ foreign import findImpl
   \  return function() {\
   \    return self.find(needle, options, animate);\
   \  };\
-  \}" :: forall eff. Fn4 String (Nullable SearchOptions) (Nullable Boolean) Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn4 String (Nullable SearchOptions) (Nullable Boolean) Editor (Eff (ace :: ACE | eff) Unit)
 
-find :: forall eff. String -> Maybe SearchOptions -> Maybe Boolean -> Editor -> Eff (ace :: EAce | eff) Unit
+find :: forall eff. String -> Maybe SearchOptions -> Maybe Boolean -> Editor -> Eff (ace :: ACE | eff) Unit
 find needle options animate self = runFn4 findImpl needle (toNullable options) (toNullable animate) self
 
 foreign import findNextImpl
@@ -1230,9 +1230,9 @@ foreign import findNextImpl
   \  return function() {\
   \    return self.findNext(options, animate);\
   \  };\
-  \}" :: forall eff. Fn3 (Nullable SearchOptions) (Nullable Boolean) Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn3 (Nullable SearchOptions) (Nullable Boolean) Editor (Eff (ace :: ACE | eff) Unit)
 
-findNext :: forall eff. Maybe SearchOptions -> Maybe Boolean -> Editor -> Eff (ace :: EAce | eff) Unit
+findNext :: forall eff. Maybe SearchOptions -> Maybe Boolean -> Editor -> Eff (ace :: ACE | eff) Unit
 findNext options animate self = runFn3 findNextImpl (toNullable options) (toNullable animate) self
 
 foreign import findPreviousImpl
@@ -1240,9 +1240,9 @@ foreign import findPreviousImpl
   \  return function() {\
   \    return self.findPrevious(options, animate);\
   \  };\
-  \}" :: forall eff. Fn3 (Nullable SearchOptions) (Nullable Boolean) Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn3 (Nullable SearchOptions) (Nullable Boolean) Editor (Eff (ace :: ACE | eff) Unit)
 
-findPrevious :: forall eff. Maybe SearchOptions -> Maybe Boolean -> Editor -> Eff (ace :: EAce | eff) Unit
+findPrevious :: forall eff. Maybe SearchOptions -> Maybe Boolean -> Editor -> Eff (ace :: ACE | eff) Unit
 findPrevious options animate self = runFn3 findPreviousImpl (toNullable options) (toNullable animate) self
 
 foreign import undoImpl
@@ -1250,9 +1250,9 @@ foreign import undoImpl
   \  return function() {\
   \    return self.undo();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) Unit)
 
-undo :: forall eff. Editor -> Eff (ace :: EAce | eff) Unit
+undo :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
 undo self = runFn1 undoImpl self
 
 foreign import redoImpl
@@ -1260,9 +1260,9 @@ foreign import redoImpl
   \  return function() {\
   \    return self.redo();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) Unit)
 
-redo :: forall eff. Editor -> Eff (ace :: EAce | eff) Unit
+redo :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
 redo self = runFn1 redoImpl self
 
 foreign import destroyImpl
@@ -1270,9 +1270,9 @@ foreign import destroyImpl
   \  return function() {\
   \    return self.destroy();\
   \  };\
-  \}" :: forall eff. Fn1 Editor (Eff (ace :: EAce | eff) Unit)
+  \}" :: forall eff. Fn1 Editor (Eff (ace :: ACE | eff) Unit)
 
-destroy :: forall eff. Editor -> Eff (ace :: EAce | eff) Unit
+destroy :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
 destroy self = runFn1 destroyImpl self
 
 foreign import createImpl
@@ -1280,7 +1280,7 @@ foreign import createImpl
   \  return function() {\
   \    return new Editor(renderer, session);\
   \  };\
-  \}" :: forall eff. Fn2 VirtualRenderer (Nullable EditSession) (Eff (ace :: EAce | eff) Editor)
+  \}" :: forall eff. Fn2 VirtualRenderer (Nullable EditSession) (Eff (ace :: ACE | eff) Editor)
 
-create :: forall eff. VirtualRenderer -> Maybe EditSession -> Eff (ace :: EAce | eff) Editor
+create :: forall eff. VirtualRenderer -> Maybe EditSession -> Eff (ace :: ACE | eff) Editor
 create renderer session = runFn2 createImpl renderer (toNullable session)
