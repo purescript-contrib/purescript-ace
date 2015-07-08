@@ -73,613 +73,306 @@ import Ace.Types
 import Data.DOM.Simple.Types
 import Data.Nullable
 
-foreign import getCharacterWidth
-  "function getCharacterWidth(value) {\
-  \  return value.characterWidth;\
-  \}" :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Number
+foreign import getCharacterWidth :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Number
 
-foreign import getLineHeight
-  "function getLineHeight(value) {\
-  \  return value.lineHeight;\
-  \}" :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Number
+foreign import getLineHeight :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Number
 
-foreign import screenToTextCoordinatesImpl
-  "function screenToTextCoordinatesImpl(left, top, self) {\
-  \  return function() {\
-  \    return self.screenToTextCoordinates(left, top);\
-  \  };\
-  \}" :: forall eff. Fn3 Number Number VirtualRenderer (Eff (ace :: ACE | eff) Unit)
+foreign import screenToTextCoordinatesImpl :: forall eff. Fn3 Number Number VirtualRenderer (Eff (ace :: ACE | eff) Unit)
 
 screenToTextCoordinates :: forall eff. Number -> Number -> VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 screenToTextCoordinates left top self = runFn3 screenToTextCoordinatesImpl left top self
 
-foreign import setSessionImpl
-  "function setSessionImpl(session, self) {\
-  \  return function() {\
-  \    return self.setSession(session);\
-  \  };\
-  \}" :: forall eff. Fn2 EditSession VirtualRenderer (Eff (ace :: ACE | eff) Unit)
+foreign import setSessionImpl :: forall eff. Fn2 EditSession VirtualRenderer (Eff (ace :: ACE | eff) Unit)
 
 setSession :: forall eff. EditSession -> VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 setSession session self = runFn2 setSessionImpl session self
 
-foreign import updateLinesImpl
-  "function updateLinesImpl(firstRow, lastRow, self) {\
-  \  return function() {\
-  \    return self.updateLines(firstRow, lastRow);\
-  \  };\
-  \}" :: forall eff. Fn3 Number Number VirtualRenderer (Eff (ace :: ACE | eff) Unit)
+foreign import updateLinesImpl :: forall eff. Fn3 Int Int VirtualRenderer (Eff (ace :: ACE | eff) Unit)
 
-updateLines :: forall eff. Number -> Number -> VirtualRenderer -> Eff (ace :: ACE | eff) Unit
+updateLines :: forall eff. Int -> Int -> VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 updateLines firstRow lastRow self = runFn3 updateLinesImpl firstRow lastRow self
 
-foreign import updateTextImpl
-  "function updateTextImpl(self) {\
-  \  return function() {\
-  \    return self.updateText();\
-  \  };\
-  \}" :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Unit)
+foreign import updateTextImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Unit)
 
 updateText :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 updateText self = runFn1 updateTextImpl self
 
-foreign import updateFullImpl
-  "function updateFullImpl(force, self) {\
-  \  return function() {\
-  \    return self.updateFull(force);\
-  \  };\
-  \}" :: forall eff. Fn2 Boolean VirtualRenderer (Eff (ace :: ACE | eff) Unit)
+foreign import updateFullImpl :: forall eff. Fn2 Boolean VirtualRenderer (Eff (ace :: ACE | eff) Unit)
 
 updateFull :: forall eff. Boolean -> VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 updateFull force self = runFn2 updateFullImpl force self
 
-foreign import updateFontSizeImpl
-  "function updateFontSizeImpl(self) {\
-  \  return function() {\
-  \    return self.updateFontSize();\
-  \  };\
-  \}" :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Unit)
+foreign import updateFontSizeImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Unit)
 
 updateFontSize :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 updateFontSize self = runFn1 updateFontSizeImpl self
 
-foreign import onResizeImpl
-  "function onResizeImpl(force, gutterWidth, width, height, self) {\
-  \  return function() {\
-  \    return self.onResize(force, gutterWidth, width, height);\
-  \  };\
-  \}" :: forall eff. Fn5 Boolean Number Number Number VirtualRenderer (Eff (ace :: ACE | eff) Unit)
+foreign import onResizeImpl :: forall eff. Fn5 Boolean Int Int Int VirtualRenderer (Eff (ace :: ACE | eff) Unit)
 
-onResize :: forall eff. Boolean -> Number -> Number -> Number -> VirtualRenderer -> Eff (ace :: ACE | eff) Unit
+onResize :: forall eff. Boolean -> Int -> Int -> Int -> VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 onResize force gutterWidth width height self = runFn5 onResizeImpl force gutterWidth width height self
 
-foreign import adjustWrapLimitImpl
-  "function adjustWrapLimitImpl(self) {\
-  \  return function() {\
-  \    return self.adjustWrapLimit();\
-  \  };\
-  \}" :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Unit)
+foreign import adjustWrapLimitImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Unit)
 
 adjustWrapLimit :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 adjustWrapLimit self = runFn1 adjustWrapLimitImpl self
 
-foreign import setAnimatedScrollImpl
-  "function setAnimatedScrollImpl(shouldAnimate, self) {\
-  \  return function() {\
-  \    return self.setAnimatedScroll(shouldAnimate);\
-  \  };\
-  \}" :: forall eff. Fn2 Boolean VirtualRenderer (Eff (ace :: ACE | eff) Unit)
+foreign import setAnimatedScrollImpl :: forall eff. Fn2 Boolean VirtualRenderer (Eff (ace :: ACE | eff) Unit)
 
 setAnimatedScroll :: forall eff. Boolean -> VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 setAnimatedScroll shouldAnimate self = runFn2 setAnimatedScrollImpl shouldAnimate self
 
-foreign import getAnimatedScrollImpl
-  "function getAnimatedScrollImpl(self) {\
-  \  return function() {\
-  \    return self.getAnimatedScroll();\
-  \  };\
-  \}" :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Boolean)
+foreign import getAnimatedScrollImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Boolean)
 
 getAnimatedScroll :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Boolean
 getAnimatedScroll self = runFn1 getAnimatedScrollImpl self
 
-foreign import setShowInvisiblesImpl
-  "function setShowInvisiblesImpl(showInvisibles, self) {\
-  \  return function() {\
-  \    return self.setShowInvisibles(showInvisibles);\
-  \  };\
-  \}" :: forall eff. Fn2 Boolean VirtualRenderer (Eff (ace :: ACE | eff) Unit)
+foreign import setShowInvisiblesImpl :: forall eff. Fn2 Boolean VirtualRenderer (Eff (ace :: ACE | eff) Unit)
 
 setShowInvisibles :: forall eff. Boolean -> VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 setShowInvisibles showInvisibles self = runFn2 setShowInvisiblesImpl showInvisibles self
 
-foreign import getShowInvisiblesImpl
-  "function getShowInvisiblesImpl(self) {\
-  \  return function() {\
-  \    return self.getShowInvisibles();\
-  \  };\
-  \}" :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Boolean)
+foreign import getShowInvisiblesImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Boolean)
 
 getShowInvisibles :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Boolean
 getShowInvisibles self = runFn1 getShowInvisiblesImpl self
 
-foreign import setShowPrintMarginImpl
-  "function setShowPrintMarginImpl(showPrintMargin, self) {\
-  \  return function() {\
-  \    return self.setShowPrintMargin(showPrintMargin);\
-  \  };\
-  \}" :: forall eff. Fn2 Boolean VirtualRenderer (Eff (ace :: ACE | eff) Unit)
+foreign import setShowPrintMarginImpl :: forall eff. Fn2 Boolean VirtualRenderer (Eff (ace :: ACE | eff) Unit)
 
 setShowPrintMargin :: forall eff. Boolean -> VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 setShowPrintMargin showPrintMargin self = runFn2 setShowPrintMarginImpl showPrintMargin self
 
-foreign import getShowPrintMarginImpl
-  "function getShowPrintMarginImpl(self) {\
-  \  return function() {\
-  \    return self.getShowPrintMargin();\
-  \  };\
-  \}" :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Boolean)
+foreign import getShowPrintMarginImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Boolean)
 
 getShowPrintMargin :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Boolean
 getShowPrintMargin self = runFn1 getShowPrintMarginImpl self
 
-foreign import setPrintMarginColumnImpl
-  "function setPrintMarginColumnImpl(showPrintMargin, self) {\
-  \  return function() {\
-  \    return self.setPrintMarginColumn(showPrintMargin);\
-  \  };\
-  \}" :: forall eff. Fn2 Boolean VirtualRenderer (Eff (ace :: ACE | eff) Unit)
+foreign import setPrintMarginColumnImpl :: forall eff. Fn2 Boolean VirtualRenderer (Eff (ace :: ACE | eff) Unit)
 
 setPrintMarginColumn :: forall eff. Boolean -> VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 setPrintMarginColumn showPrintMargin self = runFn2 setPrintMarginColumnImpl showPrintMargin self
 
-foreign import getPrintMarginColumnImpl
-  "function getPrintMarginColumnImpl(self) {\
-  \  return function() {\
-  \    return self.getPrintMarginColumn();\
-  \  };\
-  \}" :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Boolean)
+foreign import getPrintMarginColumnImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Boolean)
 
 getPrintMarginColumn :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Boolean
 getPrintMarginColumn self = runFn1 getPrintMarginColumnImpl self
 
-foreign import getShowGutterImpl
-  "function getShowGutterImpl(self) {\
-  \  return function() {\
-  \    return self.getShowGutter();\
-  \  };\
-  \}" :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Boolean)
+foreign import getShowGutterImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Boolean)
 
 getShowGutter :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Boolean
 getShowGutter self = runFn1 getShowGutterImpl self
 
-foreign import setShowGutterImpl
-  "function setShowGutterImpl(show, self) {\
-  \  return function() {\
-  \    return self.setShowGutter(show);\
-  \  };\
-  \}" :: forall eff. Fn2 Boolean VirtualRenderer (Eff (ace :: ACE | eff) Unit)
+foreign import setShowGutterImpl :: forall eff. Fn2 Boolean VirtualRenderer (Eff (ace :: ACE | eff) Unit)
 
 setShowGutter :: forall eff. Boolean -> VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 setShowGutter show self = runFn2 setShowGutterImpl show self
 
-foreign import getContainerElementImpl
-  "function getContainerElementImpl(self) {\
-  \  return function() {\
-  \    return self.getContainerElement();\
-  \  };\
-  \}" :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) HTMLElement)
+foreign import getContainerElementImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) HTMLElement)
 
 getContainerElement :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) HTMLElement
 getContainerElement self = runFn1 getContainerElementImpl self
 
-foreign import getMouseEventTargetImpl
-  "function getMouseEventTargetImpl(self) {\
-  \  return function() {\
-  \    return self.getMouseEventTarget();\
-  \  };\
-  \}" :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) HTMLElement)
+foreign import getMouseEventTargetImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) HTMLElement)
 
 getMouseEventTarget :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) HTMLElement
 getMouseEventTarget self = runFn1 getMouseEventTargetImpl self
 
-foreign import getTextAreaContainerImpl
-  "function getTextAreaContainerImpl(self) {\
-  \  return function() {\
-  \    return self.getTextAreaContainer();\
-  \  };\
-  \}" :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) HTMLElement)
+foreign import getTextAreaContainerImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) HTMLElement)
 
 getTextAreaContainer :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) HTMLElement
 getTextAreaContainer self = runFn1 getTextAreaContainerImpl self
 
-foreign import getFirstVisibleRowImpl
-  "function getFirstVisibleRowImpl(self) {\
-  \  return function() {\
-  \    return self.getFirstVisibleRow();\
-  \  };\
-  \}" :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Number)
+foreign import getFirstVisibleRowImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Int)
 
-getFirstVisibleRow :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Number
+getFirstVisibleRow :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Int
 getFirstVisibleRow self = runFn1 getFirstVisibleRowImpl self
 
-foreign import getFirstFullyVisibleRowImpl
-  "function getFirstFullyVisibleRowImpl(self) {\
-  \  return function() {\
-  \    return self.getFirstFullyVisibleRow();\
-  \  };\
-  \}" :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Number)
+foreign import getFirstFullyVisibleRowImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Int)
 
-getFirstFullyVisibleRow :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Number
+getFirstFullyVisibleRow :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Int
 getFirstFullyVisibleRow self = runFn1 getFirstFullyVisibleRowImpl self
 
-foreign import getLastFullyVisibleRowImpl
-  "function getLastFullyVisibleRowImpl(self) {\
-  \  return function() {\
-  \    return self.getLastFullyVisibleRow();\
-  \  };\
-  \}" :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Number)
+foreign import getLastFullyVisibleRowImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Int)
 
-getLastFullyVisibleRow :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Number
+getLastFullyVisibleRow :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Int
 getLastFullyVisibleRow self = runFn1 getLastFullyVisibleRowImpl self
 
-foreign import getLastVisibleRowImpl
-  "function getLastVisibleRowImpl(self) {\
-  \  return function() {\
-  \    return self.getLastVisibleRow();\
-  \  };\
-  \}" :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Number)
+foreign import getLastVisibleRowImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Int)
 
-getLastVisibleRow :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Number
+getLastVisibleRow :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Int
 getLastVisibleRow self = runFn1 getLastVisibleRowImpl self
 
-foreign import setPaddingImpl
-  "function setPaddingImpl(padding, self) {\
-  \  return function() {\
-  \    return self.setPadding(padding);\
-  \  };\
-  \}" :: forall eff. Fn2 Number VirtualRenderer (Eff (ace :: ACE | eff) Unit)
+foreign import setPaddingImpl :: forall eff. Fn2 Int VirtualRenderer (Eff (ace :: ACE | eff) Unit)
 
-setPadding :: forall eff. Number -> VirtualRenderer -> Eff (ace :: ACE | eff) Unit
+setPadding :: forall eff. Int -> VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 setPadding padding self = runFn2 setPaddingImpl padding self
 
-foreign import getHScrollBarAlwaysVisibleImpl
-  "function getHScrollBarAlwaysVisibleImpl(self) {\
-  \  return function() {\
-  \    return self.getHScrollBarAlwaysVisible();\
-  \  };\
-  \}" :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Boolean)
+foreign import getHScrollBarAlwaysVisibleImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Boolean)
 
 getHScrollBarAlwaysVisible :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Boolean
 getHScrollBarAlwaysVisible self = runFn1 getHScrollBarAlwaysVisibleImpl self
 
-foreign import setHScrollBarAlwaysVisibleImpl
-  "function setHScrollBarAlwaysVisibleImpl(alwaysVisible, self) {\
-  \  return function() {\
-  \    return self.setHScrollBarAlwaysVisible(alwaysVisible);\
-  \  };\
-  \}" :: forall eff. Fn2 Boolean VirtualRenderer (Eff (ace :: ACE | eff) Unit)
+foreign import setHScrollBarAlwaysVisibleImpl :: forall eff. Fn2 Boolean VirtualRenderer (Eff (ace :: ACE | eff) Unit)
 
 setHScrollBarAlwaysVisible :: forall eff. Boolean -> VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 setHScrollBarAlwaysVisible alwaysVisible self = runFn2 setHScrollBarAlwaysVisibleImpl alwaysVisible self
 
-foreign import updateFrontMarkersImpl
-  "function updateFrontMarkersImpl(self) {\
-  \  return function() {\
-  \    return self.updateFrontMarkers();\
-  \  };\
-  \}" :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Unit)
+foreign import updateFrontMarkersImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Unit)
 
 updateFrontMarkers :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 updateFrontMarkers self = runFn1 updateFrontMarkersImpl self
 
-foreign import updateBackMarkersImpl
-  "function updateBackMarkersImpl(self) {\
-  \  return function() {\
-  \    return self.updateBackMarkers();\
-  \  };\
-  \}" :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Unit)
+foreign import updateBackMarkersImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Unit)
 
 updateBackMarkers :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 updateBackMarkers self = runFn1 updateBackMarkersImpl self
 
-foreign import addGutterDecorationImpl
-  "function addGutterDecorationImpl(self) {\
-  \  return function() {\
-  \    return self.addGutterDecoration();\
-  \  };\
-  \}" :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Unit)
+foreign import addGutterDecorationImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Unit)
 
 addGutterDecoration :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 addGutterDecoration self = runFn1 addGutterDecorationImpl self
 
-foreign import removeGutterDecorationImpl
-  "function removeGutterDecorationImpl(self) {\
-  \  return function() {\
-  \    return self.removeGutterDecoration();\
-  \  };\
-  \}" :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Unit)
+foreign import removeGutterDecorationImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Unit)
 
 removeGutterDecoration :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 removeGutterDecoration self = runFn1 removeGutterDecorationImpl self
 
-foreign import updateBreakpointsImpl
-  "function updateBreakpointsImpl(self) {\
-  \  return function() {\
-  \    return self.updateBreakpoints();\
-  \  };\
-  \}" :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Unit)
+foreign import updateBreakpointsImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Unit)
 
 updateBreakpoints :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 updateBreakpoints self = runFn1 updateBreakpointsImpl self
 
-foreign import setAnnotationsImpl
-  "function setAnnotationsImpl(annotations, self) {\
-  \  return function() {\
-  \    return self.setAnnotations(annotations);\
-  \  };\
-  \}" :: forall eff. Fn2 [Annotation] VirtualRenderer (Eff (ace :: ACE | eff) Unit)
+foreign import setAnnotationsImpl :: forall eff. Fn2 (Array Annotation) VirtualRenderer (Eff (ace :: ACE | eff) Unit)
 
-setAnnotations :: forall eff. [Annotation] -> VirtualRenderer -> Eff (ace :: ACE | eff) Unit
+setAnnotations :: forall eff. Array Annotation -> VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 setAnnotations annotations self = runFn2 setAnnotationsImpl annotations self
 
-foreign import updateCursorImpl
-  "function updateCursorImpl(self) {\
-  \  return function() {\
-  \    return self.updateCursor();\
-  \  };\
-  \}" :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Unit)
+foreign import updateCursorImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Unit)
 
 updateCursor :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 updateCursor self = runFn1 updateCursorImpl self
 
-foreign import hideCursorImpl
-  "function hideCursorImpl(self) {\
-  \  return function() {\
-  \    return self.hideCursor();\
-  \  };\
-  \}" :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Unit)
+foreign import hideCursorImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Unit)
 
 hideCursor :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 hideCursor self = runFn1 hideCursorImpl self
 
-foreign import showCursorImpl
-  "function showCursorImpl(self) {\
-  \  return function() {\
-  \    return self.showCursor();\
-  \  };\
-  \}" :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Unit)
+foreign import showCursorImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Unit)
 
 showCursor :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 showCursor self = runFn1 showCursorImpl self
 
-foreign import scrollCursorIntoViewImpl
-  "function scrollCursorIntoViewImpl(self) {\
-  \  return function() {\
-  \    return self.scrollCursorIntoView();\
-  \  };\
-  \}" :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Unit)
+foreign import scrollCursorIntoViewImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Unit)
 
 scrollCursorIntoView :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 scrollCursorIntoView self = runFn1 scrollCursorIntoViewImpl self
 
-foreign import getScrollTopImpl
-  "function getScrollTopImpl(self) {\
-  \  return function() {\
-  \    return self.getScrollTop();\
-  \  };\
-  \}" :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Number)
+foreign import getScrollTopImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Int)
 
-getScrollTop :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Number
+getScrollTop :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Int
 getScrollTop self = runFn1 getScrollTopImpl self
 
-foreign import getScrollLeftImpl
-  "function getScrollLeftImpl(self) {\
-  \  return function() {\
-  \    return self.getScrollLeft();\
-  \  };\
-  \}" :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Number)
+foreign import getScrollLeftImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Int)
 
-getScrollLeft :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Number
+getScrollLeft :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Int
 getScrollLeft self = runFn1 getScrollLeftImpl self
 
-foreign import getScrollTopRowImpl
-  "function getScrollTopRowImpl(self) {\
-  \  return function() {\
-  \    return self.getScrollTopRow();\
-  \  };\
-  \}" :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Number)
+foreign import getScrollTopRowImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Int)
 
-getScrollTopRow :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Number
+getScrollTopRow :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Int
 getScrollTopRow self = runFn1 getScrollTopRowImpl self
 
-foreign import getScrollBottomRowImpl
-  "function getScrollBottomRowImpl(self) {\
-  \  return function() {\
-  \    return self.getScrollBottomRow();\
-  \  };\
-  \}" :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Number)
+foreign import getScrollBottomRowImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Int)
 
-getScrollBottomRow :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Number
+getScrollBottomRow :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Int
 getScrollBottomRow self = runFn1 getScrollBottomRowImpl self
 
-foreign import scrollToRowImpl
-  "function scrollToRowImpl(row, self) {\
-  \  return function() {\
-  \    return self.scrollToRow(row);\
-  \  };\
-  \}" :: forall eff. Fn2 Number VirtualRenderer (Eff (ace :: ACE | eff) Unit)
+foreign import scrollToRowImpl :: forall eff. Fn2 Int VirtualRenderer (Eff (ace :: ACE | eff) Unit)
 
-scrollToRow :: forall eff. Number -> VirtualRenderer -> Eff (ace :: ACE | eff) Unit
+scrollToRow :: forall eff. Int -> VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 scrollToRow row self = runFn2 scrollToRowImpl row self
 
-foreign import scrollToLineImpl
-  "function scrollToLineImpl(line, center, animate, callback, self) {\
-  \  return function() {\
-  \    return self.scrollToLine(line, center, animate, callback);\
-  \  };\
-  \}" :: forall eff. Fn5 Number Boolean Boolean (Eff (ace :: ACE | eff) Unit) VirtualRenderer (Eff (ace :: ACE | eff) Unit)
+foreign import scrollToLineImpl :: forall eff. Fn5 Int Boolean Boolean (Eff (ace :: ACE | eff) Unit) VirtualRenderer (Eff (ace :: ACE | eff) Unit)
 
-scrollToLine :: forall eff. Number -> Boolean -> Boolean -> Eff (ace :: ACE | eff) Unit -> VirtualRenderer -> Eff (ace :: ACE | eff) Unit
+scrollToLine :: forall eff. Int -> Boolean -> Boolean -> Eff (ace :: ACE | eff) Unit -> VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 scrollToLine line center animate callback self = runFn5 scrollToLineImpl line center animate callback self
 
-foreign import scrollToYImpl
-  "function scrollToYImpl(scrollTop, self) {\
-  \  return function() {\
-  \    return self.scrollToY(scrollTop);\
-  \  };\
-  \}" :: forall eff. Fn2 Number VirtualRenderer (Eff (ace :: ACE | eff) Number)
+foreign import scrollToYImpl :: forall eff. Fn2 Number VirtualRenderer (Eff (ace :: ACE | eff) Number)
 
 scrollToY :: forall eff. Number -> VirtualRenderer -> Eff (ace :: ACE | eff) Number
 scrollToY scrollTop self = runFn2 scrollToYImpl scrollTop self
 
-foreign import scrollToXImpl
-  "function scrollToXImpl(scrollLeft, self) {\
-  \  return function() {\
-  \    return self.scrollToX(scrollLeft);\
-  \  };\
-  \}" :: forall eff. Fn2 Number VirtualRenderer (Eff (ace :: ACE | eff) Number)
+foreign import scrollToXImpl :: forall eff. Fn2 Number VirtualRenderer (Eff (ace :: ACE | eff) Number)
 
 scrollToX :: forall eff. Number -> VirtualRenderer -> Eff (ace :: ACE | eff) Number
 scrollToX scrollLeft self = runFn2 scrollToXImpl scrollLeft self
 
-foreign import scrollByImpl
-  "function scrollByImpl(deltaX, deltaY, self) {\
-  \  return function() {\
-  \    return self.scrollBy(deltaX, deltaY);\
-  \  };\
-  \}" :: forall eff. Fn3 Number Number VirtualRenderer (Eff (ace :: ACE | eff) Unit)
+foreign import scrollByImpl :: forall eff. Fn3 Number Number VirtualRenderer (Eff (ace :: ACE | eff) Unit)
 
 scrollBy :: forall eff. Number -> Number -> VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 scrollBy deltaX deltaY self = runFn3 scrollByImpl deltaX deltaY self
 
-foreign import isScrollableByImpl
-  "function isScrollableByImpl(deltaX, deltaY, self) {\
-  \  return function() {\
-  \    return self.isScrollableBy(deltaX, deltaY);\
-  \  };\
-  \}" :: forall eff. Fn3 Number Number VirtualRenderer (Eff (ace :: ACE | eff) Boolean)
+foreign import isScrollableByImpl :: forall eff. Fn3 Number Number VirtualRenderer (Eff (ace :: ACE | eff) Boolean)
 
 isScrollableBy :: forall eff. Number -> Number -> VirtualRenderer -> Eff (ace :: ACE | eff) Boolean
 isScrollableBy deltaX deltaY self = runFn3 isScrollableByImpl deltaX deltaY self
 
-foreign import textToScreenCoordinatesImpl
-  "function textToScreenCoordinatesImpl(row, column, self) {\
-  \  return function() {\
-  \    return self.textToScreenCoordinates(row, column);\
-  \  };\
-  \}" :: forall eff. Fn3 Number Number VirtualRenderer (Eff (ace :: ACE | eff) Position)
+foreign import textToScreenCoordinatesImpl :: forall eff. Fn3 Int Int VirtualRenderer (Eff (ace :: ACE | eff) Position)
 
-textToScreenCoordinates :: forall eff. Number -> Number -> VirtualRenderer -> Eff (ace :: ACE | eff) Position
+textToScreenCoordinates :: forall eff. Int -> Int -> VirtualRenderer -> Eff (ace :: ACE | eff) Position
 textToScreenCoordinates row column self = runFn3 textToScreenCoordinatesImpl row column self
 
-foreign import visualizeFocusImpl
-  "function visualizeFocusImpl(self) {\
-  \  return function() {\
-  \    return self.visualizeFocus();\
-  \  };\
-  \}" :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Unit)
+foreign import visualizeFocusImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Unit)
 
 visualizeFocus :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 visualizeFocus self = runFn1 visualizeFocusImpl self
 
-foreign import visualizeBlurImpl
-  "function visualizeBlurImpl(self) {\
-  \  return function() {\
-  \    return self.visualizeBlur();\
-  \  };\
-  \}" :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Unit)
+foreign import visualizeBlurImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Unit)
 
 visualizeBlur :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 visualizeBlur self = runFn1 visualizeBlurImpl self
 
-foreign import showCompositionImpl
-  "function showCompositionImpl(position, self) {\
-  \  return function() {\
-  \    return self.showComposition(position);\
-  \  };\
-  \}" :: forall eff. Fn2 Number VirtualRenderer (Eff (ace :: ACE | eff) Unit)
+foreign import showCompositionImpl :: forall eff. Fn2 Int VirtualRenderer (Eff (ace :: ACE | eff) Unit)
 
-showComposition :: forall eff. Number -> VirtualRenderer -> Eff (ace :: ACE | eff) Unit
+showComposition :: forall eff. Int -> VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 showComposition position self = runFn2 showCompositionImpl position self
 
-foreign import setCompositionTextImpl
-  "function setCompositionTextImpl(text, self) {\
-  \  return function() {\
-  \    return self.setCompositionText(text);\
-  \  };\
-  \}" :: forall eff. Fn2 String VirtualRenderer (Eff (ace :: ACE | eff) Unit)
+foreign import setCompositionTextImpl :: forall eff. Fn2 String VirtualRenderer (Eff (ace :: ACE | eff) Unit)
 
 setCompositionText :: forall eff. String -> VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 setCompositionText text self = runFn2 setCompositionTextImpl text self
 
-foreign import hideCompositionImpl
-  "function hideCompositionImpl(self) {\
-  \  return function() {\
-  \    return self.hideComposition();\
-  \  };\
-  \}" :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Unit)
+foreign import hideCompositionImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Unit)
 
 hideComposition :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 hideComposition self = runFn1 hideCompositionImpl self
 
-foreign import setThemeImpl
-  "function setThemeImpl(theme, self) {\
-  \  return function() {\
-  \    return self.setTheme(theme);\
-  \  };\
-  \}" :: forall eff. Fn2 String VirtualRenderer (Eff (ace :: ACE | eff) Unit)
+foreign import setThemeImpl :: forall eff. Fn2 String VirtualRenderer (Eff (ace :: ACE | eff) Unit)
 
 setTheme :: forall eff. String -> VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 setTheme theme self = runFn2 setThemeImpl theme self
 
-foreign import getThemeImpl
-  "function getThemeImpl(self) {\
-  \  return function() {\
-  \    return self.getTheme();\
-  \  };\
-  \}" :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) String)
+foreign import getThemeImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) String)
 
 getTheme :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) String
 getTheme self = runFn1 getThemeImpl self
 
-foreign import setStyleImpl
-  "function setStyleImpl(style, self) {\
-  \  return function() {\
-  \    return self.setStyle(style);\
-  \  };\
-  \}" :: forall eff. Fn2 String VirtualRenderer (Eff (ace :: ACE | eff) Unit)
+foreign import setStyleImpl :: forall eff. Fn2 String VirtualRenderer (Eff (ace :: ACE | eff) Unit)
 
 setStyle :: forall eff. String -> VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 setStyle style self = runFn2 setStyleImpl style self
 
-foreign import unsetStyleImpl
-  "function unsetStyleImpl(style, self) {\
-  \  return function() {\
-  \    return self.unsetStyle(style);\
-  \  };\
-  \}" :: forall eff. Fn2 String VirtualRenderer (Eff (ace :: ACE | eff) Unit)
+foreign import unsetStyleImpl :: forall eff. Fn2 String VirtualRenderer (Eff (ace :: ACE | eff) Unit)
 
 unsetStyle :: forall eff. String -> VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 unsetStyle style self = runFn2 unsetStyleImpl style self
 
-foreign import destroyImpl
-  "function destroyImpl(self) {\
-  \  return function() {\
-  \    return self.destroy();\
-  \  };\
-  \}" :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Unit)
+foreign import destroyImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Unit)
 
 destroy :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 destroy self = runFn1 destroyImpl self
 
-foreign import createImpl
-  "function createImpl(container, theme) {\
-  \  return function() {\
-  \    var VirtualRenderer = ace.require('ace/virtual_renderer').VirtualRenderer;\
-  \    return new VirtualRenderer(container, theme);\
-  \  };\
-  \}" :: forall eff. Fn2 HTMLElement (Nullable String) (Eff (ace :: ACE | eff) VirtualRenderer)
+foreign import createImpl :: forall eff. Fn2 HTMLElement (Nullable String) (Eff (ace :: ACE | eff) VirtualRenderer)
 
 create :: forall eff. HTMLElement -> Maybe String -> Eff (ace :: ACE | eff) VirtualRenderer
 create container theme = runFn2 createImpl container (toNullable theme)

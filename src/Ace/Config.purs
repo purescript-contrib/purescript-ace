@@ -16,15 +16,7 @@ import Data.Maybe
 
 newtype ConfigOption a = ConfigOption String
 
-foreign import setImpl
-  """
-  function setImpl(key, value) {
-    return function() {
-      ace.config.set(key, value)
-      return ace;
-    };
-  }
-  """ :: forall a eff. Fn2 (ConfigOption a) a (Eff (ace :: ACE | eff) Ace)
+foreign import setImpl :: forall a eff. Fn2 (ConfigOption a) a (Eff (ace :: ACE | eff) Ace)
 
 set :: forall a eff. ConfigOption a -> a -> Eff (ace :: ACE | eff) Ace
 set key value = runFn2 setImpl key value

@@ -7,86 +7,81 @@ var gulp        = require('gulp')
   , jsValidate  = require('gulp-jsvalidate')
   ;
 
-var paths = {
-    src: 'src/**/*.purs',
-    bowerSrc: [
-      'bower_components/purescript-*/src/**/*.purs',
-      'bower_components/purescript-*/src/**/*.purs.hs'
-    ],
-    dest: '',
-    docs: {
-        'all': {
-            dest: 'MODULES.md',
-            src: [
-              'src/**/*.purs'
-            ]
-        }
-    },
-    exampleSrc: 'example/Main.purs',
-    test: 'test/**/*.purs'
-};
-
-var options = {
-    test: {
-        main: 'Test.Main',
-        output: 'output/test.js'
-    }
-};
-
-function compile (compiler, src, opts) {
-    var psc = compiler(opts);
-    psc.on('error', function(e) {
-        console.error(e.message);
-        psc.end();
-    });
-    return gulp.src(src.concat(paths.bowerSrc))
-        .pipe(psc)
-        .pipe(jsValidate());
-};
-
-function docs (target) {
-    return function() {
-        var docgen = purescript.pscDocs();
-        docgen.on('error', function(e) {
-            console.error(e.message);
-            docgen.end();
-        });
-        return gulp.src(paths.docs[target].src)
-            .pipe(docgen)
-            .pipe(gulp.dest(paths.docs[target].dest));
-    }
-}
-
 function sequence () {
     var args = [].slice.apply(arguments);
     return function() {
         runSequence.apply(null, args);
-    }
+    };
 }
 
+var sources = [
+    'src/**/*.purs',
+    'bower_components/purescript-*/src/**/*.purs'
+];
+var foreigns = [
+    'src/**/*.js',
+    'bower_components/purescript-*/src/**/*.js'
+];
+var exampleSources = [
+    'example/src/**/*.purs'
+];
+var exampleForeigns = [
+    'example/src/**/*.js'
+];
+
+gulp.task('docs', function() {
+    return purescript.pscDocs({
+        src: sources,
+        docgen: {
+            "Ace": "docs/Ace.md",
+            "Ace.Anchor": "docs/Ace/Anchor.md",
+            "Ace.BackgroundTokenizer": "docs/Ace/BackgroundTokenizer.md",
+            "Ace.Config": "docs/Ace/Config.md",
+            "Ace.Document": "docs/Ace/Document.md",
+            "Ace.EditSession": "docs/Ace/EditSession.md",
+            "Ace.Editor": "docs/Ace/Editor.md",
+            "Ace.Range": "docs/Ace/Range.md",
+            "Ace.ScrollBar": "docs/Ace/ScrollBar.md",
+            "Ace.Search": "docs/Ace/Search.md",
+            "Ace.Selection": "docs/Ace/Selection.md",
+            "Ace.TokenIterator": "docs/Ace/TokenIterator.md",
+            "Ace.Tokenizer": "docs/Ace/Tokenizer.md",
+            "Ace.Types": "docs/Ace/Types.md",
+            "Ace.UndoManager": "docs/Ace/UndoManager.md",
+            "Ace.VirtualRenderer": "docs/Ace/VirtualRenderer.md"
+        }
+    });
+});
+
 gulp.task('example', function() {
-    return compile(purescript.psc, [paths.src].concat(paths.bowerSrc).concat(paths.exampleSrc), {})
-        .pipe(gulp.dest('example'))
+    return purescript.psc({
+        src: sources.concat(exampleSources),
+        ffi: foreigns.concat(exampleForeigns)
+    });
 });
 
 gulp.task('make', function() {
-    return compile(purescript.pscMake, [paths.src].concat(paths.bowerSrc), {})
-        .pipe(gulp.dest(paths.dest))
+    return purescript.psc({
+        src: sources,
+        ffi: foreigns
+    });
 });
 
-gulp.task('test', function() {
-    return compile(purescript.psc, [paths.src, paths.test].concat(paths.bowerSrc), options.test)
-        .pipe(run('node').exec());
+gulp.task('bundle', ['example'], function() {
+    return purescript.pscBundle({
+        src: 'output/**/*.js',
+        output: 'example/psc.js',
+        main: "Main"
+    });
 });
 
-gulp.task('docs', docs('all'));
 
 gulp.task('watch-browser', function() {
-    gulp.watch(paths.src, sequence('example', 'docs'));
+    gulp.watch(sources.concat(exampleSources).concat(foreigns).concat(exampleForeigns), sequence('bundle', 'docs'))
 });
 
 gulp.task('watch-make', function() {
-    gulp.watch(paths.src, sequence('make', 'docs'));
+    gulp.watch(sources.concat(foreigns), sequence('make', 'docs'));
 });
 
 gulp.task('default', sequence('make', 'docs', 'example'));
