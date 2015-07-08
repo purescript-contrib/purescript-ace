@@ -1,12 +1,12 @@
 module Main where
 
+import Prelude
+
 import Data.Maybe
-import Data.Array (map)
 import Data.Array.ST (pushSTArray)
 
 import Control.Monad.Eff
-
-import Debug.Trace
+import Control.Monad.Eff.Console (print, log)
 
 import Ace
 import Ace.Types
@@ -26,18 +26,11 @@ import qualified Ace.TokenIterator as TokenIterator
 import qualified Ace.UndoManager as UndoManager
 import qualified Ace.VirtualRenderer as VirtualRenderer
 
-foreign import rules """
-  var rules = {
-      "start": [
-        {
-            token : "example",
-            regex : "[a-z]*"
-        }
-      ]
-  }
-  """ :: Rules
+foreign import rules :: Rules
+foreign import onLoad :: forall e. Eff e Unit -> Eff e Unit 
 
-main = do
+
+main = onLoad $ do
 
   Config.set Config.basePath "foo"
 
@@ -48,10 +41,10 @@ main = do
   Editor.setTheme "ace/theme/chrome" editor
 
   -- Log some events
-  editor `Editor.onCopy` \s -> trace ("Text copied: " ++ s)
-  editor `Editor.onPaste` \_ -> trace "Text pasted."
-  editor `Editor.onBlur` trace "Editor lost focus."
-  editor `Editor.onFocus` trace "Editor gained focus."
+  editor `Editor.onCopy` \s -> log ("Text copied: " ++ s)
+  editor `Editor.onPaste` \_ -> log "Text pasted."
+  editor `Editor.onBlur` log "Editor lost focus."
+  editor `Editor.onFocus` log "Editor gained focus."
 
   -- Get the editor session
   session <- Editor.getSession editor
@@ -65,7 +58,7 @@ main = do
 
   -- Get the document for the session
   document <- Session.getDocument session
-  document `Document.onChange` \(DocumentEvent ty _ _ _ _) -> trace ("Document changed: " ++ showDocumentEventType ty)
+  document `Document.onChange` \(DocumentEvent ty _ _ _ _) -> log ("Document changed: " ++ showDocumentEventType ty)
   Document.setNewLineMode Windows document
 
   -- Add an anchor at the start of the document and listen for updates
@@ -76,7 +69,7 @@ main = do
   Anchor.setPosition 0 1 true anchor
   -- Listen for anchor position changes
   anchor `Anchor.onChange` \e -> do
-    trace ("New anchor position: " ++ show e.value.row ++ ", " ++ show e.value.column)
+    log ("New anchor position: " ++ show e.value.row ++ ", " ++ show e.value.column)
     -- Unlisten
     Anchor.detach anchor
 
@@ -88,13 +81,13 @@ main = do
   tokens <- BackgroundTokenizer.getTokens 0 backgroundTokenizer
   print $ map (\o -> o.value) tokens
   state <- BackgroundTokenizer.getState 0 backgroundTokenizer
-  trace state
+  log state
 
   -- Create a scroll bar and apply it to
   ctr <- Editor.getContainer editor
   vr <- Editor.getRenderer editor
   scrollBar <- ScrollBar.create ctr vr
-  scrollBar `ScrollBar.onScroll` trace "Scrolled"
+  scrollBar `ScrollBar.onScroll` log "Scrolled"
 
   -- Create a search class
   search <- Search.create
@@ -123,6 +116,7 @@ main = do
 
   -- Misc. Tests
   miscTests
+  pure unit 
 
 miscTests = do
   editor <- Ace.edit "tests" ace
@@ -230,7 +224,7 @@ miscTests = do
   Session.getMode session
   Session.setScrollTop 0 session
   Session.getScrollTop session
-  Session.setScrollLeft session
+  Session.setScrollLeft 0 session
   Session.getScrollLeft session
   Session.getScreenWidth session
   Session.getLine 0 session
@@ -288,9 +282,9 @@ miscTests = do
   Editor.setOverwrite true editor
   Editor.getOverwrite editor
   Editor.toggleOverwrite editor
-  Editor.setScrollSpeed 0 editor
+  Editor.setScrollSpeed 0.0 editor
   Editor.getScrollSpeed editor
-  Editor.setDragDelay 0 editor
+  Editor.setDragDelay 0.0 editor
   Editor.getDragDelay editor
   Editor.setSelectionStyle "" editor
   Editor.getSelectionStyle editor
@@ -326,7 +320,7 @@ miscTests = do
   Editor.blockOutdent Nothing editor
   Editor.toggleCommentLines editor
   Editor.getNumberAt editor
-  Editor.modifyNumber 0 editor
+  Editor.modifyNumber 0.0 editor
   Editor.removeLines editor
   Editor.moveLinesDown editor
   Editor.moveLinesUp editor

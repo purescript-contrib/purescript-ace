@@ -17,13 +17,14 @@
     "package.json"
   ],
   "dependencies": {
-    "purescript-maybe": "~0.2.1",
-    "purescript-arrays": "~0.3.0",
-    "purescript-foreign": "~0.4.0",
-    "purescript-simple-dom": "~0.0.2",
-    "purescript-nullable": "~0.1.0"
+    "purescript-arrays": "^0.4.0",
+    "purescript-foreign": "^0.5.0",
+    "purescript-nullable": "^0.2.0",
+    "purescript-simple-dom": "6358414013eb3106d695e3e19488609f82d903e9",
+    "purescript-prelude": "^0.1.0",
+    "purescript-console": "^0.1.0"
   },
   "devDependencies": {
-    "ace-builds": "~1.1.9"
+    "ace-builds": "^1.1.9"
   }
 }

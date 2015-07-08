@@ -6,6 +6,8 @@ import Data.Foreign
 import Data.Foreign.Index
 import Data.Foreign.Class
 import Data.Foreign.Undefined
+import Prelude 
+
 
 type AnchorEvent =
   { old :: Position
@@ -28,7 +30,7 @@ readDocumentEventType "insertText"  = InsertText
 readDocumentEventType "removeLines" = RemoveLines
 readDocumentEventType "removeText"  = RemoveText
 
-data DocumentEvent = DocumentEvent DocumentEventType Range (Maybe [String]) (Maybe String) (Maybe String)
+data DocumentEvent = DocumentEvent DocumentEventType Range (Maybe (Array String)) (Maybe String) (Maybe String)
 
 instance documentEventIsForeign :: IsForeign DocumentEvent where
   read e = do
@@ -56,15 +58,15 @@ readNewlineMode "auto"    = Auto
 data Rules
 
 type Annotation =
-  { row :: Number
-  , column :: Number
+  { row :: Int
+  , column :: Int
   , text :: String
   , "type" :: String
   }
 
 type Position =
-  { row :: Number
-  , column :: Number
+  { row :: Int
+  , column :: Int
   }
 
 type TokenInfo =
