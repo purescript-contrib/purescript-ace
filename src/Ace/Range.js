@@ -1,5 +1,7 @@
-// module Ace.Range
+/* global exports, ace */
+"use strict";
 
+// module Ace.Range
 
 function effize(method) {
     return function() {
@@ -19,24 +21,15 @@ function effGet(field) {
     };
 }
 
-function effSet(field) {
-    return function(val, self) {
-        return function() {
-            self[field] = val;
-        };
-    };
-}
-
-
 exports.getStartRow = effGet("startRow");
 exports.getStartColumn = effGet("startColumn");
 exports.getEndRow = effGet("endRow");
 exports.getEndColumn = effGet("endColumn");
 exports.getStart = effGet("start");
 exports.getEnd = effGet("end");
-exports.isEmptyImpl = effize("isEmpty");
+exports.isEmpty = effize("isEmpty");
 exports.isEqualImpl = effize("isEqual");
-exports.toStringImpl = effize("toString");
+exports.toString = effize("toString");
 exports.containsImpl = effize('contains');
 exports.compareRangeImpl = effize('compareRange');
 exports.comparePointImpl = effize('comparePoint');
@@ -55,20 +48,21 @@ exports.compareEndImpl = effize('compareEnd');
 exports.compareInsideImpl = effize('compareInside');
 exports.clipRowsImpl = effize('clipRows');
 exports.extendImpl = effize('extend');
-exports.isMultiLineImpl = effize('isMultiLine');
-exports.cloneImpl = effize('clone');
-exports.collapseRowsImpl = effize('collapseRows');
+exports.isMultiLine = effize('isMultiLine');
+exports.clone = effize('clone');
+exports.collapseRows = effize('collapseRows');
 exports.toScreenRangeImpl = effize('toScreenRange');
+
 exports.fromPointsImpl = function(start, end) {
     return function() {
         var Range = ace.require('ace/range').Range;
         return Range.fromPoints(start, end);
     };
 };
+
 exports.createImpl = function(startRow, startColumn, endRow, endColumn) {
     return function() {
         var Range = ace.require('ace/range').Range;
         return new Range(startRow, startColumn, endRow, endColumn);
     };
 };
-

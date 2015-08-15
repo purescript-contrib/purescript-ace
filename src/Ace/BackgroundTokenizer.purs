@@ -10,12 +10,11 @@ module Ace.BackgroundTokenizer
   , create
   ) where
 
-import Prelude hiding (compare)
+import Prelude
 
-import Data.Maybe
-import Data.Function hiding (on)
+import Data.Function (Fn2(), runFn2, Fn3(), runFn3)
 
-import Control.Monad.Eff
+import Control.Monad.Eff (Eff())
 
 import Ace.Types
 
@@ -44,10 +43,7 @@ foreign import startImpl :: forall eff. Fn2 Int BackgroundTokenizer (Eff (ace ::
 start :: forall eff. Int -> BackgroundTokenizer -> Eff (ace :: ACE | eff) Unit
 start startRow self = runFn2 startImpl startRow self
 
-foreign import stopImpl :: forall eff. Fn1 BackgroundTokenizer (Eff (ace :: ACE | eff) Unit)
-
-stop :: forall eff. BackgroundTokenizer -> Eff (ace :: ACE | eff) Unit
-stop self = runFn1 stopImpl self
+foreign import stop :: forall eff. BackgroundTokenizer -> (Eff (ace :: ACE | eff) Unit)
 
 foreign import getTokensImpl :: forall eff. Fn2 Int BackgroundTokenizer (Eff (ace :: ACE | eff) (Array TokenInfo))
 

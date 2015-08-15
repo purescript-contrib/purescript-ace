@@ -7,39 +7,23 @@ module Ace.TokenIterator
   , stepForward
   ) where
 
-import Prelude hiding (compare)
+import Prelude
 
-import Data.Maybe
-import Data.Function hiding (on)
+import Control.Monad.Eff (Eff())
 
-import Control.Monad.Eff
+import Data.Function (Fn3(), runFn3)
 
 import Ace.Types
 
-foreign import stepBackwardImpl :: forall eff. Fn1 TokenIterator (Eff (ace :: ACE | eff) (Array String))
+foreign import stepBackward :: forall eff. TokenIterator -> Eff (ace :: ACE | eff) (Array String)
 
-stepBackward :: forall eff. TokenIterator -> Eff (ace :: ACE | eff) (Array String)
-stepBackward self = runFn1 stepBackwardImpl self
+foreign import stepForward :: forall eff. TokenIterator -> Eff (ace :: ACE | eff) String
 
-foreign import stepForwardImpl :: forall eff. Fn1 TokenIterator (Eff (ace :: ACE | eff) String)
+foreign import getCurrentToken :: forall eff. TokenIterator -> Eff (ace :: ACE | eff) TokenInfo
 
-stepForward :: forall eff. TokenIterator -> Eff (ace :: ACE | eff) String
-stepForward self = runFn1 stepForwardImpl self
+foreign import getCurrentTokenRow :: forall eff. TokenIterator -> Eff (ace :: ACE | eff) Int
 
-foreign import getCurrentTokenImpl :: forall eff. Fn1 TokenIterator (Eff (ace :: ACE | eff) TokenInfo)
-
-getCurrentToken :: forall eff. TokenIterator -> Eff (ace :: ACE | eff) TokenInfo
-getCurrentToken self = runFn1 getCurrentTokenImpl self
-
-foreign import getCurrentTokenRowImpl :: forall eff. Fn1 TokenIterator (Eff (ace :: ACE | eff) Int)
-
-getCurrentTokenRow :: forall eff. TokenIterator -> Eff (ace :: ACE | eff) Int
-getCurrentTokenRow self = runFn1 getCurrentTokenRowImpl self
-
-foreign import getCurrentTokenColumnImpl :: forall eff. Fn1 TokenIterator (Eff (ace :: ACE | eff) Int)
-
-getCurrentTokenColumn :: forall eff. TokenIterator -> Eff (ace :: ACE | eff) Int
-getCurrentTokenColumn self = runFn1 getCurrentTokenColumnImpl self
+foreign import getCurrentTokenColumn :: forall eff. TokenIterator -> Eff (ace :: ACE | eff) Int
 
 foreign import createImpl :: forall eff. Fn3 EditSession Int Int (Eff (ace :: ACE | eff) TokenIterator)
 

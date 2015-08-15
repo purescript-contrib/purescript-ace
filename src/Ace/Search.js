@@ -1,3 +1,6 @@
+/* global exports, ace */
+"use strict";
+
 // module Ace.Search
 
 function effize(method) {
@@ -10,30 +13,12 @@ function effize(method) {
     };
 }
 
-function effGet(field) {
-    return function(self) {
-        return function() {
-            return self[field];
-        };
-    };
-}
-
-function effSet(field) {
-    return function(val, self) {
-        return function() {
-            self[field] = val;
-        };
-    };
-}
-
-
 exports.setImpl = effize("set");
 exports.findImpl = effize("find");
 exports.findAllImpl = effize("findAll");
 exports.replaceImpl = effize("replace");
+
 exports.createImpl = function() {
-    return function() {
-        var Search = ace.require("ace/search").Search;
-        return new Search();
-    };
+    var Search = ace.require("ace/search").Search;
+    return new Search();
 };

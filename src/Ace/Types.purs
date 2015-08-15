@@ -1,13 +1,13 @@
 module Ace.Types where
 
-import Data.Maybe
+import Prelude
 
-import Data.Foreign
-import Data.Foreign.Index
-import Data.Foreign.Class
-import Data.Foreign.Undefined
-import Prelude 
-
+import Data.Either (Either(..))
+import Data.Foreign (Foreign(), F(), ForeignError(..), unsafeFromForeign)
+import Data.Foreign.Class (IsForeign, read, readProp)
+import Data.Foreign.Index (prop)
+import Data.Foreign.Undefined (runUndefined)
+import Data.Maybe (Maybe())
 
 type AnchorEvent =
   { old :: Position
@@ -24,22 +24,23 @@ showDocumentEventType InsertText  = "insertText"
 showDocumentEventType RemoveLines = "removeLines"
 showDocumentEventType RemoveText  = "removeText"
 
-readDocumentEventType :: String -> DocumentEventType
-readDocumentEventType "insertLines" = InsertLines
-readDocumentEventType "insertText"  = InsertText
-readDocumentEventType "removeLines" = RemoveLines
-readDocumentEventType "removeText"  = RemoveText
+readDocumentEventType :: String -> F DocumentEventType
+readDocumentEventType "insertLines" = Right InsertLines
+readDocumentEventType "insertText"  = Right InsertText
+readDocumentEventType "removeLines" = Right RemoveLines
+readDocumentEventType "removeText"  = Right RemoveText
+readDocumentEventType s = Left $ TypeMismatch ("'" ++ s ++ "'") " a valid value for the DocumentEventType enum"
 
 data DocumentEvent = DocumentEvent DocumentEventType Range (Maybe (Array String)) (Maybe String) (Maybe String)
 
 instance documentEventIsForeign :: IsForeign DocumentEvent where
   read e = do
-    action <- readProp "action" e
+    et     <- readProp "action" e >>= readDocumentEventType
     range  <- unsafeFromForeign <$> prop "range" e
     lines  <- runUndefined <$> readProp "lines" e
     text   <- runUndefined <$> readProp "text" e
     nl     <- runUndefined <$> readProp "nl" e
-    return $ DocumentEvent (readDocumentEventType action) range lines text nl
+    return $ DocumentEvent et range lines text nl
 
 data PasteEvent
 
@@ -50,10 +51,11 @@ showNewlineMode Windows = "windows"
 showNewlineMode Unix    = "unix"
 showNewlineMode Auto    = "auto"
 
-readNewlineMode :: String -> NewlineMode
-readNewlineMode "windows" = Windows
-readNewlineMode "unix"    = Unix
-readNewlineMode "auto"    = Auto
+readNewlineMode :: String -> F NewlineMode
+readNewlineMode "windows" = Right Windows
+readNewlineMode "unix"    = Right Unix
+readNewlineMode "auto"    = Right Auto
+readNewlineMode s = Left $ TypeMismatch ("'" ++ s ++ "'") " a valid value for the NewlineMode enum"
 
 data Rules
 

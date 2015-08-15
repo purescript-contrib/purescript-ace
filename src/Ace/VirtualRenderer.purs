@@ -64,14 +64,15 @@ module Ace.VirtualRenderer
 
 import Prelude hiding (compare)
 
-import Data.Maybe
-import Data.Function hiding (on)
+import Control.Monad.Eff (Eff())
 
-import Control.Monad.Eff
+import Data.Function (Fn2(), runFn2, Fn3(), runFn3, Fn5(), runFn5)
+import Data.Maybe (Maybe())
+import Data.Nullable (Nullable(), toNullable)
+
+import DOM.HTML.Types (HTMLElement())
 
 import Ace.Types
-import Data.DOM.Simple.Types
-import Data.Nullable
 
 foreign import getCharacterWidth :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Number
 
@@ -92,200 +93,113 @@ foreign import updateLinesImpl :: forall eff. Fn3 Int Int VirtualRenderer (Eff (
 updateLines :: forall eff. Int -> Int -> VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 updateLines firstRow lastRow self = runFn3 updateLinesImpl firstRow lastRow self
 
-foreign import updateTextImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Unit)
-
-updateText :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Unit
-updateText self = runFn1 updateTextImpl self
+foreign import updateText :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 
 foreign import updateFullImpl :: forall eff. Fn2 Boolean VirtualRenderer (Eff (ace :: ACE | eff) Unit)
 
 updateFull :: forall eff. Boolean -> VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 updateFull force self = runFn2 updateFullImpl force self
 
-foreign import updateFontSizeImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Unit)
-
-updateFontSize :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Unit
-updateFontSize self = runFn1 updateFontSizeImpl self
+foreign import updateFontSize :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 
 foreign import onResizeImpl :: forall eff. Fn5 Boolean Int Int Int VirtualRenderer (Eff (ace :: ACE | eff) Unit)
 
 onResize :: forall eff. Boolean -> Int -> Int -> Int -> VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 onResize force gutterWidth width height self = runFn5 onResizeImpl force gutterWidth width height self
 
-foreign import adjustWrapLimitImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Unit)
-
-adjustWrapLimit :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Unit
-adjustWrapLimit self = runFn1 adjustWrapLimitImpl self
+foreign import adjustWrapLimit :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 
 foreign import setAnimatedScrollImpl :: forall eff. Fn2 Boolean VirtualRenderer (Eff (ace :: ACE | eff) Unit)
 
 setAnimatedScroll :: forall eff. Boolean -> VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 setAnimatedScroll shouldAnimate self = runFn2 setAnimatedScrollImpl shouldAnimate self
 
-foreign import getAnimatedScrollImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Boolean)
-
-getAnimatedScroll :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Boolean
-getAnimatedScroll self = runFn1 getAnimatedScrollImpl self
+foreign import getAnimatedScroll :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Boolean
 
 foreign import setShowInvisiblesImpl :: forall eff. Fn2 Boolean VirtualRenderer (Eff (ace :: ACE | eff) Unit)
 
 setShowInvisibles :: forall eff. Boolean -> VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 setShowInvisibles showInvisibles self = runFn2 setShowInvisiblesImpl showInvisibles self
 
-foreign import getShowInvisiblesImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Boolean)
-
-getShowInvisibles :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Boolean
-getShowInvisibles self = runFn1 getShowInvisiblesImpl self
+foreign import getShowInvisibles :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Boolean
 
 foreign import setShowPrintMarginImpl :: forall eff. Fn2 Boolean VirtualRenderer (Eff (ace :: ACE | eff) Unit)
 
 setShowPrintMargin :: forall eff. Boolean -> VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 setShowPrintMargin showPrintMargin self = runFn2 setShowPrintMarginImpl showPrintMargin self
 
-foreign import getShowPrintMarginImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Boolean)
-
-getShowPrintMargin :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Boolean
-getShowPrintMargin self = runFn1 getShowPrintMarginImpl self
+foreign import getShowPrintMargin :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Boolean
 
 foreign import setPrintMarginColumnImpl :: forall eff. Fn2 Boolean VirtualRenderer (Eff (ace :: ACE | eff) Unit)
 
 setPrintMarginColumn :: forall eff. Boolean -> VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 setPrintMarginColumn showPrintMargin self = runFn2 setPrintMarginColumnImpl showPrintMargin self
 
-foreign import getPrintMarginColumnImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Boolean)
+foreign import getPrintMarginColumn :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Boolean
 
-getPrintMarginColumn :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Boolean
-getPrintMarginColumn self = runFn1 getPrintMarginColumnImpl self
-
-foreign import getShowGutterImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Boolean)
-
-getShowGutter :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Boolean
-getShowGutter self = runFn1 getShowGutterImpl self
+foreign import getShowGutter :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Boolean
 
 foreign import setShowGutterImpl :: forall eff. Fn2 Boolean VirtualRenderer (Eff (ace :: ACE | eff) Unit)
 
 setShowGutter :: forall eff. Boolean -> VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 setShowGutter show self = runFn2 setShowGutterImpl show self
 
-foreign import getContainerElementImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) HTMLElement)
+foreign import getContainerElement :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) HTMLElement
 
-getContainerElement :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) HTMLElement
-getContainerElement self = runFn1 getContainerElementImpl self
+foreign import getMouseEventTarget :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) HTMLElement
 
-foreign import getMouseEventTargetImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) HTMLElement)
+foreign import getTextAreaContainer :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) HTMLElement
 
-getMouseEventTarget :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) HTMLElement
-getMouseEventTarget self = runFn1 getMouseEventTargetImpl self
+foreign import getFirstVisibleRow :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Int
 
-foreign import getTextAreaContainerImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) HTMLElement)
+foreign import getFirstFullyVisibleRow :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Int
 
-getTextAreaContainer :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) HTMLElement
-getTextAreaContainer self = runFn1 getTextAreaContainerImpl self
+foreign import getLastFullyVisibleRow :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Int
 
-foreign import getFirstVisibleRowImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Int)
-
-getFirstVisibleRow :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Int
-getFirstVisibleRow self = runFn1 getFirstVisibleRowImpl self
-
-foreign import getFirstFullyVisibleRowImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Int)
-
-getFirstFullyVisibleRow :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Int
-getFirstFullyVisibleRow self = runFn1 getFirstFullyVisibleRowImpl self
-
-foreign import getLastFullyVisibleRowImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Int)
-
-getLastFullyVisibleRow :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Int
-getLastFullyVisibleRow self = runFn1 getLastFullyVisibleRowImpl self
-
-foreign import getLastVisibleRowImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Int)
-
-getLastVisibleRow :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Int
-getLastVisibleRow self = runFn1 getLastVisibleRowImpl self
+foreign import getLastVisibleRow :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Int
 
 foreign import setPaddingImpl :: forall eff. Fn2 Int VirtualRenderer (Eff (ace :: ACE | eff) Unit)
 
 setPadding :: forall eff. Int -> VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 setPadding padding self = runFn2 setPaddingImpl padding self
 
-foreign import getHScrollBarAlwaysVisibleImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Boolean)
-
-getHScrollBarAlwaysVisible :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Boolean
-getHScrollBarAlwaysVisible self = runFn1 getHScrollBarAlwaysVisibleImpl self
+foreign import getHScrollBarAlwaysVisible :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Boolean
 
 foreign import setHScrollBarAlwaysVisibleImpl :: forall eff. Fn2 Boolean VirtualRenderer (Eff (ace :: ACE | eff) Unit)
 
 setHScrollBarAlwaysVisible :: forall eff. Boolean -> VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 setHScrollBarAlwaysVisible alwaysVisible self = runFn2 setHScrollBarAlwaysVisibleImpl alwaysVisible self
 
-foreign import updateFrontMarkersImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Unit)
+foreign import updateFrontMarkers :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 
-updateFrontMarkers :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Unit
-updateFrontMarkers self = runFn1 updateFrontMarkersImpl self
+foreign import updateBackMarkers :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 
-foreign import updateBackMarkersImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Unit)
+foreign import addGutterDecoration :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 
-updateBackMarkers :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Unit
-updateBackMarkers self = runFn1 updateBackMarkersImpl self
+foreign import removeGutterDecoration :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 
-foreign import addGutterDecorationImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Unit)
-
-addGutterDecoration :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Unit
-addGutterDecoration self = runFn1 addGutterDecorationImpl self
-
-foreign import removeGutterDecorationImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Unit)
-
-removeGutterDecoration :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Unit
-removeGutterDecoration self = runFn1 removeGutterDecorationImpl self
-
-foreign import updateBreakpointsImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Unit)
-
-updateBreakpoints :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Unit
-updateBreakpoints self = runFn1 updateBreakpointsImpl self
+foreign import updateBreakpoints :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 
 foreign import setAnnotationsImpl :: forall eff. Fn2 (Array Annotation) VirtualRenderer (Eff (ace :: ACE | eff) Unit)
 
 setAnnotations :: forall eff. Array Annotation -> VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 setAnnotations annotations self = runFn2 setAnnotationsImpl annotations self
 
-foreign import updateCursorImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Unit)
+foreign import updateCursor :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 
-updateCursor :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Unit
-updateCursor self = runFn1 updateCursorImpl self
+foreign import hideCursor :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 
-foreign import hideCursorImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Unit)
+foreign import showCursor :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 
-hideCursor :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Unit
-hideCursor self = runFn1 hideCursorImpl self
+foreign import scrollCursorIntoView :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 
-foreign import showCursorImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Unit)
+foreign import getScrollTop :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Int
 
-showCursor :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Unit
-showCursor self = runFn1 showCursorImpl self
+foreign import getScrollLeft :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Int
 
-foreign import scrollCursorIntoViewImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Unit)
+foreign import getScrollTopRow :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Int
 
-scrollCursorIntoView :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Unit
-scrollCursorIntoView self = runFn1 scrollCursorIntoViewImpl self
-
-foreign import getScrollTopImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Int)
-
-getScrollTop :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Int
-getScrollTop self = runFn1 getScrollTopImpl self
-
-foreign import getScrollLeftImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Int)
-
-getScrollLeft :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Int
-getScrollLeft self = runFn1 getScrollLeftImpl self
-
-foreign import getScrollTopRowImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Int)
-
-getScrollTopRow :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Int
-getScrollTopRow self = runFn1 getScrollTopRowImpl self
-
-foreign import getScrollBottomRowImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Int)
-
-getScrollBottomRow :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Int
-getScrollBottomRow self = runFn1 getScrollBottomRowImpl self
+foreign import getScrollBottomRow :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Int
 
 foreign import scrollToRowImpl :: forall eff. Fn2 Int VirtualRenderer (Eff (ace :: ACE | eff) Unit)
 
@@ -322,15 +236,9 @@ foreign import textToScreenCoordinatesImpl :: forall eff. Fn3 Int Int VirtualRen
 textToScreenCoordinates :: forall eff. Int -> Int -> VirtualRenderer -> Eff (ace :: ACE | eff) Position
 textToScreenCoordinates row column self = runFn3 textToScreenCoordinatesImpl row column self
 
-foreign import visualizeFocusImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Unit)
+foreign import visualizeFocus :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 
-visualizeFocus :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Unit
-visualizeFocus self = runFn1 visualizeFocusImpl self
-
-foreign import visualizeBlurImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Unit)
-
-visualizeBlur :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Unit
-visualizeBlur self = runFn1 visualizeBlurImpl self
+foreign import visualizeBlur :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 
 foreign import showCompositionImpl :: forall eff. Fn2 Int VirtualRenderer (Eff (ace :: ACE | eff) Unit)
 
@@ -342,20 +250,14 @@ foreign import setCompositionTextImpl :: forall eff. Fn2 String VirtualRenderer 
 setCompositionText :: forall eff. String -> VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 setCompositionText text self = runFn2 setCompositionTextImpl text self
 
-foreign import hideCompositionImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Unit)
-
-hideComposition :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Unit
-hideComposition self = runFn1 hideCompositionImpl self
+foreign import hideComposition :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 
 foreign import setThemeImpl :: forall eff. Fn2 String VirtualRenderer (Eff (ace :: ACE | eff) Unit)
 
 setTheme :: forall eff. String -> VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 setTheme theme self = runFn2 setThemeImpl theme self
 
-foreign import getThemeImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) String)
-
-getTheme :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) String
-getTheme self = runFn1 getThemeImpl self
+foreign import getTheme :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) String
 
 foreign import setStyleImpl :: forall eff. Fn2 String VirtualRenderer (Eff (ace :: ACE | eff) Unit)
 
@@ -367,10 +269,7 @@ foreign import unsetStyleImpl :: forall eff. Fn2 String VirtualRenderer (Eff (ac
 unsetStyle :: forall eff. String -> VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 unsetStyle style self = runFn2 unsetStyleImpl style self
 
-foreign import destroyImpl :: forall eff. Fn1 VirtualRenderer (Eff (ace :: ACE | eff) Unit)
-
-destroy :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Unit
-destroy self = runFn1 destroyImpl self
+foreign import destroy :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Unit
 
 foreign import createImpl :: forall eff. Fn2 HTMLElement (Nullable String) (Eff (ace :: ACE | eff) VirtualRenderer)
 

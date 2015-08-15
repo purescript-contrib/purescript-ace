@@ -1,3 +1,6 @@
+/* global exports, ace */
+"use strict";
+
 // module Ace.BackgroundTokenizer
 
 exports.onUpdateImpl = function(self, fn) {
@@ -32,7 +35,7 @@ exports.startImpl = function(startRow, self) {
     };
 };
 
-exports.stopImpl = function(self) {
+exports.stop = function(self) {
     return function() {
         return self.stop();
     };

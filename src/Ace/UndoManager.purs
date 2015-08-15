@@ -9,13 +9,13 @@ module Ace.UndoManager
 
 import Prelude
 
-import Data.Maybe
-import Data.Function
+import Control.Monad.Eff (Eff())
 
-import Control.Monad.Eff
+import Data.Function (Fn2(), runFn2)
+import Data.Maybe (Maybe())
+import Data.Nullable (Nullable(), toNullable)
 
 import Ace.Types
-import Data.Nullable
 
 foreign import undoImpl :: forall eff. Fn2 (Nullable Boolean) UndoManager (Eff (ace :: ACE | eff) Range)
 
@@ -27,22 +27,10 @@ foreign import redoImpl :: forall eff. Fn2 Boolean UndoManager (Eff (ace :: ACE 
 redo :: forall eff. Boolean -> UndoManager -> Eff (ace :: ACE | eff) Unit
 redo dontSelect self = runFn2 redoImpl dontSelect self
 
-foreign import resetImpl :: forall eff. Fn1 UndoManager (Eff (ace :: ACE | eff) Unit)
+foreign import reset :: forall eff. UndoManager -> Eff (ace :: ACE | eff) Unit
 
-reset :: forall eff. UndoManager -> Eff (ace :: ACE | eff) Unit
-reset self = runFn1 resetImpl self
+foreign import hasUndo :: forall eff. UndoManager -> Eff (ace :: ACE | eff) Boolean
 
-foreign import hasUndoImpl :: forall eff. Fn1 UndoManager (Eff (ace :: ACE | eff) Boolean)
+foreign import hasRedo :: forall eff. UndoManager -> Eff (ace :: ACE | eff) Boolean
 
-hasUndo :: forall eff. UndoManager -> Eff (ace :: ACE | eff) Boolean
-hasUndo self = runFn1 hasUndoImpl self
-
-foreign import hasRedoImpl :: forall eff. Fn1 UndoManager (Eff (ace :: ACE | eff) Boolean)
-
-hasRedo :: forall eff. UndoManager -> Eff (ace :: ACE | eff) Boolean
-hasRedo self = runFn1 hasRedoImpl self
-
-foreign import createImpl :: forall eff. Fn0 (Eff (ace :: ACE | eff) UndoManager)
-
-create :: forall eff. Eff (ace :: ACE | eff) UndoManager
-create = runFn0 createImpl
+foreign import create :: forall eff. Eff (ace :: ACE | eff) UndoManager

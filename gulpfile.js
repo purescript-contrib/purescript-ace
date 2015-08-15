@@ -2,9 +2,8 @@
 
 var gulp        = require('gulp')
   , purescript  = require('gulp-purescript')
-  , run         = require('gulp-run')
   , runSequence = require('run-sequence')
-  , jsValidate  = require('gulp-jsvalidate')
+  , jshint      = require('gulp-jshint')
   ;
 
 function sequence () {
@@ -38,8 +37,8 @@ gulp.task('docs', function() {
             "Ace.BackgroundTokenizer": "docs/Ace/BackgroundTokenizer.md",
             "Ace.Config": "docs/Ace/Config.md",
             "Ace.Document": "docs/Ace/Document.md",
-            "Ace.EditSession": "docs/Ace/EditSession.md",
             "Ace.Editor": "docs/Ace/Editor.md",
+            "Ace.EditSession": "docs/Ace/EditSession.md",
             "Ace.Range": "docs/Ace/Range.md",
             "Ace.ScrollBar": "docs/Ace/ScrollBar.md",
             "Ace.Search": "docs/Ace/Search.md",
@@ -53,17 +52,23 @@ gulp.task('docs', function() {
     });
 });
 
-gulp.task('example', function() {
-    return purescript.psc({
-        src: sources.concat(exampleSources),
-        ffi: foreigns.concat(exampleForeigns)
-    });
+gulp.task('lint', function() {
+  return gulp.src('src/**/*.js')
+    .pipe(jshint())
+    .pipe(jshint.reporter());
 });
 
-gulp.task('make', function() {
+gulp.task('make', ['lint'], function() {
     return purescript.psc({
         src: sources,
         ffi: foreigns
+    });
+});
+
+gulp.task('example', ['lint'], function() {
+    return purescript.psc({
+        src: sources.concat(exampleSources),
+        ffi: foreigns.concat(exampleForeigns)
     });
 });
 
@@ -74,7 +79,6 @@ gulp.task('bundle', ['example'], function() {
         main: "Main"
     });
 });
-
 
 gulp.task('watch-browser', function() {
     gulp.watch(sources.concat(exampleSources).concat(foreigns).concat(exampleForeigns), sequence('bundle', 'docs'))

@@ -1,6 +1,9 @@
+/* global exports, ace */
+"use strict";
+
 // module Ace.Tokenizer
 
-exports.getLineTokensImpl = function(self) {
+exports.getLineTokens = function(self) {
     return function() {
         return self.getLineTokens();
     };

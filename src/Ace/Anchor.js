@@ -1,3 +1,6 @@
+/* global exports, ace */
+"use strict";
+
 // module Ace.Anchor
 
 exports.onChangeImpl = function(self, fn) {
@@ -8,13 +11,13 @@ exports.onChangeImpl = function(self, fn) {
     };
 };
 
-exports.getPositionImpl = function(self) {
+exports.getPosition = function(self) {
     return function() {
         return self.getPosition();
     };
 };
 
-exports.getDocumentImpl = function(self) {
+exports.getDocument = function(self) {
     return function() {
         return self.getDocument();
     };
@@ -26,7 +29,7 @@ exports.setPositionImpl = function(row, column, noClip, self) {
     };
 };
 
-exports.detachImpl = function(self) {
+exports.detach = function(self) {
     return function() {
         self.detach();
     };

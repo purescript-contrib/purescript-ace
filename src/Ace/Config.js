@@ -1,3 +1,6 @@
+/* global exports, ace */
+"use strict";
+
 // module Ace.Config
 
 exports.setImpl = function(key, value) {
