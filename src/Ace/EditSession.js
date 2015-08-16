@@ -1,3 +1,6 @@
+/* global exports, ace */
+"use strict";
+
 // module Ace.EditSession
 
 exports.getBackgroundTokenizer = function(value) {
@@ -44,7 +47,7 @@ exports.setDocumentImpl = function(doc, self) {
     };
 };
 
-exports.getDocumentImpl = function(self) {
+exports.getDocument = function(self) {
     return function() {
         return self.getDocument();
     };
@@ -68,13 +71,13 @@ exports.setModeImpl = function(mode, self) {
     };
 };
 
-exports.getValueImpl = function(self) {
+exports.getValue = function(self) {
     return function() {
         return self.getValue();
     };
 };
 
-exports.getSelectionImpl = function(self) {
+exports.getSelection = function(self) {
     return function() {
         return self.getSelection();
     };
@@ -105,13 +108,13 @@ exports.setUndoManagerImpl = function(undoManager, self) {
     };
 };
 
-exports.getUndoManagerImpl = function(self) {
+exports.getUndoManager = function(self) {
     return function() {
         return self.getUndoManager();
     };
 };
 
-exports.getTabStringImpl = function(self) {
+exports.getTabString = function(self) {
     return function() {
         return self.getTabString();
     };
@@ -123,7 +126,7 @@ exports.setUseSoftTabsImpl = function(useSoftTabs, self) {
     };
 };
 
-exports.getUseSoftTabsImpl = function(self) {
+exports.getUseSoftTabs = function(self) {
     return function() {
         return self.getUseSoftTabs();
     };
@@ -135,7 +138,7 @@ exports.setTabSizeImpl = function(tabSize, self) {
     };
 };
 
-exports.getTabSizeImpl = function(self) {
+exports.getTabSize = function(self) {
     return function() {
         return self.getTabSize();
     };
@@ -153,13 +156,13 @@ exports.setOverwriteImpl = function(overwrite, self) {
     };
 };
 
-exports.getOverwriteImpl = function(self) {
+exports.getOverwrite = function(self) {
     return function() {
         return self.getOverwrite();
     };
 };
 
-exports.toggleOverwriteImpl = function(self) {
+exports.toggleOverwrite = function(self) {
     return function() {
         return self.toggleOverwrite();
     };
@@ -177,7 +180,7 @@ exports.removeGutterDecorationImpl = function(row, className, self) {
     };
 };
 
-exports.getBreakpointsImpl = function(self) {
+exports.getBreakpoints = function(self) {
     return function() {
         return self.getBreakpoints();
     };
@@ -189,7 +192,7 @@ exports.setBreakpointsImpl = function(rows, self) {
     };
 };
 
-exports.clearBreakpointsImpl = function(self) {
+exports.clearBreakpoints = function(self) {
     return function() {
         return self.clearBreakpoints();
     };
@@ -235,13 +238,13 @@ exports.setAnnotationsImpl = function(annotations, self) {
     };
 };
 
-exports.getAnnotationsImpl = function(self) {
+exports.getAnnotations = function(self) {
     return function() {
         return self.getAnnotations();
     };
 };
 
-exports.clearAnnotationsImpl = function(self) {
+exports.clearAnnotations = function(self) {
     return function() {
         return self.clearAnnotations();
     };
@@ -271,7 +274,7 @@ exports.setNewLineModeImpl = function(newLineMode, self) {
     };
 };
 
-exports.getNewLineModeImpl = function(self) {
+exports.getNewLineMode = function(self) {
     return function() {
         return self.getNewLineMode();
     };
@@ -283,13 +286,13 @@ exports.setUseWorkerImpl = function(useWorker, self) {
     };
 };
 
-exports.getUseWorkerImpl = function(self) {
+exports.getUseWorker = function(self) {
     return function() {
         return self.getUseWorker();
     };
 };
 
-exports.onReloadTokenizerImpl = function(self) {
+exports.onReloadTokenizer = function(self) {
     return function() {
         return self.onReloadTokenizer();
     };
@@ -301,7 +304,7 @@ exports.modeImpl = function(mode, self) {
     };
 };
 
-exports.getModeImpl = function(self) {
+exports.getMode = function(self) {
     return function() {
         return self.getMode();
     };
@@ -313,7 +316,7 @@ exports.setScrollTopImpl = function(scrollTop, self) {
     };
 };
 
-exports.getScrollTopImpl = function(self) {
+exports.getScrollTop = function(self) {
     return function() {
         return self.getScrollTop();
     };
@@ -325,13 +328,13 @@ exports.setScrollLeftImpl = function(scrollLeft, self) {
     };
 };
 
-exports.getScrollLeftImpl = function(self) {
+exports.getScrollLeft = function(self) {
     return function() {
         return self.getScrollLeft();
     };
 };
 
-exports.getScreenWidthImpl = function(self) {
+exports.getScreenWidth = function(self) {
     return function() {
         return self.getScreenWidth();
     };
@@ -349,7 +352,7 @@ exports.getLinesImpl = function(firstRow, lastRow, self) {
     };
 };
 
-exports.getLengthImpl = function(self) {
+exports.getLength = function(self) {
     return function() {
         return self.getLength();
     };
@@ -385,7 +388,7 @@ exports.replaceImpl = function(range, text, self) {
     };
 };
 
-exports.moveTextImpl = function(fromRange, toPosiion, self) {
+exports.moveTextImpl = function(fromRange, toPosition, self) {
     return function() {
         return self.moveText(fromRange, toPosition);
     };
@@ -427,7 +430,7 @@ exports.setUseWrapModeImpl = function(useWrapMode, self) {
     };
 };
 
-exports.getUseWrapModeImpl = function(self) {
+exports.getUseWrapMode = function(self) {
     return function() {
         return self.getUseWrapMode();
     };
@@ -446,13 +449,13 @@ exports.adjustWrapLimitImpl = function(desiredLimit, self) {
     };
 };
 
-exports.getWrapLimitImpl = function(self) {
+exports.getWrapLimit = function(self) {
     return function() {
         return self.getWrapLimit();
     };
 };
 
-exports.getWrapLimitRangeImpl = function(self) {
+exports.getWrapLimitRange = function(self) {
     return function() {
         return self.getWrapLimitRange();
     };
@@ -464,12 +467,11 @@ exports.getDisplayTokensImpl = function(str, offset, self) {
     };
 };
 
-exports.getStringScreenWidthImpl = function(str, maxScreenColumn, screenColumn, self)
-{
+exports.getStringScreenWidthImpl = function(str, maxScreenColumn, screenColumn, self) {
     return function() {
         return self.$getStringScreenWidth(str, maxScreenColumn, screenColumn);
     };
-}
+};
 
 exports.getRowLengthImpl = function(row, self) {
     return function() {
@@ -495,7 +497,7 @@ exports.getDocumentLastRowColumnPositionImpl = function(docRow, docColumn, self)
     };
 };
 
-exports.getRowSplitDataImpl = function(self) {
+exports.getRowSplitData = function(self) {
     return function() {
         return self.getRowSplitData();
     };
@@ -531,7 +533,7 @@ exports.documentToScreenRowImpl = function(docRow, docColumn, self) {
     };
 };
 
-exports.getScreenLengthImpl = function(self) {
+exports.getScreenLength = function(self) {
     return function() {
         return self.getScreenLength();
     };
@@ -544,10 +546,8 @@ function create(text, mode) {
     };
 }
 
-exports.setThemeImpl = 
-
 exports.createWithModeImpl = create;
 
 exports.createImpl = create;
 
-exports.createFromLinesImpl = create; 
+exports.createFromLinesImpl = create;

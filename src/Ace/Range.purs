@@ -33,10 +33,9 @@ module Ace.Range
 
 import Prelude hiding (compare)
 
-import Data.Maybe
-import Data.Function
+import Control.Monad.Eff (Eff())
 
-import Control.Monad.Eff
+import Data.Function (Fn2(), runFn2, Fn3(), runFn3, Fn4(), runFn4)
 
 import Ace.Types
 
@@ -52,20 +51,14 @@ foreign import getStart :: forall eff. Range -> Eff (ace :: ACE | eff) Position
 
 foreign import getEnd :: forall eff. Range -> Eff (ace :: ACE | eff) Position
 
-foreign import isEmptyImpl :: forall eff. Fn1 Range (Eff (ace :: ACE | eff) Boolean)
-
-isEmpty :: forall eff. Range -> Eff (ace :: ACE | eff) Boolean
-isEmpty self = runFn1 isEmptyImpl self
+foreign import isEmpty :: forall eff. Range -> Eff (ace :: ACE | eff) Boolean
 
 foreign import isEqualImpl :: forall eff. Fn2 Range Range (Eff (ace :: ACE | eff) Unit)
 
 isEqual :: forall eff. Range -> Range -> Eff (ace :: ACE | eff) Unit
 isEqual range self = runFn2 isEqualImpl range self
 
-foreign import toStringImpl :: forall eff. Fn1 Range (Eff (ace :: ACE | eff) Unit)
-
-toString :: forall eff. Range -> Eff (ace :: ACE | eff) Unit
-toString self = runFn1 toStringImpl self
+foreign import toString :: forall eff. Range -> Eff (ace :: ACE | eff) Unit
 
 foreign import containsImpl :: forall eff. Fn3 Int Int Range (Eff (ace :: ACE | eff) Boolean)
 
@@ -157,20 +150,11 @@ foreign import extendImpl :: forall eff. Fn3 Int Int Range (Eff (ace :: ACE | ef
 extend :: forall eff. Int -> Int -> Range -> Eff (ace :: ACE | eff) Range
 extend row column self = runFn3 extendImpl row column self
 
-foreign import isMultiLineImpl :: forall eff. Fn1 Range (Eff (ace :: ACE | eff) Boolean)
+foreign import isMultiLine :: forall eff. Range -> Eff (ace :: ACE | eff) Boolean
 
-isMultiLine :: forall eff. Range -> Eff (ace :: ACE | eff) Boolean
-isMultiLine self = runFn1 isMultiLineImpl self
+foreign import clone :: forall eff. Range -> Eff (ace :: ACE | eff) Range
 
-foreign import cloneImpl :: forall eff. Fn1 Range (Eff (ace :: ACE | eff) Range)
-
-clone :: forall eff. Range -> Eff (ace :: ACE | eff) Range
-clone self = runFn1 cloneImpl self
-
-foreign import collapseRowsImpl :: forall eff. Fn1 Range (Eff (ace :: ACE | eff) Range)
-
-collapseRows :: forall eff. Range -> Eff (ace :: ACE | eff) Range
-collapseRows self = runFn1 collapseRowsImpl self
+foreign import collapseRows :: forall eff. Range -> Eff (ace :: ACE | eff) Range
 
 foreign import toScreenRangeImpl :: forall eff. Fn2 EditSession Range (Eff (ace :: ACE | eff) Range)
 

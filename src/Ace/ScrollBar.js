@@ -1,3 +1,6 @@
+/* global exports, ace */
+"use strict";
+
 // module Ace.ScrollBar
 
 function effize(method) {
@@ -10,24 +13,6 @@ function effize(method) {
     };
 }
 
-function effGet(field) {
-    return function(self) {
-        return function() {
-            return self[field];
-        };
-    };
-}
-
-function effSet(field) {
-    return function(val, self) {
-        return function() {
-            self[field] = val;
-        };
-    };
-}
-
-
-
 exports.onScrollImpl = function(self, fn) {
     return function() {
         return self.on('scroll', function() {
@@ -35,14 +20,15 @@ exports.onScrollImpl = function(self, fn) {
         });
     };
 };
-exports.getWidthImpl = effize('getWidth');
+
+exports.getWidth = effize('getWidth');
 exports.setHeightImpl = effize('setHeight');
 exports.setInnerHeightImpl = effize('setInnerHeight');
 exports.setScrollTopImpl = effize('setScrollTop');
+
 exports.createImpl = function(parent, vr) {
     return function() {
         var ScrollBar = ace.require('ace/scrollbar').ScrollBar;
         return new ScrollBar(parent, vr);
     };
 };
-

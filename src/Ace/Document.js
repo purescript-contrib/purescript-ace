@@ -1,3 +1,6 @@
+/* global exports, ace */
+"use strict";
+
 // module Ace.Document
 
 exports.onChangeImpl = function(self, fn) {
@@ -8,14 +11,13 @@ exports.onChangeImpl = function(self, fn) {
     };
 };
 
-
 exports.setValueImpl = function(text, self) {
     return function() {
         return self.setValue(text);
     };
 };
 
-exports.getValueImpl = function(self) {
+exports.getValue = function(self) {
     return function() {
         return self.getValue();
     };
@@ -28,7 +30,7 @@ exports.createAnchorImpl = function(row, column, self) {
     };
 };
 
-exports.getNewLineCharacterImpl = function(self) {
+exports.getNewLineCharacter = function(self) {
     return function() {
         return self.getNewLineCharacter();
     };
@@ -40,7 +42,7 @@ exports.setNewLineModeImpl = function(newLineMode, self) {
     };
 };
 
-exports.getNewLineModeImpl = function(self) {
+exports.getNewLineMode = function(self) {
     return function() {
         return self.getNewLineMode();
     };
@@ -64,13 +66,13 @@ exports.getLinesImpl = function(firstRow, lastRow, self) {
     };
 };
 
-exports.getAllLinesImpl = function(self) {
+exports.getAllLines = function(self) {
     return function() {
         return self.getAllLines();
     };
 };
 
-exports.getLengthImpl = function(self) {
+exports.getLength = function(self) {
     return function() {
         return self.getLength();
     };
@@ -148,14 +150,14 @@ exports.positionToIndexImpl = function(pos, startRow, self) {
     };
 };
 
-exports.createImpl = function(text) {
+exports.create = function(text) {
     return function() {
         var Document = ace.require('ace/document').Document;
         return new Document(text);
     };
 };
 
-exports.createFromLinesImpl = function(text) {
+exports.createFromLines = function(text) {
     return function() {
         var Document = ace.require('ace/document').Document;
         return new Document(text);

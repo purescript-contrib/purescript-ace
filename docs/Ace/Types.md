@@ -31,7 +31,7 @@ showDocumentEventType :: DocumentEventType -> String
 #### `readDocumentEventType`
 
 ``` purescript
-readDocumentEventType :: String -> DocumentEventType
+readDocumentEventType :: String -> F DocumentEventType
 ```
 
 #### `DocumentEvent`
@@ -70,7 +70,7 @@ showNewlineMode :: NewlineMode -> String
 #### `readNewlineMode`
 
 ``` purescript
-readNewlineMode :: String -> NewlineMode
+readNewlineMode :: String -> F NewlineMode
 ```
 
 #### `Rules`

@@ -1,5 +1,7 @@
-// module Ace.TokenIterator
+/* global exports, ace */
+"use strict";
 
+// module Ace.TokenIterator
 
 function effize(method) {
     return function() {
@@ -11,31 +13,15 @@ function effize(method) {
     };
 }
 
-function effGet(field) {
-    return function(self) {
-        return function() {
-            return self[field];
-        };
-    };
-}
+exports.stepBackward = effize('stepBackward');
+exports.stepForward = effize('stepForward');
+exports.getCurrentToken = effize('getCurrentToken');
+exports.getCurrentTokenRow = effize('getCurrentTokenRow');
+exports.getCurrentTokenColumn = effize('getCurrentTokenColumn');
 
-function effSet(field) {
-    return function(val, self) {
-        return function() {
-            self[field] = val;
-        };
-    };
-}
-
-exports.stepBackwardImpl = effize('stepBackward');
-exports.stepForwardImpl = effize('stepForward');
-exports.getCurrentTokenImpl = effize('getCurrentToken');
-exports.getCurrentTokenRowImpl = effize('getCurrentTokenRow');
-exports.getCurrentTokenColumnImpl = effize('getCurrentTokenColumn');
 exports.createImpl = function(session, initialRow, initialColumn) {
     return function() {
         var TokenIterator = ace.require('ace/token_iterator').TokenIterator;
         return new TokenIterator(session, initialRow, initialColumn);
     };
 };
-

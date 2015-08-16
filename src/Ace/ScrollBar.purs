@@ -5,28 +5,24 @@ module Ace.ScrollBar
   , setHeight
   , setInnerHeight
   , setScrollTop
-  )
-  where
+  ) where
 
 import Prelude
- 
-import Data.Maybe
-import Data.Function
 
-import Control.Monad.Eff
+import Control.Monad.Eff (Eff())
+
+import Data.Function (Fn2(), runFn2)
+
+import DOM.HTML.Types (HTMLElement())
 
 import Ace.Types
-import Data.DOM.Simple.Types
 
 foreign import onScrollImpl :: forall eff a. Fn2 ScrollBar (Eff (ace :: ACE | eff) a) (Eff (ace :: ACE | eff) Unit)
 
 onScroll :: forall eff a. ScrollBar -> (Eff (ace :: ACE | eff) a) -> Eff (ace :: ACE | eff) Unit
 onScroll self fn = runFn2 onScrollImpl self fn
 
-foreign import getWidthImpl :: forall eff. Fn1 ScrollBar (Eff (ace :: ACE | eff) Int)
-
-getWidth :: forall eff. ScrollBar -> Eff (ace :: ACE | eff) Int
-getWidth self = runFn1 getWidthImpl self
+foreign import getWidth :: forall eff. ScrollBar -> Eff (ace :: ACE | eff) Int
 
 foreign import setHeightImpl :: forall eff. Fn2 Int ScrollBar (Eff (ace :: ACE | eff) Unit)
 

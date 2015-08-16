@@ -28,54 +28,42 @@ module Ace.Document
 
 import Prelude
 
-import Data.Maybe
-import Data.Either
-import Data.Foreign
-import Data.Foreign.Class
-import Data.Function
+import Control.Monad.Eff (Eff())
 
-import Control.Monad.Eff
+import Data.Maybe (Maybe())
+import Data.Either.Unsafe (fromRight)
+import Data.Foreign (Foreign())
+import Data.Foreign.Class (read)
+import Data.Function (Fn2(), runFn2, Fn3(), runFn3, Fn4(), runFn4)
+import Data.Nullable (Nullable(), toNullable)
 
 import Ace.Types
-import Data.Nullable
 
 foreign import onChangeImpl :: forall eff a. Fn2 Document (Foreign -> Eff (ace :: ACE | eff) a) (Eff (ace :: ACE | eff) Unit)
 
 onChange :: forall eff a. Document -> (DocumentEvent -> Eff (ace :: ACE | eff) a) -> Eff (ace :: ACE | eff) Unit
-onChange self fn = runFn2 onChangeImpl self (fn <<< readResult <<< read)
-  where
-  readResult :: forall a. F a -> a
-  readResult (Right r) = r
+onChange self fn = runFn2 onChangeImpl self (fn <<< fromRight <<< read)
 
 foreign import setValueImpl :: forall eff. Fn2 String Document (Eff (ace :: ACE | eff) Unit)
 
 setValue :: forall eff. String -> Document -> Eff (ace :: ACE | eff) Unit
 setValue text self = runFn2 setValueImpl text self
 
-foreign import getValueImpl :: forall eff. Fn1 Document (Eff (ace :: ACE | eff) String)
-
-getValue :: forall eff. Document -> Eff (ace :: ACE | eff) String
-getValue self = runFn1 getValueImpl self
+foreign import getValue :: forall eff. Document -> Eff (ace :: ACE | eff) String
 
 foreign import createAnchorImpl :: forall eff. Fn3 Int Int Document (Eff (ace :: ACE | eff) Anchor)
 
 createAnchor :: forall eff. Int -> Int -> Document -> Eff (ace :: ACE | eff) Anchor
 createAnchor row column self = runFn3 createAnchorImpl row column self
 
-foreign import getNewLineCharacterImpl :: forall eff. Fn1 Document (Eff (ace :: ACE | eff) String)
-
-getNewLineCharacter :: forall eff. Document -> Eff (ace :: ACE | eff) String
-getNewLineCharacter self = runFn1 getNewLineCharacterImpl self
+foreign import getNewLineCharacter :: forall eff. Document -> Eff (ace :: ACE | eff) String
 
 foreign import setNewLineModeImpl :: forall eff. Fn2 String Document (Eff (ace :: ACE | eff) Unit)
 
 setNewLineMode :: forall eff. NewlineMode -> Document -> Eff (ace :: ACE | eff) Unit
 setNewLineMode newLineMode self = runFn2 setNewLineModeImpl (showNewlineMode newLineMode) self
 
-foreign import getNewLineModeImpl :: forall eff. Fn1 Document (Eff (ace :: ACE | eff) String)
-
-getNewLineMode :: forall eff. Document -> Eff (ace :: ACE | eff) NewlineMode
-getNewLineMode self = readNewlineMode <$> runFn1 getNewLineModeImpl self
+foreign import getNewLineMode :: forall eff. Document -> Eff (ace :: ACE | eff) String
 
 foreign import isNewLineImpl :: forall eff. Fn2 String Document (Eff (ace :: ACE | eff) Boolean)
 
@@ -92,15 +80,9 @@ foreign import getLinesImpl :: forall eff. Fn3 Int Int Document (Eff (ace :: ACE
 getLines :: forall eff. Int -> Int -> Document -> Eff (ace :: ACE | eff) (Array String)
 getLines firstRow lastRow self = runFn3 getLinesImpl firstRow lastRow self
 
-foreign import getAllLinesImpl :: forall eff. Fn1 Document (Eff (ace :: ACE | eff) (Array String))
+foreign import getAllLines :: forall eff. Document -> Eff (ace :: ACE | eff) (Array String)
 
-getAllLines :: forall eff. Document -> Eff (ace :: ACE | eff) (Array String)
-getAllLines self = runFn1 getAllLinesImpl self
-
-foreign import getLengthImpl :: forall eff. Fn1 Document (Eff (ace :: ACE | eff) Int)
-
-getLength :: forall eff. Document -> Eff (ace :: ACE | eff) Int
-getLength self = runFn1 getLengthImpl self
+foreign import getLength :: forall eff. Document -> Eff (ace :: ACE | eff) Int
 
 foreign import getTextRangeImpl :: forall eff. Fn2 Range Document (Eff (ace :: ACE | eff) String)
 
@@ -162,12 +144,6 @@ foreign import positionToIndexImpl :: forall eff. Fn3 Position Int Document (Eff
 positionToIndex :: forall eff. Position -> Int -> Document -> Eff (ace :: ACE | eff) Int
 positionToIndex pos startRow self = runFn3 positionToIndexImpl pos startRow self
 
-foreign import createImpl :: forall eff. Fn1 (Nullable String) (Eff (ace :: ACE | eff) Document)
+foreign import create :: forall eff. Nullable String -> Eff (ace :: ACE | eff) Document
 
-create :: forall eff. Maybe String -> Eff (ace :: ACE | eff) Document
-create text = runFn1 createImpl (toNullable text)
-
-foreign import createFromLinesImpl :: forall eff. Fn1 (Array String) (Eff (ace :: ACE | eff) Document)
-
-createFromLines :: forall eff. Array String -> Eff (ace :: ACE | eff) Document
-createFromLines text = runFn1 createFromLinesImpl text
+foreign import createFromLines :: forall eff. Array String -> Eff (ace :: ACE | eff) Document

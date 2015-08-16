@@ -1,5 +1,7 @@
-// module Ace.UndoManager
+/* global exports, ace */
+"use strict";
 
+// module Ace.UndoManager
 
 function effize(method) {
     return function() {
@@ -10,15 +12,15 @@ function effize(method) {
         };
     };
 }
+
 exports.undoImpl = effize('undo');
 exports.redoImpl = effize('redo');
-exports.resetImpl = effize('reset');
-exports.hasUndoImpl = effize('hasUndo');
-exports.hasRedoImpl = effize('hasRedo');
+exports.reset = effize('reset');
+exports.hasUndo = effize('hasUndo');
+exports.hasRedo = effize('hasRedo');
+
 exports.createImpl = function() {
-    return function() {
-        var UndoManager = ace.require('ace/undomanager').UndoManager;
-        return new UndoManager();
-    };
+    var UndoManager = ace.require('ace/undomanager').UndoManager;
+    return new UndoManager();
 };
 

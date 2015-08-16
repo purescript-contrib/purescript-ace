@@ -39,7 +39,7 @@ setNewLineMode :: forall eff. NewlineMode -> Document -> Eff (ace :: ACE | eff) 
 #### `getNewLineMode`
 
 ``` purescript
-getNewLineMode :: forall eff. Document -> Eff (ace :: ACE | eff) NewlineMode
+getNewLineMode :: forall eff. Document -> Eff (ace :: ACE | eff) String
 ```
 
 #### `isNewLine`
@@ -141,7 +141,7 @@ positionToIndex :: forall eff. Position -> Int -> Document -> Eff (ace :: ACE | 
 #### `create`
 
 ``` purescript
-create :: forall eff. Maybe String -> Eff (ace :: ACE | eff) Document
+create :: forall eff. Nullable String -> Eff (ace :: ACE | eff) Document
 ```
 
 #### `createFromLines`

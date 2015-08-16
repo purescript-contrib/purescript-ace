@@ -1,5 +1,7 @@
-// module Ace.Selection
+/* global exports, ace */
+"use strict";
 
+// module Ace.Selection
 
 function effize(method) {
     return function() {
@@ -11,7 +13,6 @@ function effize(method) {
     };
 }
 
-
 exports.onImpl = function(ev, fn, self) {
     return function() {
         return self.on(ev, function() {
@@ -19,58 +20,59 @@ exports.onImpl = function(ev, fn, self) {
         });
     };
 };
-exports.moveCursorWordLeftImpl = effize('moveCursorWordLeft');
-exports.moveCursorWordRightImpl = effize('moveCursorWordRight');
+
+exports.moveCursorWordLeft = effize('moveCursorWordLeft');
+exports.moveCursorWordRight = effize('moveCursorWordRight');
 exports.fromOrientedRangeImpl = effize('fromOrientedRange');
 exports.setSelectionRangeImpl = effize('setSelectionRange');
-exports.getAllRangesImpl = effize('getAllRanges');
+exports.getAllRanges = effize('getAllRanges');
 exports.addRangeImpl = effize('addRange');
-exports.isEmptyImpl = effize('isEmpty');
-exports.isMultiLineImpl = effize('isMultiLine');
-exports.getCursorImpl = effize('getCursor');
-exports.setSelectionAnchorImpl = effize('setSelectionAnchor');
+exports.isEmpty = effize('isEmpty');
+exports.isMultiLine = effize('isMultiLine');
+exports.getCursor = effize('getCursor');
+exports.setSelectionAnchor = effize('setSelectionAnchor');
 exports.getSelectionAnchorImpl = effize('getSelectionAnchor');
-exports.getSelectionLeadImpl = effize('getSelectionLead');
+exports.getSelectionLead = effize('getSelectionLead');
 exports.shiftSelectionImpl = effize('shiftSelection');
-exports.isBackwardsImpl = effize('isBackwards');
-exports.getRangeImpl = effize('getRange');
-exports.clearSelectionImpl = effize("clearSelection");
-exports.selectAllImpl = effize('selectAll');
+exports.isBackwards = effize('isBackwards');
+exports.getRange = effize('getRange');
+exports.clearSelection = effize("clearSelection");
+exports.selectAll = effize('selectAll');
 exports.setRangeImpl = effize('setRange');
 exports.selectToImpl = effize('selectTo');
 exports.selectToPositionImpl = effize('selectToPosition');
-exports.selectUpImpl = effize('selectUp');
-exports.selectDownImpl = effize('selectDown');
-exports.selectRightImpl = effize('selectRight');
-exports.selectLeftImpl = effize('selectLeft');
-exports.selectLineStartImpl = effize('selectLineStart');
-exports.selectLineEndImpl = effize('selectLineEnd');
-exports.selectFileEndImpl = effize('selectFileEnd');
-exports.selectFileStartImpl = effize('selectFileStart');
-exports.selectWordRightImpl = effize('selectWordRight');
-exports.selectWordLeftImpl = effize('selectWordLeft');
-exports.getWordRangeImpl = effize('getWordRange');
-exports.selectWordImpl = effize('selectWord');
-exports.selectAWordImpl = effize('selectAWord');
-exports.selectLineImpl = effize('selectLine');
-exports.moveCursorUpImpl = effize('moveCursorUp');
-exports.moveCursorDownImpl = effize('moveCursorDown');
-exports.moveCursorLeftImpl = effize('moveCursorLeft');
-exports.moveCursorRightImpl = effize('moveCursorRight');
-exports.moveCursorLineStartImpl = effize('moveCursorLineStart');
-exports.moveCursorLineEndImpl = effize('moveCursorLineEnd');
-exports.moveCursorFileEndImpl = effize('moveCursorFileEnd');
-exports.moveCursorFileStartImpl = effize('moveCursorFileStart');
-exports.moveCursorLongWordRightImpl = effize('moveCursorLongWordRight');
-exports.moveCursorLongWordLeftImpl = effize('moveCursorLongWordLeft');
+exports.selectUp = effize('selectUp');
+exports.selectDown = effize('selectDown');
+exports.selectRight = effize('selectRight');
+exports.selectLeft = effize('selectLeft');
+exports.selectLineStart = effize('selectLineStart');
+exports.selectLineEnd = effize('selectLineEnd');
+exports.selectFileEnd = effize('selectFileEnd');
+exports.selectFileStart = effize('selectFileStart');
+exports.selectWordRight = effize('selectWordRight');
+exports.selectWordLeft = effize('selectWordLeft');
+exports.getWordRange = effize('getWordRange');
+exports.selectWord = effize('selectWord');
+exports.selectAWord = effize('selectAWord');
+exports.selectLine = effize('selectLine');
+exports.moveCursorUp = effize('moveCursorUp');
+exports.moveCursorDown = effize('moveCursorDown');
+exports.moveCursorLeft = effize('moveCursorLeft');
+exports.moveCursorRight = effize('moveCursorRight');
+exports.moveCursorLineStart = effize('moveCursorLineStart');
+exports.moveCursorLineEnd = effize('moveCursorLineEnd');
+exports.moveCursorFileEnd = effize('moveCursorFileEnd');
+exports.moveCursorFileStart = effize('moveCursorFileStart');
+exports.moveCursorLongWordRight = effize('moveCursorLongWordRight');
+exports.moveCursorLongWordLeft = effize('moveCursorLongWordLeft');
 exports.moveCursorByImpl = effize('moveCursorBy');
 exports.moveCursorToImpl = effize('moveCursorTo');
 exports.moveCursorToPositionImpl = effize('moveCursorToPosition');
 exports.moveCursorToScreenImpl = effize('moveCursorToScreen');
-exports.createImpl = function(session) {
+
+exports.create = function(session) {
     return function() {
         var Selection = ace.require('ace/selection').Selection;
         return new Selection(session);
     };
-}
-
+};

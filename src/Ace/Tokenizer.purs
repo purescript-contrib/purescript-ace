@@ -3,17 +3,13 @@ module Ace.Tokenizer
   , getLineTokens
   ) where
 
-import Data.Maybe
-import Data.Function
+import Control.Monad.Eff (Eff())
 
-import Control.Monad.Eff
+import Data.Function (Fn2(), runFn2)
 
 import Ace.Types
 
-foreign import getLineTokensImpl :: forall eff. Fn1 Tokenizer (Eff (ace :: ACE | eff) { tokens :: Array TokenInfo, state :: String })
-
-getLineTokens :: forall eff. Tokenizer -> Eff (ace :: ACE | eff) { tokens :: Array TokenInfo, state :: String }
-getLineTokens self = runFn1 getLineTokensImpl self
+foreign import getLineTokens :: forall eff. Tokenizer -> Eff (ace :: ACE | eff) { tokens :: Array TokenInfo, state :: String }
 
 foreign import createImpl :: forall eff. Fn2 Rules String (Eff (ace :: ACE | eff) Tokenizer)
 

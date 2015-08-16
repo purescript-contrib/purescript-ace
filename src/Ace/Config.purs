@@ -9,10 +9,11 @@ module Ace.Config
   , suffix
   ) where
 
+import Control.Monad.Eff (Eff())
+
+import Data.Function (Fn2(), runFn2)
+
 import Ace.Types
-import Control.Monad.Eff
-import Data.Function
-import Data.Maybe
 
 newtype ConfigOption a = ConfigOption String
 

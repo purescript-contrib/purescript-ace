@@ -1,3 +1,6 @@
+/* global exports, ace */
+"use strict";
+
 // module Ace
 
 exports.ace = ace;

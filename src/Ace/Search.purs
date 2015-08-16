@@ -6,12 +6,11 @@ module Ace.Search
   , create
   ) where
 
-import Prelude hiding (compare)
+import Prelude
 
-import Data.Maybe
-import Data.Function hiding (on)
+import Control.Monad.Eff (Eff())
 
-import Control.Monad.Eff
+import Data.Function (Fn2(), runFn2, Fn3(), runFn3)
 
 import Ace.Types
 
@@ -35,7 +34,4 @@ foreign import replaceImpl :: forall eff. Fn3 String String Search (Eff (ace :: 
 replace :: forall eff. String -> String -> Search -> Eff (ace :: ACE | eff) String
 replace input replacement self = runFn3 replaceImpl input replacement self
 
-foreign import createImpl :: forall eff. Fn0 (Eff (ace :: ACE | eff) Search)
-
-create :: forall eff. Eff (ace :: ACE | eff) Search
-create = runFn0 createImpl
+foreign import create :: forall eff. Eff (ace :: ACE | eff) Search
