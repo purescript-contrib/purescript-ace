@@ -151,6 +151,16 @@ exports.undo = effize('undo');
 exports.redo = effize('redo');
 exports.destroy = effize('destroy');
 
+exports.setOption = function(s) {
+  return function (a) {
+    return function (editor) {
+      return function () {
+        editor.setOption(s, a);
+      };
+    };
+  };
+};
+
 exports.createImpl = function(renderer, session) {
     return function() {
         return new Editor(renderer, session);
