@@ -4,6 +4,7 @@ module Ace
   , editNode
   , createEditSession
   , createEditSessionForDocument
+  , module Ace.Types
   ) where
 
 import Control.Monad.Eff (Eff())
@@ -35,4 +36,3 @@ foreign import createEditSessionImpl :: forall eff. Fn3 String TextMode Ace (Eff
 
 createEditSession :: forall eff. String -> TextMode -> Ace -> Eff (ace :: ACE | eff) EditSession
 createEditSession text mode self = runFn3 createEditSessionImpl text mode self
-
