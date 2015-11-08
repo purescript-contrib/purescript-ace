@@ -119,6 +119,9 @@ module Ace.Editor
   , transposeLetters
   , undo
   , unsetStyle
+  , setMinLines
+  , setMaxLines
+  , setAutoScrollEditorIntoView
   ) where
 
 import Prelude
@@ -509,3 +512,14 @@ foreign import createImpl :: forall eff. Fn2 VirtualRenderer (Nullable EditSessi
 
 create :: forall eff. VirtualRenderer -> Maybe EditSession -> Eff (ace :: ACE | eff) Editor
 create renderer session = runFn2 createImpl renderer (toNullable session)
+
+foreign import setOption :: forall a eff. String -> a -> Editor -> Eff (ace :: ACE | eff) Unit
+
+setMinLines :: forall eff. Int -> Editor ->  Eff (ace :: ACE | eff) Unit
+setMinLines = setOption "minLines"
+
+setMaxLines :: forall eff. Int -> Editor ->  Eff (ace :: ACE | eff) Unit
+setMaxLines = setOption "maxLines"
+
+setAutoScrollEditorIntoView :: forall eff. Boolean -> Editor ->  Eff (ace :: ACE | eff) Unit
+setAutoScrollEditorIntoView = setOption "autoScrollEditorIntoView"
