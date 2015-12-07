@@ -5,6 +5,10 @@
     "John A. De Goes <john@degoes.net> (http://degoes.net)",
     "Maxim Zimaliev <zimaliev@gmail.com>"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/slamdata/purescript-ace.git"
+  },
   "ignore": [
     "**/.*",
     "bower_components",
