@@ -18,7 +18,7 @@ exports.findImpl = effize("find");
 exports.findAllImpl = effize("findAll");
 exports.replaceImpl = effize("replace");
 
-exports.createImpl = function() {
+exports.create = function() {
     var Search = ace.require("ace/search").Search;
     return new Search();
 };
