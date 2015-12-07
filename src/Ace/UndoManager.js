@@ -19,8 +19,7 @@ exports.reset = effize('reset');
 exports.hasUndo = effize('hasUndo');
 exports.hasRedo = effize('hasRedo');
 
-exports.createImpl = function() {
+exports.create = function() {
     var UndoManager = ace.require('ace/undomanager').UndoManager;
     return new UndoManager();
 };
-

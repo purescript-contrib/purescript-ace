@@ -6,30 +6,32 @@ import Data.Maybe
 import Data.Array.ST (pushSTArray)
 
 import Control.Monad.Eff
-import Control.Monad.Eff.Console (print, log)
+import Control.Monad.Eff.Console (print, log, CONSOLE())
 
 import Ace
 import Ace.Types
 
-import qualified Ace.Config as Config
-import qualified Ace.Editor as Editor
-import qualified Ace.EditSession as Session
-import qualified Ace.Anchor as Anchor
-import qualified Ace.BackgroundTokenizer as BackgroundTokenizer
-import qualified Ace.Document as Document
-import qualified Ace.Range as Range
-import qualified Ace.ScrollBar as ScrollBar
-import qualified Ace.Search as Search
-import qualified Ace.Selection as Selection
-import qualified Ace.Tokenizer as Tokenizer
-import qualified Ace.TokenIterator as TokenIterator
-import qualified Ace.UndoManager as UndoManager
-import qualified Ace.VirtualRenderer as VirtualRenderer
+import Ace.Config as Config
+import Ace.Editor as Editor
+import Ace.EditSession as Session
+import Ace.Anchor as Anchor
+import Ace.BackgroundTokenizer as BackgroundTokenizer
+import Ace.Document as Document
+import Ace.Range as Range
+import Ace.ScrollBar as ScrollBar
+import Ace.Search as Search
+import Ace.Selection as Selection
+import Ace.Tokenizer as Tokenizer
+import Ace.TokenIterator as TokenIterator
+import Ace.UndoManager as UndoManager
+import Ace.VirtualRenderer as VirtualRenderer
+import Ace.Ext.LanguageTools as LanguageTools
+import Ace.Ext.LanguageTools.Completer as Completer
 
 foreign import rules :: Rules
-foreign import onLoad :: forall e. Eff e Unit -> Eff e Unit 
+foreign import onLoad :: forall e. Eff e Unit -> Eff e Unit
 
-
+main :: Eff (ace :: ACE, console :: CONSOLE) Unit
 main = onLoad $ do
 
   Config.set Config.basePath "foo"
@@ -58,18 +60,29 @@ main = onLoad $ do
 
   -- Get the document for the session
   document <- Session.getDocument session
-  document `Document.onChange` \(DocumentEvent ty _ _ _ _) -> log ("Document changed: " ++ showDocumentEventType ty)
+  document `Document.onChange` \(DocumentEvent {action: ty}) ->
+    log ("Document changed: " ++ showDocumentEventType ty)
   Document.setNewLineMode Windows document
 
   -- Add an anchor at the start of the document and listen for updates
   anchor <- Document.createAnchor 0 0 document
-  -- Assert position is correct
-  { row: 0, column: 0 } <- Anchor.getPosition anchor
+  -- Check initial anchor position
+  position <- Anchor.getPosition anchor
+
+  log $ "Initial anchor position: "
+      <> show (getRow position)
+      <> ", "
+      <> show (getColumn position)
+      <> ". Should be 0, 0"
+
   -- Update the anchor position
   Anchor.setPosition 0 1 true anchor
   -- Listen for anchor position changes
   anchor `Anchor.onChange` \e -> do
-    log ("New anchor position: " ++ show e.value.row ++ ", " ++ show e.value.column)
+    log $ "New anchor position: "
+       ++ show (getRow e.value)
+       ++ ", "
+       ++ show (getColumn e.value)
     -- Unlisten
     Anchor.detach anchor
 
@@ -114,11 +127,31 @@ main = onLoad $ do
   -- Move the cursor
   Editor.moveCursorTo 0 Nothing Nothing editor
 
+
+--  Session.setMode "ace/mode/text" session
+  languageTools <- LanguageTools.languageTools
+  Editor.setEnableBasicAutocompletion true editor
+  completer <-
+    Completer.mkCompleter
+    (\_ _ _ inp cb -> do
+        cb $ pure [ { value: inp <> "!!"
+                    , score: 100.0
+                    , meta: "!!"
+                    }
+                  , { value: "abcde"
+                    , score: 200.0
+                    , meta: "abcde"
+                    } ] )
+  LanguageTools.addCompleter completer languageTools
+
+
   -- Misc. Tests
   miscTests
-  pure unit 
+  pure unit
 
-miscTests = do
+
+miscTests :: Eff (console :: CONSOLE, ace :: ACE) Unit
+miscTests = void do
   editor <- Ace.edit "tests" ace
   session <- Editor.getSession editor
   document <- Session.getDocument session

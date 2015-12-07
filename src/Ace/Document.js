@@ -6,7 +6,7 @@
 exports.onChangeImpl = function(self, fn) {
     return function() {
         return self.on('change', function(e) {
-            fn(e.data)();
+            fn(e)();
         });
     };
 };

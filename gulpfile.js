@@ -2,16 +2,8 @@
 
 var gulp        = require('gulp')
   , purescript  = require('gulp-purescript')
-  , runSequence = require('run-sequence')
   , jshint      = require('gulp-jshint')
   ;
-
-function sequence () {
-    var args = [].slice.apply(arguments);
-    return function() {
-        runSequence.apply(null, args);
-    };
-}
 
 var sources = [
     'src/**/*.purs',
@@ -27,30 +19,6 @@ var exampleSources = [
 var exampleForeigns = [
     'example/src/**/*.js'
 ];
-
-gulp.task('docs', function() {
-    return purescript.pscDocs({
-        src: sources,
-        docgen: {
-            "Ace": "docs/Ace.md",
-            "Ace.Anchor": "docs/Ace/Anchor.md",
-            "Ace.BackgroundTokenizer": "docs/Ace/BackgroundTokenizer.md",
-            "Ace.Config": "docs/Ace/Config.md",
-            "Ace.Document": "docs/Ace/Document.md",
-            "Ace.Editor": "docs/Ace/Editor.md",
-            "Ace.EditSession": "docs/Ace/EditSession.md",
-            "Ace.Range": "docs/Ace/Range.md",
-            "Ace.ScrollBar": "docs/Ace/ScrollBar.md",
-            "Ace.Search": "docs/Ace/Search.md",
-            "Ace.Selection": "docs/Ace/Selection.md",
-            "Ace.TokenIterator": "docs/Ace/TokenIterator.md",
-            "Ace.Tokenizer": "docs/Ace/Tokenizer.md",
-            "Ace.Types": "docs/Ace/Types.md",
-            "Ace.UndoManager": "docs/Ace/UndoManager.md",
-            "Ace.VirtualRenderer": "docs/Ace/VirtualRenderer.md"
-        }
-    });
-});
 
 gulp.task('lint', function() {
   return gulp.src('src/**/*.js')
@@ -80,12 +48,17 @@ gulp.task('bundle', ['example'], function() {
     });
 });
 
-gulp.task('watch-browser', function() {
-    gulp.watch(sources.concat(exampleSources).concat(foreigns).concat(exampleForeigns), sequence('bundle', 'docs'))
+gulp.task('watch-browser', ["bundle"], function() {
+    gulp.watch(sources
+               .concat(exampleSources)
+               .concat(foreigns)
+               .concat(exampleForeigns),
+               ["bundle"]);
+
 });
 
-gulp.task('watch-make', function() {
-    gulp.watch(sources.concat(foreigns), sequence('make', 'docs'));
+gulp.task('watch-make', ["make"], function() {
+    gulp.watch(sources.concat(foreigns), ["make"]);
 });
 
-gulp.task('default', sequence('make', 'docs', 'example'));
+gulp.task('default', ["bundle"]);

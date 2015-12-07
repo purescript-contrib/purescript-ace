@@ -4,12 +4,14 @@
   "license": "MIT",
   "repository": "git@github.com:slamdata/purescript-ace.git",
   "contributors": [
-    "John A. De Goes <john@degoes.net> (http://degoes.net)"
+    "John A. De Goes <john@degoes.net> (http://degoes.net)",
+    "Maxim Zimaliev <zimaliev@gmail.com>"
   ],
   "devDependencies": {
-    "gulp": "^3.8.10",
-    "gulp-jshint": "^1.11.2",
-    "gulp-purescript": "^0.6.0",
-    "run-sequence": "^1.0.2"
+    "gulp": "^3.9.0",
+    "gulp-jshint": "^2.0.0",
+    "gulp-purescript": "^0.8.0",
+    "jshint": "^2.8.0",
+    "purescript": "^0.7.6"
   }
 }

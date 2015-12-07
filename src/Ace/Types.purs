@@ -2,12 +2,10 @@ module Ace.Types where
 
 import Prelude
 
+import Control.Bind ((>=>))
 import Data.Either (Either(..))
-import Data.Foreign (Foreign(), F(), ForeignError(..), unsafeFromForeign)
-import Data.Foreign.Class (IsForeign, read, readProp)
-import Data.Foreign.Index (prop)
-import Data.Foreign.Undefined (runUndefined)
-import Data.Maybe (Maybe())
+import Data.Foreign (F(), ForeignError(..), readString)
+import Data.Foreign.Class (IsForeign, readProp)
 
 type AnchorEvent =
   { old :: Position
@@ -16,31 +14,37 @@ type AnchorEvent =
 
 data BackgroundTokenizerEvent
 
-data DocumentEventType = InsertLines | InsertText | RemoveLines | RemoveText
+data DocumentEventType = Insert | Remove
 
 showDocumentEventType :: DocumentEventType -> String
-showDocumentEventType InsertLines = "insertLines"
-showDocumentEventType InsertText  = "insertText"
-showDocumentEventType RemoveLines = "removeLines"
-showDocumentEventType RemoveText  = "removeText"
+showDocumentEventType Insert = "insert"
+showDocumentEventType Remove = "remove"
 
 readDocumentEventType :: String -> F DocumentEventType
-readDocumentEventType "insertLines" = Right InsertLines
-readDocumentEventType "insertText"  = Right InsertText
-readDocumentEventType "removeLines" = Right RemoveLines
-readDocumentEventType "removeText"  = Right RemoveText
-readDocumentEventType s = Left $ TypeMismatch ("'" ++ s ++ "'") " a valid value for the DocumentEventType enum"
+readDocumentEventType "insert" = Right Insert
+readDocumentEventType "remove" = Right Remove
+readDocumentEventType s =
+  Left $ TypeMismatch ("'" ++ s ++ "'") " a valid value for the DocumentEventType enum"
 
-data DocumentEvent = DocumentEvent DocumentEventType Range (Maybe (Array String)) (Maybe String) (Maybe String)
+
+instance documentEventTypeIsForeign :: IsForeign DocumentEventType where
+  read = readString >=> readDocumentEventType
+
+newtype DocumentEvent = DocumentEvent
+  { action :: DocumentEventType
+  , start :: Position
+  , end :: Position
+  , lines :: Array String
+  }
 
 instance documentEventIsForeign :: IsForeign DocumentEvent where
   read e = do
-    et     <- readProp "action" e >>= readDocumentEventType
-    range  <- unsafeFromForeign <$> prop "range" e
-    lines  <- runUndefined <$> readProp "lines" e
-    text   <- runUndefined <$> readProp "text" e
-    nl     <- runUndefined <$> readProp "nl" e
-    return $ DocumentEvent et range lines text nl
+    r <- { action: _, start: _, end: _, lines: _ }
+         <$> readProp "action" e
+         <*> readProp "start" e
+         <*> readProp "end" e
+         <*> readProp "lines" e
+    pure $ DocumentEvent r
 
 data PasteEvent
 
@@ -48,14 +52,15 @@ data NewlineMode = Windows | Unix | Auto
 
 showNewlineMode :: NewlineMode -> String
 showNewlineMode Windows = "windows"
-showNewlineMode Unix    = "unix"
-showNewlineMode Auto    = "auto"
+showNewlineMode Unix = "unix"
+showNewlineMode Auto = "auto"
 
 readNewlineMode :: String -> F NewlineMode
 readNewlineMode "windows" = Right Windows
-readNewlineMode "unix"    = Right Unix
-readNewlineMode "auto"    = Right Auto
-readNewlineMode s = Left $ TypeMismatch ("'" ++ s ++ "'") " a valid value for the NewlineMode enum"
+readNewlineMode "unix" = Right Unix
+readNewlineMode "auto" = Right Auto
+readNewlineMode s =
+  Left $ TypeMismatch ("'" ++ s ++ "'") " a valid value for the NewlineMode enum"
 
 data Rules
 
@@ -66,10 +71,23 @@ type Annotation =
   , "type" :: String
   }
 
-type Position =
+newtype Position = Position
   { row :: Int
   , column :: Int
   }
+
+getRow :: Position -> Int
+getRow (Position {row : row}) = row
+
+getColumn :: Position -> Int
+getColumn (Position {column : column}) = column
+
+instance positionIsForeign :: IsForeign Position where
+  read e = do
+    r <- { row: _, column: _ }
+         <$> readProp "row" e
+         <*> readProp "column" e
+    pure $ Position r
 
 type TokenInfo =
   { value :: String
@@ -118,3 +136,13 @@ data Tokenizer
 data UndoManager
 
 data VirtualRenderer
+
+data LanguageTools
+
+data Completer
+
+type Completion =
+  { value :: String
+  , score :: Number
+  , meta :: String
+  }

@@ -15,9 +15,17 @@ import Control.Monad.Eff (Eff())
 
 import Ace.Types
 
-foreign import onChangeImpl :: forall eff a. Fn2 Anchor (AnchorEvent -> Eff (ace :: ACE | eff) a) (Eff (ace :: ACE | eff) Unit)
+foreign import onChangeImpl
+  :: forall eff a
+   . Fn2 Anchor
+       (AnchorEvent -> Eff (ace :: ACE | eff) a)
+       (Eff (ace :: ACE | eff) Unit)
 
-onChange :: forall eff a. Anchor -> (AnchorEvent -> Eff (ace :: ACE | eff) a) -> Eff (ace :: ACE | eff) Unit
+onChange
+  :: forall eff a
+   . Anchor
+  -> (AnchorEvent -> Eff (ace :: ACE | eff) a)
+  -> Eff (ace :: ACE | eff) Unit
 onChange self fn = runFn2 onChangeImpl self fn
 
 foreign import getPosition :: forall eff. Anchor -> Eff (ace :: ACE | eff) Position
