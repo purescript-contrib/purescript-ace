@@ -6,6 +6,7 @@ import Control.Bind ((>=>))
 import Data.Either (Either(..))
 import Data.Foreign (F(), ForeignError(..), readString)
 import Data.Foreign.Class (IsForeign, readProp)
+import Data.Maybe (Maybe())
 
 type AnchorEvent =
   { old :: Position
@@ -145,4 +146,5 @@ type Completion =
   { value :: String
   , score :: Number
   , meta :: String
+  , caption :: Maybe String
   }
