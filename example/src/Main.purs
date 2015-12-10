@@ -136,10 +136,12 @@ main = onLoad $ do
     (\_ _ _ inp cb -> do
         cb $ pure [ { value: inp <> "!!"
                     , score: 100.0
+                    , caption: pure "???"
                     , meta: "!!"
                     }
                   , { value: "abcde"
                     , score: 200.0
+                    , caption: Nothing
                     , meta: "abcde"
                     } ] )
   LanguageTools.addCompleter completer languageTools
