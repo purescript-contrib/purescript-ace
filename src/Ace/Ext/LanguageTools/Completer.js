@@ -15,11 +15,17 @@ exports.mkCompleterImpl = function(getCompletionCb, isJust, fromJust) {
                         var result = [],
                             extracted = fromJust(mb),
                             i = 0,
-                            item;
+                            item,
+                            current;
                         for (i; i < extracted.length; i++) {
-                            item = extracted[i];
-                            if (isJust(item.caption)) {
-                                item.caption = fromJust(item.caption);
+                            current = extracted[i];
+                            item = {
+                                value: current.value,
+                                score: current.score,
+                                meta: current.meta
+                            };
+                            if (isJust(current.caption)) {
+                                item.caption = fromJust(current.caption);
                             }
                             else {
                                 item.caption = undefined;
