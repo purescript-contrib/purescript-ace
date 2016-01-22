@@ -5,6 +5,8 @@ module Ace.Anchor
   , setPosition
   , detach
   , create
+  , getInsertRight
+  , setInsertRight
   ) where
 
 import Prelude
@@ -43,3 +45,8 @@ foreign import createImpl :: forall eff. Fn3 Document Int Int (Eff (ace :: ACE |
 
 create :: forall eff. Document -> Int -> Int -> Eff (ace :: ACE | eff) Anchor
 create doc row column = runFn3 createImpl doc row column
+
+foreign import getInsertRight :: forall eff. Anchor -> Eff (ace :: ACE |eff) Boolean
+foreign import setInsertRight
+  :: forall eff
+   . Boolean -> Anchor -> Eff (ace :: ACE|eff) Unit

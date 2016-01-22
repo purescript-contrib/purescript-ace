@@ -4,9 +4,11 @@ import Prelude
 
 import Data.Maybe
 import Data.Array.ST (pushSTArray)
+import DOM (DOM())
 
 import Control.Monad.Eff
 import Control.Monad.Eff.Console (print, log, CONSOLE())
+import Control.Monad.Eff.Ref (newRef, readRef, writeRef, REF())
 
 import Ace
 import Ace.Types
@@ -27,17 +29,76 @@ import Ace.UndoManager as UndoManager
 import Ace.VirtualRenderer as VirtualRenderer
 import Ace.Ext.LanguageTools as LanguageTools
 import Ace.Ext.LanguageTools.Completer as Completer
+import Ace.KeyBinding as KeyBinding
 
 foreign import rules :: Rules
 foreign import onLoad :: forall e. Eff e Unit -> Eff e Unit
 
-main :: Eff (ace :: ACE, console :: CONSOLE) Unit
+main :: forall e. Eff (ref ::REF, console :: CONSOLE, ace :: ACE, dom :: DOM|e) Unit
 main = onLoad $ do
-
   Config.set Config.basePath "foo"
 
   -- Create an editor
   editor <- Ace.edit "editor" ace
+  session <- Editor.getSession editor
+  document <- Session.getDocument session
+  Editor.setValue "blablabla \n tr  test boo boo" Nothing editor
+
+  startAnchor <- Document.createAnchor 1 5 document
+  endAnchor <- Document.createAnchor 1 9 document
+  Anchor.setInsertRight true endAnchor
+
+  range <- Range.create 1 4 1 10
+  markerRef <-
+    Session.addMarker
+      range
+      "readonly-highlight"
+      "string"
+      false
+      session
+    >>= newRef
+
+  let rerenderMarker _ = do
+        readRef markerRef >>= flip Session.removeMarker session
+        Position {row: startRow, column: startColumn}
+          <- Anchor.getPosition startAnchor
+        Position {row: endRow, column: endColumn}
+          <- Anchor.getPosition endAnchor
+        markRange <- Range.create
+                       startRow
+                       (startColumn - one)
+                       endRow
+                       (endColumn + one)
+        newMId <- Session.addMarker
+                  markRange
+                  "readonly-highlight"
+                  "string"
+                  false
+                  session
+
+        writeRef markerRef newMId
+        pure unit
+
+  Anchor.onChange startAnchor rerenderMarker
+  Anchor.onChange endAnchor rerenderMarker
+
+  Editor.getKeyBinding editor
+    >>= KeyBinding.addKeyboardHandler \{editor} hs kstring kcode evt -> do
+      if hs == -1 || (kcode <= 40 && kcode >= 37)
+        then pure Nothing
+        else do
+        Position {row: startRow, column: startColumn}
+          <- Anchor.getPosition startAnchor
+        Position {row: endRow, column: endColumn}
+          <- Anchor.getPosition endAnchor
+        selectedRange <- Editor.getSelectionRange editor
+        newRange <- if kstring /= "backspace"
+                    then Range.create startRow startColumn endRow endColumn
+                    else Range.create startRow startColumn endRow (endColumn + one)
+        intersected <- Range.intersects newRange selectedRange
+        pure if intersected
+             then Just {command: Null, passEvent: false}
+             else Nothing
 
   -- Set the theme
   Editor.setTheme "ace/theme/chrome" editor
@@ -49,7 +110,7 @@ main = onLoad $ do
   editor `Editor.onFocus` log "Editor gained focus."
 
   -- Get the editor session
-  session <- Editor.getSession editor
+
 
   -- Set the mode
   Session.setMode "ace/mode/javascript" session
@@ -149,10 +210,11 @@ main = onLoad $ do
 
   -- Misc. Tests
   miscTests
+
   pure unit
 
 
-miscTests :: Eff (console :: CONSOLE, ace :: ACE) Unit
+miscTests :: forall e. Eff (console :: CONSOLE, ace :: ACE |e) Unit
 miscTests = void do
   editor <- Ace.edit "tests" ace
   session <- Editor.getSession editor

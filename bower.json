@@ -27,6 +27,7 @@
     "purescript-prelude": "^0.1.3"
   },
   "devDependencies": {
-    "ace-builds": "~1.2.0"
+    "ace-builds": "~1.2.0",
+    "purescript-refs": "~0.2.0"
   }
 }

@@ -118,6 +118,8 @@ data Editor
 
 data EditSession
 
+data KeyBinding
+
 data Range
 
 data RangeList
@@ -147,4 +149,11 @@ type Completion =
   , score :: Number
   , meta :: String
   , caption :: Maybe String
+  }
+
+data Command = Null | InsertText
+
+type HandlerResult =
+  { command :: Command
+  , passEvent :: Boolean
   }

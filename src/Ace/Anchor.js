@@ -42,3 +42,18 @@ exports.createImpl = function(doc, row, column) {
     };
 };
 
+
+exports.getInsertRight = function(a) {
+    return function() {
+        return a.$insertRight;
+    };
+};
+
+exports.setInsertRight = function(val) {
+    return function(a) {
+        return function() {
+            a.$insertRight = val;
+            return {};
+        };
+    };
+};
