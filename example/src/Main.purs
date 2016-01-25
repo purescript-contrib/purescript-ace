@@ -84,6 +84,9 @@ main = onLoad $ do
 
   Editor.getKeyBinding editor
     >>= KeyBinding.addKeyboardHandler \{editor} hs kstring kcode evt -> do
+      Debug.Trace.traceAnyA hs
+      Debug.Trace.traceAnyA kcode
+      Debug.Trace.traceAnyA kstring
       if hs == -1 || (kcode <= 40 && kcode >= 37)
         then pure Nothing
         else do
@@ -92,9 +95,9 @@ main = onLoad $ do
         Position {row: endRow, column: endColumn}
           <- Anchor.getPosition endAnchor
         selectedRange <- Editor.getSelectionRange editor
-        newRange <- if kstring /= "backspace"
-                    then Range.create startRow startColumn endRow endColumn
-                    else Range.create startRow startColumn endRow (endColumn + one)
+        newRange <- if (kstring == "backspace") || (kstring == "delete") || (kstring == "d" && hs == 1)
+                    then Range.create startRow (startColumn - 1) endRow (endColumn + one)
+                    else Range.create startRow startColumn endRow endColumn
         intersected <- Range.intersects newRange selectedRange
         pure if intersected
              then Just {command: Null, passEvent: false}
