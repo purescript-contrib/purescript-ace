@@ -551,3 +551,16 @@ exports.createWithModeImpl = create;
 exports.createImpl = create;
 
 exports.createFromLinesImpl = create;
+
+exports.getMarkers = function(session) {
+    return function() {
+        var markerObj = session.getMarkers();
+        var i, ks = Object.getOwnPropertyNames(markerObj),
+            key, result = [];
+        for (i = 0; i < ks.length; i++) {
+            key = ks[i];
+            result.push(markerObj[key]);
+        }
+        return result;
+    };
+};

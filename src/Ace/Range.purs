@@ -15,7 +15,10 @@ module Ace.Range
   , fromPoints
   , getEnd
   , getEndRow
+  , getEndColumn
   , getStartColumn
+  , getStartRow
+  , getStart
   , inside
   , insideEnd
   , insideStart
