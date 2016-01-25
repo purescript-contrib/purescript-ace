@@ -125,6 +125,7 @@ module Ace.Editor
   , setEnableLiveAutocompletion
   , setEnableBasicAutocompletion
   , setEnableSnippets
+  , getKeyBinding
   ) where
 
 import Prelude
@@ -681,3 +682,7 @@ setEnableLiveAutocompletion = setOption "enableLiveAutocompletion"
 setEnableSnippets
   :: forall eff. Boolean -> Editor -> Eff (ace :: ACE | eff) Unit
 setEnableSnippets = setOption "enableSnippets"
+
+
+foreign import getKeyBinding
+  :: forall eff. Editor -> Eff (ace :: ACE | eff) KeyBinding

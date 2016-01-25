@@ -1,0 +1,29 @@
+// module Ace.KeyBinding
+
+exports.addKeyboardHandlerImpl = function(commandToString) {
+    return function(isJust) {
+        return function(fromJust) {
+            return function(curriedEffHandler) {
+                return function(kb) {
+                    return function() {
+                        kb.addKeyboardHandler(
+                            function(data, hash, keyCode, keyString, evt) {
+                                var res = curriedEffHandler(data)(hash)(keyCode)(keyString)(evt)(),
+                                    extracted;
+                                if (isJust(res)) {
+                                    extracted = fromJust(res);
+                                    return {
+                                        passEvent: extracted.passEvent,
+                                        command: commandToString(extracted.command)
+                                    };
+                                } else {
+                                    return false;
+                                }
+                            });
+                        return {};
+                    };
+                };
+            };
+        };
+    };
+};

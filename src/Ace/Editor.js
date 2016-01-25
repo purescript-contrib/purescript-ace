@@ -166,3 +166,9 @@ exports.createImpl = function(renderer, session) {
         return new Editor(renderer, session);
     };
 };
+
+exports.getKeyBinding = function(editor) {
+    return function() {
+        return editor.keyBinding;
+    };
+};
