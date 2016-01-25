@@ -84,9 +84,6 @@ main = onLoad $ do
 
   Editor.getKeyBinding editor
     >>= KeyBinding.addKeyboardHandler \{editor} hs kstring kcode evt -> do
-      Debug.Trace.traceAnyA hs
-      Debug.Trace.traceAnyA kcode
-      Debug.Trace.traceAnyA kstring
       if hs == -1 || (kcode <= 40 && kcode >= 37)
         then pure Nothing
         else do
