@@ -104,6 +104,7 @@ module Ace.EditSession
   , setValue
   , setWrapLimitRange
   , toggleOverwrite
+  , getMarkers
   ) where
 
 import Prelude
@@ -293,9 +294,9 @@ foreign import clearBreakpointImpl :: forall eff. Fn2 Int EditSession (Eff (ace 
 clearBreakpoint :: forall eff. Int -> EditSession -> Eff (ace :: ACE | eff) Unit
 clearBreakpoint row self = runFn2 clearBreakpointImpl row self
 
-foreign import addMarkerImpl :: forall eff. Fn5 Range String String Boolean EditSession (Eff (ace :: ACE | eff) Unit)
+foreign import addMarkerImpl :: forall eff. Fn5 Range String String Boolean EditSession (Eff (ace :: ACE | eff) Int)
 
-addMarker :: forall eff. Range -> String -> String -> Boolean -> EditSession -> Eff (ace :: ACE | eff) Unit
+addMarker :: forall eff. Range -> String -> String -> Boolean -> EditSession -> Eff (ace :: ACE | eff) Int
 addMarker range clazz _type inFront self = runFn5 addMarkerImpl range clazz _type inFront self
 
 type DynamicMarker eff a = forall h. STArray h String -> HTMLElement -> Eff (st :: ST h | eff) a
@@ -534,3 +535,7 @@ foreign import createFromLinesImpl :: forall eff. Fn2 (Array String) (Nullable S
 
 createFromLines :: forall eff. Array String -> Maybe String -> Eff (ace :: ACE | eff) EditSession
 createFromLines text mode' = runFn2 createFromLinesImpl text (toNullable mode')
+
+
+foreign import getMarkers
+  :: forall eff. EditSession -> Eff (ace :: ACE |eff) (Array Marker)
