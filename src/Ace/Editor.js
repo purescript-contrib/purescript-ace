@@ -37,8 +37,8 @@ exports.onImpl = function(event, fn, self) {
     };
 };
 
-exports.getPasteEvent = effGet("text");
-exports.setPasteEvent = effSet("text");
+exports.getPasteEventText = effGet("text");
+exports.setPasteEventTextImpl = effSet("text");
 exports.getRenderer = effGet("renderer");
 exports.isInMultiSelectMode = effGet("inMultiSelectMode");
 exports.selectMoreLinesImpl = effize("selectMoreLines");
