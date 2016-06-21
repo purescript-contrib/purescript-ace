@@ -10,7 +10,7 @@
   "devDependencies": {
     "gulp": "^3.9.0",
     "gulp-jshint": "^2.0.0",
-    "gulp-purescript": "^0.9.1",
+    "gulp-purescript": "^1.0.0",
     "jshint": "^2.8.0",
     "purescript": "^0.9.1"
   }

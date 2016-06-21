@@ -7,7 +7,7 @@ import Data.Array.ST (pushSTArray)
 import DOM (DOM())
 
 import Control.Monad.Eff
-import Control.Monad.Eff.Console (print, log, CONSOLE())
+import Control.Monad.Eff.Console (logShow, log, CONSOLE())
 import Control.Monad.Eff.Ref (newRef, readRef, writeRef, REF())
 
 import Ace
@@ -36,7 +36,7 @@ main = onLoad $ do
   Config.set Config.basePath "foo"
 
   -- Create an editor
-  editor <- Ace.edit "editor" ace
+  editor <- edit "editor" ace
   session <- Editor.getSession editor
   document <- Session.getDocument session
   Editor.setValue "blablabla \n tr  test boo boo" Nothing editor
@@ -104,7 +104,7 @@ main = onLoad $ do
   Editor.setTheme "ace/theme/chrome" editor
 
   -- Log some events
-  editor `Editor.onCopy` \s -> log ("Text copied: " ++ s)
+  editor `Editor.onCopy` \s -> log ("Text copied: " <> s)
   editor `Editor.onPaste` \_ -> log "Text pasted."
   editor `Editor.onBlur` log "Editor lost focus."
   editor `Editor.onFocus` log "Editor gained focus."
@@ -117,12 +117,12 @@ main = onLoad $ do
   -- Get the mode
   mode <- Session.getMode session
   -- Create another edit session with this mode
-  session1 <- Ace.createEditSession "" mode ace
+  session1 <- createEditSession "" mode ace
 
   -- Get the document for the session
   document <- Session.getDocument session
   document `Document.onChange` \(DocumentEvent {action: ty}) ->
-    log ("Document changed: " ++ showDocumentEventType ty)
+    log ("Document changed: " <> showDocumentEventType ty)
   Document.setNewLineMode Windows document
 
   -- Add an anchor at the start of the document and listen for updates
@@ -141,9 +141,9 @@ main = onLoad $ do
   -- Listen for anchor position changes
   anchor `Anchor.onChange` \e -> do
     log $ "New anchor position: "
-       ++ show (getRow e.value)
-       ++ ", "
-       ++ show (getColumn e.value)
+       <> show (getRow e.value)
+       <> ", "
+       <> show (getColumn e.value)
     -- Unlisten
     Anchor.detach anchor
 
@@ -153,7 +153,7 @@ main = onLoad $ do
   -- Get the background tokenizer and trace the tokens and state on the first line
   backgroundTokenizer <- Session.getBackgroundTokenizer session
   tokens <- BackgroundTokenizer.getTokens 0 backgroundTokenizer
-  print $ map (\o -> o.value) tokens
+  logShow $ map (\o -> o.value) tokens
   state <- BackgroundTokenizer.getState 0 backgroundTokenizer
   log state
 
@@ -216,7 +216,7 @@ main = onLoad $ do
 
 miscTests :: forall e. Eff (console :: CONSOLE, ace :: ACE |e) Unit
 miscTests = void do
-  editor <- Ace.edit "tests" ace
+  editor <- edit "tests" ace
   session <- Editor.getSession editor
   document <- Session.getDocument session
 
