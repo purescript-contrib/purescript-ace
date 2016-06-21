@@ -9,7 +9,7 @@ module Ace
 
 import Control.Monad.Eff (Eff())
 
-import Data.Function (Fn2(), runFn2, Fn3(), runFn3)
+import Data.Function.Uncurried (Fn2(), runFn2, Fn3(), runFn3)
 
 import DOM.HTML.Types (HTMLElement())
 

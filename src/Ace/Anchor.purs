@@ -11,7 +11,7 @@ module Ace.Anchor
 
 import Prelude
 
-import Data.Function (Fn2(), runFn2, Fn3(), runFn3, Fn4(), runFn4)
+import Data.Function.Uncurried (Fn2(), runFn2, Fn3(), runFn3, Fn4(), runFn4)
 
 import Control.Monad.Eff (Eff())
 

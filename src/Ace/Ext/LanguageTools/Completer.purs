@@ -6,9 +6,9 @@ module Ace.Ext.LanguageTools.Completer
 import Prelude
 
 import Control.Monad.Eff (Eff())
-import Data.Function (runFn3, Fn3())
-import Data.Maybe (Maybe(), isJust)
-import Data.Maybe.Unsafe (fromJust)
+import Data.Function.Uncurried (runFn3, Fn3())
+import Data.Maybe (Maybe(), isJust, fromJust)
+import Partial.Unsafe
 
 import Ace.Types
 
@@ -28,4 +28,4 @@ mkCompleter
    . (Editor -> EditSession -> Position -> String
       -> CompleterCallback (ace :: ACE |eff) -> Eff (ace :: ACE | eff) Unit)
   -> Eff (ace :: ACE | eff) Completer
-mkCompleter fn = runFn3 mkCompleterImpl fn isJust fromJust
+mkCompleter fn = runFn3 mkCompleterImpl fn isJust (unsafePartial fromJust)
