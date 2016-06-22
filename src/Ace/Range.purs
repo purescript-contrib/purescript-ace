@@ -36,11 +36,9 @@ module Ace.Range
 
 import Prelude hiding (compare)
 
-import Control.Monad.Eff (Eff())
-
-import Data.Function.Uncurried (Fn2(), runFn2, Fn3(), runFn3, Fn4(), runFn4)
-
-import Ace.Types
+import Ace.Types (Range, ACE, EditSession, Position)
+import Control.Monad.Eff (Eff)
+import Data.Function.Uncurried (Fn2, runFn2, Fn3, runFn3, Fn4, runFn4)
 
 foreign import getStartRow :: forall eff. Range -> Eff (ace :: ACE | eff) Int
 

@@ -1,42 +1,29 @@
-/* global exports */
-// module Ace.Ext.LanguageTools.Completer
 "use strict";
 
-exports.mkCompleterImpl = function(getCompletionCb, isJust, fromJust) {
-    return function() {
-        return {
-            getCompletions: function(editor, session, pos, prefix, callback) {
-                return getCompletionCb(editor)(session)(pos)(prefix)(function(mb){
-                    return function() {
-                        if (!isJust(mb)) {
-                            return callback("Error in getCompletion", null);
-
-                        }
-                        var result = [],
-                            extracted = fromJust(mb),
-                            i = 0,
-                            item,
-                            current;
-                        for (i; i < extracted.length; i++) {
-                            current = extracted[i];
-                            item = {
-                                value: current.value,
-                                score: current.score,
-                                meta: current.meta
-                            };
-                            if (isJust(current.caption)) {
-                                item.caption = fromJust(current.caption);
-                            }
-                            else {
-                                item.caption = undefined;
-                            }
-                            result.push(item);
-                        }
-                        return callback(null, result);
-
-                    };
-                })();
+exports.mkCompleterImpl = function (getCompletionCb, isJust, fromJust) {
+  return function () {
+    return {
+      getCompletions: function (editor, session, pos, prefix, callback) {
+        return getCompletionCb(editor)(session)(pos)(prefix)(function (mb) {
+          return function () {
+            if (!isJust(mb)) {
+              return callback("Error in getCompletion", null);
             }
-        };
+            var result = [];
+            var extracted = fromJust(mb);
+            for (var i = 0; i < extracted.length; i++) {
+              var current = extracted[i];
+              result[i] = {
+                value: current.value,
+                score: current.score,
+                meta: current.meta,
+                caption: isJust(current.caption) ? fromJust(current.caption) : undefined
+              };
+            }
+            return callback(null, result);
+          };
+        })();
+      }
     };
+  };
 };

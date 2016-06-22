@@ -27,18 +27,14 @@ module Ace.Document
   ) where
 
 import Prelude
-
-import Control.Monad.Eff (Eff())
-
+import Ace.Types (Document, ACE, Position, Range, NewlineMode, Anchor, DocumentEvent, showNewlineMode)
+import Control.Monad.Eff (Eff)
 import Data.Either (fromRight)
-import Data.Foreign (Foreign())
+import Data.Foreign (Foreign)
 import Data.Foreign.Class (read)
-import Data.Function.Uncurried (Fn2(), runFn2, Fn3(), runFn3, Fn4(), runFn4)
-import Data.Nullable (Nullable())
-
-import Partial.Unsafe
-
-import Ace.Types
+import Data.Function.Uncurried (Fn2, runFn2, Fn3, runFn3, Fn4, runFn4)
+import Data.Nullable (Nullable)
+import Partial.Unsafe (unsafePartial)
 
 foreign import onChangeImpl
   :: forall eff a

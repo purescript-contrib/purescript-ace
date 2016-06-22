@@ -11,11 +11,9 @@ module Ace.Anchor
 
 import Prelude
 
-import Data.Function.Uncurried (Fn2(), runFn2, Fn3(), runFn3, Fn4(), runFn4)
-
-import Control.Monad.Eff (Eff())
-
-import Ace.Types
+import Ace.Types (ACE, Anchor, Document, Position, AnchorEvent)
+import Control.Monad.Eff (Eff)
+import Data.Function.Uncurried (Fn2, runFn2, Fn3, runFn3, Fn4, runFn4)
 
 foreign import onChangeImpl
   :: forall eff a

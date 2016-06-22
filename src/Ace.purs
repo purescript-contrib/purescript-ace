@@ -7,13 +7,10 @@ module Ace
   , module Ace.Types
   ) where
 
-import Control.Monad.Eff (Eff())
-
-import Data.Function.Uncurried (Fn2(), runFn2, Fn3(), runFn3)
-
-import DOM.HTML.Types (HTMLElement())
-
 import Ace.Types
+import Control.Monad.Eff (Eff)
+import Data.Function.Uncurried (Fn2, runFn2, Fn3, runFn3)
+import DOM.HTML.Types (HTMLElement)
 
 foreign import ace :: Ace
 

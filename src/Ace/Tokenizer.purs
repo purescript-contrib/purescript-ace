@@ -3,11 +3,9 @@ module Ace.Tokenizer
   , getLineTokens
   ) where
 
-import Control.Monad.Eff (Eff())
-
-import Data.Function.Uncurried (Fn2(), runFn2)
-
 import Ace.Types
+import Control.Monad.Eff (Eff)
+import Data.Function.Uncurried (Fn2, runFn2)
 
 foreign import getLineTokens :: forall eff. Tokenizer -> Eff (ace :: ACE | eff) { tokens :: Array TokenInfo, state :: String }
 

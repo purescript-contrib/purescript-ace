@@ -1,40 +1,37 @@
-/* global exports, Editor */
 "use strict";
 
-// module Ace.Editor
-
 function effize(method) {
-    return function() {
-        var me = arguments[arguments.length - 1],
-            args = Array.prototype.slice.call(arguments, 0, -1);
-        return function() {
-            return me[method].apply(me, args);
-        };
+  return function () {
+    var me = arguments[arguments.length - 1];
+    var args = Array.prototype.slice.call(arguments, 0, -1);
+    return function () {
+      return me[method].apply(me, args);
     };
+  };
 }
 
 function effGet(field) {
-    return function(self) {
-        return function() {
-            return self[field];
-        };
+  return function (self) {
+    return function () {
+      return self[field];
     };
+  };
 }
 
 function effSet(field) {
-    return function(val, self) {
-        return function() {
-            self[field] = val;
-        };
+  return function (val, self) {
+    return function () {
+      self[field] = val;
     };
+  };
 }
 
-exports.onImpl = function(event, fn, self) {
-    return function() {
-        return self.on(event, function(e) {
-            fn(e)();
-        });
-    };
+exports.onImpl = function (event, fn, self) {
+  return function () {
+    return self.on(event, function (e) {
+      fn(e)();
+    });
+  };
 };
 
 exports.getPasteEventText = effGet("text");
@@ -112,7 +109,7 @@ exports.getFirstVisibleRow = effize("getFirstVisibleRow");
 exports.getLastVisibleRow = effize("getLastVisibleRow");
 exports.isRowVisibleImpl = effize("isRowVisible");
 exports.isRowFullyVisibleImpl = effize("isRowFullyVisible");
-exports.selectPageDown = effize('selectPageDown');
+exports.selectPageDown = effize("selectPageDown");
 exports.selectPageUp = effize("selectPageUp");
 exports.gotoPageDown = effize("gotoPageDown");
 exports.gotoPageUp = effize("gotoPageUp");
@@ -136,22 +133,22 @@ exports.navigateDownImpl = effize("navigateDown");
 exports.navigateLeftImpl = effize("navigateLeft");
 exports.navigateRightImpl = effize("navigateRight");
 exports.navigateLineStart = effize("navigateLineStart");
-exports.navigateLineEnd = effize('navigateLineEnd');
-exports.navigateFileEnd = effize('navigateFileEnd');
-exports.navigateFileStart = effize('navigateFileStart');
-exports.navigateWordRight = effize('navigateWordRight');
-exports.navigateWordLeft = effize('navigateWordLeft');
-exports.replaceImpl = effize('replace');
-exports.replaceAllImpl = effize('replaceAll');
-exports.getLastSearchOptions = effize('getLastSearchOptions');
-exports.findImpl = effize('find');
-exports.findNextImpl = effize('findNext');
-exports.findPreviousImpl = effize('findPrevious');
-exports.undo = effize('undo');
-exports.redo = effize('redo');
-exports.destroy = effize('destroy');
+exports.navigateLineEnd = effize("navigateLineEnd");
+exports.navigateFileEnd = effize("navigateFileEnd");
+exports.navigateFileStart = effize("navigateFileStart");
+exports.navigateWordRight = effize("navigateWordRight");
+exports.navigateWordLeft = effize("navigateWordLeft");
+exports.replaceImpl = effize("replace");
+exports.replaceAllImpl = effize("replaceAll");
+exports.getLastSearchOptions = effize("getLastSearchOptions");
+exports.findImpl = effize("find");
+exports.findNextImpl = effize("findNext");
+exports.findPreviousImpl = effize("findPrevious");
+exports.undo = effize("undo");
+exports.redo = effize("redo");
+exports.destroy = effize("destroy");
 
-exports.setOption = function(s) {
+exports.setOption = function (s) {
   return function (a) {
     return function (editor) {
       return function () {
@@ -161,14 +158,14 @@ exports.setOption = function(s) {
   };
 };
 
-exports.createImpl = function(renderer, session) {
-    return function() {
-        return new Editor(renderer, session);
-    };
+exports.createImpl = function (renderer, session) {
+  return function () {
+    return new Editor(renderer, session);
+  };
 };
 
-exports.getKeyBinding = function(editor) {
-    return function() {
-        return editor.keyBinding;
-    };
+exports.getKeyBinding = function (editor) {
+  return function () {
+    return editor.keyBinding;
+  };
 };

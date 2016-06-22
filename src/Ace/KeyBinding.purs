@@ -1,15 +1,15 @@
 module Ace.KeyBinding where
 
 import Prelude
-import Ace.Types
 import Ace.Command (commandToString)
-import Data.Maybe (Maybe(), isJust, fromJust)
-import DOM.Event.Types (KeyboardEvent())
-import Control.Monad.Eff (Eff())
-import Partial.Unsafe
+import Ace.Types (ACE, KeyBinding, Command, HandlerResult, Editor)
+import Control.Monad.Eff (Eff)
+import Data.Maybe (Maybe, isJust, fromJust)
+import DOM.Event.Types (KeyboardEvent)
+import Partial.Unsafe (unsafePartial)
 
-type KeyboardHandler e =
-  { editor :: Editor }
+type KeyboardHandler e
+  = { editor :: Editor }
   -> Int
   -> String
   -> Int

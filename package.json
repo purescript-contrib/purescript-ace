@@ -1,17 +1,15 @@
 {
-  "name": "purescript-ace",
   "private": true,
-  "license": "MIT",
-  "repository": "git@github.com:slamdata/purescript-ace.git",
-  "contributors": [
-    "John A. De Goes <john@degoes.net> (http://degoes.net)",
-    "Maxim Zimaliev <zimaliev@gmail.com>"
-  ],
+  "scripts": {
+    "clean": "rimraf output && rimraf .pulp-cache",
+    "build": "jshint src && jscs src && pulp build --censor-lib --strict",
+    "test": "pulp build -I example/src --to example/example.js"
+  },
   "devDependencies": {
-    "gulp": "^3.9.0",
-    "gulp-jshint": "^2.0.0",
-    "gulp-purescript": "^1.0.0",
-    "jshint": "^2.8.0",
-    "purescript": "^0.9.1"
+    "jscs": "^2.8.0",
+    "jshint": "^2.9.1",
+    "pulp": "^9.0.1",
+    "purescript-psa": "^0.3.9",
+    "rimraf": "^2.5.0"
   }
 }

@@ -64,15 +64,12 @@ module Ace.VirtualRenderer
 
 import Prelude hiding (compare)
 
-import Control.Monad.Eff (Eff())
-
-import Data.Function.Uncurried (Fn2(), runFn2, Fn3(), runFn3, Fn5(), runFn5)
-import Data.Maybe (Maybe())
-import Data.Nullable (Nullable(), toNullable)
-
-import DOM.HTML.Types (HTMLElement())
-
-import Ace.Types
+import Ace.Types (VirtualRenderer, ACE, Position, Annotation, EditSession)
+import Control.Monad.Eff (Eff)
+import Data.Function.Uncurried (Fn2, runFn2, Fn3, runFn3, Fn5, runFn5)
+import Data.Maybe (Maybe)
+import Data.Nullable (Nullable, toNullable)
+import DOM.HTML.Types (HTMLElement)
 
 foreign import getCharacterWidth :: forall eff. VirtualRenderer -> Eff (ace :: ACE | eff) Number
 

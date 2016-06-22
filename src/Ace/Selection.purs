@@ -54,13 +54,11 @@ module Ace.Selection
 
 import Prelude
 
-import Control.Monad.Eff (Eff())
-
-import Data.Function.Uncurried (Fn2(), runFn2, Fn3(), runFn3, Fn4(), runFn4)
-import Data.Maybe (Maybe())
-import Data.Nullable (Nullable(), toNullable)
-
-import Ace.Types
+import Ace.Types (Selection, ACE, EditSession, Position, Range)
+import Control.Monad.Eff (Eff)
+import Data.Function.Uncurried (Fn2, runFn2, Fn3, runFn3, Fn4, runFn4)
+import Data.Maybe (Maybe)
+import Data.Nullable (Nullable, toNullable)
 
 foreign import onImpl :: forall eff a. Fn3 String (Eff (ace :: ACE | eff) a) Selection (Eff (ace :: ACE | eff) Unit)
 
@@ -203,4 +201,3 @@ moveCursorToScreen :: forall eff. Int -> Int -> Boolean -> Selection -> Eff (ace
 moveCursorToScreen row column keepDesiredColumn self = runFn4 moveCursorToScreenImpl row column keepDesiredColumn self
 
 foreign import create :: forall eff. EditSession -> Eff (ace :: ACE | eff) Selection
-

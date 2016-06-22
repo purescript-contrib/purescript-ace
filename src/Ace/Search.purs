@@ -6,13 +6,9 @@ module Ace.Search
   , create
   ) where
 
-import Prelude
-
-import Control.Monad.Eff (Eff())
-
-import Data.Function.Uncurried (Fn2(), runFn2, Fn3(), runFn3)
-
 import Ace.Types
+import Control.Monad.Eff (Eff)
+import Data.Function.Uncurried (Fn2, runFn2, Fn3, runFn3)
 
 foreign import setImpl :: forall eff. Fn2 SearchOptions Search (Eff (ace :: ACE | eff) Search)
 

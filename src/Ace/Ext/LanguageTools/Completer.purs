@@ -1,16 +1,14 @@
 module Ace.Ext.LanguageTools.Completer
-  ( CompleterCallback()
+  ( CompleterCallback
   , mkCompleter
   ) where
 
 import Prelude
-
-import Control.Monad.Eff (Eff())
-import Data.Function.Uncurried (runFn3, Fn3())
-import Data.Maybe (Maybe(), isJust, fromJust)
-import Partial.Unsafe
-
-import Ace.Types
+import Ace.Types (Completer, ACE, Position, EditSession, Editor, Completion)
+import Control.Monad.Eff (Eff)
+import Data.Function.Uncurried (runFn3, Fn3)
+import Data.Maybe (Maybe, isJust, fromJust)
+import Partial.Unsafe (unsafePartial)
 
 type CompleterCallback eff = Maybe (Array Completion) -> Eff eff Unit
 
