@@ -5,7 +5,7 @@ module Ace.Tokenizer
 
 import Control.Monad.Eff (Eff())
 
-import Data.Function (Fn2(), runFn2)
+import Data.Function.Uncurried (Fn2(), runFn2)
 
 import Ace.Types
 

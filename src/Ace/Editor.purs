@@ -133,7 +133,7 @@ import Prelude
 import Control.Monad.Eff (Eff())
 
 import Data.Maybe (Maybe())
-import Data.Function (Fn2(), runFn2, Fn3(), runFn3, Fn4(), runFn4, Fn5(), runFn5)
+import Data.Function.Uncurried (Fn2(), runFn2, Fn3(), runFn3, Fn4(), runFn4, Fn5(), runFn5)
 import Data.Nullable (Nullable(), toNullable)
 
 import DOM.HTML.Types (HTMLElement())

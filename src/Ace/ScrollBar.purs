@@ -11,7 +11,7 @@ import Prelude
 
 import Control.Monad.Eff (Eff())
 
-import Data.Function (Fn2(), runFn2)
+import Data.Function.Uncurried (Fn2(), runFn2)
 
 import DOM.HTML.Types (HTMLElement())
 

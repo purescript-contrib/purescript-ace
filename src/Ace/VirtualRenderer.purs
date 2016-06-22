@@ -66,7 +66,7 @@ import Prelude hiding (compare)
 
 import Control.Monad.Eff (Eff())
 
-import Data.Function (Fn2(), runFn2, Fn3(), runFn3, Fn5(), runFn5)
+import Data.Function.Uncurried (Fn2(), runFn2, Fn3(), runFn3, Fn5(), runFn5)
 import Data.Maybe (Maybe())
 import Data.Nullable (Nullable(), toNullable)
 

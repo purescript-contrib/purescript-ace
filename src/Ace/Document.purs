@@ -30,11 +30,13 @@ import Prelude
 
 import Control.Monad.Eff (Eff())
 
-import Data.Either.Unsafe (fromRight)
+import Data.Either (fromRight)
 import Data.Foreign (Foreign())
 import Data.Foreign.Class (read)
-import Data.Function (Fn2(), runFn2, Fn3(), runFn3, Fn4(), runFn4)
+import Data.Function.Uncurried (Fn2(), runFn2, Fn3(), runFn3, Fn4(), runFn4)
 import Data.Nullable (Nullable())
+
+import Partial.Unsafe
 
 import Ace.Types
 
@@ -46,7 +48,7 @@ onChange
   :: forall eff a
    . Document -> (DocumentEvent -> Eff (ace :: ACE | eff) a)
   -> Eff (ace :: ACE | eff) Unit
-onChange self fn = runFn2 onChangeImpl self (fn <<< fromRight <<< read)
+onChange self fn = runFn2 onChangeImpl self (fn <<< (unsafePartial fromRight) <<< read)
 
 foreign import setValueImpl
   :: forall eff. Fn2 String Document (Eff (ace :: ACE | eff) Unit)

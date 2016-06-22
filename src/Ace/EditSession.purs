@@ -113,7 +113,7 @@ import Control.Monad.Eff (Eff())
 import Control.Monad.ST (ST())
 
 import Data.Array.ST (STArray())
-import Data.Function (Fn2(), runFn2, Fn3(), runFn3, Fn4(), runFn4, Fn5(), runFn5)
+import Data.Function.Uncurried (Fn2(), runFn2, Fn3(), runFn3, Fn4(), runFn4, Fn5(), runFn5)
 import Data.Maybe (Maybe())
 import Data.Nullable (Nullable(), toNullable)
 

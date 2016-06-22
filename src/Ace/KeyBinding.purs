@@ -3,10 +3,10 @@ module Ace.KeyBinding where
 import Prelude
 import Ace.Types
 import Ace.Command (commandToString)
-import Data.Maybe (Maybe(), isJust)
-import Data.Maybe.Unsafe (fromJust)
+import Data.Maybe (Maybe(), isJust, fromJust)
 import DOM.Event.Types (KeyboardEvent())
 import Control.Monad.Eff (Eff())
+import Partial.Unsafe
 
 type KeyboardHandler e =
   { editor :: Editor }
@@ -30,4 +30,4 @@ addKeyboardHandler
    . KeyboardHandler (ace :: ACE |e)
   -> KeyBinding
   -> Eff (ace :: ACE|e) Unit
-addKeyboardHandler = addKeyboardHandlerImpl commandToString isJust fromJust
+addKeyboardHandler = addKeyboardHandlerImpl commandToString isJust (unsafePartial fromJust)

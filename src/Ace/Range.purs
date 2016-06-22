@@ -38,7 +38,7 @@ import Prelude hiding (compare)
 
 import Control.Monad.Eff (Eff())
 
-import Data.Function (Fn2(), runFn2, Fn3(), runFn3, Fn4(), runFn4)
+import Data.Function.Uncurried (Fn2(), runFn2, Fn3(), runFn3, Fn4(), runFn4)
 
 import Ace.Types
 

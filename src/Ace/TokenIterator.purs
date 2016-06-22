@@ -11,7 +11,7 @@ import Prelude
 
 import Control.Monad.Eff (Eff())
 
-import Data.Function (Fn3(), runFn3)
+import Data.Function.Uncurried (Fn3(), runFn3)
 
 import Ace.Types
 

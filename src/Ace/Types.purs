@@ -5,7 +5,7 @@ import Prelude
 import Control.Bind ((>=>))
 import Data.Either (Either(..))
 import Data.Foreign (F(), ForeignError(..), readString)
-import Data.Foreign.Class (IsForeign, readProp)
+import Data.Foreign.Class (class IsForeign, readProp)
 import Data.Maybe (Maybe())
 
 type AnchorEvent =
@@ -25,7 +25,7 @@ readDocumentEventType :: String -> F DocumentEventType
 readDocumentEventType "insert" = Right Insert
 readDocumentEventType "remove" = Right Remove
 readDocumentEventType s =
-  Left $ TypeMismatch ("'" ++ s ++ "'") " a valid value for the DocumentEventType enum"
+  Left $ TypeMismatch ("'" <> s <> "'") " a valid value for the DocumentEventType enum"
 
 
 instance documentEventTypeIsForeign :: IsForeign DocumentEventType where
@@ -61,7 +61,7 @@ readNewlineMode "windows" = Right Windows
 readNewlineMode "unix" = Right Unix
 readNewlineMode "auto" = Right Auto
 readNewlineMode s =
-  Left $ TypeMismatch ("'" ++ s ++ "'") " a valid value for the NewlineMode enum"
+  Left $ TypeMismatch ("'" <> s <> "'") " a valid value for the NewlineMode enum"
 
 data Rules
 
