@@ -11,7 +11,14 @@ function effize(method) {
 }
 
 exports.setImpl = effize("set");
-exports.findImpl = effize("find");
+
+exports.findImpl = function (just, nothing, sess, search) {
+  return function () {
+    var result = search.find(sess);
+    return result == null ? nothing : just(result);
+  };
+};
+
 exports.findAllImpl = effize("findAll");
 exports.replaceImpl = effize("replace");
 

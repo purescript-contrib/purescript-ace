@@ -3,11 +3,12 @@ module Main where
 import Prelude
 
 import Control.Monad.Eff (Eff)
-import Control.Monad.Eff.Console (logShow, log, CONSOLE)
+import Control.Monad.Eff.Console (log, CONSOLE)
 import Control.Monad.Eff.Ref (newRef, readRef, writeRef, REF)
 
 import Data.Array.ST (pushSTArray)
 import Data.Maybe (Maybe(..))
+import Data.Traversable (for_)
 
 import DOM (DOM)
 
@@ -27,7 +28,6 @@ import Ace.Search as Search
 import Ace.Selection as Selection
 import Ace.TokenIterator as TokenIterator
 import Ace.UndoManager as UndoManager
-
 
 foreign import rules :: Ace.Rules
 foreign import onLoad :: forall e. Eff e Unit -> Eff e Unit
@@ -153,9 +153,9 @@ main = onLoad $ do
   -- Get the background tokenizer and trace the tokens and state on the first line
   backgroundTokenizer <- Session.getBackgroundTokenizer session
   tokens <- BackgroundTokenizer.getTokens 0 backgroundTokenizer
-  logShow $ map (\o -> o.value) tokens
+  log $ "tokens " <> show (map (\o -> o.value) tokens)
   state <- BackgroundTokenizer.getState 0 backgroundTokenizer
-  log state
+  log $ "state " <> state
 
   -- Create a scroll bar and apply it to
   ctr <- Editor.getContainer editor
@@ -165,7 +165,7 @@ main = onLoad $ do
 
   -- Create a search class
   search <- Search.create
-  Search.set { needle: "to the console"
+  Search.set { needle: "boo"
              , backwards: false
              , wrap: false
              , caseSensitive: false
@@ -174,13 +174,13 @@ main = onLoad $ do
              , skipCurrent: false
              } search
   range' <- Search.find session search
-  Session.addFold "fold" range' session
+  for_ range' \r -> Session.addFold "fold" r session
 
   -- Gutter decorations
   Session.addGutterDecoration 0 "?" session
 
   -- Markers
-  Session.addMarker range' "1" "2" false session
+  for_ range' \r -> Session.addMarker r "1" "2" false session
 
   -- Wrap limit
   Session.adjustWrapLimit 20 session
@@ -189,7 +189,7 @@ main = onLoad $ do
   Editor.moveCursorTo 0 Nothing Nothing editor
 
 
---  Session.setMode "ace/mode/text" session
+  Session.setMode "ace/mode/text" session
   languageTools <- LanguageTools.languageTools
   Editor.setEnableBasicAutocompletion true editor
   completer <-
@@ -209,7 +209,7 @@ main = onLoad $ do
 
 
   -- Misc. Tests
-  miscTests
+  -- miscTests
 
   pure unit
 

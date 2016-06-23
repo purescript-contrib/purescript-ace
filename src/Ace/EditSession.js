@@ -22,7 +22,7 @@ exports.findMatchingBracketImpl = function (position, self) {
 
 exports.addFoldImpl = function (text, range, self) {
   return function () {
-    self.addFold(text, range);
+    return self.addFold(text, range);
   };
 };
 

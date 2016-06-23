@@ -6,7 +6,9 @@ exports.rules = {
 };
 
 exports.onLoad = function (action) {
-  window.addEventListener("load", function () {
-    action();
-  });
+  return function () {
+    window.addEventListener("load", function () {
+      action();
+    });
+  };
 };
