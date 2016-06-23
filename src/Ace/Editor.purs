@@ -130,15 +130,12 @@ module Ace.Editor
 
 import Prelude
 
-import Control.Monad.Eff (Eff())
-
-import Data.Maybe (Maybe())
-import Data.Function.Uncurried (Fn2(), runFn2, Fn3(), runFn3, Fn4(), runFn4, Fn5(), runFn5)
-import Data.Nullable (Nullable(), toNullable)
-
-import DOM.HTML.Types (HTMLElement())
-
-import Ace.Types
+import Ace.Types (KeyBinding, ACE, Editor, EditSession, VirtualRenderer, SearchOptions, Position, Range, Selection, PasteEvent)
+import Control.Monad.Eff (Eff)
+import Data.Function.Uncurried (Fn2, runFn2, Fn3, runFn3, Fn4, runFn4, Fn5, runFn5)
+import Data.Maybe (Maybe)
+import Data.Nullable (Nullable, toNullable)
+import DOM.HTML.Types (HTMLElement)
 
 foreign import onImpl
   :: forall ev eff a

@@ -9,13 +9,10 @@ module Ace.ScrollBar
 
 import Prelude
 
-import Control.Monad.Eff (Eff())
-
-import Data.Function.Uncurried (Fn2(), runFn2)
-
-import DOM.HTML.Types (HTMLElement())
-
-import Ace.Types
+import Ace.Types (ScrollBar, ACE, VirtualRenderer)
+import Control.Monad.Eff (Eff)
+import Data.Function.Uncurried (Fn2, runFn2)
+import DOM.HTML.Types (HTMLElement)
 
 foreign import onScrollImpl :: forall eff a. Fn2 ScrollBar (Eff (ace :: ACE | eff) a) (Eff (ace :: ACE | eff) Unit)
 

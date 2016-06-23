@@ -2,41 +2,42 @@ module Main where
 
 import Prelude
 
-import Data.Maybe
+import Control.Monad.Eff (Eff)
+import Control.Monad.Eff.Console (log, CONSOLE)
+import Control.Monad.Eff.Ref (newRef, readRef, writeRef, REF)
+
 import Data.Array.ST (pushSTArray)
-import DOM (DOM())
+import Data.Maybe (Maybe(..))
+import Data.Traversable (for_)
 
-import Control.Monad.Eff
-import Control.Monad.Eff.Console (logShow, log, CONSOLE())
-import Control.Monad.Eff.Ref (newRef, readRef, writeRef, REF())
+import DOM (DOM)
 
-import Ace
-
-import Ace.Config as Config
-import Ace.Editor as Editor
-import Ace.EditSession as Session
+import Ace as Ace
 import Ace.Anchor as Anchor
 import Ace.BackgroundTokenizer as BackgroundTokenizer
+import Ace.Config as Config
 import Ace.Document as Document
+import Ace.Editor as Editor
+import Ace.EditSession as Session
+import Ace.Ext.LanguageTools as LanguageTools
+import Ace.Ext.LanguageTools.Completer as Completer
+import Ace.KeyBinding as KeyBinding
 import Ace.Range as Range
 import Ace.ScrollBar as ScrollBar
 import Ace.Search as Search
 import Ace.Selection as Selection
 import Ace.TokenIterator as TokenIterator
 import Ace.UndoManager as UndoManager
-import Ace.Ext.LanguageTools as LanguageTools
-import Ace.Ext.LanguageTools.Completer as Completer
-import Ace.KeyBinding as KeyBinding
 
-foreign import rules :: Rules
+foreign import rules :: Ace.Rules
 foreign import onLoad :: forall e. Eff e Unit -> Eff e Unit
 
-main :: forall e. Eff (ref ::REF, console :: CONSOLE, ace :: ACE, dom :: DOM|e) Unit
+main :: forall e. Eff (ref ::REF, console :: CONSOLE, ace :: Ace.ACE, dom :: DOM|e) Unit
 main = onLoad $ do
   Config.set Config.basePath "foo"
 
   -- Create an editor
-  editor <- edit "editor" ace
+  editor <- Ace.edit "editor" Ace.ace
   session <- Editor.getSession editor
   document <- Session.getDocument session
   Editor.setValue "blablabla \n tr  test boo boo" Nothing editor
@@ -57,9 +58,9 @@ main = onLoad $ do
 
   let rerenderMarker _ = do
         readRef markerRef >>= flip Session.removeMarker session
-        Position {row: startRow, column: startColumn}
+        Ace.Position {row: startRow, column: startColumn}
           <- Anchor.getPosition startAnchor
-        Position {row: endRow, column: endColumn}
+        Ace.Position {row: endRow, column: endColumn}
           <- Anchor.getPosition endAnchor
         markRange <- Range.create
                        startRow
@@ -84,9 +85,9 @@ main = onLoad $ do
       if hs == -1 || (kcode <= 40 && kcode >= 37)
         then pure Nothing
         else do
-        Position {row: startRow, column: startColumn}
+        Ace.Position {row: startRow, column: startColumn}
           <- Anchor.getPosition startAnchor
-        Position {row: endRow, column: endColumn}
+        Ace.Position {row: endRow, column: endColumn}
           <- Anchor.getPosition endAnchor
         selectedRange <- Editor.getSelectionRange editor
         newRange <-
@@ -97,7 +98,7 @@ main = onLoad $ do
                else Range.create startRow startColumn endRow endColumn
         intersected <- Range.intersects newRange selectedRange
         pure if intersected
-             then Just {command: Null, passEvent: false}
+             then Just {command: Ace.Null, passEvent: false}
              else Nothing
 
   -- Set the theme
@@ -117,13 +118,12 @@ main = onLoad $ do
   -- Get the mode
   mode <- Session.getMode session
   -- Create another edit session with this mode
-  session1 <- createEditSession "" mode ace
+  session1 <- Ace.createEditSession "" mode Ace.ace
 
   -- Get the document for the session
-  document <- Session.getDocument session
-  document `Document.onChange` \(DocumentEvent {action: ty}) ->
-    log ("Document changed: " <> showDocumentEventType ty)
-  Document.setNewLineMode Windows document
+  document `Document.onChange` \(Ace.DocumentEvent {action: ty}) ->
+    log ("Document changed: " <> Ace.showDocumentEventType ty)
+  Document.setNewLineMode Ace.Windows document
 
   -- Add an anchor at the start of the document and listen for updates
   anchor <- Document.createAnchor 0 0 document
@@ -131,9 +131,9 @@ main = onLoad $ do
   position <- Anchor.getPosition anchor
 
   log $ "Initial anchor position: "
-      <> show (getRow position)
+      <> show (Ace.getRow position)
       <> ", "
-      <> show (getColumn position)
+      <> show (Ace.getColumn position)
       <> ". Should be 0, 0"
 
   -- Update the anchor position
@@ -141,9 +141,9 @@ main = onLoad $ do
   -- Listen for anchor position changes
   anchor `Anchor.onChange` \e -> do
     log $ "New anchor position: "
-       <> show (getRow e.value)
+       <> show (Ace.getRow e.value)
        <> ", "
-       <> show (getColumn e.value)
+       <> show (Ace.getColumn e.value)
     -- Unlisten
     Anchor.detach anchor
 
@@ -153,9 +153,9 @@ main = onLoad $ do
   -- Get the background tokenizer and trace the tokens and state on the first line
   backgroundTokenizer <- Session.getBackgroundTokenizer session
   tokens <- BackgroundTokenizer.getTokens 0 backgroundTokenizer
-  logShow $ map (\o -> o.value) tokens
+  log $ "tokens " <> show (map (\o -> o.value) tokens)
   state <- BackgroundTokenizer.getState 0 backgroundTokenizer
-  log state
+  log $ "state " <> state
 
   -- Create a scroll bar and apply it to
   ctr <- Editor.getContainer editor
@@ -165,7 +165,7 @@ main = onLoad $ do
 
   -- Create a search class
   search <- Search.create
-  Search.set { needle: "to the console"
+  Search.set { needle: "boo"
              , backwards: false
              , wrap: false
              , caseSensitive: false
@@ -173,14 +173,14 @@ main = onLoad $ do
              , regExp: false
              , skipCurrent: false
              } search
-  range <- Search.find session search
-  Session.addFold "fold" range session
+  range' <- Search.find session search
+  for_ range' \r -> Session.addFold "fold" r session
 
   -- Gutter decorations
   Session.addGutterDecoration 0 "?" session
 
   -- Markers
-  Session.addMarker range "1" "2" false session
+  for_ range' \r -> Session.addMarker r "1" "2" false session
 
   -- Wrap limit
   Session.adjustWrapLimit 20 session
@@ -189,7 +189,7 @@ main = onLoad $ do
   Editor.moveCursorTo 0 Nothing Nothing editor
 
 
---  Session.setMode "ace/mode/text" session
+  Session.setMode "ace/mode/text" session
   languageTools <- LanguageTools.languageTools
   Editor.setEnableBasicAutocompletion true editor
   completer <-
@@ -209,14 +209,14 @@ main = onLoad $ do
 
 
   -- Misc. Tests
-  miscTests
+  -- miscTests
 
   pure unit
 
 
-miscTests :: forall e. Eff (console :: CONSOLE, ace :: ACE |e) Unit
+miscTests :: forall e. Eff (console :: CONSOLE, ace :: Ace.ACE |e) Unit
 miscTests = void do
-  editor <- edit "tests" ace
+  editor <- Ace.edit "tests" Ace.ace
   session <- Editor.getSession editor
   document <- Session.getDocument session
 

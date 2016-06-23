@@ -9,13 +9,11 @@ module Ace.UndoManager
 
 import Prelude
 
-import Control.Monad.Eff (Eff())
-
-import Data.Function.Uncurried (Fn2(), runFn2)
-import Data.Maybe (Maybe())
-import Data.Nullable (Nullable(), toNullable)
-
-import Ace.Types
+import Ace.Types (UndoManager, ACE, Range)
+import Control.Monad.Eff (Eff)
+import Data.Function.Uncurried (Fn2, runFn2)
+import Data.Maybe (Maybe)
+import Data.Nullable (Nullable, toNullable)
 
 foreign import undoImpl :: forall eff. Fn2 (Nullable Boolean) UndoManager (Eff (ace :: ACE | eff) Range)
 

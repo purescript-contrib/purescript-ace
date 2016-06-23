@@ -1,5 +1,5 @@
 module Ace.Config
-  ( ConfigOption()
+  ( ConfigOption
   , set
   , packaged
   , workerPath
@@ -9,11 +9,9 @@ module Ace.Config
   , suffix
   ) where
 
-import Control.Monad.Eff (Eff())
-
-import Data.Function.Uncurried (Fn2(), runFn2)
-
 import Ace.Types
+import Control.Monad.Eff (Eff)
+import Data.Function.Uncurried (Fn2, runFn2)
 
 newtype ConfigOption a = ConfigOption String
 

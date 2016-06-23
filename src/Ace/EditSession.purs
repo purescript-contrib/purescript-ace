@@ -1,5 +1,5 @@
 module Ace.EditSession
-  ( DynamicMarker()
+  ( DynamicMarker
   , addDynamicMarker
   , addFold
   , addGutterDecoration
@@ -109,17 +109,14 @@ module Ace.EditSession
 
 import Prelude
 
-import Control.Monad.Eff (Eff())
-import Control.Monad.ST (ST())
-
-import Data.Array.ST (STArray())
-import Data.Function.Uncurried (Fn2(), runFn2, Fn3(), runFn3, Fn4(), runFn4, Fn5(), runFn5)
-import Data.Maybe (Maybe())
-import Data.Nullable (Nullable(), toNullable)
-
-import DOM.HTML.Types (HTMLElement())
-
-import Ace.Types
+import Ace.Types (Marker, ACE, EditSession, TextMode, Position, Range, Annotation, UndoManager, TokenInfo, Selection, Document, BackgroundTokenizer)
+import Control.Monad.Eff (Eff)
+import Control.Monad.ST (ST)
+import Data.Array.ST (STArray)
+import Data.Function.Uncurried (Fn2, runFn2, Fn3, runFn3, Fn4, runFn4, Fn5, runFn5)
+import Data.Maybe (Maybe)
+import Data.Nullable (Nullable, toNullable)
+import DOM.HTML.Types (HTMLElement)
 
 foreign import getBackgroundTokenizer :: forall eff. EditSession -> Eff (ace :: ACE | eff) BackgroundTokenizer
 

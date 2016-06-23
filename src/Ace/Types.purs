@@ -2,11 +2,10 @@ module Ace.Types where
 
 import Prelude
 
-import Control.Bind ((>=>))
 import Data.Either (Either(..))
-import Data.Foreign (F(), ForeignError(..), readString)
+import Data.Foreign (F, ForeignError(..), readString)
 import Data.Foreign.Class (class IsForeign, readProp)
-import Data.Maybe (Maybe())
+import Data.Maybe (Maybe)
 
 type AnchorEvent =
   { old :: Position

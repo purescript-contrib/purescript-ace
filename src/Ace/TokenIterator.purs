@@ -7,13 +7,9 @@ module Ace.TokenIterator
   , stepForward
   ) where
 
-import Prelude
-
-import Control.Monad.Eff (Eff())
-
-import Data.Function.Uncurried (Fn3(), runFn3)
-
 import Ace.Types
+import Control.Monad.Eff (Eff)
+import Data.Function.Uncurried (Fn3, runFn3)
 
 foreign import stepBackward :: forall eff. TokenIterator -> Eff (ace :: ACE | eff) (Array String)
 

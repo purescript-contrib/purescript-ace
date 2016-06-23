@@ -14,8 +14,8 @@
     "bower_components",
     "node_modules",
     "output",
+    "test",
     "bower.json",
-    "gulpfile.js",
     "package.json"
   ],
   "dependencies": {
@@ -27,7 +27,7 @@
     "purescript-prelude": "^1.0.0"
   },
   "devDependencies": {
-    "ace-builds": "~1.2.0",
-    "purescript-refs": "~1.0.0"
+    "ace-builds": "^1.2.0",
+    "purescript-refs": "^1.0.0"
   }
 }

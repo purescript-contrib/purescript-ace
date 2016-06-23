@@ -12,11 +12,9 @@ module Ace.BackgroundTokenizer
 
 import Prelude
 
-import Data.Function.Uncurried (Fn2(), runFn2, Fn3(), runFn3)
-
-import Control.Monad.Eff (Eff())
-
-import Ace.Types
+import Ace.Types (BackgroundTokenizer, ACE, Editor, Tokenizer, TokenInfo, Document, BackgroundTokenizerEvent)
+import Control.Monad.Eff (Eff)
+import Data.Function.Uncurried (Fn2, runFn2, Fn3, runFn3)
 
 foreign import onUpdateImpl :: forall eff a. Fn2 BackgroundTokenizer (BackgroundTokenizerEvent -> Eff (ace :: ACE | eff) a) (Eff (ace :: ACE | eff) Unit)
 

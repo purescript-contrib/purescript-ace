@@ -5,7 +5,7 @@
   "freeze": true,
   "funcscope": true,
   "futurehostile": true,
-  "globalstrict": true,
+  "strict": "global",
   "latedef": true,
   "noarg": true,
   "nocomma": true,
@@ -14,5 +14,6 @@
   "singleGroups": true,
   "undef": true,
   "unused": true,
-  "eqnull": true
+  "eqnull": true,
+  "predef": ["exports", "ace", "Editor"]
 }
