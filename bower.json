@@ -20,14 +20,14 @@
   ],
   "dependencies": {
     "purescript-console": "^1.0.0",
-    "purescript-dom": "^1.0.0",
-    "purescript-arrays": "^1.0.0",
+    "purescript-dom": "^2.0.0",
+    "purescript-arrays": "^1.1.0",
     "purescript-foreign": "^1.0.0",
-    "purescript-nullable": "^1.0.0",
-    "purescript-prelude": "^1.0.0"
+    "purescript-nullable": "^1.0.1",
+    "purescript-prelude": "^1.0.1"
   },
   "devDependencies": {
-    "ace-builds": "^1.2.0",
+    "ace-builds": "^1.2.4",
     "purescript-refs": "^1.0.0"
   }
 }

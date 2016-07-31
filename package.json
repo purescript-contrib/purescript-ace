@@ -6,11 +6,11 @@
     "test": "pulp build -I example/src --to example/example.js"
   },
   "devDependencies": {
-    "jscs": "^2.8.0",
-    "jshint": "^2.9.1",
+    "jscs": "^3.0.7",
+    "jshint": "^2.9.2",
     "pulp": "^9.0.1",
     "purescript-psa": "^0.3.9",
-    "purescript": "^0.9.1",
-    "rimraf": "^2.5.0"
+    "purescript": "^0.9.2",
+    "rimraf": "^2.5.4"
   }
 }
