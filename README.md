@@ -1,10 +1,10 @@
 # purescript-ace
 
-PureScript bindings for the [Ace code editor](http://ace.c9.io).
+[![Latest release](http://img.shields.io/github/release/slamdata/purescript-ace.svg)](https://github.com/slamdata/purescript-ace/releases)
+[![Build status](https://travis-ci.org/slamdata/purescript-ace.svg?branch=master)](https://travis-ci.org/slamdata/purescript-ace)
+[![Dependency status](https://img.shields.io/librariesio/github/slamdata/purescript-ace.svg)](https://libraries.io/github/slamdata/purescript-ace)
 
-[![Latest release](http://img.shields.io/bower/v/purescript-ace.svg)](https://github.com/slamdata/purescript-ace/releases)
-[![Build Status](https://travis-ci.org/slamdata/purescript-ace.svg?branch=master)](https://travis-ci.org/slamdata/purescript-ace)
-[![Dependency Status](https://www.versioneye.com/user/projects/5769eab0fdabcd003d086c62/badge.svg?style=flat)](https://www.versioneye.com/user/projects/5769eab0fdabcd003d086c62)
+PureScript bindings for the [Ace code editor](http://ace.c9.io).
 
 ## API
 
