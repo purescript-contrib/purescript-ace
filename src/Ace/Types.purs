@@ -2,8 +2,7 @@ module Ace.Types where
 
 import Prelude
 
-import Data.Either (Either(..))
-import Data.Foreign (F, ForeignError(..), readString)
+import Data.Foreign (F, ForeignError(..), readString, fail)
 import Data.Foreign.Class (class IsForeign, readProp)
 import Data.Maybe (Maybe)
 
@@ -21,10 +20,10 @@ showDocumentEventType Insert = "insert"
 showDocumentEventType Remove = "remove"
 
 readDocumentEventType :: String -> F DocumentEventType
-readDocumentEventType "insert" = Right Insert
-readDocumentEventType "remove" = Right Remove
+readDocumentEventType "insert" = pure Insert
+readDocumentEventType "remove" = pure Remove
 readDocumentEventType s =
-  Left $ TypeMismatch ("'" <> s <> "'") " a valid value for the DocumentEventType enum"
+  fail $ TypeMismatch ("'" <> s <> "'") " a valid value for the DocumentEventType enum"
 
 
 instance documentEventTypeIsForeign :: IsForeign DocumentEventType where
@@ -56,11 +55,11 @@ showNewlineMode Unix = "unix"
 showNewlineMode Auto = "auto"
 
 readNewlineMode :: String -> F NewlineMode
-readNewlineMode "windows" = Right Windows
-readNewlineMode "unix" = Right Unix
-readNewlineMode "auto" = Right Auto
+readNewlineMode "windows" = pure Windows
+readNewlineMode "unix" = pure Unix
+readNewlineMode "auto" = pure Auto
 readNewlineMode s =
-  Left $ TypeMismatch ("'" <> s <> "'") " a valid value for the NewlineMode enum"
+  fail $ TypeMismatch ("'" <> s <> "'") " a valid value for the NewlineMode enum"
 
 data Rules
 
