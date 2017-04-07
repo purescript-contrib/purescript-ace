@@ -1,10 +1,11 @@
 module Ace.Types where
 
 import Prelude
-
-import Data.Foreign (F, ForeignError(..), readString, fail)
-import Data.Foreign.Class (class IsForeign, readProp)
+import Control.Monad.Eff (kind Effect)
+import Data.Foreign (F, Foreign, ForeignError(..), fail, readArray, readInt, readString)
+import Data.Foreign.Index ((!))
 import Data.Maybe (Maybe)
+import Data.Traversable (sequence)
 
 type AnchorEvent =
   { old :: Position
@@ -25,10 +26,6 @@ readDocumentEventType "remove" = pure Remove
 readDocumentEventType s =
   fail $ TypeMismatch ("'" <> s <> "'") " a valid value for the DocumentEventType enum"
 
-
-instance documentEventTypeIsForeign :: IsForeign DocumentEventType where
-  read = readString >=> readDocumentEventType
-
 newtype DocumentEvent = DocumentEvent
   { action :: DocumentEventType
   , start :: Position
@@ -36,14 +33,15 @@ newtype DocumentEvent = DocumentEvent
   , lines :: Array String
   }
 
-instance documentEventIsForeign :: IsForeign DocumentEvent where
-  read e = do
-    r <- { action: _, start: _, end: _, lines: _ }
-         <$> readProp "action" e
-         <*> readProp "start" e
-         <*> readProp "end" e
-         <*> readProp "lines" e
-    pure $ DocumentEvent r
+readDocumentEvent :: Foreign -> F DocumentEvent
+readDocumentEvent e = do
+  action <- e ! "action" >>= readString >>= readDocumentEventType
+  start <- e ! "start" >>= readPosition
+  end <- e ! "end" >>= readPosition
+  lines <- e ! "lines"
+    >>= readArray
+    >>= (map readString >>> sequence)
+  pure $ DocumentEvent { action, start, end, lines }
 
 data PasteEvent
 
@@ -75,18 +73,17 @@ newtype Position = Position
   , column :: Int
   }
 
+readPosition :: Foreign -> F Position
+readPosition e = do
+  row <- e ! "row" >>= readInt
+  column <- e ! "column" >>= readInt
+  pure $ Position { row, column }
+
 getRow :: Position -> Int
 getRow (Position {row : row}) = row
 
 getColumn :: Position -> Int
 getColumn (Position {column : column}) = column
-
-instance positionIsForeign :: IsForeign Position where
-  read e = do
-    r <- { row: _, column: _ }
-         <$> readProp "row" e
-         <*> readProp "column" e
-    pure $ Position r
 
 type TokenInfo =
   { value :: String
@@ -102,7 +99,7 @@ type SearchOptions =
   , skipCurrent :: Boolean
   }
 
-foreign import data ACE :: !
+foreign import data ACE :: Effect
 
 data Ace
 

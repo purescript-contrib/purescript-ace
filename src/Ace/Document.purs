@@ -28,14 +28,13 @@ module Ace.Document
 
 import Prelude
 
-import Ace.Types (Document, ACE, Position, Range, NewlineMode, Anchor, DocumentEvent, showNewlineMode)
+import Ace.Types (Document, ACE, Position, Range, NewlineMode, Anchor, DocumentEvent, readDocumentEvent, showNewlineMode)
 
 import Control.Monad.Eff (Eff)
 import Control.Monad.Except (runExcept)
 
 import Data.Either (fromRight)
 import Data.Foreign (Foreign)
-import Data.Foreign.Class (read)
 import Data.Function.Uncurried (Fn2, runFn2, Fn3, runFn3, Fn4, runFn4)
 import Data.Nullable (Nullable)
 
@@ -49,7 +48,7 @@ onChange
   :: forall eff a
    . Document -> (DocumentEvent -> Eff (ace :: ACE | eff) a)
   -> Eff (ace :: ACE | eff) Unit
-onChange self fn = runFn2 onChangeImpl self (fn <<< (unsafePartial fromRight) <<< runExcept <<< read)
+onChange self fn = runFn2 onChangeImpl self (fn <<< (unsafePartial fromRight) <<< runExcept <<< readDocumentEvent)
 
 foreign import setValueImpl
   :: forall eff. Fn2 String Document (Eff (ace :: ACE | eff) Unit)
