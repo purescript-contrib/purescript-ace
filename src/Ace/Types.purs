@@ -5,7 +5,7 @@ import Control.Monad.Eff (kind Effect)
 import Data.Foreign (F, Foreign, ForeignError(..), fail, readArray, readInt, readString)
 import Data.Foreign.Index ((!))
 import Data.Maybe (Maybe)
-import Data.Traversable (sequence)
+import Data.Traversable (traverse)
 
 type AnchorEvent =
   { old :: Position
@@ -40,7 +40,7 @@ readDocumentEvent e = do
   end <- e ! "end" >>= readPosition
   lines <- e ! "lines"
     >>= readArray
-    >>= (map readString >>> sequence)
+    >>= traverse readString
   pure $ DocumentEvent { action, start, end, lines }
 
 data PasteEvent
