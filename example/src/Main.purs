@@ -34,13 +34,13 @@ foreign import onLoad :: forall e. Eff e Unit -> Eff e Unit
 
 main :: forall e. Eff (ref ::REF, console :: CONSOLE, ace :: Ace.ACE, dom :: DOM|e) Unit
 main = onLoad $ do
-  Config.set Config.basePath "foo"
+  _ <- Config.set Config.basePath "foo"
 
   -- Create an editor
   editor <- Ace.edit "editor" Ace.ace
   session <- Editor.getSession editor
   document <- Session.getDocument session
-  Editor.setValue "blablabla \n tr  test boo boo" Nothing editor
+  _ <- Editor.setValue "blablabla \n tr  test boo boo" Nothing editor
 
   startAnchor <- Document.createAnchor 1 5 document
   endAnchor <- Document.createAnchor 1 9 document
@@ -165,7 +165,7 @@ main = onLoad $ do
 
   -- Create a search class
   search <- Search.create
-  Search.set { needle: "boo"
+  _ <- Search.set { needle: "boo"
              , backwards: false
              , wrap: false
              , caseSensitive: false
@@ -183,7 +183,7 @@ main = onLoad $ do
   for_ range' \r -> Session.addMarker r "1" "2" false session
 
   -- Wrap limit
-  Session.adjustWrapLimit 20 session
+  _ <- Session.adjustWrapLimit 20 session
 
   -- Move the cursor
   Editor.moveCursorTo 0 Nothing Nothing editor
@@ -232,8 +232,8 @@ miscTests = void do
 
   anchor <- Document.createAnchor 0 0 document
 
-  Anchor.getPosition anchor
-  Anchor.getDocument anchor
+  _ <- Anchor.getPosition anchor
+  _ <- Anchor.getDocument anchor
   Anchor.setPosition 0 0 true anchor
   Anchor.detach anchor
 
@@ -241,38 +241,38 @@ miscTests = void do
 
   tokenIterator <- TokenIterator.create session 0 0
 
-  TokenIterator.stepForward tokenIterator
-  TokenIterator.stepBackward tokenIterator
-  TokenIterator.getCurrentToken tokenIterator
-  TokenIterator.getCurrentTokenRow tokenIterator
-  TokenIterator.getCurrentTokenColumn tokenIterator
+  _ <- TokenIterator.stepForward tokenIterator
+  _ <- TokenIterator.stepBackward tokenIterator
+  _ <- TokenIterator.getCurrentToken tokenIterator
+  _ <- TokenIterator.getCurrentTokenRow tokenIterator
+  _ <- TokenIterator.getCurrentTokenColumn tokenIterator
 
   BackgroundTokenizer.setDocument document backgroundTokenizer
   BackgroundTokenizer.fireUpdateEvent 0 0 backgroundTokenizer
   BackgroundTokenizer.start 0 backgroundTokenizer
   BackgroundTokenizer.stop backgroundTokenizer
-  BackgroundTokenizer.getTokens 0 backgroundTokenizer
-  BackgroundTokenizer.getState 0 backgroundTokenizer
+  _ <- BackgroundTokenizer.getTokens 0 backgroundTokenizer
+  _ <- BackgroundTokenizer.getState 0 backgroundTokenizer
 
-  Document.getValue document
-  Document.createAnchor 0 0 document
-  Document.getNewLineCharacter document
-  Document.getNewLineMode document
-  Document.isNewLine "" document
-  Document.getLine 0 document
-  Document.getLines 0 0 document
-  Document.getAllLines document
-  Document.getLength document
-  Document.getTextRange range document
+  _ <- Document.getValue document
+  _ <- Document.createAnchor 0 0 document
+  _ <- Document.getNewLineCharacter document
+  _ <- Document.getNewLineMode document
+  _ <- Document.isNewLine "" document
+  _ <- Document.getLine 0 document
+  _ <- Document.getLines 0 0 document
+  _ <- Document.getAllLines document
+  _ <- Document.getLength document
+  _ <- Document.getTextRange range document
   Document.insert position "" document
   Document.insertNewLine position document
   Document.remove range document
   Document.removeInLine 0 0 0 document
-  Document.removeLines 0 0 document
+  _ <- Document.removeLines 0 0 document
   Document.removeNewLine 0 document
   Document.replace range "" document
-  Document.indexToPosition 0 0 document
-  Document.positionToIndex position 0 document
+  _ <- Document.indexToPosition 0 0 document
+  _ <- Document.positionToIndex position 0 document
 
 
   undoManager <- UndoManager.create
@@ -281,128 +281,128 @@ miscTests = void do
   Session.screenToDocumentColumn 0 0 session
   Session.highlight "" session
   Session.setDocument document session
-  Session.getDocument session
+  _ <- Session.getDocument session
   Session.resetRowCache 0 session
   Session.setValue "" session
   Session.setMode "" session
-  Session.getValue session
-  Session.getSelection session
-  Session.getState 0 session
-  Session.getTokens 0 session
-  Session.getTokenAt 0 0 session
+  _ <- Session.getValue session
+  _ <- Session.getSelection session
+  _ <- Session.getState 0 session
+  _ <- Session.getTokens 0 session
+  _ <- Session.getTokenAt 0 0 session
   Session.setUndoManager undoManager session
-  Session.getUndoManager session
-  Session.getTabString session
+  _ <- Session.getUndoManager session
+  _ <- Session.getTabString session
   Session.setUseSoftTabs true session
-  Session.getUseSoftTabs session
+  _ <- Session.getUseSoftTabs session
   Session.setTabSize 0 session
-  Session.getTabSize session
+  _ <- Session.getTabSize session
   Session.setOverwrite true session
-  Session.getOverwrite session
+  _ <- Session.getOverwrite session
   Session.toggleOverwrite session
   Session.addGutterDecoration 0 "" session
   Session.removeGutterDecoration 0 "" session
-  Session.getBreakpoints session
+  _ <- Session.getBreakpoints session
   Session.setBreakpoints [] session
   Session.clearBreakpoints session
   Session.setBreakpoint 0 "" session
   Session.clearBreakpoint 0 session
-  Session.addMarker range "" "" true session
+  _ <- Session.addMarker range "" "" true session
   Session.setAnnotations [] session
-  Session.getAnnotations session
+  _ <- Session.getAnnotations session
   Session.clearAnnotations session
   Session.detectNewLine "" session
-  Session.getWordRange 0 0 session
-  Session.getAWordRange 0 0 session
+  _ <- Session.getWordRange 0 0 session
+  _ <- Session.getAWordRange 0 0 session
   Session.setNewLineMode "" session
-  Session.getNewLineMode session
+  _ <- Session.getNewLineMode session
   Session.setUseWorker true session
-  Session.getUseWorker session
-  Session.getMode session
+  _ <- Session.getUseWorker session
+  _ <- Session.getMode session
   Session.setScrollTop 0 session
-  Session.getScrollTop session
+  _ <- Session.getScrollTop session
   Session.setScrollLeft 0 session
-  Session.getScrollLeft session
-  Session.getScreenWidth session
-  Session.getLine 0 session
-  Session.getLines 0 0 session
-  Session.getLength session
-  Session.getTextRange range session
+  _ <- Session.getScrollLeft session
+  _ <- Session.getScreenWidth session
+  _ <- Session.getLine 0 session
+  _ <- Session.getLines 0 0 session
+  _ <- Session.getLength session
+  _ <- Session.getTextRange range session
   Session.insert position "" session
   Session.remove range session
   Session.setUndoSelect true session
   Session.replace range "" session
   Session.indentRows 0 0 "" session
   Session.outdentRows range session
-  Session.moveLinesUp 0 0 session
-  Session.moveLinesDown 0 0 session
-  Session.duplicateLines 0 0 session
+  _ <- Session.moveLinesUp 0 0 session
+  _ <- Session.moveLinesDown 0 0 session
+  _ <- Session.duplicateLines 0 0 session
   Session.setUseWrapMode true session
-  Session.getUseWrapMode session
+  _ <- Session.getUseWrapMode session
   Session.setWrapLimitRange 0 0 session
-  Session.adjustWrapLimit 0 session
-  Session.getWrapLimit session
-  Session.getWrapLimitRange session
-  Session.getDisplayTokens "" 0 session
-  Session.getStringScreenWidth "" 0 0 session
-  Session.getRowLength 0 session
-  Session.getScreenLastRowColumn 0 session
-  Session.getDocumentLastRowColumn 0 0 session
-  Session.getDocumentLastRowColumnPosition 0 0 session
-  Session.getRowSplitData session
-  Session.getScreenTabSize 0 session
-  Session.screenToDocumentPosition 0 0 session
-  Session.documentToScreenPosition 0 0 session
-  Session.documentToScreenColumn 0 0 session
-  Session.documentToScreenRow 0 0 session
-  Session.getScreenLength session
+  _ <- Session.adjustWrapLimit 0 session
+  _ <- Session.getWrapLimit session
+  _ <- Session.getWrapLimitRange session
+  _ <- Session.getDisplayTokens "" 0 session
+  _ <- Session.getStringScreenWidth "" 0 0 session
+  _ <- Session.getRowLength 0 session
+  _ <- Session.getScreenLastRowColumn 0 session
+  _ <- Session.getDocumentLastRowColumn 0 0 session
+  _ <- Session.getDocumentLastRowColumnPosition 0 0 session
+  _ <- Session.getRowSplitData session
+  _ <- Session.getScreenTabSize 0 session
+  _ <- Session.screenToDocumentPosition 0 0 session
+  _ <- Session.documentToScreenPosition 0 0 session
+  _ <- Session.documentToScreenColumn 0 0 session
+  _ <- Session.documentToScreenRow 0 0 session
+  _ <- Session.getScreenLength session
 
   Editor.selectMoreLines 0 editor
   Editor.setKeyboardHandler "" editor
-  Editor.getKeyboardHandler editor
+  _ <- Editor.getKeyboardHandler editor
   Editor.setSession session editor
-  Editor.getSession editor
-  Editor.setValue "" Nothing editor
-  Editor.getValue editor
-  Editor.getSelection editor
+  _ <- Editor.getSession editor
+  _ <- Editor.setValue "" Nothing editor
+  _ <- Editor.getValue editor
+  _ <- Editor.getSelection editor
   Editor.resize Nothing editor
   Editor.setTheme "" editor
-  Editor.getTheme editor
+  _ <- Editor.getTheme editor
   Editor.setStyle "" editor
   Editor.unsetStyle editor
   Editor.setFontSize "" editor
   Editor.focus editor
-  Editor.isFocused editor
+  _ <- Editor.isFocused editor
   Editor.blur editor
-  Editor.getCopyText editor
+  _ <- Editor.getCopyText editor
   Editor.insert "" editor
   Editor.setOverwrite true editor
-  Editor.getOverwrite editor
+  _ <- Editor.getOverwrite editor
   Editor.toggleOverwrite editor
   Editor.setScrollSpeed 0.0 editor
-  Editor.getScrollSpeed editor
+  _ <- Editor.getScrollSpeed editor
   Editor.setDragDelay 0.0 editor
-  Editor.getDragDelay editor
+  _ <- Editor.getDragDelay editor
   Editor.setSelectionStyle "" editor
-  Editor.getSelectionStyle editor
+  _ <- Editor.getSelectionStyle editor
   Editor.setHighlightActiveLine true editor
-  Editor.getHighlightActiveLine editor
+  _ <- Editor.getHighlightActiveLine editor
   Editor.setHighlightSelectedWord true editor
-  Editor.getHighlightSelectedWord editor
+  _ <- Editor.getHighlightSelectedWord editor
   Editor.setShowInvisibles true editor
-  Editor.getShowInvisibles editor
+  _ <- Editor.getShowInvisibles editor
   Editor.setShowPrintMargin true editor
-  Editor.getShowPrintMargin editor
+  _ <- Editor.getShowPrintMargin editor
   Editor.setPrintMarginColumn 0 editor
-  Editor.getPrintMarginColumn editor
+  _ <- Editor.getPrintMarginColumn editor
   Editor.setReadOnly true editor
-  Editor.getReadOnly editor
+  _ <- Editor.getReadOnly editor
   Editor.setBehavioursEnabled true editor
-  Editor.getBehavioursEnabled editor
+  _ <- Editor.getBehavioursEnabled editor
   Editor.setWrapBehavioursEnabled true editor
-  Editor.getWrapBehavioursEnabled editor
+  _ <- Editor.getWrapBehavioursEnabled editor
   Editor.setShowFoldWidgets true editor
-  Editor.getShowFoldWidgets editor
+  _ <- Editor.getShowFoldWidgets editor
   Editor.remove "" editor
   Editor.removeWordRight editor
   Editor.removeWordLeft editor
@@ -416,17 +416,17 @@ miscTests = void do
   Editor.blockIndent editor
   Editor.blockOutdent Nothing editor
   Editor.toggleCommentLines editor
-  Editor.getNumberAt editor
+  _ <- Editor.getNumberAt editor
   Editor.modifyNumber 0.0 editor
   Editor.removeLines editor
-  Editor.moveLinesDown editor
-  Editor.moveLinesUp editor
-  Editor.copyLinesUp editor
-  Editor.copyLinesDown editor
-  Editor.getFirstVisibleRow editor
-  Editor.getLastVisibleRow editor
-  Editor.isRowVisible 0 editor
-  Editor.isRowFullyVisible 0 editor
+  _ <- Editor.moveLinesDown editor
+  _ <- Editor.moveLinesUp editor
+  _ <- Editor.copyLinesUp editor
+  _ <- Editor.copyLinesDown editor
+  _ <- Editor.getFirstVisibleRow editor
+  _ <- Editor.getLastVisibleRow editor
+  _ <- Editor.isRowVisible 0 editor
+  _ <- Editor.isRowFullyVisible 0 editor
   Editor.selectPageDown editor
   Editor.selectPageUp editor
   Editor.gotoPageDown editor
@@ -435,9 +435,9 @@ miscTests = void do
   Editor.scrollPageUp editor
   Editor.scrollToRow editor
   Editor.centerSelection editor
-  Editor.getCursorPosition editor
-  Editor.getCursorPositionScreen editor
-  Editor.getSelectionRange editor
+  _ <- Editor.getCursorPosition editor
+  _ <- Editor.getCursorPositionScreen editor
+  _ <- Editor.getSelectionRange editor
   Editor.selectAll editor
   Editor.clearSelection editor
   Editor.moveCursorTo 0 Nothing Nothing editor
@@ -457,7 +457,7 @@ miscTests = void do
   Editor.navigateWordLeft editor
   Editor.replace "" Nothing editor
   Editor.replaceAll "" Nothing editor
-  Editor.getLastSearchOptions editor
+  _ <- Editor.getLastSearchOptions editor
   Editor.find "" Nothing Nothing editor
   Editor.findNext Nothing Nothing editor
   Editor.findPrevious Nothing Nothing editor
@@ -465,58 +465,58 @@ miscTests = void do
   Editor.redo editor
   Editor.destroy editor
 
-  Range.isEmpty range
-  Range.isEqual range range
-  Range.toString range
-  Range.contains 0 0 range
-  Range.compareRange range range
-  Range.comparePoint range range
-  Range.containsRange range range
-  Range.intersects range range
-  Range.isEnd 0 0 range
-  Range.isStart 0 0 range
+  _ <- Range.isEmpty range
+  _ <- Range.isEqual range range
+  _ <- Range.toString range
+  _ <- Range.contains 0 0 range
+  _ <- Range.compareRange range range
+  _ <- Range.comparePoint range range
+  _ <- Range.containsRange range range
+  _ <- Range.intersects range range
+  _ <- Range.isEnd 0 0 range
+  _ <- Range.isStart 0 0 range
   Range.setStart 0 0 range
   Range.setEnd 0 0 range
-  Range.inside 0 0 range
-  Range.insideStart 0 0 range
-  Range.insideEnd 0 0 range
-  Range.compare 0 0 range
-  Range.compareStart 0 0 range
-  Range.compareEnd 0 0 range
-  Range.compareInside 0 0 range
-  Range.clipRows 0 0 range
-  Range.extend 0 0 range
-  Range.isMultiLine range
-  Range.clone range
-  Range.collapseRows range
-  Range.toScreenRange session range
-  Range.fromPoints range range
+  _ <- Range.inside 0 0 range
+  _ <- Range.insideStart 0 0 range
+  _ <- Range.insideEnd 0 0 range
+  _ <- Range.compare 0 0 range
+  _ <- Range.compareStart 0 0 range
+  _ <- Range.compareEnd 0 0 range
+  _ <- Range.compareInside 0 0 range
+  _ <- Range.clipRows 0 0 range
+  _ <- Range.extend 0 0 range
+  _ <- Range.isMultiLine range
+  _ <- Range.clone range
+  _ <- Range.collapseRows range
+  _ <- Range.toScreenRange session range
+  _ <- Range.fromPoints range range
 
-  ScrollBar.getWidth scrollBar
+  _ <- ScrollBar.getWidth scrollBar
   ScrollBar.setHeight 0 scrollBar
   ScrollBar.setInnerHeight 0 scrollBar
   ScrollBar.setScrollTop 0 scrollBar
 
-  Search.find session search
-  Search.findAll session search
-  Search.replace "" "" search
+  _ <- Search.find session search
+  _ <- Search.findAll session search
+  _ <- Search.replace "" "" search
 
   selection <- Session.getSelection session
 
   Selection.moveCursorWordLeft selection
   Selection.moveCursorWordRight selection
   Selection.fromOrientedRange range selection
-  Selection.getAllRanges selection
+  _ <- Selection.getAllRanges selection
   Selection.addRange range selection
-  Selection.isEmpty selection
-  Selection.isMultiLine selection
-  Selection.getCursor selection
+  _ <- Selection.isEmpty selection
+  _ <- Selection.isMultiLine selection
+  _ <- Selection.getCursor selection
   Selection.setSelectionAnchor 0 0 selection
-  Selection.getSelectionAnchor selection
-  Selection.getSelectionLead selection
+  _ <- Selection.getSelectionAnchor selection
+  _ <- Selection.getSelectionLead selection
   Selection.shiftSelection 0 selection
-  Selection.isBackwards selection
-  Selection.getRange selection
+  _ <- Selection.isBackwards selection
+  _ <- Selection.getRange selection
   Selection.clearSelection selection
   Selection.selectAll selection
   Selection.setRange range true selection
@@ -531,7 +531,7 @@ miscTests = void do
   Selection.selectFileStart selection
   Selection.selectWordRight selection
   Selection.selectWordLeft selection
-  Selection.getWordRange selection
+  _ <- Selection.getWordRange selection
   Selection.selectWord selection
   Selection.selectAWord selection
   Selection.selectLine selection
@@ -549,8 +549,9 @@ miscTests = void do
   Selection.moveCursorTo 0 0 Nothing selection
   Selection.moveCursorToScreen 0 0 true selection
 
-  UndoManager.undo Nothing undoManager
+  _ <- UndoManager.undo Nothing undoManager
   UndoManager.redo true undoManager
   UndoManager.reset undoManager
-  UndoManager.hasUndo undoManager
-  UndoManager.hasRedo undoManager
+  _ <- UndoManager.hasUndo undoManager
+  _ <- UndoManager.hasRedo undoManager
+  pure unit
