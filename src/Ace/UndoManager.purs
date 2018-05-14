@@ -9,26 +9,26 @@ module Ace.UndoManager
 
 import Prelude
 
-import Ace.Types (UndoManager, ACE, Range)
-import Control.Monad.Eff (Eff)
+import Ace.Types (UndoManager, Range)
+import Effect (Effect)
 import Data.Function.Uncurried (Fn2, runFn2)
 import Data.Maybe (Maybe)
 import Data.Nullable (Nullable, toNullable)
 
-foreign import undoImpl :: forall eff. Fn2 (Nullable Boolean) UndoManager (Eff (ace :: ACE | eff) Range)
+foreign import undoImpl :: Fn2 (Nullable Boolean) UndoManager (Effect Range)
 
-undo :: forall eff. Maybe Boolean -> UndoManager -> Eff (ace :: ACE | eff) Range
+undo :: Maybe Boolean -> UndoManager -> Effect Range
 undo dontSelect self = runFn2 undoImpl (toNullable dontSelect) self
 
-foreign import redoImpl :: forall eff. Fn2 Boolean UndoManager (Eff (ace :: ACE | eff) Unit)
+foreign import redoImpl :: Fn2 Boolean UndoManager (Effect Unit)
 
-redo :: forall eff. Boolean -> UndoManager -> Eff (ace :: ACE | eff) Unit
+redo :: Boolean -> UndoManager -> Effect Unit
 redo dontSelect self = runFn2 redoImpl dontSelect self
 
-foreign import reset :: forall eff. UndoManager -> Eff (ace :: ACE | eff) Unit
+foreign import reset :: UndoManager -> Effect Unit
 
-foreign import hasUndo :: forall eff. UndoManager -> Eff (ace :: ACE | eff) Boolean
+foreign import hasUndo :: UndoManager -> Effect Boolean
 
-foreign import hasRedo :: forall eff. UndoManager -> Eff (ace :: ACE | eff) Boolean
+foreign import hasRedo :: UndoManager -> Effect Boolean
 
-foreign import create :: forall eff. Eff (ace :: ACE | eff) UndoManager
+foreign import create :: Effect UndoManager

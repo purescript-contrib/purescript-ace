@@ -8,20 +8,20 @@ module Ace.TokenIterator
   ) where
 
 import Ace.Types
-import Control.Monad.Eff (Eff)
+import Effect (Effect)
 import Data.Function.Uncurried (Fn3, runFn3)
 
-foreign import stepBackward :: forall eff. TokenIterator -> Eff (ace :: ACE | eff) (Array String)
+foreign import stepBackward :: TokenIterator -> Effect (Array String)
 
-foreign import stepForward :: forall eff. TokenIterator -> Eff (ace :: ACE | eff) String
+foreign import stepForward :: TokenIterator -> Effect String
 
-foreign import getCurrentToken :: forall eff. TokenIterator -> Eff (ace :: ACE | eff) TokenInfo
+foreign import getCurrentToken :: TokenIterator -> Effect TokenInfo
 
-foreign import getCurrentTokenRow :: forall eff. TokenIterator -> Eff (ace :: ACE | eff) Int
+foreign import getCurrentTokenRow :: TokenIterator -> Effect Int
 
-foreign import getCurrentTokenColumn :: forall eff. TokenIterator -> Eff (ace :: ACE | eff) Int
+foreign import getCurrentTokenColumn :: TokenIterator -> Effect Int
 
-foreign import createImpl :: forall eff. Fn3 EditSession Int Int (Eff (ace :: ACE | eff) TokenIterator)
+foreign import createImpl :: Fn3 EditSession Int Int (Effect TokenIterator)
 
-create :: forall eff. EditSession -> Int -> Int -> Eff (ace :: ACE | eff) TokenIterator
+create :: EditSession -> Int -> Int -> Effect TokenIterator
 create session initialRow initialColumn = runFn3 createImpl session initialRow initialColumn

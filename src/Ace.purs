@@ -8,28 +8,28 @@ module Ace
   ) where
 
 import Ace.Types
-import Control.Monad.Eff (Eff)
+import Effect (Effect)
 import Data.Function.Uncurried (Fn2, runFn2, Fn3, runFn3)
-import DOM.HTML.Types (HTMLElement)
+import Web.HTML.HTMLElement (HTMLElement)
 
 foreign import ace :: Ace
 
-foreign import editImpl :: forall eff. Fn2 String Ace (Eff (ace :: ACE | eff) Editor)
+foreign import editImpl :: Fn2 String Ace (Effect Editor)
 
-edit :: forall eff. String -> Ace -> Eff (ace :: ACE | eff) Editor
+edit :: String -> Ace -> Effect Editor
 edit el self = runFn2 editImpl el self
 
-foreign import editNodeImpl :: forall eff. Fn2 HTMLElement Ace (Eff (ace :: ACE | eff) Editor)
+foreign import editNodeImpl :: Fn2 HTMLElement Ace (Effect Editor)
 
-editNode :: forall eff. HTMLElement -> Ace -> Eff (ace :: ACE | eff) Editor
+editNode :: HTMLElement -> Ace -> Effect Editor
 editNode el self = runFn2 editNodeImpl el self
 
-foreign import createEditSessionForDocumentImpl :: forall eff. Fn3 Document TextMode Ace (Eff (ace :: ACE | eff) EditSession)
+foreign import createEditSessionForDocumentImpl :: Fn3 Document TextMode Ace (Effect EditSession)
 
-createEditSessionForDocument :: forall eff. Document -> TextMode -> Ace -> Eff (ace :: ACE | eff) EditSession
+createEditSessionForDocument :: Document -> TextMode -> Ace -> Effect EditSession
 createEditSessionForDocument text mode self = runFn3 createEditSessionForDocumentImpl text mode self
 
-foreign import createEditSessionImpl :: forall eff. Fn3 String TextMode Ace (Eff (ace :: ACE | eff) EditSession)
+foreign import createEditSessionImpl :: Fn3 String TextMode Ace (Effect EditSession)
 
-createEditSession :: forall eff. String -> TextMode -> Ace -> Eff (ace :: ACE | eff) EditSession
+createEditSession :: String -> TextMode -> Ace -> Effect EditSession
 createEditSession text mode self = runFn3 createEditSessionImpl text mode self

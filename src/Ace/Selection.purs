@@ -54,150 +54,150 @@ module Ace.Selection
 
 import Prelude
 
-import Ace.Types (Selection, ACE, EditSession, Position, Range)
-import Control.Monad.Eff (Eff)
+import Ace.Types (Selection, EditSession, Position, Range)
+import Effect (Effect)
 import Data.Function.Uncurried (Fn2, runFn2, Fn3, runFn3, Fn4, runFn4)
 import Data.Maybe (Maybe)
 import Data.Nullable (Nullable, toNullable)
 
-foreign import onImpl :: forall eff a. Fn3 String (Eff (ace :: ACE | eff) a) Selection (Eff (ace :: ACE | eff) Unit)
+foreign import onImpl :: forall a. Fn3 String (Effect a) Selection (Effect Unit)
 
-onChangeCursor :: forall eff a. Selection -> Eff (ace :: ACE | eff) a -> Eff (ace :: ACE | eff) Unit
+onChangeCursor :: forall a. Selection -> Effect a -> Effect Unit
 onChangeCursor self fn = runFn3 onImpl "changeCursor" fn self
 
-onChangeSelection :: forall eff a. Selection -> Eff (ace :: ACE | eff) a -> Eff (ace :: ACE | eff) Unit
+onChangeSelection :: forall a. Selection -> Effect a -> Effect Unit
 onChangeSelection self fn = runFn3 onImpl "changeSelection" fn self
 
-foreign import moveCursorWordLeft :: forall eff. Selection -> Eff (ace :: ACE | eff) Unit
+foreign import moveCursorWordLeft :: Selection -> Effect Unit
 
-foreign import moveCursorWordRight :: forall eff. Selection -> Eff (ace :: ACE | eff) Unit
+foreign import moveCursorWordRight :: Selection -> Effect Unit
 
-foreign import fromOrientedRangeImpl :: forall eff. Fn2 Range Selection (Eff (ace :: ACE | eff) Unit)
+foreign import fromOrientedRangeImpl :: Fn2 Range Selection (Effect Unit)
 
-fromOrientedRange :: forall eff. Range -> Selection -> Eff (ace :: ACE | eff) Unit
+fromOrientedRange :: Range -> Selection -> Effect Unit
 fromOrientedRange range self = runFn2 fromOrientedRangeImpl range self
 
-foreign import setSelectionRangeImpl :: forall eff. Fn2 Range Selection (Eff (ace :: ACE | eff) Unit)
+foreign import setSelectionRangeImpl :: Fn2 Range Selection (Effect Unit)
 
-setSelectionRange :: forall eff. Range -> Selection -> Eff (ace :: ACE | eff) Unit
+setSelectionRange :: Range -> Selection -> Effect Unit
 setSelectionRange match self = runFn2 setSelectionRangeImpl match self
 
-foreign import getAllRanges :: forall eff. Selection -> Eff (ace :: ACE | eff) (Array Range)
+foreign import getAllRanges :: Selection -> Effect (Array Range)
 
-foreign import addRangeImpl :: forall eff. Fn2 Range Selection (Eff (ace :: ACE | eff) Unit)
+foreign import addRangeImpl :: Fn2 Range Selection (Effect Unit)
 
-addRange :: forall eff. Range -> Selection -> Eff (ace :: ACE | eff) Unit
+addRange :: Range -> Selection -> Effect Unit
 addRange range self = runFn2 addRangeImpl range self
 
-foreign import isEmpty :: forall eff. Selection -> Eff (ace :: ACE | eff) Boolean
+foreign import isEmpty :: Selection -> Effect Boolean
 
-foreign import isMultiLine :: forall eff. Selection -> Eff (ace :: ACE | eff) Boolean
+foreign import isMultiLine :: Selection -> Effect Boolean
 
-foreign import getCursor :: forall eff. Selection -> Eff (ace :: ACE | eff) Position
+foreign import getCursor :: Selection -> Effect Position
 
-foreign import setSelectionAnchorImpl :: forall eff. Fn3 Int Int Selection (Eff (ace :: ACE | eff) Unit)
+foreign import setSelectionAnchorImpl :: Fn3 Int Int Selection (Effect Unit)
 
-setSelectionAnchor :: forall eff. Int -> Int -> Selection -> Eff (ace :: ACE | eff) Unit
+setSelectionAnchor :: Int -> Int -> Selection -> Effect Unit
 setSelectionAnchor row column self = runFn3 setSelectionAnchorImpl row column self
 
-foreign import getSelectionAnchor :: forall eff. Selection -> Eff (ace :: ACE | eff) Position
+foreign import getSelectionAnchor :: Selection -> Effect Position
 
-foreign import getSelectionLead :: forall eff. Selection -> Eff (ace :: ACE | eff) Position
+foreign import getSelectionLead :: Selection -> Effect Position
 
-foreign import shiftSelectionImpl :: forall eff. Fn2 Int Selection (Eff (ace :: ACE | eff) Unit)
+foreign import shiftSelectionImpl :: Fn2 Int Selection (Effect Unit)
 
-shiftSelection :: forall eff. Int -> Selection -> Eff (ace :: ACE | eff) Unit
+shiftSelection :: Int -> Selection -> Effect Unit
 shiftSelection columns self = runFn2 shiftSelectionImpl columns self
 
-foreign import isBackwards :: forall eff. Selection -> Eff (ace :: ACE | eff) Boolean
+foreign import isBackwards :: Selection -> Effect Boolean
 
-foreign import getRange :: forall eff. Selection -> Eff (ace :: ACE | eff) Range
+foreign import getRange :: Selection -> Effect Range
 
-foreign import clearSelection :: forall eff. Selection -> Eff (ace :: ACE | eff) Unit
+foreign import clearSelection :: Selection -> Effect Unit
 
-foreign import selectAll :: forall eff. Selection -> Eff (ace :: ACE | eff) Unit
+foreign import selectAll :: Selection -> Effect Unit
 
-foreign import setRangeImpl :: forall eff. Fn3 Range Boolean Selection (Eff (ace :: ACE | eff) Unit)
+foreign import setRangeImpl :: Fn3 Range Boolean Selection (Effect Unit)
 
-setRange :: forall eff. Range -> Boolean -> Selection -> Eff (ace :: ACE | eff) Unit
+setRange :: Range -> Boolean -> Selection -> Effect Unit
 setRange range reverse self = runFn3 setRangeImpl range reverse self
 
-foreign import selectToImpl :: forall eff. Fn3 Int Int Selection (Eff (ace :: ACE | eff) Unit)
+foreign import selectToImpl :: Fn3 Int Int Selection (Effect Unit)
 
-selectTo :: forall eff. Int -> Int -> Selection -> Eff (ace :: ACE | eff) Unit
+selectTo :: Int -> Int -> Selection -> Effect Unit
 selectTo row column self = runFn3 selectToImpl row column self
 
-foreign import selectToPositionImpl :: forall eff. Fn2 Position Selection (Eff (ace :: ACE | eff) Unit)
+foreign import selectToPositionImpl :: Fn2 Position Selection (Effect Unit)
 
-selectToPosition :: forall eff. Position -> Selection -> Eff (ace :: ACE | eff) Unit
+selectToPosition :: Position -> Selection -> Effect Unit
 selectToPosition pos self = runFn2 selectToPositionImpl pos self
 
-foreign import selectUp :: forall eff. Selection -> Eff (ace :: ACE | eff) Unit
+foreign import selectUp :: Selection -> Effect Unit
 
-foreign import selectDown :: forall eff. Selection -> Eff (ace :: ACE | eff) Unit
+foreign import selectDown :: Selection -> Effect Unit
 
-foreign import selectRight :: forall eff. Selection -> Eff (ace :: ACE | eff) Unit
+foreign import selectRight :: Selection -> Effect Unit
 
-foreign import selectLeft :: forall eff. Selection -> Eff (ace :: ACE | eff) Unit
+foreign import selectLeft :: Selection -> Effect Unit
 
-foreign import selectLineStart :: forall eff. Selection -> Eff (ace :: ACE | eff) Unit
+foreign import selectLineStart :: Selection -> Effect Unit
 
-foreign import selectLineEnd :: forall eff. Selection -> Eff (ace :: ACE | eff) Unit
+foreign import selectLineEnd :: Selection -> Effect Unit
 
-foreign import selectFileEnd :: forall eff. Selection -> Eff (ace :: ACE | eff) Unit
+foreign import selectFileEnd :: Selection -> Effect Unit
 
-foreign import selectFileStart :: forall eff. Selection -> Eff (ace :: ACE | eff) Unit
+foreign import selectFileStart :: Selection -> Effect Unit
 
-foreign import selectWordRight :: forall eff. Selection -> Eff (ace :: ACE | eff) Unit
+foreign import selectWordRight :: Selection -> Effect Unit
 
-foreign import selectWordLeft :: forall eff. Selection -> Eff (ace :: ACE | eff) Unit
+foreign import selectWordLeft :: Selection -> Effect Unit
 
-foreign import getWordRange :: forall eff. Selection -> Eff (ace :: ACE | eff) Unit
+foreign import getWordRange :: Selection -> Effect Unit
 
-foreign import selectWord :: forall eff. Selection -> Eff (ace :: ACE | eff) Unit
+foreign import selectWord :: Selection -> Effect Unit
 
-foreign import selectAWord :: forall eff. Selection -> Eff (ace :: ACE | eff) Unit
+foreign import selectAWord :: Selection -> Effect Unit
 
-foreign import selectLine :: forall eff. Selection -> Eff (ace :: ACE | eff) Unit
+foreign import selectLine :: Selection -> Effect Unit
 
-foreign import moveCursorUp :: forall eff. Selection -> Eff (ace :: ACE | eff) Unit
+foreign import moveCursorUp :: Selection -> Effect Unit
 
-foreign import moveCursorDown :: forall eff. Selection -> Eff (ace :: ACE | eff) Unit
+foreign import moveCursorDown :: Selection -> Effect Unit
 
-foreign import moveCursorLeft :: forall eff. Selection -> Eff (ace :: ACE | eff) Unit
+foreign import moveCursorLeft :: Selection -> Effect Unit
 
-foreign import moveCursorRight :: forall eff. Selection -> Eff (ace :: ACE | eff) Unit
+foreign import moveCursorRight :: Selection -> Effect Unit
 
-foreign import moveCursorLineStart :: forall eff. Selection -> Eff (ace :: ACE | eff) Unit
+foreign import moveCursorLineStart :: Selection -> Effect Unit
 
-foreign import moveCursorLineEnd :: forall eff. Selection -> Eff (ace :: ACE | eff) Unit
+foreign import moveCursorLineEnd :: Selection -> Effect Unit
 
-foreign import moveCursorFileEnd :: forall eff. Selection -> Eff (ace :: ACE | eff) Unit
+foreign import moveCursorFileEnd :: Selection -> Effect Unit
 
-foreign import moveCursorFileStart :: forall eff. Selection -> Eff (ace :: ACE | eff) Unit
+foreign import moveCursorFileStart :: Selection -> Effect Unit
 
-foreign import moveCursorLongWordRight :: forall eff. Selection -> Eff (ace :: ACE | eff) Unit
+foreign import moveCursorLongWordRight :: Selection -> Effect Unit
 
-foreign import moveCursorLongWordLeft :: forall eff. Selection -> Eff (ace :: ACE | eff) Unit
+foreign import moveCursorLongWordLeft :: Selection -> Effect Unit
 
-foreign import moveCursorByImpl :: forall eff. Fn3 Int Int Selection (Eff (ace :: ACE | eff) Unit)
+foreign import moveCursorByImpl :: Fn3 Int Int Selection (Effect Unit)
 
-moveCursorBy :: forall eff. Int -> Int -> Selection -> Eff (ace :: ACE | eff) Unit
+moveCursorBy :: Int -> Int -> Selection -> Effect Unit
 moveCursorBy rows chars self = runFn3 moveCursorByImpl rows chars self
 
-foreign import moveCursorToPositionImpl :: forall eff. Fn2 Position Selection (Eff (ace :: ACE | eff) Unit)
+foreign import moveCursorToPositionImpl :: Fn2 Position Selection (Effect Unit)
 
-moveCursorToPosition :: forall eff. Position -> Selection -> Eff (ace :: ACE | eff) Unit
+moveCursorToPosition :: Position -> Selection -> Effect Unit
 moveCursorToPosition position self = runFn2 moveCursorToPositionImpl position self
 
-foreign import moveCursorToImpl :: forall eff. Fn4 Int Int (Nullable Boolean) Selection (Eff (ace :: ACE | eff) Unit)
+foreign import moveCursorToImpl :: Fn4 Int Int (Nullable Boolean) Selection (Effect Unit)
 
-moveCursorTo :: forall eff. Int -> Int -> Maybe Boolean -> Selection -> Eff (ace :: ACE | eff) Unit
+moveCursorTo :: Int -> Int -> Maybe Boolean -> Selection -> Effect Unit
 moveCursorTo row column keepDesiredColumn self = runFn4 moveCursorToImpl row column (toNullable keepDesiredColumn) self
 
-foreign import moveCursorToScreenImpl :: forall eff. Fn4 Int Int Boolean Selection (Eff (ace :: ACE | eff) Unit)
+foreign import moveCursorToScreenImpl :: Fn4 Int Int Boolean Selection (Effect Unit)
 
-moveCursorToScreen :: forall eff. Int -> Int -> Boolean -> Selection -> Eff (ace :: ACE | eff) Unit
+moveCursorToScreen :: Int -> Int -> Boolean -> Selection -> Effect Unit
 moveCursorToScreen row column keepDesiredColumn self = runFn4 moveCursorToScreenImpl row column keepDesiredColumn self
 
-foreign import create :: forall eff. EditSession -> Eff (ace :: ACE | eff) Selection
+foreign import create :: EditSession -> Effect Selection

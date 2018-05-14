@@ -9,34 +9,34 @@ module Ace.ScrollBar
 
 import Prelude
 
-import Ace.Types (ScrollBar, ACE, VirtualRenderer)
-import Control.Monad.Eff (Eff)
+import Ace.Types (ScrollBar, VirtualRenderer)
+import Effect (Effect)
 import Data.Function.Uncurried (Fn2, runFn2)
-import DOM.HTML.Types (HTMLElement)
+import Web.HTML.HTMLElement (HTMLElement)
 
-foreign import onScrollImpl :: forall eff a. Fn2 ScrollBar (Eff (ace :: ACE | eff) a) (Eff (ace :: ACE | eff) Unit)
+foreign import onScrollImpl :: forall a. Fn2 ScrollBar (Effect a) (Effect Unit)
 
-onScroll :: forall eff a. ScrollBar -> (Eff (ace :: ACE | eff) a) -> Eff (ace :: ACE | eff) Unit
+onScroll :: forall a. ScrollBar -> (Effect a) -> Effect Unit
 onScroll self fn = runFn2 onScrollImpl self fn
 
-foreign import getWidth :: forall eff. ScrollBar -> Eff (ace :: ACE | eff) Int
+foreign import getWidth :: ScrollBar -> Effect Int
 
-foreign import setHeightImpl :: forall eff. Fn2 Int ScrollBar (Eff (ace :: ACE | eff) Unit)
+foreign import setHeightImpl :: Fn2 Int ScrollBar (Effect Unit)
 
-setHeight :: forall eff. Int -> ScrollBar -> Eff (ace :: ACE | eff) Unit
+setHeight :: Int -> ScrollBar -> Effect Unit
 setHeight height self = runFn2 setHeightImpl height self
 
-foreign import setInnerHeightImpl :: forall eff. Fn2 Int ScrollBar (Eff (ace :: ACE | eff) Unit)
+foreign import setInnerHeightImpl :: Fn2 Int ScrollBar (Effect Unit)
 
-setInnerHeight :: forall eff. Int -> ScrollBar -> Eff (ace :: ACE | eff) Unit
+setInnerHeight :: Int -> ScrollBar -> Effect Unit
 setInnerHeight height self = runFn2 setInnerHeightImpl height self
 
-foreign import setScrollTopImpl :: forall eff. Fn2 Int ScrollBar (Eff (ace :: ACE | eff) Unit)
+foreign import setScrollTopImpl :: Fn2 Int ScrollBar (Effect Unit)
 
-setScrollTop :: forall eff. Int -> ScrollBar -> Eff (ace :: ACE | eff) Unit
+setScrollTop :: Int -> ScrollBar -> Effect Unit
 setScrollTop scrollTop self = runFn2 setScrollTopImpl scrollTop self
 
-foreign import createImpl :: forall eff. Fn2 HTMLElement VirtualRenderer (Eff (ace :: ACE | eff) ScrollBar)
+foreign import createImpl :: Fn2 HTMLElement VirtualRenderer (Effect ScrollBar)
 
-create :: forall eff. HTMLElement -> VirtualRenderer -> Eff (ace :: ACE | eff) ScrollBar
+create :: HTMLElement -> VirtualRenderer -> Effect ScrollBar
 create parent vr = runFn2 createImpl parent vr

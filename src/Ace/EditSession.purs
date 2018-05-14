@@ -109,430 +109,430 @@ module Ace.EditSession
 
 import Prelude
 
-import Ace.Types (Marker, ACE, EditSession, TextMode, Position, Range, Annotation, UndoManager, TokenInfo, Selection, Document, BackgroundTokenizer)
-import Control.Monad.Eff (Eff)
+import Ace.Types (Marker, EditSession, TextMode, Position, Range, Annotation, UndoManager, TokenInfo, Selection, Document, BackgroundTokenizer)
 import Control.Monad.ST (ST)
 import Data.Array.ST (STArray)
 import Data.Function.Uncurried (Fn2, runFn2, Fn3, runFn3, Fn4, runFn4, Fn5, runFn5)
 import Data.Maybe (Maybe)
 import Data.Nullable (Nullable, toNullable)
-import DOM.HTML.Types (HTMLElement)
+import Effect (Effect)
+import Web.HTML.HTMLElement (HTMLElement)
 
-foreign import getBackgroundTokenizer :: forall eff. EditSession -> Eff (ace :: ACE | eff) BackgroundTokenizer
+foreign import getBackgroundTokenizer :: EditSession -> Effect BackgroundTokenizer
 
-foreign import onImpl :: forall ev eff a. Fn3 String (ev -> Eff (ace :: ACE | eff) a) EditSession (Eff (ace :: ACE | eff) Unit)
+foreign import onImpl :: forall ev a. Fn3 String (ev -> Effect a) EditSession (Effect Unit)
 
-onChange :: forall eff a. EditSession -> Eff (ace :: ACE | eff) a -> Eff (ace :: ACE | eff) Unit
+onChange :: forall a. EditSession -> Effect a -> Effect Unit
 onChange self fn = runFn3 onImpl "change" (\_ -> fn) self
 
-onChangeAnnotation :: forall eff a. EditSession -> Eff (ace :: ACE | eff) a -> Eff (ace :: ACE | eff) Unit
+onChangeAnnotation :: forall a. EditSession -> Effect a -> Effect Unit
 onChangeAnnotation self fn = runFn3 onImpl "changeAnnotation" (\_ -> fn) self
 
-onChangeBackMarker :: forall eff a. EditSession -> Eff (ace :: ACE | eff) a -> Eff (ace :: ACE | eff) Unit
+onChangeBackMarker :: forall a. EditSession -> Effect a -> Effect Unit
 onChangeBackMarker self fn = runFn3 onImpl "changeBackMarker" (\_ -> fn) self
 
-onChangeBreakpoint :: forall eff a. EditSession -> Eff (ace :: ACE | eff) a -> Eff (ace :: ACE | eff) Unit
+onChangeBreakpoint :: forall a. EditSession -> Effect a -> Effect Unit
 onChangeBreakpoint self fn = runFn3 onImpl "changeBreakpoint" (\_ -> fn) self
 
-onChangeFold :: forall eff a. EditSession -> Eff (ace :: ACE | eff) a -> Eff (ace :: ACE | eff) Unit
+onChangeFold :: forall a. EditSession -> Effect a -> Effect Unit
 onChangeFold self fn = runFn3 onImpl "changeFold" (\_ -> fn) self
 
-onChangeFrontMarker :: forall eff a. EditSession -> Eff (ace :: ACE | eff) a -> Eff (ace :: ACE | eff) Unit
+onChangeFrontMarker :: forall a. EditSession -> Effect a -> Effect Unit
 onChangeFrontMarker self fn = runFn3 onImpl "changeFrontMarker" (\_ -> fn) self
 
-onChangeMode :: forall eff a. EditSession -> Eff (ace :: ACE | eff) a -> Eff (ace :: ACE | eff) Unit
+onChangeMode :: forall a. EditSession -> Effect a -> Effect Unit
 onChangeMode self fn = runFn3 onImpl "changeMode" (\_ -> fn) self
 
-onChangeOverwrite :: forall eff a. EditSession -> Eff (ace :: ACE | eff) a -> Eff (ace :: ACE | eff) Unit
+onChangeOverwrite :: forall a. EditSession -> Effect a -> Effect Unit
 onChangeOverwrite self fn = runFn3 onImpl "changeOverwrite" (\_ -> fn) self
 
-onChangeScrollLeft :: forall eff a. EditSession -> (Int -> Eff (ace :: ACE | eff) a) -> Eff (ace :: ACE | eff) Unit
+onChangeScrollLeft :: forall a. EditSession -> (Int -> Effect a) -> Effect Unit
 onChangeScrollLeft self fn = runFn3 onImpl "changeScrollLeft" fn self
 
-onChangeScrollTop :: forall eff a. EditSession -> (Int -> Eff (ace :: ACE | eff) a) -> Eff (ace :: ACE | eff) Unit
+onChangeScrollTop :: forall a. EditSession -> (Int -> Effect a) -> Effect Unit
 onChangeScrollTop self fn = runFn3 onImpl "changeScrollTop" fn self
 
-onChangeTabSize :: forall eff a. EditSession -> Eff (ace :: ACE | eff) a -> Eff (ace :: ACE | eff) Unit
+onChangeTabSize :: forall a. EditSession -> Effect a -> Effect Unit
 onChangeTabSize self fn = runFn3 onImpl "changeTabSize" (\_ -> fn) self
 
-onChangeWrapLimit :: forall eff a. EditSession -> Eff (ace :: ACE | eff) a -> Eff (ace :: ACE | eff) Unit
+onChangeWrapLimit :: forall a. EditSession -> Effect a -> Effect Unit
 onChangeWrapLimit self fn = runFn3 onImpl "changeWrapLimit" (\_ -> fn) self
 
-onChangeWrapMode :: forall eff a. EditSession -> Eff (ace :: ACE | eff) a -> Eff (ace :: ACE | eff) Unit
+onChangeWrapMode :: forall a. EditSession -> Effect a -> Effect Unit
 onChangeWrapMode self fn = runFn3 onImpl "changeWrapMode" (\_ -> fn) self
 
-onTokenizerUpdate :: forall eff a. EditSession -> Eff (ace :: ACE | eff) a -> Eff (ace :: ACE | eff) Unit
+onTokenizerUpdate :: forall a. EditSession -> Effect a -> Effect Unit
 onTokenizerUpdate self fn = runFn3 onImpl "tokenizerUpdate" (\_ -> fn) self
 
-foreign import findMatchingBracketImpl :: forall eff. Fn2 Position EditSession (Eff (ace :: ACE | eff) Unit)
+foreign import findMatchingBracketImpl :: Fn2 Position EditSession (Effect Unit)
 
-findMatchingBracket :: forall eff. Position -> EditSession -> Eff (ace :: ACE | eff) Unit
+findMatchingBracket :: Position -> EditSession -> Effect Unit
 findMatchingBracket position self = runFn2 findMatchingBracketImpl position self
 
-foreign import addFoldImpl :: forall eff. Fn3 String Range EditSession (Eff (ace :: ACE | eff) Unit)
+foreign import addFoldImpl :: Fn3 String Range EditSession (Effect Unit)
 
-addFold :: forall eff. String -> Range -> EditSession -> Eff (ace :: ACE | eff) Unit
+addFold :: String -> Range -> EditSession -> Effect Unit
 addFold text range self = runFn3 addFoldImpl text range self
 
-foreign import screenToDocumentColumnImpl :: forall eff. Fn3 Int Int EditSession (Eff (ace :: ACE | eff) Unit)
+foreign import screenToDocumentColumnImpl :: Fn3 Int Int EditSession (Effect Unit)
 
-screenToDocumentColumn :: forall eff. Int -> Int -> EditSession -> Eff (ace :: ACE | eff) Unit
+screenToDocumentColumn :: Int -> Int -> EditSession -> Effect Unit
 screenToDocumentColumn row column self = runFn3 screenToDocumentColumnImpl row column self
 
-foreign import highlightImpl :: forall eff. Fn2 String EditSession (Eff (ace :: ACE | eff) Unit)
+foreign import highlightImpl :: Fn2 String EditSession (Effect Unit)
 
-highlight :: forall eff. String -> EditSession -> Eff (ace :: ACE | eff) Unit
+highlight :: String -> EditSession -> Effect Unit
 highlight text self = runFn2 highlightImpl text self
 
-foreign import setDocumentImpl :: forall eff. Fn2 Document EditSession (Eff (ace :: ACE | eff) Unit)
+foreign import setDocumentImpl :: Fn2 Document EditSession (Effect Unit)
 
-setDocument :: forall eff. Document -> EditSession -> Eff (ace :: ACE | eff) Unit
+setDocument :: Document -> EditSession -> Effect Unit
 setDocument doc self = runFn2 setDocumentImpl doc self
 
-foreign import getDocument :: forall eff. EditSession -> Eff (ace :: ACE | eff) Document
+foreign import getDocument :: EditSession -> Effect Document
 
-foreign import resetRowCacheImpl :: forall eff. Fn2 Int EditSession (Eff (ace :: ACE | eff) Unit)
+foreign import resetRowCacheImpl :: Fn2 Int EditSession (Effect Unit)
 
-resetRowCache :: forall eff. Int -> EditSession -> Eff (ace :: ACE | eff) Unit
+resetRowCache :: Int -> EditSession -> Effect Unit
 resetRowCache row self = runFn2 resetRowCacheImpl row self
 
-foreign import setValueImpl :: forall eff. Fn2 String EditSession (Eff (ace :: ACE | eff) Unit)
+foreign import setValueImpl :: Fn2 String EditSession (Effect Unit)
 
-setValue :: forall eff. String -> EditSession -> Eff (ace :: ACE | eff) Unit
+setValue :: String -> EditSession -> Effect Unit
 setValue text self = runFn2 setValueImpl text self
 
-foreign import setModeImpl :: forall eff. Fn2 String EditSession (Eff (ace :: ACE | eff) Unit)
+foreign import setModeImpl :: Fn2 String EditSession (Effect Unit)
 
-setMode :: forall eff. String -> EditSession -> Eff (ace :: ACE | eff) Unit
+setMode :: String -> EditSession -> Effect Unit
 setMode mode' self = runFn2 setModeImpl mode' self
 
-foreign import getValue :: forall eff. EditSession -> Eff (ace :: ACE | eff) String
+foreign import getValue :: EditSession -> Effect String
 
-foreign import getSelection :: forall eff. EditSession -> Eff (ace :: ACE | eff) Selection
+foreign import getSelection :: EditSession -> Effect Selection
 
-foreign import getStateImpl :: forall eff. Fn2 Int EditSession (Eff (ace :: ACE | eff) String)
+foreign import getStateImpl :: Fn2 Int EditSession (Effect String)
 
-getState :: forall eff. Int -> EditSession -> Eff (ace :: ACE | eff) String
+getState :: Int -> EditSession -> Effect String
 getState row self = runFn2 getStateImpl row self
 
-foreign import getTokensImpl :: forall eff. Fn2 Int EditSession (Eff (ace :: ACE | eff) (Array TokenInfo))
+foreign import getTokensImpl :: Fn2 Int EditSession (Effect (Array TokenInfo))
 
-getTokens :: forall eff. Int -> EditSession -> Eff (ace :: ACE | eff) (Array TokenInfo)
+getTokens :: Int -> EditSession -> Effect (Array TokenInfo)
 getTokens row self = runFn2 getTokensImpl row self
 
-foreign import getTokenAtImpl :: forall eff. Fn3 Int Int EditSession (Eff (ace :: ACE | eff) TokenInfo)
+foreign import getTokenAtImpl :: Fn3 Int Int EditSession (Effect TokenInfo)
 
-getTokenAt :: forall eff. Int -> Int -> EditSession -> Eff (ace :: ACE | eff) TokenInfo
+getTokenAt :: Int -> Int -> EditSession -> Effect TokenInfo
 getTokenAt row column self = runFn3 getTokenAtImpl row column self
 
-foreign import setUndoManagerImpl :: forall eff. Fn2 UndoManager EditSession (Eff (ace :: ACE | eff) Unit)
+foreign import setUndoManagerImpl :: Fn2 UndoManager EditSession (Effect Unit)
 
-setUndoManager :: forall eff. UndoManager -> EditSession -> Eff (ace :: ACE | eff) Unit
+setUndoManager :: UndoManager -> EditSession -> Effect Unit
 setUndoManager undoManager self = runFn2 setUndoManagerImpl undoManager self
 
-foreign import getUndoManager :: forall eff. EditSession -> Eff (ace :: ACE | eff) UndoManager
+foreign import getUndoManager :: EditSession -> Effect UndoManager
 
-foreign import getTabString :: forall eff. EditSession -> Eff (ace :: ACE | eff) String
+foreign import getTabString :: EditSession -> Effect String
 
-foreign import setUseSoftTabsImpl :: forall eff. Fn2 Boolean EditSession (Eff (ace :: ACE | eff) Unit)
+foreign import setUseSoftTabsImpl :: Fn2 Boolean EditSession (Effect Unit)
 
-setUseSoftTabs :: forall eff. Boolean -> EditSession -> Eff (ace :: ACE | eff) Unit
+setUseSoftTabs :: Boolean -> EditSession -> Effect Unit
 setUseSoftTabs useSoftTabs self = runFn2 setUseSoftTabsImpl useSoftTabs self
 
-foreign import getUseSoftTabs :: forall eff. EditSession -> Eff (ace :: ACE | eff) Boolean
+foreign import getUseSoftTabs :: EditSession -> Effect Boolean
 
-foreign import setTabSizeImpl :: forall eff. Fn2 Int EditSession (Eff (ace :: ACE | eff) Unit)
+foreign import setTabSizeImpl :: Fn2 Int EditSession (Effect Unit)
 
-setTabSize :: forall eff. Int -> EditSession -> Eff (ace :: ACE | eff) Unit
+setTabSize :: Int -> EditSession -> Effect Unit
 setTabSize tabSize self = runFn2 setTabSizeImpl tabSize self
 
-foreign import getTabSize :: forall eff. EditSession -> Eff (ace :: ACE | eff) String
+foreign import getTabSize :: EditSession -> Effect String
 
-foreign import isTabStopImpl :: forall eff. Fn2 Position EditSession (Eff (ace :: ACE | eff) Boolean)
+foreign import isTabStopImpl :: Fn2 Position EditSession (Effect Boolean)
 
-isTabStop :: forall eff. Position -> EditSession -> Eff (ace :: ACE | eff) Boolean
+isTabStop :: Position -> EditSession -> Effect Boolean
 isTabStop position self = runFn2 isTabStopImpl position self
 
-foreign import setOverwriteImpl :: forall eff. Fn2 Boolean EditSession (Eff (ace :: ACE | eff) Unit)
+foreign import setOverwriteImpl :: Fn2 Boolean EditSession (Effect Unit)
 
-setOverwrite :: forall eff. Boolean -> EditSession -> Eff (ace :: ACE | eff) Unit
+setOverwrite :: Boolean -> EditSession -> Effect Unit
 setOverwrite overwrite self = runFn2 setOverwriteImpl overwrite self
 
-foreign import getOverwrite :: forall eff. EditSession -> Eff (ace :: ACE | eff) Boolean
+foreign import getOverwrite :: EditSession -> Effect Boolean
 
-foreign import toggleOverwrite :: forall eff. EditSession -> Eff (ace :: ACE | eff) Unit
+foreign import toggleOverwrite :: EditSession -> Effect Unit
 
-foreign import addGutterDecorationImpl :: forall eff. Fn3 Int String EditSession (Eff (ace :: ACE | eff) Unit)
+foreign import addGutterDecorationImpl :: Fn3 Int String EditSession (Effect Unit)
 
-addGutterDecoration :: forall eff. Int -> String -> EditSession -> Eff (ace :: ACE | eff) Unit
+addGutterDecoration :: Int -> String -> EditSession -> Effect Unit
 addGutterDecoration row className self = runFn3 addGutterDecorationImpl row className self
 
-foreign import removeGutterDecorationImpl :: forall eff. Fn3 Int String EditSession (Eff (ace :: ACE | eff) Unit)
+foreign import removeGutterDecorationImpl :: Fn3 Int String EditSession (Effect Unit)
 
-removeGutterDecoration :: forall eff. Int -> String -> EditSession -> Eff (ace :: ACE | eff) Unit
+removeGutterDecoration :: Int -> String -> EditSession -> Effect Unit
 removeGutterDecoration row className self = runFn3 removeGutterDecorationImpl row className self
 
-foreign import getBreakpoints :: forall eff. EditSession -> Eff (ace :: ACE | eff) (Array Int)
+foreign import getBreakpoints :: EditSession -> Effect (Array Int)
 
-foreign import setBreakpointsImpl :: forall eff. Fn2 (Array Int) EditSession (Eff (ace :: ACE | eff) Unit)
+foreign import setBreakpointsImpl :: Fn2 (Array Int) EditSession (Effect Unit)
 
-setBreakpoints :: forall eff. Array Int -> EditSession -> Eff (ace :: ACE | eff) Unit
+setBreakpoints :: Array Int -> EditSession -> Effect Unit
 setBreakpoints rows self = runFn2 setBreakpointsImpl rows self
 
-foreign import clearBreakpoints :: forall eff. EditSession -> Eff (ace :: ACE | eff) Unit
+foreign import clearBreakpoints :: EditSession -> Effect Unit
 
-foreign import setBreakpointImpl :: forall eff. Fn3 Int String EditSession (Eff (ace :: ACE | eff) Unit)
+foreign import setBreakpointImpl :: Fn3 Int String EditSession (Effect Unit)
 
-setBreakpoint :: forall eff. Int -> String -> EditSession -> Eff (ace :: ACE | eff) Unit
+setBreakpoint :: Int -> String -> EditSession -> Effect Unit
 setBreakpoint row className self = runFn3 setBreakpointImpl row className self
 
-foreign import clearBreakpointImpl :: forall eff. Fn2 Int EditSession (Eff (ace :: ACE | eff) Unit)
+foreign import clearBreakpointImpl :: Fn2 Int EditSession (Effect Unit)
 
-clearBreakpoint :: forall eff. Int -> EditSession -> Eff (ace :: ACE | eff) Unit
+clearBreakpoint :: Int -> EditSession -> Effect Unit
 clearBreakpoint row self = runFn2 clearBreakpointImpl row self
 
-foreign import addMarkerImpl :: forall eff. Fn5 Range String String Boolean EditSession (Eff (ace :: ACE | eff) Int)
+foreign import addMarkerImpl :: Fn5 Range String String Boolean EditSession (Effect Int)
 
-addMarker :: forall eff. Range -> String -> String -> Boolean -> EditSession -> Eff (ace :: ACE | eff) Int
+addMarker :: Range -> String -> String -> Boolean -> EditSession -> Effect Int
 addMarker range clazz _type inFront self = runFn5 addMarkerImpl range clazz _type inFront self
 
-type DynamicMarker eff a = forall h. STArray h String -> HTMLElement -> Eff (st :: ST h | eff) a
+type DynamicMarker a = forall h. STArray h String -> HTMLElement -> ST h a
 
-foreign import addDynamicMarkerImpl :: forall eff a. Fn3 (DynamicMarker (ace :: ACE | eff) a) Boolean EditSession (Eff (ace :: ACE | eff) Unit)
+foreign import addDynamicMarkerImpl :: forall a. Fn3 (DynamicMarker a) Boolean EditSession (Effect Unit)
 
-addDynamicMarker :: forall eff a. (DynamicMarker (ace :: ACE | eff) a) -> Boolean -> EditSession -> Eff (ace :: ACE | eff) Unit
+addDynamicMarker :: forall a. DynamicMarker a -> Boolean -> EditSession -> Effect Unit
 addDynamicMarker marker inFront self = runFn3 addDynamicMarkerImpl marker inFront self
 
-foreign import removeMarkerImpl :: forall eff. Fn2 Int EditSession (Eff (ace :: ACE | eff) Unit)
+foreign import removeMarkerImpl :: Fn2 Int EditSession (Effect Unit)
 
-removeMarker :: forall eff. Int -> EditSession -> Eff (ace :: ACE | eff) Unit
+removeMarker :: Int -> EditSession -> Effect Unit
 removeMarker markerId self = runFn2 removeMarkerImpl markerId self
 
-foreign import setAnnotationsImpl :: forall eff. Fn2 (Array Annotation) EditSession (Eff (ace :: ACE | eff) Unit)
+foreign import setAnnotationsImpl :: Fn2 (Array Annotation) EditSession (Effect Unit)
 
-setAnnotations :: forall eff. Array Annotation -> EditSession -> Eff (ace :: ACE | eff) Unit
+setAnnotations :: Array Annotation -> EditSession -> Effect Unit
 setAnnotations annotations self = runFn2 setAnnotationsImpl annotations self
 
-foreign import getAnnotations :: forall eff. EditSession -> Eff (ace :: ACE | eff) (Array Annotation)
+foreign import getAnnotations :: EditSession -> Effect (Array Annotation)
 
-foreign import clearAnnotations :: forall eff. EditSession -> Eff (ace :: ACE | eff) Unit
+foreign import clearAnnotations :: EditSession -> Effect Unit
 
-foreign import detectNewLineImpl :: forall eff. Fn2 String EditSession (Eff (ace :: ACE | eff) Unit)
+foreign import detectNewLineImpl :: Fn2 String EditSession (Effect Unit)
 
-detectNewLine :: forall eff. String -> EditSession -> Eff (ace :: ACE | eff) Unit
+detectNewLine :: String -> EditSession -> Effect Unit
 detectNewLine text self = runFn2 detectNewLineImpl text self
 
-foreign import getWordRangeImpl :: forall eff. Fn3 Int Int EditSession (Eff (ace :: ACE | eff) Range)
+foreign import getWordRangeImpl :: Fn3 Int Int EditSession (Effect Range)
 
-getWordRange :: forall eff. Int -> Int -> EditSession -> Eff (ace :: ACE | eff) Range
+getWordRange :: Int -> Int -> EditSession -> Effect Range
 getWordRange row column self = runFn3 getWordRangeImpl row column self
 
-foreign import getAWordRangeImpl :: forall eff. Fn3 Int Int EditSession (Eff (ace :: ACE | eff) Range)
+foreign import getAWordRangeImpl :: Fn3 Int Int EditSession (Effect Range)
 
-getAWordRange :: forall eff. Int -> Int -> EditSession -> Eff (ace :: ACE | eff) Range
+getAWordRange :: Int -> Int -> EditSession -> Effect Range
 getAWordRange row column self = runFn3 getAWordRangeImpl row column self
 
-foreign import setNewLineModeImpl :: forall eff. Fn2 String EditSession (Eff (ace :: ACE | eff) Unit)
+foreign import setNewLineModeImpl :: Fn2 String EditSession (Effect Unit)
 
-setNewLineMode :: forall eff. String -> EditSession -> Eff (ace :: ACE | eff) Unit
+setNewLineMode :: String -> EditSession -> Effect Unit
 setNewLineMode newLineMode self = runFn2 setNewLineModeImpl newLineMode self
 
-foreign import getNewLineMode :: forall eff. EditSession -> Eff (ace :: ACE | eff) String
+foreign import getNewLineMode :: EditSession -> Effect String
 
-foreign import setUseWorkerImpl :: forall eff. Fn2 Boolean EditSession (Eff (ace :: ACE | eff) Unit)
+foreign import setUseWorkerImpl :: Fn2 Boolean EditSession (Effect Unit)
 
-setUseWorker :: forall eff. Boolean -> EditSession -> Eff (ace :: ACE | eff) Unit
+setUseWorker :: Boolean -> EditSession -> Effect Unit
 setUseWorker useWorker self = runFn2 setUseWorkerImpl useWorker self
 
-foreign import getUseWorker :: forall eff. EditSession -> Eff (ace :: ACE | eff) Boolean
+foreign import getUseWorker :: EditSession -> Effect Boolean
 
-foreign import onReloadTokenizer :: forall eff. EditSession -> Eff (ace :: ACE | eff) Unit
+foreign import onReloadTokenizer :: EditSession -> Effect Unit
 
-foreign import modeImpl :: forall eff. Fn2 TextMode EditSession (Eff (ace :: ACE | eff) Unit)
+foreign import modeImpl :: Fn2 TextMode EditSession (Effect Unit)
 
-mode :: forall eff. TextMode -> EditSession -> Eff (ace :: ACE | eff) Unit
+mode :: TextMode -> EditSession -> Effect Unit
 mode mode' self = runFn2 modeImpl mode' self
 
-foreign import getMode :: forall eff. EditSession -> Eff (ace :: ACE | eff) TextMode
+foreign import getMode :: EditSession -> Effect TextMode
 
-foreign import setScrollTopImpl :: forall eff. Fn2 Int EditSession (Eff (ace :: ACE | eff) Unit)
+foreign import setScrollTopImpl :: Fn2 Int EditSession (Effect Unit)
 
-setScrollTop :: forall eff. Int -> EditSession -> Eff (ace :: ACE | eff) Unit
+setScrollTop :: Int -> EditSession -> Effect Unit
 setScrollTop scrollTop self = runFn2 setScrollTopImpl scrollTop self
 
-foreign import getScrollTop :: forall eff. EditSession -> Eff (ace :: ACE | eff) Int
+foreign import getScrollTop :: EditSession -> Effect Int
 
-foreign import setScrollLeftImpl :: forall eff. Fn2 Int EditSession (Eff (ace :: ACE | eff) Unit)
+foreign import setScrollLeftImpl :: Fn2 Int EditSession (Effect Unit)
 
-setScrollLeft :: forall eff. Int -> EditSession -> Eff (ace :: ACE | eff) Unit
+setScrollLeft :: Int -> EditSession -> Effect Unit
 setScrollLeft scrollLeft self = runFn2 setScrollLeftImpl scrollLeft self
 
-foreign import getScrollLeft :: forall eff. EditSession -> Eff (ace :: ACE | eff) Int
+foreign import getScrollLeft :: EditSession -> Effect Int
 
-foreign import getScreenWidth :: forall eff. EditSession -> Eff (ace :: ACE | eff) Int
+foreign import getScreenWidth :: EditSession -> Effect Int
 
-foreign import getLineImpl :: forall eff. Fn2 Int EditSession (Eff (ace :: ACE | eff) String)
+foreign import getLineImpl :: Fn2 Int EditSession (Effect String)
 
-getLine :: forall eff. Int -> EditSession -> Eff (ace :: ACE | eff) String
+getLine :: Int -> EditSession -> Effect String
 getLine row self = runFn2 getLineImpl row self
 
-foreign import getLinesImpl :: forall eff. Fn3 Int Int EditSession (Eff (ace :: ACE | eff) (Array String))
+foreign import getLinesImpl :: Fn3 Int Int EditSession (Effect (Array String))
 
-getLines :: forall eff. Int -> Int -> EditSession -> Eff (ace :: ACE | eff) (Array String)
+getLines :: Int -> Int -> EditSession -> Effect (Array String)
 getLines firstRow lastRow self = runFn3 getLinesImpl firstRow lastRow self
 
-foreign import getLength :: forall eff. EditSession -> Eff (ace :: ACE | eff) Int
+foreign import getLength :: EditSession -> Effect Int
 
-foreign import getTextRangeImpl :: forall eff. Fn2 Range EditSession (Eff (ace :: ACE | eff) String)
+foreign import getTextRangeImpl :: Fn2 Range EditSession (Effect String)
 
-getTextRange :: forall eff. Range -> EditSession -> Eff (ace :: ACE | eff) String
+getTextRange :: Range -> EditSession -> Effect String
 getTextRange range self = runFn2 getTextRangeImpl range self
 
-foreign import insertImpl :: forall eff. Fn3 Position String EditSession (Eff (ace :: ACE | eff) Unit)
+foreign import insertImpl :: Fn3 Position String EditSession (Effect Unit)
 
-insert :: forall eff. Position -> String -> EditSession -> Eff (ace :: ACE | eff) Unit
+insert :: Position -> String -> EditSession -> Effect Unit
 insert position text self = runFn3 insertImpl position text self
 
-foreign import removeImpl :: forall eff. Fn2 Range EditSession (Eff (ace :: ACE | eff) Unit)
+foreign import removeImpl :: Fn2 Range EditSession (Effect Unit)
 
-remove :: forall eff. Range -> EditSession -> Eff (ace :: ACE | eff) Unit
+remove :: Range -> EditSession -> Effect Unit
 remove range self = runFn2 removeImpl range self
 
-foreign import setUndoSelectImpl :: forall eff. Fn2 Boolean EditSession (Eff (ace :: ACE | eff) Unit)
+foreign import setUndoSelectImpl :: Fn2 Boolean EditSession (Effect Unit)
 
-setUndoSelect :: forall eff. Boolean -> EditSession -> Eff (ace :: ACE | eff) Unit
+setUndoSelect :: Boolean -> EditSession -> Effect Unit
 setUndoSelect enable self = runFn2 setUndoSelectImpl enable self
 
-foreign import replaceImpl :: forall eff. Fn3 Range String EditSession (Eff (ace :: ACE | eff) Unit)
+foreign import replaceImpl :: Fn3 Range String EditSession (Effect Unit)
 
-replace :: forall eff. Range -> String -> EditSession -> Eff (ace :: ACE | eff) Unit
+replace :: Range -> String -> EditSession -> Effect Unit
 replace range text self = runFn3 replaceImpl range text self
 
-foreign import moveTextImpl :: forall eff. Fn3 Range Position EditSession (Eff (ace :: ACE | eff) Range)
+foreign import moveTextImpl :: Fn3 Range Position EditSession (Effect Range)
 
-moveText :: forall eff. Range -> Position -> EditSession -> Eff (ace :: ACE | eff) Range
+moveText :: Range -> Position -> EditSession -> Effect Range
 moveText fromRange toPosition self = runFn3 moveTextImpl fromRange toPosition self
 
-foreign import indentRowsImpl :: forall eff. Fn4 Int Int String EditSession (Eff (ace :: ACE | eff) Unit)
+foreign import indentRowsImpl :: Fn4 Int Int String EditSession (Effect Unit)
 
-indentRows :: forall eff. Int -> Int -> String -> EditSession -> Eff (ace :: ACE | eff) Unit
+indentRows :: Int -> Int -> String -> EditSession -> Effect Unit
 indentRows startRow endRow indentString self = runFn4 indentRowsImpl startRow endRow indentString self
 
-foreign import outdentRowsImpl :: forall eff. Fn2 Range EditSession (Eff (ace :: ACE | eff) Unit)
+foreign import outdentRowsImpl :: Fn2 Range EditSession (Effect Unit)
 
-outdentRows :: forall eff. Range -> EditSession -> Eff (ace :: ACE | eff) Unit
+outdentRows :: Range -> EditSession -> Effect Unit
 outdentRows range self = runFn2 outdentRowsImpl range self
 
-foreign import moveLinesUpImpl :: forall eff. Fn3 Int Int EditSession (Eff (ace :: ACE | eff) Int)
+foreign import moveLinesUpImpl :: Fn3 Int Int EditSession (Effect Int)
 
-moveLinesUp :: forall eff. Int -> Int -> EditSession -> Eff (ace :: ACE | eff) Int
+moveLinesUp :: Int -> Int -> EditSession -> Effect Int
 moveLinesUp firstRow lastRow self = runFn3 moveLinesUpImpl firstRow lastRow self
 
-foreign import moveLinesDownImpl :: forall eff. Fn3 Int Int EditSession (Eff (ace :: ACE | eff) Int)
+foreign import moveLinesDownImpl :: Fn3 Int Int EditSession (Effect Int)
 
-moveLinesDown :: forall eff. Int -> Int -> EditSession -> Eff (ace :: ACE | eff) Int
+moveLinesDown :: Int -> Int -> EditSession -> Effect Int
 moveLinesDown firstRow lastRow self = runFn3 moveLinesDownImpl firstRow lastRow self
 
-foreign import duplicateLinesImpl :: forall eff. Fn3 Int Int EditSession (Eff (ace :: ACE | eff) Int)
+foreign import duplicateLinesImpl :: Fn3 Int Int EditSession (Effect Int)
 
-duplicateLines :: forall eff. Int -> Int -> EditSession -> Eff (ace :: ACE | eff) Int
+duplicateLines :: Int -> Int -> EditSession -> Effect Int
 duplicateLines firstRow lastRow self = runFn3 duplicateLinesImpl firstRow lastRow self
 
-foreign import setUseWrapModeImpl :: forall eff. Fn2 Boolean EditSession (Eff (ace :: ACE | eff) Unit)
+foreign import setUseWrapModeImpl :: Fn2 Boolean EditSession (Effect Unit)
 
-setUseWrapMode :: forall eff. Boolean -> EditSession -> Eff (ace :: ACE | eff) Unit
+setUseWrapMode :: Boolean -> EditSession -> Effect Unit
 setUseWrapMode useWrapMode self = runFn2 setUseWrapModeImpl useWrapMode self
 
-foreign import getUseWrapMode :: forall eff. EditSession -> Eff (ace :: ACE | eff) Boolean
+foreign import getUseWrapMode :: EditSession -> Effect Boolean
 
-foreign import setWrapLimitRangeImpl :: forall eff. Fn3 Int Int EditSession (Eff (ace :: ACE | eff) Unit)
+foreign import setWrapLimitRangeImpl :: Fn3 Int Int EditSession (Effect Unit)
 
-setWrapLimitRange :: forall eff. Int -> Int -> EditSession -> Eff (ace :: ACE | eff) Unit
+setWrapLimitRange :: Int -> Int -> EditSession -> Effect Unit
 setWrapLimitRange min max self = runFn3 setWrapLimitRangeImpl min max self
 
-foreign import adjustWrapLimitImpl :: forall eff. Fn2 Int EditSession (Eff (ace :: ACE | eff) Boolean)
+foreign import adjustWrapLimitImpl :: Fn2 Int EditSession (Effect Boolean)
 
-adjustWrapLimit :: forall eff. Int -> EditSession -> Eff (ace :: ACE | eff) Boolean
+adjustWrapLimit :: Int -> EditSession -> Effect Boolean
 adjustWrapLimit desiredLimit self = runFn2 adjustWrapLimitImpl desiredLimit self
 
-foreign import getWrapLimit :: forall eff. EditSession -> Eff (ace :: ACE | eff) Int
+foreign import getWrapLimit :: EditSession -> Effect Int
 
-foreign import getWrapLimitRange :: forall eff. EditSession -> Eff (ace :: ACE | eff) { min :: Int, max :: Int }
+foreign import getWrapLimitRange :: EditSession -> Effect { min :: Int, max :: Int }
 
-foreign import getDisplayTokensImpl :: forall eff. Fn3 String Int EditSession (Eff (ace :: ACE | eff) Unit)
+foreign import getDisplayTokensImpl :: Fn3 String Int EditSession (Effect Unit)
 
-getDisplayTokens :: forall eff. String -> Int -> EditSession -> Eff (ace :: ACE | eff) Unit
+getDisplayTokens :: String -> Int -> EditSession -> Effect Unit
 getDisplayTokens str offset self = runFn3 getDisplayTokensImpl str offset self
 
-foreign import getStringScreenWidthImpl :: forall eff. Fn4 String Int Int EditSession (Eff (ace :: ACE | eff) (Array Int))
+foreign import getStringScreenWidthImpl :: Fn4 String Int Int EditSession (Effect (Array Int))
 
-getStringScreenWidth :: forall eff. String -> Int -> Int -> EditSession -> Eff (ace :: ACE | eff) (Array Int)
+getStringScreenWidth :: String -> Int -> Int -> EditSession -> Effect (Array Int)
 getStringScreenWidth str maxScreenColumn screenColumn self = runFn4 getStringScreenWidthImpl str maxScreenColumn screenColumn self
 
-foreign import getRowLengthImpl :: forall eff. Fn2 Int EditSession (Eff (ace :: ACE | eff) Int)
+foreign import getRowLengthImpl :: Fn2 Int EditSession (Effect Int)
 
-getRowLength :: forall eff. Int -> EditSession -> Eff (ace :: ACE | eff) Int
+getRowLength :: Int -> EditSession -> Effect Int
 getRowLength row self = runFn2 getRowLengthImpl row self
 
-foreign import getScreenLastRowColumnImpl :: forall eff. Fn2 Int EditSession (Eff (ace :: ACE | eff) Int)
+foreign import getScreenLastRowColumnImpl :: Fn2 Int EditSession (Effect Int)
 
-getScreenLastRowColumn :: forall eff. Int -> EditSession -> Eff (ace :: ACE | eff) Int
+getScreenLastRowColumn :: Int -> EditSession -> Effect Int
 getScreenLastRowColumn screenRow self = runFn2 getScreenLastRowColumnImpl screenRow self
 
-foreign import getDocumentLastRowColumnImpl :: forall eff. Fn3 Int Int EditSession (Eff (ace :: ACE | eff) Int)
+foreign import getDocumentLastRowColumnImpl :: Fn3 Int Int EditSession (Effect Int)
 
-getDocumentLastRowColumn :: forall eff. Int -> Int -> EditSession -> Eff (ace :: ACE | eff) Int
+getDocumentLastRowColumn :: Int -> Int -> EditSession -> Effect Int
 getDocumentLastRowColumn docRow docColumn self = runFn3 getDocumentLastRowColumnImpl docRow docColumn self
 
-foreign import getDocumentLastRowColumnPositionImpl :: forall eff. Fn3 Int Int EditSession (Eff (ace :: ACE | eff) Int)
+foreign import getDocumentLastRowColumnPositionImpl :: Fn3 Int Int EditSession (Effect Int)
 
-getDocumentLastRowColumnPosition :: forall eff. Int -> Int -> EditSession -> Eff (ace :: ACE | eff) Int
+getDocumentLastRowColumnPosition :: Int -> Int -> EditSession -> Effect Int
 getDocumentLastRowColumnPosition docRow docColumn self = runFn3 getDocumentLastRowColumnPositionImpl docRow docColumn self
 
-foreign import getRowSplitData :: forall eff. EditSession -> Eff (ace :: ACE | eff) String
+foreign import getRowSplitData :: EditSession -> Effect String
 
-foreign import getScreenTabSizeImpl :: forall eff. Fn2 Int EditSession (Eff (ace :: ACE | eff) Int)
+foreign import getScreenTabSizeImpl :: Fn2 Int EditSession (Effect Int)
 
-getScreenTabSize :: forall eff. Int -> EditSession -> Eff (ace :: ACE | eff) Int
+getScreenTabSize :: Int -> EditSession -> Effect Int
 getScreenTabSize screenColumn self = runFn2 getScreenTabSizeImpl screenColumn self
 
-foreign import screenToDocumentPositionImpl :: forall eff. Fn3 Int Int EditSession (Eff (ace :: ACE | eff) Position)
+foreign import screenToDocumentPositionImpl :: Fn3 Int Int EditSession (Effect Position)
 
-screenToDocumentPosition :: forall eff. Int -> Int -> EditSession -> Eff (ace :: ACE | eff) Position
+screenToDocumentPosition :: Int -> Int -> EditSession -> Effect Position
 screenToDocumentPosition screenRow screenColumn self = runFn3 screenToDocumentPositionImpl screenRow screenColumn self
 
-foreign import documentToScreenPositionImpl :: forall eff. Fn3 Int Int EditSession (Eff (ace :: ACE | eff) Position)
+foreign import documentToScreenPositionImpl :: Fn3 Int Int EditSession (Effect Position)
 
-documentToScreenPosition :: forall eff. Int -> Int -> EditSession -> Eff (ace :: ACE | eff) Position
+documentToScreenPosition :: Int -> Int -> EditSession -> Effect Position
 documentToScreenPosition docRow docColumn self = runFn3 documentToScreenPositionImpl docRow docColumn self
 
-foreign import documentToScreenColumnImpl :: forall eff. Fn3 Int Int EditSession (Eff (ace :: ACE | eff) Int)
+foreign import documentToScreenColumnImpl :: Fn3 Int Int EditSession (Effect Int)
 
-documentToScreenColumn :: forall eff. Int -> Int -> EditSession -> Eff (ace :: ACE | eff) Int
+documentToScreenColumn :: Int -> Int -> EditSession -> Effect Int
 documentToScreenColumn row docColumn self = runFn3 documentToScreenColumnImpl row docColumn self
 
-foreign import documentToScreenRowImpl :: forall eff. Fn3 Int Int EditSession (Eff (ace :: ACE | eff) Unit)
+foreign import documentToScreenRowImpl :: Fn3 Int Int EditSession (Effect Unit)
 
-documentToScreenRow :: forall eff. Int -> Int -> EditSession -> Eff (ace :: ACE | eff) Unit
+documentToScreenRow :: Int -> Int -> EditSession -> Effect Unit
 documentToScreenRow docRow docColumn self = runFn3 documentToScreenRowImpl docRow docColumn self
 
-foreign import getScreenLength :: forall eff. EditSession -> Eff (ace :: ACE | eff) Int
+foreign import getScreenLength :: EditSession -> Effect Int
 
-foreign import createWithModeImpl :: forall eff. Fn2 String (Nullable TextMode) (Eff (ace :: ACE | eff) EditSession)
+foreign import createWithModeImpl :: Fn2 String (Nullable TextMode) (Effect EditSession)
 
-createWithMode :: forall eff. String -> Maybe TextMode -> Eff (ace :: ACE | eff) EditSession
+createWithMode :: String -> Maybe TextMode -> Effect EditSession
 createWithMode text mode' = runFn2 createWithModeImpl text (toNullable mode')
 
-foreign import createImpl :: forall eff. Fn2 String (Nullable String) (Eff (ace :: ACE | eff) EditSession)
+foreign import createImpl :: Fn2 String (Nullable String) (Effect EditSession)
 
-create :: forall eff. String -> Maybe String -> Eff (ace :: ACE | eff) EditSession
+create :: String -> Maybe String -> Effect EditSession
 create content mode' = runFn2 createImpl content (toNullable mode')
 
-foreign import createFromLinesImpl :: forall eff. Fn2 (Array String) (Nullable String) (Eff (ace :: ACE | eff) EditSession)
+foreign import createFromLinesImpl :: Fn2 (Array String) (Nullable String) (Effect EditSession)
 
-createFromLines :: forall eff. Array String -> Maybe String -> Eff (ace :: ACE | eff) EditSession
+createFromLines :: Array String -> Maybe String -> Effect EditSession
 createFromLines text mode' = runFn2 createFromLinesImpl text (toNullable mode')
 
 
 foreign import getMarkers
-  :: forall eff. EditSession -> Eff (ace :: ACE |eff) (Array Marker)
+  :: EditSession -> Effect (Array Marker)
