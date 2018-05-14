@@ -19,14 +19,16 @@
     "package.json"
   ],
   "dependencies": {
-    "purescript-console": "#compiler/0.12",
+    "purescript-effect": "#compiler/0.12",
     "purescript-web-html": "#compiler/0.12",
+    "purescript-web-uievents": "#compiler/0.12",
     "purescript-arrays": "#compiler/0.12",
     "purescript-foreign": "#compiler/0.12",
     "purescript-nullable": "#compiler/0.12",
     "purescript-prelude": "#compiler/0.12"
   },
   "devDependencies": {
+    "purescript-console": "#compiler/0.12",
     "ace-builds": "^1.2.6",
     "purescript-refs": "#compiler/0.12"
   }
