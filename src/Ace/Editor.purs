@@ -130,556 +130,529 @@ module Ace.Editor
 
 import Prelude
 
-import Ace.Types (KeyBinding, ACE, Editor, EditSession, VirtualRenderer, SearchOptions, Position, Range, Selection, PasteEvent)
-import Control.Monad.Eff (Eff)
+import Ace.Types (KeyBinding, Editor, EditSession, VirtualRenderer, SearchOptions, Position, Range, Selection, PasteEvent)
+import Effect (Effect)
 import Data.Function.Uncurried (Fn2, runFn2, Fn3, runFn3, Fn4, runFn4, Fn5, runFn5)
 import Data.Maybe (Maybe)
 import Data.Nullable (Nullable, toNullable)
-import DOM.HTML.Types (HTMLElement)
+import Web.HTML.HTMLElement (HTMLElement)
 
 foreign import onImpl
-  :: forall ev eff a
-   . Fn3 String (ev -> Eff (ace :: ACE | eff) a) Editor (Eff (ace :: ACE | eff) Unit)
+  :: forall ev a
+   . Fn3 String (ev -> Effect a) Editor (Effect Unit)
 
 onBlur
-  :: forall eff a
-   . Editor -> (Eff (ace :: ACE | eff) a) -> Eff (ace :: ACE | eff) Unit
+  :: forall a
+   . Editor -> (Effect a) -> Effect Unit
 onBlur self fn = runFn3 onImpl "blur" (\_ -> fn) self
 
 onFocus
-  :: forall eff a
-   . Editor -> (Eff (ace :: ACE | eff) a) -> Eff (ace :: ACE | eff) Unit
+  :: forall a
+   . Editor -> (Effect a) -> Effect Unit
 onFocus self fn = runFn3 onImpl "focus" (\_ -> fn) self
 
 onCopy
-  :: forall eff a
-   . Editor -> (String -> Eff (ace :: ACE | eff) a) -> Eff (ace :: ACE | eff) Unit
+  :: forall a
+   . Editor -> (String -> Effect a) -> Effect Unit
 onCopy self fn = runFn3 onImpl "copy" fn self
 
 onPaste
-  :: forall eff a
+  :: forall a
    . Editor
-  -> (PasteEvent -> Eff (ace :: ACE | eff) a)
-  -> Eff (ace :: ACE | eff) Unit
+  -> (PasteEvent -> Effect a)
+  -> Effect Unit
 onPaste self fn = runFn3 onImpl "paste" fn self
 
 foreign import getPasteEventText
-  :: forall eff. PasteEvent -> Eff (ace :: ACE | eff) String
+  :: PasteEvent -> Effect String
 
 foreign import setPasteEventTextImpl
-  :: forall eff. Fn2 String PasteEvent (Eff (ace :: ACE | eff) Unit)
+  :: Fn2 String PasteEvent (Effect Unit)
 
-setPasteEventText :: forall eff. String -> PasteEvent -> Eff (ace :: ACE | eff) Unit
+setPasteEventText :: String -> PasteEvent -> Effect Unit
 setPasteEventText text e = runFn2 setPasteEventTextImpl text e
 
 onChangeSession
-  :: forall eff
-   . Editor
+  :: Editor
   -> ({ oldSession :: EditSession, session :: EditSession }
-     -> Eff (ace :: ACE | eff) Unit)
-  -> Eff (ace :: ACE | eff) Unit
+     -> Effect Unit)
+  -> Effect Unit
 onChangeSession self fn = runFn3 onImpl "changeSession" fn self
 
 onChangeSelectionStyle
-  :: forall eff
-   . Editor -> Eff (ace :: ACE | eff) Unit -> Eff (ace :: ACE | eff) Unit
+  :: Editor -> Effect Unit -> Effect Unit
 onChangeSelectionStyle self fn =
   runFn3 onImpl "changeSelectionStyle" (\_ -> fn) self
 
 foreign import getRenderer
-  :: forall eff. Editor -> Eff (ace :: ACE | eff) VirtualRenderer
+  :: Editor -> Effect VirtualRenderer
 
 foreign import isInMultiSelectMode
-  :: forall eff. Editor -> Eff (ace :: ACE | eff) Boolean
+  :: Editor -> Effect Boolean
 
 foreign import selectMoreLinesImpl
-  :: forall eff. Fn2 Int Editor (Eff (ace :: ACE | eff) Unit)
+  :: Fn2 Int Editor (Effect Unit)
 
-selectMoreLines :: forall eff. Int -> Editor -> Eff (ace :: ACE | eff) Unit
+selectMoreLines :: Int -> Editor -> Effect Unit
 selectMoreLines n self = runFn2 selectMoreLinesImpl n self
 
 foreign import getContainer
-  :: forall eff. Editor -> Eff (ace :: ACE | eff) HTMLElement
+  :: Editor -> Effect HTMLElement
 
 foreign import setKeyboardHandlerImpl
-  :: forall eff. Fn2 String Editor (Eff (ace :: ACE | eff) Unit)
+  :: Fn2 String Editor (Effect Unit)
 
-setKeyboardHandler :: forall eff. String -> Editor -> Eff (ace :: ACE | eff) Unit
+setKeyboardHandler :: String -> Editor -> Effect Unit
 setKeyboardHandler keyboardHandler self =
   runFn2 setKeyboardHandlerImpl keyboardHandler self
 
 foreign import getKeyboardHandler
-  :: forall eff. Editor -> Eff (ace :: ACE | eff) String
+  :: Editor -> Effect String
 
 foreign import setSessionImpl
-  :: forall eff. Fn2 EditSession Editor (Eff (ace :: ACE | eff) Unit)
+  :: Fn2 EditSession Editor (Effect Unit)
 
-setSession :: forall eff. EditSession -> Editor -> Eff (ace :: ACE | eff) Unit
+setSession :: EditSession -> Editor -> Effect Unit
 setSession session self = runFn2 setSessionImpl session self
 
 foreign import getSession
-  :: forall eff. Editor -> Eff (ace :: ACE | eff) EditSession
+  :: Editor -> Effect EditSession
 
 foreign import setValueImpl
-  :: forall eff. Fn3 String (Nullable Int) Editor (Eff (ace :: ACE | eff) String)
+  :: Fn3 String (Nullable Int) Editor (Effect String)
 
 setValue
-  :: forall eff. String -> Maybe Int -> Editor -> Eff (ace :: ACE | eff) String
+  :: String -> Maybe Int -> Editor -> Effect String
 setValue val cursorPos self = runFn3 setValueImpl val (toNullable cursorPos) self
 
 foreign import getValue
-  :: forall eff. Editor -> Eff (ace :: ACE | eff) String
+  :: Editor -> Effect String
 
 foreign import getSelection
-  :: forall eff. Editor -> Eff (ace :: ACE | eff) Selection
+  :: Editor -> Effect Selection
 
 foreign import resizeImpl
-  :: forall eff. Fn2 (Nullable Boolean) Editor (Eff (ace :: ACE | eff) Unit)
+  :: Fn2 (Nullable Boolean) Editor (Effect Unit)
 
-resize :: forall eff. Maybe Boolean -> Editor -> Eff (ace :: ACE | eff) Unit
+resize :: Maybe Boolean -> Editor -> Effect Unit
 resize force self = runFn2 resizeImpl (toNullable force) self
 
 foreign import setThemeImpl
-  :: forall eff. Fn2 String Editor (Eff (ace :: ACE | eff) Unit)
+  :: Fn2 String Editor (Effect Unit)
 
-setTheme :: forall eff. String -> Editor -> Eff (ace :: ACE | eff) Unit
+setTheme :: String -> Editor -> Effect Unit
 setTheme theme self = runFn2 setThemeImpl theme self
 
-foreign import getTheme :: forall eff. Editor -> Eff (ace :: ACE | eff) String
+foreign import getTheme :: Editor -> Effect String
 
 foreign import setStyleImpl
-  :: forall eff. Fn2 String Editor (Eff (ace :: ACE | eff) Unit)
+  :: Fn2 String Editor (Effect Unit)
 
-setStyle :: forall eff. String -> Editor -> Eff (ace :: ACE | eff) Unit
+setStyle :: String -> Editor -> Effect Unit
 setStyle style self = runFn2 setStyleImpl style self
 
 foreign import unsetStyle
-  :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
+  :: Editor -> Effect Unit
 
 foreign import setFontSizeImpl
-  :: forall eff. Fn2 String Editor (Eff (ace :: ACE | eff) Unit)
+  :: Fn2 String Editor (Effect Unit)
 
-setFontSize :: forall eff. String -> Editor -> Eff (ace :: ACE | eff) Unit
+setFontSize :: String -> Editor -> Effect Unit
 setFontSize size self = runFn2 setFontSizeImpl size self
 
-foreign import focus :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
+foreign import focus :: Editor -> Effect Unit
 
-foreign import isFocused :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
+foreign import isFocused :: Editor -> Effect Unit
 
-foreign import blur :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
+foreign import blur :: Editor -> Effect Unit
 
-foreign import getCopyText :: forall eff. Editor -> Eff (ace :: ACE | eff) String
+foreign import getCopyText :: Editor -> Effect String
 
 foreign import insertImpl
-  :: forall eff. Fn2 String Editor (Eff (ace :: ACE | eff) Unit)
+  :: Fn2 String Editor (Effect Unit)
 
-insert :: forall eff. String -> Editor -> Eff (ace :: ACE | eff) Unit
+insert :: String -> Editor -> Effect Unit
 insert text self = runFn2 insertImpl text self
 
 foreign import setOverwriteImpl
-  :: forall eff. Fn2 Boolean Editor (Eff (ace :: ACE | eff) Unit)
+  :: Fn2 Boolean Editor (Effect Unit)
 
-setOverwrite :: forall eff. Boolean -> Editor -> Eff (ace :: ACE | eff) Unit
+setOverwrite :: Boolean -> Editor -> Effect Unit
 setOverwrite overwrite self = runFn2 setOverwriteImpl overwrite self
 
-foreign import getOverwrite :: forall eff. Editor -> Eff (ace :: ACE | eff) Boolean
+foreign import getOverwrite :: Editor -> Effect Boolean
 
-foreign import toggleOverwrite :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
+foreign import toggleOverwrite :: Editor -> Effect Unit
 
 foreign import setScrollSpeedImpl
-  :: forall eff. Fn2 Number Editor (Eff (ace :: ACE | eff) Unit)
+  :: Fn2 Number Editor (Effect Unit)
 
-setScrollSpeed :: forall eff. Number -> Editor -> Eff (ace :: ACE | eff) Unit
+setScrollSpeed :: Number -> Editor -> Effect Unit
 setScrollSpeed speed self = runFn2 setScrollSpeedImpl speed self
 
 foreign import getScrollSpeed
-  :: forall eff. Editor -> Eff (ace :: ACE | eff) Number
+  :: Editor -> Effect Number
 
 foreign import setDragDelayImpl
-  :: forall eff. Fn2 Number Editor (Eff (ace :: ACE | eff) Unit)
+  :: Fn2 Number Editor (Effect Unit)
 
-setDragDelay :: forall eff. Number -> Editor -> Eff (ace :: ACE | eff) Unit
+setDragDelay :: Number -> Editor -> Effect Unit
 setDragDelay dragDelay self = runFn2 setDragDelayImpl dragDelay self
 
 foreign import getDragDelay
-  :: forall eff. Editor -> Eff (ace :: ACE | eff) Number
+  :: Editor -> Effect Number
 
 foreign import setSelectionStyleImpl
-  :: forall eff. Fn2 String Editor (Eff (ace :: ACE | eff) Unit)
+  :: Fn2 String Editor (Effect Unit)
 
-setSelectionStyle :: forall eff. String -> Editor -> Eff (ace :: ACE | eff) Unit
+setSelectionStyle :: String -> Editor -> Effect Unit
 setSelectionStyle style self = runFn2 setSelectionStyleImpl style self
 
 foreign import getSelectionStyle
-  :: forall eff. Editor -> Eff (ace :: ACE | eff) String
+  :: Editor -> Effect String
 
 foreign import setHighlightActiveLineImpl
-  :: forall eff. Fn2 Boolean Editor (Eff (ace :: ACE | eff) Unit)
+  :: Fn2 Boolean Editor (Effect Unit)
 
 setHighlightActiveLine
-  :: forall eff. Boolean -> Editor -> Eff (ace :: ACE | eff) Unit
+  :: Boolean -> Editor -> Effect Unit
 setHighlightActiveLine shouldHighlight self =
   runFn2 setHighlightActiveLineImpl shouldHighlight self
 
 foreign import getHighlightActiveLine
-  :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
+  :: Editor -> Effect Unit
 
 foreign import setHighlightSelectedWordImpl
-  :: forall eff. Fn2 Boolean Editor (Eff (ace :: ACE | eff) Unit)
+  :: Fn2 Boolean Editor (Effect Unit)
 
 setHighlightSelectedWord
-  :: forall eff. Boolean -> Editor -> Eff (ace :: ACE | eff) Unit
+  :: Boolean -> Editor -> Effect Unit
 setHighlightSelectedWord shouldHighlight self =
   runFn2 setHighlightSelectedWordImpl shouldHighlight self
 
 foreign import getHighlightSelectedWord
-  :: forall eff. Editor -> Eff (ace :: ACE | eff) Boolean
+  :: Editor -> Effect Boolean
 
 foreign import setShowInvisiblesImpl
-  :: forall eff. Fn2 Boolean Editor (Eff (ace :: ACE | eff) Unit)
+  :: Fn2 Boolean Editor (Effect Unit)
 
-setShowInvisibles :: forall eff. Boolean -> Editor -> Eff (ace :: ACE | eff) Unit
+setShowInvisibles :: Boolean -> Editor -> Effect Unit
 setShowInvisibles showInvisibles self =
   runFn2 setShowInvisiblesImpl showInvisibles self
 
 foreign import getShowInvisibles
-  :: forall eff. Editor -> Eff (ace :: ACE | eff) Boolean
+  :: Editor -> Effect Boolean
 
 foreign import setShowPrintMarginImpl
-  :: forall eff. Fn2 Boolean Editor (Eff (ace :: ACE | eff) Unit)
+  :: Fn2 Boolean Editor (Effect Unit)
 
-setShowPrintMargin :: forall eff. Boolean -> Editor -> Eff (ace :: ACE | eff) Unit
+setShowPrintMargin :: Boolean -> Editor -> Effect Unit
 setShowPrintMargin showPrintMargin self =
   runFn2 setShowPrintMarginImpl showPrintMargin self
 
 foreign import getShowPrintMargin
-  :: forall eff. Editor -> Eff (ace :: ACE | eff) Boolean
+  :: Editor -> Effect Boolean
 
 foreign import setPrintMarginColumnImpl
-  :: forall eff. Fn2 Int Editor (Eff (ace :: ACE | eff) Unit)
+  :: Fn2 Int Editor (Effect Unit)
 
-setPrintMarginColumn :: forall eff. Int -> Editor -> Eff (ace :: ACE | eff) Unit
+setPrintMarginColumn :: Int -> Editor -> Effect Unit
 setPrintMarginColumn showPrintMargin self =
   runFn2 setPrintMarginColumnImpl showPrintMargin self
 
 foreign import getPrintMarginColumn
-  :: forall eff. Editor -> Eff (ace :: ACE | eff) Int
+  :: Editor -> Effect Int
 
 foreign import setReadOnlyImpl
-  :: forall eff. Fn2 Boolean Editor (Eff (ace :: ACE | eff) Unit)
+  :: Fn2 Boolean Editor (Effect Unit)
 
-setReadOnly :: forall eff. Boolean -> Editor -> Eff (ace :: ACE | eff) Unit
+setReadOnly :: Boolean -> Editor -> Effect Unit
 setReadOnly readOnly self = runFn2 setReadOnlyImpl readOnly self
 
-foreign import getReadOnly :: forall eff. Editor -> Eff (ace :: ACE | eff) Boolean
+foreign import getReadOnly :: Editor -> Effect Boolean
 
 foreign import setBehavioursEnabledImpl
-  :: forall eff. Fn2 Boolean Editor (Eff (ace :: ACE | eff) Unit)
+  :: Fn2 Boolean Editor (Effect Unit)
 
-setBehavioursEnabled :: forall eff. Boolean -> Editor -> Eff (ace :: ACE | eff) Unit
+setBehavioursEnabled :: Boolean -> Editor -> Effect Unit
 setBehavioursEnabled enabled self = runFn2 setBehavioursEnabledImpl enabled self
 
 foreign import getBehavioursEnabled
-  :: forall eff. Editor -> Eff (ace :: ACE | eff) Boolean
+  :: Editor -> Effect Boolean
 
 foreign import setWrapBehavioursEnabledImpl
-  :: forall eff. Fn2 Boolean Editor (Eff (ace :: ACE | eff) Unit)
+  :: Fn2 Boolean Editor (Effect Unit)
 
 setWrapBehavioursEnabled
-  :: forall eff. Boolean -> Editor -> Eff (ace :: ACE | eff) Unit
+  :: Boolean -> Editor -> Effect Unit
 setWrapBehavioursEnabled enabled self =
   runFn2 setWrapBehavioursEnabledImpl enabled self
 
 foreign import getWrapBehavioursEnabled
-  :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
+  :: Editor -> Effect Unit
 
 foreign import setShowFoldWidgetsImpl
-  :: forall eff. Fn2 Boolean Editor (Eff (ace :: ACE | eff) Unit)
+  :: Fn2 Boolean Editor (Effect Unit)
 
-setShowFoldWidgets :: forall eff. Boolean -> Editor -> Eff (ace :: ACE | eff) Unit
+setShowFoldWidgets :: Boolean -> Editor -> Effect Unit
 setShowFoldWidgets show self = runFn2 setShowFoldWidgetsImpl show self
 
 foreign import getShowFoldWidgets
-  :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
+  :: Editor -> Effect Unit
 
 foreign import removeImpl
-  :: forall eff. Fn2 String Editor (Eff (ace :: ACE | eff) Unit)
+  :: Fn2 String Editor (Effect Unit)
 
-remove :: forall eff. String -> Editor -> Eff (ace :: ACE | eff) Unit
+remove :: String -> Editor -> Effect Unit
 remove dir self = runFn2 removeImpl dir self
 
-foreign import removeWordRight :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
+foreign import removeWordRight :: Editor -> Effect Unit
 
-foreign import removeWordLeft :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
+foreign import removeWordLeft :: Editor -> Effect Unit
 
-foreign import removeToLineStart :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
+foreign import removeToLineStart :: Editor -> Effect Unit
 
-foreign import removeToLineEnd :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
+foreign import removeToLineEnd :: Editor -> Effect Unit
 
-foreign import splitLine :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
+foreign import splitLine :: Editor -> Effect Unit
 
-foreign import transposeLetters :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
+foreign import transposeLetters :: Editor -> Effect Unit
 
-foreign import toLowerCase :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
+foreign import toLowerCase :: Editor -> Effect Unit
 
-foreign import toUpperCase :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
+foreign import toUpperCase :: Editor -> Effect Unit
 
-foreign import indent :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
+foreign import indent :: Editor -> Effect Unit
 
-foreign import blockIndent :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
+foreign import blockIndent :: Editor -> Effect Unit
 
 foreign import blockOutdentImpl
-  :: forall eff. Fn2 (Nullable String) Editor (Eff (ace :: ACE | eff) Unit)
+  :: Fn2 (Nullable String) Editor (Effect Unit)
 
-blockOutdent :: forall eff. Maybe String -> Editor -> Eff (ace :: ACE | eff) Unit
+blockOutdent :: Maybe String -> Editor -> Effect Unit
 blockOutdent arg self = runFn2 blockOutdentImpl (toNullable arg) self
 
 foreign import toggleCommentLines
-  :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
+  :: Editor -> Effect Unit
 
-foreign import getNumberAt :: forall eff. Editor -> Eff (ace :: ACE | eff) Number
+foreign import getNumberAt :: Editor -> Effect Number
 
 foreign import modifyNumberImpl
-  :: forall eff. Fn2 Number Editor (Eff (ace :: ACE | eff) Unit)
+  :: Fn2 Number Editor (Effect Unit)
 
-modifyNumber :: forall eff. Number -> Editor -> Eff (ace :: ACE | eff) Unit
+modifyNumber :: Number -> Editor -> Effect Unit
 modifyNumber amount self = runFn2 modifyNumberImpl amount self
 
-foreign import removeLines :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
+foreign import removeLines :: Editor -> Effect Unit
 
-foreign import moveLinesDown :: forall eff. Editor -> Eff (ace :: ACE | eff) Int
+foreign import moveLinesDown :: Editor -> Effect Int
 
-foreign import moveLinesUp :: forall eff. Editor -> Eff (ace :: ACE | eff) Int
+foreign import moveLinesUp :: Editor -> Effect Int
 
-foreign import copyLinesUp :: forall eff. Editor -> Eff (ace :: ACE | eff) Int
+foreign import copyLinesUp :: Editor -> Effect Int
 
-foreign import copyLinesDown :: forall eff. Editor -> Eff (ace :: ACE | eff) Int
+foreign import copyLinesDown :: Editor -> Effect Int
 
-foreign import getFirstVisibleRow :: forall eff. Editor -> Eff (ace :: ACE | eff) Int
+foreign import getFirstVisibleRow :: Editor -> Effect Int
 
-foreign import getLastVisibleRow :: forall eff. Editor -> Eff (ace :: ACE | eff) Int
+foreign import getLastVisibleRow :: Editor -> Effect Int
 
-foreign import isRowVisibleImpl :: forall eff. Fn2 Int Editor (Eff (ace :: ACE | eff) Boolean)
+foreign import isRowVisibleImpl :: Fn2 Int Editor (Effect Boolean)
 
-isRowVisible :: forall eff. Int -> Editor -> Eff (ace :: ACE | eff) Boolean
+isRowVisible :: Int -> Editor -> Effect Boolean
 isRowVisible row self = runFn2 isRowVisibleImpl row self
 
 foreign import isRowFullyVisibleImpl
-  :: forall eff. Fn2 Int Editor (Eff (ace :: ACE | eff) Boolean)
+  :: Fn2 Int Editor (Effect Boolean)
 
-isRowFullyVisible :: forall eff. Int -> Editor -> Eff (ace :: ACE | eff) Boolean
+isRowFullyVisible :: Int -> Editor -> Effect Boolean
 isRowFullyVisible row self = runFn2 isRowFullyVisibleImpl row self
 
-foreign import selectPageDown :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
+foreign import selectPageDown :: Editor -> Effect Unit
 
-foreign import selectPageUp :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
+foreign import selectPageUp :: Editor -> Effect Unit
 
-foreign import gotoPageDown :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
+foreign import gotoPageDown :: Editor -> Effect Unit
 
-foreign import gotoPageUp :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
+foreign import gotoPageUp :: Editor -> Effect Unit
 
-foreign import scrollPageDown :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
+foreign import scrollPageDown :: Editor -> Effect Unit
 
-foreign import scrollPageUp :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
+foreign import scrollPageUp :: Editor -> Effect Unit
 
-foreign import scrollToRow :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
+foreign import scrollToRow :: Editor -> Effect Unit
 
-foreign import scrollToLineImpl :: forall eff. Fn5 Int Boolean Boolean (Eff (ace :: ACE | eff) Unit) Editor (Eff (ace :: ACE | eff) Unit)
+foreign import scrollToLineImpl :: Fn5 Int Boolean Boolean (Effect Unit) Editor (Effect Unit)
 
 scrollToLine
-  :: forall eff
-   . Int -> Boolean -> Boolean -> Eff (ace :: ACE | eff) Unit -> Editor
-  -> Eff (ace :: ACE | eff) Unit
+  :: Int -> Boolean -> Boolean -> Effect Unit -> Editor -> Effect Unit
 scrollToLine line center animate callback self =
   runFn5 scrollToLineImpl line center animate callback self
 
-foreign import centerSelection :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
+foreign import centerSelection :: Editor -> Effect Unit
 
 foreign import getCursorPosition
-  :: forall eff. Editor -> Eff (ace :: ACE | eff) Position
+  :: Editor -> Effect Position
 
 foreign import getCursorPositionScreen
-  :: forall eff. Editor -> Eff (ace :: ACE | eff) Int
+  :: Editor -> Effect Int
 
-foreign import getSelectionRange :: forall eff. Editor -> Eff (ace :: ACE | eff) Range
+foreign import getSelectionRange :: Editor -> Effect Range
 
-foreign import selectAll :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
+foreign import selectAll :: Editor -> Effect Unit
 
-foreign import clearSelection :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
+foreign import clearSelection :: Editor -> Effect Unit
 
 foreign import moveCursorToImpl
-  :: forall eff
-   . Fn4 Int (Nullable Int) (Nullable Boolean) Editor (Eff (ace :: ACE | eff) Unit)
+  :: Fn4 Int (Nullable Int) (Nullable Boolean) Editor (Effect Unit)
 
 moveCursorTo
-  :: forall eff
-   . Int -> Maybe Int -> Maybe Boolean -> Editor -> Eff (ace :: ACE | eff) Unit
+  :: Int -> Maybe Int -> Maybe Boolean -> Editor -> Effect Unit
 moveCursorTo row column animate self =
   runFn4 moveCursorToImpl row (toNullable column) (toNullable animate) self
 
 foreign import moveCursorToPositionImpl
-  :: forall eff. Fn2 Position Editor (Eff (ace :: ACE | eff) Unit)
+  :: Fn2 Position Editor (Effect Unit)
 
 moveCursorToPosition
-  :: forall eff. Position -> Editor -> Eff (ace :: ACE | eff) Unit
+  :: Position -> Editor -> Effect Unit
 moveCursorToPosition position self = runFn2 moveCursorToPositionImpl position self
 
-foreign import jumpToMatching :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
+foreign import jumpToMatching :: Editor -> Effect Unit
 
 foreign import gotoLineImpl
-  :: forall eff
-   . Fn4 Int (Nullable Int) (Nullable Boolean) Editor (Eff (ace :: ACE | eff) Unit)
+  :: Fn4 Int (Nullable Int) (Nullable Boolean) Editor (Effect Unit)
 
 gotoLine
-  :: forall eff
-   . Int -> Maybe Int -> Maybe Boolean -> Editor
-  -> Eff (ace :: ACE | eff) Unit
+  :: Int -> Maybe Int -> Maybe Boolean -> Editor -> Effect Unit
 gotoLine lineNumber column animate self =
   runFn4 gotoLineImpl lineNumber (toNullable column) (toNullable animate) self
 
 foreign import navigateToImpl
-  :: forall eff. Fn3 Int Int Editor (Eff (ace :: ACE | eff) Unit)
+  :: Fn3 Int Int Editor (Effect Unit)
 
-navigateTo :: forall eff. Int -> Int -> Editor -> Eff (ace :: ACE | eff) Unit
+navigateTo :: Int -> Int -> Editor -> Effect Unit
 navigateTo row column self = runFn3 navigateToImpl row column self
 
 foreign import navigateUpImpl
-  :: forall eff. Fn2 (Nullable Int) Editor (Eff (ace :: ACE | eff) Unit)
+  :: Fn2 (Nullable Int) Editor (Effect Unit)
 
-navigateUp :: forall eff. Maybe Int -> Editor -> Eff (ace :: ACE | eff) Unit
+navigateUp :: Maybe Int -> Editor -> Effect Unit
 navigateUp times self = runFn2 navigateUpImpl (toNullable times) self
 
 foreign import navigateDownImpl
-  :: forall eff. Fn2 (Nullable Int) Editor (Eff (ace :: ACE | eff) Unit)
+  :: Fn2 (Nullable Int) Editor (Effect Unit)
 
-navigateDown :: forall eff. Maybe Int -> Editor -> Eff (ace :: ACE | eff) Unit
+navigateDown :: Maybe Int -> Editor -> Effect Unit
 navigateDown times self = runFn2 navigateDownImpl (toNullable times) self
 
-foreign import navigateLeftImpl :: forall eff. Fn2 (Nullable Int) Editor (Eff (ace :: ACE | eff) Unit)
+foreign import navigateLeftImpl :: Fn2 (Nullable Int) Editor (Effect Unit)
 
-navigateLeft :: forall eff. Maybe Int -> Editor -> Eff (ace :: ACE | eff) Unit
+navigateLeft :: Maybe Int -> Editor -> Effect Unit
 navigateLeft times self = runFn2 navigateLeftImpl (toNullable times) self
 
 foreign import navigateRightImpl
-  :: forall eff. Fn2 Int Editor (Eff (ace :: ACE | eff) Unit)
+  :: Fn2 Int Editor (Effect Unit)
 
-navigateRight :: forall eff. Int -> Editor -> Eff (ace :: ACE | eff) Unit
+navigateRight :: Int -> Editor -> Effect Unit
 navigateRight times self = runFn2 navigateRightImpl times self
 
-foreign import navigateLineStart :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
+foreign import navigateLineStart :: Editor -> Effect Unit
 
-foreign import navigateLineEnd :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
+foreign import navigateLineEnd :: Editor -> Effect Unit
 
-foreign import navigateFileEnd :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
+foreign import navigateFileEnd :: Editor -> Effect Unit
 
-foreign import navigateFileStart :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
+foreign import navigateFileStart :: Editor -> Effect Unit
 
-foreign import navigateWordRight :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
+foreign import navigateWordRight :: Editor -> Effect Unit
 
-foreign import navigateWordLeft :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
+foreign import navigateWordLeft :: Editor -> Effect Unit
 
 foreign import replaceImpl
-  :: forall eff
-   . Fn3 String (Nullable SearchOptions) Editor (Eff (ace :: ACE | eff) Unit)
+  :: Fn3 String (Nullable SearchOptions) Editor (Effect Unit)
 
 replace
-  :: forall eff
-   . String -> Maybe SearchOptions -> Editor
-  -> Eff (ace :: ACE | eff) Unit
+  :: String -> Maybe SearchOptions -> Editor -> Effect Unit
 replace replacement options self =
   runFn3 replaceImpl replacement (toNullable options) self
 
 foreign import replaceAllImpl
-  :: forall eff
-   . Fn3 String (Nullable SearchOptions) Editor (Eff (ace :: ACE | eff) Unit)
+  :: Fn3 String (Nullable SearchOptions) Editor (Effect Unit)
 
 replaceAll
-  :: forall eff
-   . String -> Maybe SearchOptions -> Editor
-  -> Eff (ace :: ACE | eff) Unit
+  :: String -> Maybe SearchOptions -> Editor -> Effect Unit
 replaceAll replacement options self =
   runFn3 replaceAllImpl replacement (toNullable options) self
 
 foreign import getLastSearchOptions
-  :: forall eff. Editor -> Eff (ace :: ACE | eff) SearchOptions
+  :: Editor -> Effect SearchOptions
 
 foreign import findImpl
-  :: forall eff
-   . Fn4 String (Nullable SearchOptions) (Nullable Boolean) Editor
-         (Eff (ace :: ACE | eff) Unit)
+  :: Fn4 String (Nullable SearchOptions) (Nullable Boolean) Editor (Effect Unit)
 
 find
-  :: forall eff
-   . String -> Maybe SearchOptions -> Maybe Boolean -> Editor
-  -> Eff (ace :: ACE | eff) Unit
+  :: String -> Maybe SearchOptions -> Maybe Boolean -> Editor -> Effect Unit
 find needle options animate self =
   runFn4 findImpl needle (toNullable options) (toNullable animate) self
 
 foreign import findNextImpl
-  :: forall eff
-   . Fn3 (Nullable SearchOptions) (Nullable Boolean) Editor
-         (Eff (ace :: ACE | eff) Unit)
+  :: Fn3 (Nullable SearchOptions) (Nullable Boolean) Editor (Effect Unit)
 
 findNext
-  :: forall eff
-   . Maybe SearchOptions -> Maybe Boolean -> Editor
-  -> Eff (ace :: ACE | eff) Unit
+  :: Maybe SearchOptions -> Maybe Boolean -> Editor
+  -> Effect Unit
 findNext options animate self =
   runFn3 findNextImpl (toNullable options) (toNullable animate) self
 
 foreign import findPreviousImpl
-  :: forall eff
-   . Fn3 (Nullable SearchOptions) (Nullable Boolean) Editor
-         (Eff (ace :: ACE | eff) Unit)
+  :: Fn3 (Nullable SearchOptions) (Nullable Boolean) Editor (Effect Unit)
 
 findPrevious
-  :: forall eff
-   . Maybe SearchOptions -> Maybe Boolean -> Editor
-  -> Eff (ace :: ACE | eff) Unit
+  :: Maybe SearchOptions -> Maybe Boolean -> Editor
+  -> Effect Unit
 findPrevious options animate self =
   runFn3 findPreviousImpl (toNullable options) (toNullable animate) self
 
-foreign import undo :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
+foreign import undo :: Editor -> Effect Unit
 
-foreign import redo :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
+foreign import redo :: Editor -> Effect Unit
 
-foreign import destroy :: forall eff. Editor -> Eff (ace :: ACE | eff) Unit
+foreign import destroy :: Editor -> Effect Unit
 
 foreign import createImpl
-  :: forall eff
-   . Fn2 VirtualRenderer (Nullable EditSession) (Eff (ace :: ACE | eff) Editor)
+  :: Fn2 VirtualRenderer (Nullable EditSession) (Effect Editor)
 
 create
-  :: forall eff
-   . VirtualRenderer -> Maybe EditSession
-  -> Eff (ace :: ACE | eff) Editor
+  :: VirtualRenderer -> Maybe EditSession
+  -> Effect Editor
 create renderer session = runFn2 createImpl renderer (toNullable session)
 
 foreign import setOption
-  :: forall a eff. String -> a -> Editor -> Eff (ace :: ACE | eff) Unit
+  :: forall a. String -> a -> Editor -> Effect Unit
 
-setMinLines :: forall eff. Int -> Editor ->  Eff (ace :: ACE | eff) Unit
+setMinLines :: Int -> Editor ->  Effect Unit
 setMinLines = setOption "minLines"
 
-setMaxLines :: forall eff. Int -> Editor ->  Eff (ace :: ACE | eff) Unit
+setMaxLines :: Int -> Editor ->  Effect Unit
 setMaxLines = setOption "maxLines"
 
 setAutoScrollEditorIntoView
-  :: forall eff. Boolean -> Editor ->  Eff (ace :: ACE | eff) Unit
+  :: Boolean -> Editor ->  Effect Unit
 setAutoScrollEditorIntoView = setOption "autoScrollEditorIntoView"
 
 setEnableBasicAutocompletion
-  :: forall eff. Boolean -> Editor -> Eff (ace :: ACE | eff) Unit
+  :: Boolean -> Editor -> Effect Unit
 setEnableBasicAutocompletion = setOption "enableBasicAutocompletion"
 
 setEnableLiveAutocompletion
-  :: forall eff . Boolean -> Editor -> Eff (ace :: ACE | eff) Unit
+  :: Boolean -> Editor -> Effect Unit
 setEnableLiveAutocompletion = setOption "enableLiveAutocompletion"
 
 setEnableSnippets
-  :: forall eff. Boolean -> Editor -> Eff (ace :: ACE | eff) Unit
+  :: Boolean -> Editor -> Effect Unit
 setEnableSnippets = setOption "enableSnippets"
 
 
 foreign import getKeyBinding
-  :: forall eff. Editor -> Eff (ace :: ACE | eff) KeyBinding
+  :: Editor -> Effect KeyBinding

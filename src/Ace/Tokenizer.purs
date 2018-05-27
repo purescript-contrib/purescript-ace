@@ -4,12 +4,12 @@ module Ace.Tokenizer
   ) where
 
 import Ace.Types
-import Control.Monad.Eff (Eff)
+import Effect (Effect)
 import Data.Function.Uncurried (Fn2, runFn2)
 
-foreign import getLineTokens :: forall eff. Tokenizer -> Eff (ace :: ACE | eff) { tokens :: Array TokenInfo, state :: String }
+foreign import getLineTokens :: Tokenizer -> Effect { tokens :: Array TokenInfo, state :: String }
 
-foreign import createImpl :: forall eff. Fn2 Rules String (Eff (ace :: ACE | eff) Tokenizer)
+foreign import createImpl :: Fn2 Rules String (Effect Tokenizer)
 
-create :: forall eff. Rules -> String -> Eff (ace :: ACE | eff) Tokenizer
+create :: Rules -> String -> Effect Tokenizer
 create rules flag = runFn2 createImpl rules flag

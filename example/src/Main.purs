@@ -2,23 +2,13 @@ module Main where
 
 import Prelude
 
-import Control.Monad.Eff (Eff)
-import Control.Monad.Eff.Console (log, CONSOLE)
-import Control.Monad.Eff.Ref (newRef, readRef, writeRef, REF)
-
-import Data.Array.ST (pushSTArray)
-import Data.Maybe (Maybe(..))
-import Data.Traversable (for_)
-
-import DOM (DOM)
-
 import Ace as Ace
 import Ace.Anchor as Anchor
 import Ace.BackgroundTokenizer as BackgroundTokenizer
 import Ace.Config as Config
 import Ace.Document as Document
-import Ace.Editor as Editor
 import Ace.EditSession as Session
+import Ace.Editor as Editor
 import Ace.Ext.LanguageTools as LanguageTools
 import Ace.Ext.LanguageTools.Completer as Completer
 import Ace.KeyBinding as KeyBinding
@@ -28,11 +18,17 @@ import Ace.Search as Search
 import Ace.Selection as Selection
 import Ace.TokenIterator as TokenIterator
 import Ace.UndoManager as UndoManager
+import Data.Array.ST as AST
+import Data.Maybe (Maybe(..))
+import Data.Traversable (for_)
+import Effect (Effect)
+import Effect.Console (log)
+import Effect.Ref as Ref
 
 foreign import rules :: Ace.Rules
-foreign import onLoad :: forall e. Eff e Unit -> Eff e Unit
+foreign import onLoad :: Effect Unit -> Effect Unit
 
-main :: forall e. Eff (ref ::REF, console :: CONSOLE, ace :: Ace.ACE, dom :: DOM|e) Unit
+main :: Effect Unit
 main = onLoad $ do
   _ <- Config.set Config.basePath "foo"
 
@@ -54,10 +50,10 @@ main = onLoad $ do
       "string"
       false
       session
-    >>= newRef
+    >>= Ref.new
 
   let rerenderMarker _ = do
-        readRef markerRef >>= flip Session.removeMarker session
+        Ref.read markerRef >>= flip Session.removeMarker session
         Ace.Position {row: startRow, column: startColumn}
           <- Anchor.getPosition startAnchor
         Ace.Position {row: endRow, column: endColumn}
@@ -74,7 +70,7 @@ main = onLoad $ do
                   false
                   session
 
-        writeRef markerRef newMId
+        Ref.write newMId markerRef
         pure unit
 
   Anchor.onChange startAnchor rerenderMarker
@@ -148,7 +144,7 @@ main = onLoad $ do
     Anchor.detach anchor
 
   -- Add a dynamic marker
-  Session.addDynamicMarker (\html _ -> pushSTArray html "<i>!</i>") true session
+  Session.addDynamicMarker (\html _ -> AST.push "<i>lulz</i>" html) true session
 
   -- Get the background tokenizer and trace the tokens and state on the first line
   backgroundTokenizer <- Session.getBackgroundTokenizer session
@@ -214,7 +210,7 @@ main = onLoad $ do
   pure unit
 
 
-miscTests :: forall e. Eff (console :: CONSOLE, ace :: Ace.ACE |e) Unit
+miscTests :: Effect Unit
 miscTests = void do
   editor <- Ace.edit "tests" Ace.ace
   session <- Editor.getSession editor

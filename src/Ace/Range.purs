@@ -36,138 +36,138 @@ module Ace.Range
 
 import Prelude hiding (compare)
 
-import Ace.Types (Range, ACE, EditSession, Position)
-import Control.Monad.Eff (Eff)
+import Ace.Types (Range, EditSession, Position)
+import Effect (Effect)
 import Data.Function.Uncurried (Fn2, runFn2, Fn3, runFn3, Fn4, runFn4)
 
-foreign import getStartRow :: forall eff. Range -> Eff (ace :: ACE | eff) Int
+foreign import getStartRow :: Range -> Effect Int
 
-foreign import getStartColumn :: forall eff. Range -> Eff (ace :: ACE | eff) Int
+foreign import getStartColumn :: Range -> Effect Int
 
-foreign import getEndRow :: forall eff. Range -> Eff (ace :: ACE | eff) Int
+foreign import getEndRow :: Range -> Effect Int
 
-foreign import getEndColumn :: forall eff. Range -> Eff (ace :: ACE | eff) Int
+foreign import getEndColumn :: Range -> Effect Int
 
-foreign import getStart :: forall eff. Range -> Eff (ace :: ACE | eff) Position
+foreign import getStart :: Range -> Effect Position
 
-foreign import getEnd :: forall eff. Range -> Eff (ace :: ACE | eff) Position
+foreign import getEnd :: Range -> Effect Position
 
-foreign import isEmpty :: forall eff. Range -> Eff (ace :: ACE | eff) Boolean
+foreign import isEmpty :: Range -> Effect Boolean
 
-foreign import isEqualImpl :: forall eff. Fn2 Range Range (Eff (ace :: ACE | eff) Unit)
+foreign import isEqualImpl :: Fn2 Range Range (Effect Unit)
 
-isEqual :: forall eff. Range -> Range -> Eff (ace :: ACE | eff) Unit
+isEqual :: Range -> Range -> Effect Unit
 isEqual range self = runFn2 isEqualImpl range self
 
-foreign import toString :: forall eff. Range -> Eff (ace :: ACE | eff) Unit
+foreign import toString :: Range -> Effect Unit
 
-foreign import containsImpl :: forall eff. Fn3 Int Int Range (Eff (ace :: ACE | eff) Boolean)
+foreign import containsImpl :: Fn3 Int Int Range (Effect Boolean)
 
-contains :: forall eff. Int -> Int -> Range -> Eff (ace :: ACE | eff) Boolean
+contains :: Int -> Int -> Range -> Effect Boolean
 contains row column self = runFn3 containsImpl row column self
 
-foreign import compareRangeImpl :: forall eff. Fn2 Range Range (Eff (ace :: ACE | eff) Int)
+foreign import compareRangeImpl :: Fn2 Range Range (Effect Int)
 
-compareRange :: forall eff. Range -> Range -> Eff (ace :: ACE | eff) Int
+compareRange :: Range -> Range -> Effect Int
 compareRange range self = runFn2 compareRangeImpl range self
 
-foreign import comparePointImpl :: forall eff. Fn2 Range Range (Eff (ace :: ACE | eff) Int)
+foreign import comparePointImpl :: Fn2 Range Range (Effect Int)
 
-comparePoint :: forall eff. Range -> Range -> Eff (ace :: ACE | eff) Int
+comparePoint :: Range -> Range -> Effect Int
 comparePoint p self = runFn2 comparePointImpl p self
 
-foreign import containsRangeImpl :: forall eff. Fn2 Range Range (Eff (ace :: ACE | eff) Boolean)
+foreign import containsRangeImpl :: Fn2 Range Range (Effect Boolean)
 
-containsRange :: forall eff. Range -> Range -> Eff (ace :: ACE | eff) Boolean
+containsRange :: Range -> Range -> Effect Boolean
 containsRange range self = runFn2 containsRangeImpl range self
 
-foreign import intersectsImpl :: forall eff. Fn2 Range Range (Eff (ace :: ACE | eff) Boolean)
+foreign import intersectsImpl :: Fn2 Range Range (Effect Boolean)
 
-intersects :: forall eff. Range -> Range -> Eff (ace :: ACE | eff) Boolean
+intersects :: Range -> Range -> Effect Boolean
 intersects range self = runFn2 intersectsImpl range self
 
-foreign import isEndImpl :: forall eff. Fn3 Int Int Range (Eff (ace :: ACE | eff) Boolean)
+foreign import isEndImpl :: Fn3 Int Int Range (Effect Boolean)
 
-isEnd :: forall eff. Int -> Int -> Range -> Eff (ace :: ACE | eff) Boolean
+isEnd :: Int -> Int -> Range -> Effect Boolean
 isEnd row column self = runFn3 isEndImpl row column self
 
-foreign import isStartImpl :: forall eff. Fn3 Int Int Range (Eff (ace :: ACE | eff) Boolean)
+foreign import isStartImpl :: Fn3 Int Int Range (Effect Boolean)
 
-isStart :: forall eff. Int -> Int -> Range -> Eff (ace :: ACE | eff) Boolean
+isStart :: Int -> Int -> Range -> Effect Boolean
 isStart row column self = runFn3 isStartImpl row column self
 
-foreign import setStartImpl :: forall eff. Fn3 Int Int Range (Eff (ace :: ACE | eff) Unit)
+foreign import setStartImpl :: Fn3 Int Int Range (Effect Unit)
 
-setStart :: forall eff. Int -> Int -> Range -> Eff (ace :: ACE | eff) Unit
+setStart :: Int -> Int -> Range -> Effect Unit
 setStart row column self = runFn3 setStartImpl row column self
 
-foreign import setEndImpl :: forall eff. Fn3 Int Int Range (Eff (ace :: ACE | eff) Unit)
+foreign import setEndImpl :: Fn3 Int Int Range (Effect Unit)
 
-setEnd :: forall eff. Int -> Int -> Range -> Eff (ace :: ACE | eff) Unit
+setEnd :: Int -> Int -> Range -> Effect Unit
 setEnd row column self = runFn3 setEndImpl row column self
 
-foreign import insideImpl :: forall eff. Fn3 Int Int Range (Eff (ace :: ACE | eff) Boolean)
+foreign import insideImpl :: Fn3 Int Int Range (Effect Boolean)
 
-inside :: forall eff. Int -> Int -> Range -> Eff (ace :: ACE | eff) Boolean
+inside :: Int -> Int -> Range -> Effect Boolean
 inside row column self = runFn3 insideImpl row column self
 
-foreign import insideStartImpl :: forall eff. Fn3 Int Int Range (Eff (ace :: ACE | eff) Boolean)
+foreign import insideStartImpl :: Fn3 Int Int Range (Effect Boolean)
 
-insideStart :: forall eff. Int -> Int -> Range -> Eff (ace :: ACE | eff) Boolean
+insideStart :: Int -> Int -> Range -> Effect Boolean
 insideStart row column self = runFn3 insideStartImpl row column self
 
-foreign import insideEndImpl :: forall eff. Fn3 Int Int Range (Eff (ace :: ACE | eff) Boolean)
+foreign import insideEndImpl :: Fn3 Int Int Range (Effect Boolean)
 
-insideEnd :: forall eff. Int -> Int -> Range -> Eff (ace :: ACE | eff) Boolean
+insideEnd :: Int -> Int -> Range -> Effect Boolean
 insideEnd row column self = runFn3 insideEndImpl row column self
 
-foreign import compareImpl :: forall eff. Fn3 Int Int Range (Eff (ace :: ACE | eff) Int)
+foreign import compareImpl :: Fn3 Int Int Range (Effect Int)
 
-compare :: forall eff. Int -> Int -> Range -> Eff (ace :: ACE | eff) Int
+compare :: Int -> Int -> Range -> Effect Int
 compare row column self = runFn3 compareImpl row column self
 
-foreign import compareStartImpl :: forall eff. Fn3 Int Int Range (Eff (ace :: ACE | eff) Int)
+foreign import compareStartImpl :: Fn3 Int Int Range (Effect Int)
 
-compareStart :: forall eff. Int -> Int -> Range -> Eff (ace :: ACE | eff) Int
+compareStart :: Int -> Int -> Range -> Effect Int
 compareStart row column self = runFn3 compareStartImpl row column self
 
-foreign import compareEndImpl :: forall eff. Fn3 Int Int Range (Eff (ace :: ACE | eff) Int)
+foreign import compareEndImpl :: Fn3 Int Int Range (Effect Int)
 
-compareEnd :: forall eff. Int -> Int -> Range -> Eff (ace :: ACE | eff) Int
+compareEnd :: Int -> Int -> Range -> Effect Int
 compareEnd row column self = runFn3 compareEndImpl row column self
 
-foreign import compareInsideImpl :: forall eff. Fn3 Int Int Range (Eff (ace :: ACE | eff) Int)
+foreign import compareInsideImpl :: Fn3 Int Int Range (Effect Int)
 
-compareInside :: forall eff. Int -> Int -> Range -> Eff (ace :: ACE | eff) Int
+compareInside :: Int -> Int -> Range -> Effect Int
 compareInside row column self = runFn3 compareInsideImpl row column self
 
-foreign import clipRowsImpl :: forall eff. Fn3 Int Int Range (Eff (ace :: ACE | eff) Range)
+foreign import clipRowsImpl :: Fn3 Int Int Range (Effect Range)
 
-clipRows :: forall eff. Int -> Int -> Range -> Eff (ace :: ACE | eff) Range
+clipRows :: Int -> Int -> Range -> Effect Range
 clipRows firstRow lastRow self = runFn3 clipRowsImpl firstRow lastRow self
 
-foreign import extendImpl :: forall eff. Fn3 Int Int Range (Eff (ace :: ACE | eff) Range)
+foreign import extendImpl :: Fn3 Int Int Range (Effect Range)
 
-extend :: forall eff. Int -> Int -> Range -> Eff (ace :: ACE | eff) Range
+extend :: Int -> Int -> Range -> Effect Range
 extend row column self = runFn3 extendImpl row column self
 
-foreign import isMultiLine :: forall eff. Range -> Eff (ace :: ACE | eff) Boolean
+foreign import isMultiLine :: Range -> Effect Boolean
 
-foreign import clone :: forall eff. Range -> Eff (ace :: ACE | eff) Range
+foreign import clone :: Range -> Effect Range
 
-foreign import collapseRows :: forall eff. Range -> Eff (ace :: ACE | eff) Range
+foreign import collapseRows :: Range -> Effect Range
 
-foreign import toScreenRangeImpl :: forall eff. Fn2 EditSession Range (Eff (ace :: ACE | eff) Range)
+foreign import toScreenRangeImpl :: Fn2 EditSession Range (Effect Range)
 
-toScreenRange :: forall eff. EditSession -> Range -> Eff (ace :: ACE | eff) Range
+toScreenRange :: EditSession -> Range -> Effect Range
 toScreenRange session self = runFn2 toScreenRangeImpl session self
 
-foreign import fromPointsImpl :: forall eff. Fn2 Range Range (Eff (ace :: ACE | eff) Range)
+foreign import fromPointsImpl :: Fn2 Range Range (Effect Range)
 
-fromPoints :: forall eff. Range -> Range -> Eff (ace :: ACE | eff) Range
+fromPoints :: Range -> Range -> Effect Range
 fromPoints start end = runFn2 fromPointsImpl start end
 
-foreign import createImpl :: forall eff. Fn4 Int Int Int Int (Eff (ace :: ACE | eff) Range)
+foreign import createImpl :: Fn4 Int Int Int Int (Effect Range)
 
-create :: forall eff. Int -> Int -> Int -> Int -> Eff (ace :: ACE | eff) Range
+create :: Int -> Int -> Int -> Int -> Effect Range
 create startRow startColumn endRow endColumn = runFn4 createImpl startRow startColumn endRow endColumn

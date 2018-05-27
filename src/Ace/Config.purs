@@ -10,14 +10,14 @@ module Ace.Config
   ) where
 
 import Ace.Types
-import Control.Monad.Eff (Eff)
+import Effect (Effect)
 import Data.Function.Uncurried (Fn2, runFn2)
 
 newtype ConfigOption a = ConfigOption String
 
-foreign import setImpl :: forall a eff. Fn2 (ConfigOption a) a (Eff (ace :: ACE | eff) Ace)
+foreign import setImpl :: forall a. Fn2 (ConfigOption a) a (Effect Ace)
 
-set :: forall a eff. ConfigOption a -> a -> Eff (ace :: ACE | eff) Ace
+set :: forall a. ConfigOption a -> a -> Effect Ace
 set key value = runFn2 setImpl key value
 
 packaged :: ConfigOption Boolean

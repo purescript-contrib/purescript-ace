@@ -1,9 +1,8 @@
 module Ace.Types where
 
 import Prelude
-import Control.Monad.Eff (kind Effect)
-import Data.Foreign (F, Foreign, ForeignError(..), fail, readArray, readInt, readString)
-import Data.Foreign.Index ((!))
+import Foreign (F, Foreign, ForeignError(..), fail, readArray, readInt, readString)
+import Foreign.Index ((!))
 import Data.Maybe (Maybe)
 import Data.Traversable (traverse)
 
@@ -98,8 +97,6 @@ type SearchOptions =
   , regExp :: Boolean
   , skipCurrent :: Boolean
   }
-
-foreign import data ACE :: Effect
 
 data Ace
 
