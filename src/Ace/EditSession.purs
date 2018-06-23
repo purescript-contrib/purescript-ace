@@ -122,8 +122,8 @@ foreign import getBackgroundTokenizer :: EditSession -> Effect BackgroundTokeniz
 
 foreign import onImpl :: forall ev a. Fn3 String (ev -> Effect a) EditSession (Effect Unit)
 
-onChange :: forall a. EditSession -> Effect a -> Effect Unit
-onChange self fn = runFn3 onImpl "change" (\_ -> fn) self
+onChange :: forall a. EditSession -> ({ action :: String, start :: { row :: Int, column :: Int }, end :: { row :: Int, column :: Int }, lines :: Array String } -> Effect a) -> Effect Unit
+onChange self fn = runFn3 onImpl "change" fn self
 
 onChangeAnnotation :: forall a. EditSession -> Effect a -> Effect Unit
 onChangeAnnotation self fn = runFn3 onImpl "changeAnnotation" (\_ -> fn) self
