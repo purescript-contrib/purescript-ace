@@ -15,6 +15,7 @@ module Ace.Document
   , insert
   , insertNewLine
   , insertInLine
+  , insertLines
   , remove
   , removeInLine
   , removeNewLine
