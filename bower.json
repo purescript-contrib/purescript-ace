@@ -20,8 +20,8 @@
   ],
   "dependencies": {
     "purescript-effect": "^2.0.0",
-    "purescript-web-html": "^1.0.0",
-    "purescript-web-uievents": "^1.0.0",
+    "purescript-web-html": "^2.0.0",
+    "purescript-web-uievents": "^2.0.0",
     "purescript-arrays": "^5.0.0",
     "purescript-foreign": "^5.0.0",
     "purescript-nullable": "^4.0.0",
