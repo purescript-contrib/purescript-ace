@@ -109,7 +109,7 @@ module Ace.EditSession
 
 import Prelude
 
-import Ace.Types (Marker, EditSession, TextMode, Position, Range, Annotation, UndoManager, TokenInfo, Selection, Document, BackgroundTokenizer)
+import Ace.Types (Marker, DocumentEvent, EditSession, TextMode, Position, Range, Annotation, UndoManager, TokenInfo, Selection, Document, BackgroundTokenizer)
 import Control.Monad.ST (ST)
 import Data.Array.ST (STArray)
 import Data.Function.Uncurried (Fn2, runFn2, Fn3, runFn3, Fn4, runFn4, Fn5, runFn5)
@@ -122,7 +122,7 @@ foreign import getBackgroundTokenizer :: EditSession -> Effect BackgroundTokeniz
 
 foreign import onImpl :: forall ev a. Fn3 String (ev -> Effect a) EditSession (Effect Unit)
 
-onChange :: forall a. EditSession -> ({ action :: String, start :: { row :: Int, column :: Int }, end :: { row :: Int, column :: Int }, lines :: Array String } -> Effect a) -> Effect Unit
+onChange :: forall a. EditSession -> (DocumentEvent -> Effect a) -> Effect Unit
 onChange self fn = runFn3 onImpl "change" fn self
 
 onChangeAnnotation :: forall a. EditSession -> Effect a -> Effect Unit
