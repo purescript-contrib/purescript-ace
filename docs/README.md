@@ -11,10 +11,3 @@ The API is a low-level, type-safe, straightforward binding to Ace:
 * PureScript record types are used for JavaScript objects.
 * JavaScript's fake sum types are mapped to PureScript's real sum types, which necessitates encoding / decoding.
 
-## Examples
-
-The `examples` directory contains an `index.html`, which contains a variety of examples of how to embed the Ace editor and configure it using the PureScript API.
-
-## Tests
-
-This project has no real tests. However, most bound functions are exercised in the examples, to ensure the bindings and necessary wrapping, unwrapping, encoding, and decoding has been performed correctly.
