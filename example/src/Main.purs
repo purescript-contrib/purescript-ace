@@ -1,4 +1,4 @@
-module Main where
+module Example.Main where
 
 import Prelude
 
@@ -77,7 +77,7 @@ main = onLoad $ do
   Anchor.onChange endAnchor rerenderMarker
 
   Editor.getKeyBinding editor
-    >>= KeyBinding.addKeyboardHandler \{editor} hs kstring kcode evt -> do
+    >>= KeyBinding.addKeyboardHandler \{editor : editor_shadow} hs kstring kcode evt -> do
       if hs == -1 || (kcode <= 40 && kcode >= 37)
         then pure Nothing
         else do
@@ -85,7 +85,7 @@ main = onLoad $ do
           <- Anchor.getPosition startAnchor
         Ace.Position {row: endRow, column: endColumn}
           <- Anchor.getPosition endAnchor
-        selectedRange <- Editor.getSelectionRange editor
+        selectedRange <- Editor.getSelectionRange editor_shadow
         newRange <-
           if kstring == "backspace"
           then Range.create startRow startColumn endRow (endColumn + 1)
