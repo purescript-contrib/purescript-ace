@@ -1,5 +1,7 @@
 "use strict";
 
+var ace = require("ace-builds");
+
 exports.getLineTokens = function (self) {
   return function () {
     return self.getLineTokens();

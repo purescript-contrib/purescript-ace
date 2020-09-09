@@ -1,5 +1,7 @@
 "use strict";
 
+var ace = require("ace-builds");
+
 function effize(method) {
   return function () {
     var me = arguments[arguments.length - 1];
@@ -160,6 +162,7 @@ exports.setOption = function (s) {
 
 exports.createImpl = function (renderer, session) {
   return function () {
+    var Editor = ace.require("ace/editor");
     return new Editor(renderer, session);
   };
 };

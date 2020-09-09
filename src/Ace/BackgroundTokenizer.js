@@ -1,5 +1,7 @@
 "use strict";
 
+var ace = require("ace-builds");
+
 exports.onUpdateImpl = function (self, fn) {
   return function () {
     return self.on("update", function (e) {

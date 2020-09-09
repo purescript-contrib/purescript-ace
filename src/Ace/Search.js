@@ -1,5 +1,7 @@
 "use strict";
 
+var ace = require("ace-builds");
+
 function effize(method) {
   return function () {
     var me = arguments[arguments.length - 1];
@@ -15,7 +17,7 @@ exports.setImpl = effize("set");
 exports.findImpl = function (just, nothing, sess, search) {
   return function () {
     var result = search.find(sess);
-    return result == null ? nothing : just(result);
+    return result === null ? nothing : just(result);
   };
 };
 
