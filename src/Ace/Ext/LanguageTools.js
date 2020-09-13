@@ -1,5 +1,7 @@
 "use strict";
 
+var ace = require("ace-builds");
+
 exports.languageTools = function  () {
   return ace.require("ace/ext/language_tools");
 };

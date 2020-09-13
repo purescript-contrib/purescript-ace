@@ -1,5 +1,7 @@
 "use strict";
 
+var ace = require("ace-builds");
+
 exports.getBackgroundTokenizer = function (value) {
   return function () {
     return value.bgTokenizer;
