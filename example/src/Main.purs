@@ -77,15 +77,15 @@ main = onLoad $ do
   Anchor.onChange endAnchor rerenderMarker
 
   Editor.getKeyBinding editor
-    >>= KeyBinding.addKeyboardHandler \{editor : editor_shadow} hs kstring kcode evt -> do
+    >>= KeyBinding.addKeyboardHandler \handler hs kstring kcode evt -> do
       if hs == -1 || (kcode <= 40 && kcode >= 37)
         then pure Nothing
         else do
-        Ace.Position {row: startRow, column: startColumn}
+        Ace.Position { row: startRow, column: startColumn }
           <- Anchor.getPosition startAnchor
-        Ace.Position {row: endRow, column: endColumn}
+        Ace.Position { row: endRow, column: endColumn }
           <- Anchor.getPosition endAnchor
-        selectedRange <- Editor.getSelectionRange editor_shadow
+        selectedRange <- Editor.getSelectionRange handler.editor
         newRange <-
           if kstring == "backspace"
           then Range.create startRow startColumn endRow (endColumn + 1)
@@ -94,7 +94,7 @@ main = onLoad $ do
                else Range.create startRow startColumn endRow endColumn
         intersected <- Range.intersects newRange selectedRange
         pure if intersected
-             then Just {command: Ace.Null, passEvent: false}
+             then Just { command: Ace.Null, passEvent: false }
              else Nothing
 
   -- Set the theme
