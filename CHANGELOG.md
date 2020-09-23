@@ -79,3 +79,4 @@ Update for PureScript 0.9.1 and core libraries 1.0.
 
 ## [v0.1.0](https://github.com/purescript-contrib/purescript-ace/releases/tag/v0.1.0) - 2015-03-29
 
+- Initial release
