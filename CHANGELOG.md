@@ -12,4 +12,71 @@ Bugfixes:
 
 Other improvements:
 
-## [0.0.0] - 2020-01-01
+## [v7.1.0](https://github.com/purescript-contrib/purescript-ace/releases/tag/v7.1.0) - 2020-09-13
+
+* Export `insertLines` function (#29)
+
+## [v7.0.0](https://github.com/purescript-contrib/purescript-ace/releases/tag/v7.0.0) - 2019-02-23
+
+Updated `purescript-web-*` dependencies
+
+## [v6.0.0](https://github.com/purescript-contrib/purescript-ace/releases/tag/v6.0.0) - 2018-06-23
+
+Passes `onChange` delta for EditSession to the callback.
+
+## [v5.0.0](https://github.com/purescript-contrib/purescript-ace/releases/tag/v5.0.0) - 2018-05-27
+
+Updated for PureScript 0.12
+
+## [v4.0.0](https://github.com/purescript-contrib/purescript-ace/releases/tag/v4.0.0) - 2017-04-11
+
+* Updated for PureScript v0.11 (@NasalMusician)
+
+## [v3.0.0](https://github.com/purescript-contrib/purescript-ace/releases/tag/v3.0.0) - 2016-10-24
+
+- Updated dependencies for PureScript 0.10.x
+
+## [v2.0.0](https://github.com/purescript-contrib/purescript-ace/releases/tag/v2.0.0) - 2016-07-31
+
+- Updated dependencies
+
+## [v1.0.0](https://github.com/purescript-contrib/purescript-ace/releases/tag/v1.0.0) - 2016-06-23
+
+Update for PureScript 0.9.1 and core libraries 1.0.
+
+## [v0.11.1](https://github.com/purescript-contrib/purescript-ace/releases/tag/v0.11.1) - 2016-04-07
+
+- Fixed various FFI errors
+
+## [v0.11.0](https://github.com/purescript-contrib/purescript-ace/releases/tag/v0.11.0) - 2016-01-25
+
+## [v0.10.1](https://github.com/purescript-contrib/purescript-ace/releases/tag/v0.10.1) - 2016-01-20
+
+- Fix mutation in autocomplete
+
+## [v0.10.0](https://github.com/purescript-contrib/purescript-ace/releases/tag/v0.10.0) - 2015-12-10
+
+## [v0.9.0](https://github.com/purescript-contrib/purescript-ace/releases/tag/v0.9.0) - 2015-12-07
+
+## [v0.8.1](https://github.com/purescript-contrib/purescript-ace/releases/tag/v0.8.1) - 2015-11-08
+
+- The `Ace.Types` module is now re-exported from `Ace`
+- Options that allow autosizing behaviour are now exposed via `Ace.Editor`
+
+## [v0.8.0](https://github.com/purescript-contrib/purescript-ace/releases/tag/v0.8.0) - 2015-08-16
+
+## [v0.5.0](https://github.com/purescript-contrib/purescript-ace/releases/tag/v0.5.0) - 2015-07-16
+
+## [v0.4.0](https://github.com/purescript-contrib/purescript-ace/releases/tag/v0.4.0) - 2015-05-27
+
+- The `EAce` effect is now called `ACE`
+- There is a new `Ace.Config` module for setting global configuration options such as `basePath`
+- `TextMode` is now a `newtype` for `String` removing the necessity of declaring `TextMode` values with the FFI.
+
+## [v0.2.0](https://github.com/purescript-contrib/purescript-ace/releases/tag/v0.2.0) - 2015-04-13
+
+- Updated `purescript-foreign` dependency
+
+## [v0.1.0](https://github.com/purescript-contrib/purescript-ace/releases/tag/v0.1.0) - 2015-03-29
+
+- Initial release
