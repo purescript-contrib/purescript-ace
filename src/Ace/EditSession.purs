@@ -533,6 +533,7 @@ foreign import createFromLinesImpl :: Fn2 (Array String) (Nullable String) (Effe
 createFromLines :: Array String -> Maybe String -> Effect EditSession
 createFromLines text mode' = runFn2 createFromLinesImpl text (toNullable mode')
 
+foreign import getMarkersImpl :: Fn2 Boolean EditSession (Effect (Array Marker))
 
-foreign import getMarkers
-  :: EditSession -> Effect (Array Marker)
+getMarkers :: Boolean -> EditSession -> Effect (Array Marker)
+getMarkers inFront session = runFn2 getMarkersImpl inFront session

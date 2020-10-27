@@ -12,6 +12,7 @@ import Ace.Editor as Editor
 import Ace.Ext.LanguageTools as LanguageTools
 import Ace.Ext.LanguageTools.Completer as Completer
 import Ace.KeyBinding as KeyBinding
+import Ace.Marker as Marker
 import Ace.Range as Range
 import Ace.ScrollBar as ScrollBar
 import Ace.Search as Search
@@ -20,7 +21,7 @@ import Ace.TokenIterator as TokenIterator
 import Ace.UndoManager as UndoManager
 import Data.Array.ST as AST
 import Data.Maybe (Maybe(..))
-import Data.Traversable (for_)
+import Data.Traversable (for_, traverse)
 import Effect (Effect)
 import Effect.Console (log)
 import Effect.Ref as Ref
@@ -352,6 +353,9 @@ miscTests = void do
   _ <- Session.documentToScreenColumn 0 0 session
   _ <- Session.documentToScreenRow 0 0 session
   _ <- Session.getScreenLength session
+  markers <- Session.getMarkers false session
+  markerIds <- traverse Marker.getId markers
+  log $ "markers " <> show markerIds
 
   Editor.selectMoreLines 0 editor
   Editor.setKeyboardHandler "" editor
