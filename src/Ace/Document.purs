@@ -30,16 +30,13 @@ module Ace.Document
 import Prelude
 
 import Ace.Types (Document, Position, Range, NewlineMode, Anchor, DocumentEvent, readDocumentEvent, showNewlineMode)
-
-import Effect (Effect)
 import Control.Monad.Except (runExcept)
-
-import Data.Either (fromRight)
-import Foreign (Foreign)
+import Data.Either (either)
 import Data.Function.Uncurried (Fn2, runFn2, Fn3, runFn3, Fn4, runFn4)
 import Data.Nullable (Nullable)
-
-import Partial.Unsafe (unsafePartial)
+import Effect (Effect)
+import Foreign (Foreign)
+import Partial.Unsafe (unsafeCrashWith)
 
 foreign import onChangeImpl
   :: forall a
@@ -47,9 +44,13 @@ foreign import onChangeImpl
 
 onChange
   :: forall a
-   . Document -> (DocumentEvent -> Effect a)
+   . Document
+  -> (DocumentEvent -> Effect a)
   -> Effect Unit
-onChange self fn = runFn2 onChangeImpl self (fn <<< (unsafePartial fromRight) <<< runExcept <<< readDocumentEvent)
+onChange self fn =
+  runFn2 onChangeImpl self (fn <<< fromRight <<< runExcept <<< readDocumentEvent)
+  where
+  fromRight = either (\_ -> unsafeCrashWith "Expected Left in Ace.Document.onChange") identity
 
 foreign import setValueImpl
   :: Fn2 String Document (Effect Unit)

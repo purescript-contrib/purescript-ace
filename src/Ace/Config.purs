@@ -13,6 +13,7 @@ import Ace.Types
 import Effect (Effect)
 import Data.Function.Uncurried (Fn2, runFn2)
 
+newtype ConfigOption :: Type -> Type
 newtype ConfigOption a = ConfigOption String
 
 foreign import setImpl :: forall a. Fn2 (ConfigOption a) a (Effect Ace)
