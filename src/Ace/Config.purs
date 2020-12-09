@@ -16,6 +16,8 @@ import Data.Function.Uncurried (Fn2, runFn2)
 newtype ConfigOption :: Type -> Type
 newtype ConfigOption a = ConfigOption String
 
+type role ConfigOption representational
+
 foreign import setImpl :: forall a. Fn2 (ConfigOption a) a (Effect Ace)
 
 set :: forall a. ConfigOption a -> a -> Effect Ace
