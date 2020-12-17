@@ -5,7 +5,7 @@
     "test": "spago test --no-install"
   },
   "devDependencies": {
-    "eslint": "^7.6.0"
+    "eslint": "^7.15.0",
   },
   "dependencies": {
     "ace-builds": "^1.4.12"
