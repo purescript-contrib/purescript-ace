@@ -13,12 +13,14 @@ New features:
 Bugfixes:
 
 Other improvements:
-- Backfill CHANGELOG.md file with previous releases (#33)
+- Backfilled CHANGELOG.md file with previous releases (#33)
 - Fixed link to documentation in the quickstart
 
 ## [v7.1.0](https://github.com/purescript-contrib/purescript-ace/releases/tag/v7.1.0) - 2020-09-13
 
-- Export `insertLines` function (#29)
+- Exported `insertLines` function (#29)
+- Switched default branch to `main`
+- Updated to comply with Contributors library guidelines by adding new issue and pull request templates, updating documentation, and migrating to Spago for local development and CI (#30)
 
 ## [v7.0.0](https://github.com/purescript-contrib/purescript-ace/releases/tag/v7.0.0) - 2019-02-23
 
