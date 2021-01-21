@@ -5,32 +5,38 @@ Notable changes to this project are documented in this file. The format is based
 ## [Unreleased]
 
 Breaking changes (😱!!!):
+- Added support for PureScript 0.14 and dropped support for all previous versions (#39, #40)
 
 New features:
+- Added roles declarations to forbid unsafe coercions (#32) 
 
 Bugfixes:
 
 Other improvements:
+- Backfilled CHANGELOG.md file with previous releases (#33)
+- Fixed link to documentation in the quickstart
 
 ## [v7.1.0](https://github.com/purescript-contrib/purescript-ace/releases/tag/v7.1.0) - 2020-09-13
 
-* Export `insertLines` function (#29)
+- Exported `insertLines` function (#29)
+- Switched default branch to `main`
+- Updated to comply with Contributors library guidelines by adding new issue and pull request templates, updating documentation, and migrating to Spago for local development and CI (#30)
 
 ## [v7.0.0](https://github.com/purescript-contrib/purescript-ace/releases/tag/v7.0.0) - 2019-02-23
 
-Updated `purescript-web-*` dependencies
+- Updated `purescript-web-*` dependencies
 
 ## [v6.0.0](https://github.com/purescript-contrib/purescript-ace/releases/tag/v6.0.0) - 2018-06-23
 
-Passes `onChange` delta for EditSession to the callback.
+- Pass `onChange` delta for EditSession to the callback.
 
 ## [v5.0.0](https://github.com/purescript-contrib/purescript-ace/releases/tag/v5.0.0) - 2018-05-27
 
-Updated for PureScript 0.12
+- Updated for PureScript 0.12
 
 ## [v4.0.0](https://github.com/purescript-contrib/purescript-ace/releases/tag/v4.0.0) - 2017-04-11
 
-* Updated for PureScript v0.11 (@NasalMusician)
+- Updated for PureScript v0.11 (@NasalMusician)
 
 ## [v3.0.0](https://github.com/purescript-contrib/purescript-ace/releases/tag/v3.0.0) - 2016-10-24
 
@@ -42,7 +48,7 @@ Updated for PureScript 0.12
 
 ## [v1.0.0](https://github.com/purescript-contrib/purescript-ace/releases/tag/v1.0.0) - 2016-06-23
 
-Update for PureScript 0.9.1 and core libraries 1.0.
+- Updated for PureScript 0.9.1 and core libraries 1.0.
 
 ## [v0.11.1](https://github.com/purescript-contrib/purescript-ace/releases/tag/v0.11.1) - 2016-04-07
 
@@ -50,13 +56,19 @@ Update for PureScript 0.9.1 and core libraries 1.0.
 
 ## [v0.11.0](https://github.com/purescript-contrib/purescript-ace/releases/tag/v0.11.0) - 2016-01-25
 
+- Added `readonly`
+
 ## [v0.10.1](https://github.com/purescript-contrib/purescript-ace/releases/tag/v0.10.1) - 2016-01-20
 
 - Fix mutation in autocomplete
 
 ## [v0.10.0](https://github.com/purescript-contrib/purescript-ace/releases/tag/v0.10.0) - 2015-12-10
 
+- Added caption field to Completion
+
 ## [v0.9.0](https://github.com/purescript-contrib/purescript-ace/releases/tag/v0.9.0) - 2015-12-07
+
+- Fixed Travis CI
 
 ## [v0.8.1](https://github.com/purescript-contrib/purescript-ace/releases/tag/v0.8.1) - 2015-11-08
 
@@ -65,7 +77,11 @@ Update for PureScript 0.9.1 and core libraries 1.0.
 
 ## [v0.8.0](https://github.com/purescript-contrib/purescript-ace/releases/tag/v0.8.0) - 2015-08-16
 
+- Updated to `purescript-dom` (#13)
+
 ## [v0.5.0](https://github.com/purescript-contrib/purescript-ace/releases/tag/v0.5.0) - 2015-07-16
+
+- Updated for PureScript 0.7
 
 ## [v0.4.0](https://github.com/purescript-contrib/purescript-ace/releases/tag/v0.4.0) - 2015-05-27
 
