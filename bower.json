@@ -28,6 +28,7 @@
     "purescript-web-uievents": "^3.0.0"
   },
   "devDependencies": {
+    "ace-builds": "^1.2.6",
     "purescript-console": "^5.0.0",
     "purescript-refs": "^5.0.0"
   }
