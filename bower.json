@@ -7,7 +7,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/slamdata/purescript-ace.git"
+    "url": "https://github.com/purescript-contrib/purescript-ace.git"
   },
   "ignore": [
     "**/.*",
@@ -19,17 +19,17 @@
     "package.json"
   ],
   "dependencies": {
-    "purescript-effect": "master",
-    "purescript-web-html": "master",
-    "purescript-web-uievents": "master",
-    "purescript-arrays": "master",
-    "purescript-foreign": "master",
-    "purescript-nullable": "main",
-    "purescript-prelude": "master"
+    "purescript-arrays": "^6.0.0",
+    "purescript-effect": "^3.0.0",
+    "purescript-foreign": "^6.0.0",
+    "purescript-nullable": "^5.0.0",
+    "purescript-prelude": "^5.0.0",
+    "purescript-web-html": "^3.0.0",
+    "purescript-web-uievents": "^3.0.0"
   },
   "devDependencies": {
-    "purescript-console": "master",
-    "ace-builds": "master",
-    "purescript-refs": "master"
+    "ace-builds": "^1.2.6",
+    "purescript-console": "^5.0.0",
+    "purescript-refs": "^5.0.0"
   }
 }
