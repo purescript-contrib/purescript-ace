@@ -7,8 +7,10 @@
 output
 generated-docs
 bower_components
-dist
 
 node_modules
 *.lock
 package-lock.json
+
+example/example.js
+dist
