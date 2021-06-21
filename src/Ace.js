@@ -1,7 +1,5 @@
 "use strict";
 
-var ace = require("ace-builds");
-
 exports.ace = ace;
 
 exports.editImpl = function (el, self) {

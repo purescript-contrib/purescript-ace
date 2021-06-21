@@ -1,7 +1,5 @@
 "use strict";
 
-var ace = require("ace-builds");
-
 exports.onUpdateImpl = function (self, fn) {
   return function () {
     return self.on("update", function (e) {
@@ -54,7 +52,9 @@ exports.getStateImpl = function (row, self) {
 
 exports.createImpl = function (tokenizer, editor) {
   return function () {
-    var BackgroundTokenizer = ace.require("ace/background_tokenizer").BackgroundTokenizer;
+    var BackgroundTokenizer = ace.require(
+      "ace/background_tokenizer"
+    ).BackgroundTokenizer;
     return new BackgroundTokenizer(tokenizer, editor);
   };
 };

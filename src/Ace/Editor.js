@@ -1,7 +1,5 @@
 "use strict";
 
-var ace = require("ace-builds");
-
 function effize(method) {
   return function () {
     var me = arguments[arguments.length - 1];

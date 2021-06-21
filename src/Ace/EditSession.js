@@ -1,7 +1,5 @@
 "use strict";
 
-var ace = require("ace-builds");
-
 exports.getBackgroundTokenizer = function (value) {
   return function () {
     return value.bgTokenizer;
@@ -216,11 +214,14 @@ exports.addMarkerImpl = function (range, clazz, type, inFront, self) {
 
 exports.addDynamicMarkerImpl = function (marker, inFront, self) {
   return function () {
-    return self.addDynamicMarker({
-      update: function (html, layer) {
-        marker(html)(layer.element)();
-      }
-    }, inFront);
+    return self.addDynamicMarker(
+      {
+        update: function (html, layer) {
+          marker(html)(layer.element)();
+        },
+      },
+      inFront
+    );
   };
 };
 
@@ -464,7 +465,12 @@ exports.getDisplayTokensImpl = function (str, offset, self) {
   };
 };
 
-exports.getStringScreenWidthImpl = function (str, maxScreenColumn, screenColumn, self) {
+exports.getStringScreenWidthImpl = function (
+  str,
+  maxScreenColumn,
+  screenColumn,
+  self
+) {
   return function () {
     return self.$getStringScreenWidth(str, maxScreenColumn, screenColumn);
   };
@@ -488,7 +494,11 @@ exports.getDocumentLastRowColumnImpl = function (docRow, docColumn, self) {
   };
 };
 
-exports.getDocumentLastRowColumnPositionImpl = function (docRow, docColumn, self) {
+exports.getDocumentLastRowColumnPositionImpl = function (
+  docRow,
+  docColumn,
+  self
+) {
   return function () {
     return self.getDocumentLastRowColumnPosition(docRow, docColumn);
   };
@@ -506,7 +516,11 @@ exports.getScreenTabSizeImpl = function (screenColumn, self) {
   };
 };
 
-exports.screenToDocumentPositionImpl = function (screenRow, screenColumn, self) {
+exports.screenToDocumentPositionImpl = function (
+  screenRow,
+  screenColumn,
+  self
+) {
   return function () {
     return self.screenToDocumentPosition(screenRow, screenColumn);
   };
@@ -536,7 +550,7 @@ exports.getScreenLength = function (self) {
   };
 };
 
-function  create(text, mode) {
+function create(text, mode) {
   return function () {
     var EditSession = ace.require("ace/edit_session").EditSession;
     return new EditSession(text, mode);

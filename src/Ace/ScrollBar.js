@@ -1,8 +1,6 @@
 "use strict";
 
-var ace = require("ace-builds");
-
-function  effize(method) {
+function effize(method) {
   return function () {
     var me = arguments[arguments.length - 1];
     var args = Array.prototype.slice.call(arguments, 0, -1);
