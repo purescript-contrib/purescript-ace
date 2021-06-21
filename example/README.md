@@ -1,5 +1,4 @@
 ```
-spago bundle-app -m Example.Main -t example/example.js
-npm i -g parcel
-parcel serve example/index.html --open
+spago bundle-app -m Example.Main --to example/example.js
+npx parcel serve example/index.html --open
 ```

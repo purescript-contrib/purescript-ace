@@ -7,6 +7,7 @@
 output
 generated-docs
 bower_components
+dist
 
 node_modules
 *.lock

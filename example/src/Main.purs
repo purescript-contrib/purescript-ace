@@ -77,7 +77,7 @@ main = onLoad $ do
   Anchor.onChange endAnchor rerenderMarker
 
   Editor.getKeyBinding editor
-    >>= KeyBinding.addKeyboardHandler \handler hs kstring kcode evt -> do
+    >>= KeyBinding.addKeyboardHandler \handler hs kstring kcode _ -> do
       if hs == -1 || (kcode <= 40 && kcode >= 37)
         then pure Nothing
         else do
@@ -114,7 +114,7 @@ main = onLoad $ do
   -- Get the mode
   mode <- Session.getMode session
   -- Create another edit session with this mode
-  session1 <- Ace.createEditSession "" mode Ace.ace
+  _ <- Ace.createEditSession "" mode Ace.ace
 
   -- Get the document for the session
   document `Document.onChange` \(Ace.DocumentEvent {action: ty}) ->
