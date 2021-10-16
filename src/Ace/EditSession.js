@@ -549,9 +549,9 @@ exports.createImpl = create;
 
 exports.createFromLinesImpl = create;
 
-exports.getMarkers = function (session) {
+exports.getMarkersImpl = function (inFront, session) {
   return function () {
-    var markerObj = session.getMarkers();
+    var markerObj = session.getMarkers(inFront);
     var ks = Object.getOwnPropertyNames(markerObj);
     var result = [];
     for (var i = 0; i < ks.length; i++) {
