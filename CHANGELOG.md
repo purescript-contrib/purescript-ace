@@ -11,6 +11,7 @@ New features:
 Bugfixes:
 
 Other improvements:
+Added `purs-tidy` formatter (#44 by @thomashoneyman)
 
 ## [v8.0.0](https://github.com/purescript-contrib/purescript-ace/releases/tag/v8.0.0) - 2021-02-26
 
