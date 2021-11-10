@@ -10,7 +10,8 @@ import Partial.Unsafe (unsafePartial)
 import Web.UIEvent.KeyboardEvent (KeyboardEvent)
 
 type KeyboardHandler
-  = { editor :: Editor }
+  =
+  { editor :: Editor }
   -> Int
   -> String
   -> Int

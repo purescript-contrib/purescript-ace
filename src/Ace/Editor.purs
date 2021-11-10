@@ -143,17 +143,23 @@ foreign import onImpl
 
 onBlur
   :: forall a
-   . Editor -> (Effect a) -> Effect Unit
+   . Editor
+  -> (Effect a)
+  -> Effect Unit
 onBlur self fn = runFn3 onImpl "blur" (\_ -> fn) self
 
 onFocus
   :: forall a
-   . Editor -> (Effect a) -> Effect Unit
+   . Editor
+  -> (Effect a)
+  -> Effect Unit
 onFocus self fn = runFn3 onImpl "focus" (\_ -> fn) self
 
 onCopy
   :: forall a
-   . Editor -> (String -> Effect a) -> Effect Unit
+   . Editor
+  -> (String -> Effect a)
+  -> Effect Unit
 onCopy self fn = runFn3 onImpl "copy" fn self
 
 onPaste
@@ -174,8 +180,9 @@ setPasteEventText text e = runFn2 setPasteEventTextImpl text e
 
 onChangeSession
   :: Editor
-  -> ({ oldSession :: EditSession, session :: EditSession }
-     -> Effect Unit)
+  -> ( { oldSession :: EditSession, session :: EditSession }
+       -> Effect Unit
+     )
   -> Effect Unit
 onChangeSession self fn = runFn3 onImpl "changeSession" fn self
 
@@ -600,7 +607,9 @@ foreign import findNextImpl
   :: Fn3 (Nullable SearchOptions) (Nullable Boolean) Editor (Effect Unit)
 
 findNext
-  :: Maybe SearchOptions -> Maybe Boolean -> Editor
+  :: Maybe SearchOptions
+  -> Maybe Boolean
+  -> Editor
   -> Effect Unit
 findNext options animate self =
   runFn3 findNextImpl (toNullable options) (toNullable animate) self
@@ -609,7 +618,9 @@ foreign import findPreviousImpl
   :: Fn3 (Nullable SearchOptions) (Nullable Boolean) Editor (Effect Unit)
 
 findPrevious
-  :: Maybe SearchOptions -> Maybe Boolean -> Editor
+  :: Maybe SearchOptions
+  -> Maybe Boolean
+  -> Editor
   -> Effect Unit
 findPrevious options animate self =
   runFn3 findPreviousImpl (toNullable options) (toNullable animate) self
@@ -624,21 +635,22 @@ foreign import createImpl
   :: Fn2 VirtualRenderer (Nullable EditSession) (Effect Editor)
 
 create
-  :: VirtualRenderer -> Maybe EditSession
+  :: VirtualRenderer
+  -> Maybe EditSession
   -> Effect Editor
 create renderer session = runFn2 createImpl renderer (toNullable session)
 
 foreign import setOption
   :: forall a. String -> a -> Editor -> Effect Unit
 
-setMinLines :: Int -> Editor ->  Effect Unit
+setMinLines :: Int -> Editor -> Effect Unit
 setMinLines = setOption "minLines"
 
-setMaxLines :: Int -> Editor ->  Effect Unit
+setMaxLines :: Int -> Editor -> Effect Unit
 setMaxLines = setOption "maxLines"
 
 setAutoScrollEditorIntoView
-  :: Boolean -> Editor ->  Effect Unit
+  :: Boolean -> Editor -> Effect Unit
 setAutoScrollEditorIntoView = setOption "autoScrollEditorIntoView"
 
 setEnableBasicAutocompletion
@@ -652,7 +664,6 @@ setEnableLiveAutocompletion = setOption "enableLiveAutocompletion"
 setEnableSnippets
   :: Boolean -> Editor -> Effect Unit
 setEnableSnippets = setOption "enableSnippets"
-
 
 foreign import getKeyBinding
   :: Editor -> Effect KeyBinding

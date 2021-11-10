@@ -16,7 +16,10 @@ foreign import getInFront :: Marker -> Effect Boolean
 foreign import getType :: Marker -> Effect String
 foreign import getRangeImpl
   :: forall a
-   . Maybe a -> (a -> Maybe a) -> Marker -> Effect (Maybe Range)
+   . Maybe a
+  -> (a -> Maybe a)
+  -> Marker
+  -> Effect (Maybe Range)
 
 getRange :: Marker -> Effect (Maybe Range)
 getRange = getRangeImpl Nothing Just
