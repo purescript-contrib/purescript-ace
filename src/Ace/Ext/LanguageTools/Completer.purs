@@ -15,10 +15,9 @@ type CompleterCallback = Maybe (Array Completion) -> Effect Unit
 foreign import mkCompleterImpl
   :: forall a
    . Fn3 (Editor -> EditSession -> Position -> String -> CompleterCallback -> Effect Unit)
-         (Maybe a -> Boolean)
-         (Maybe a -> a)
-         (Effect Completer)
-
+       (Maybe a -> Boolean)
+       (Maybe a -> a)
+       (Effect Completer)
 
 mkCompleter
   :: (Editor -> EditSession -> Position -> String -> CompleterCallback -> Effect Unit)

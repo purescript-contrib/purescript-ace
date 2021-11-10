@@ -50,52 +50,46 @@ main = onLoad $ do
       "string"
       false
       session
-    >>= Ref.new
+      >>= Ref.new
 
-  let rerenderMarker _ = do
-        Ref.read markerRef >>= flip Session.removeMarker session
-        Ace.Position {row: startRow, column: startColumn}
-          <- Anchor.getPosition startAnchor
-        Ace.Position {row: endRow, column: endColumn}
-          <- Anchor.getPosition endAnchor
-        markRange <- Range.create
-                       startRow
-                       (startColumn - one)
-                       endRow
-                       (endColumn + one)
-        newMId <- Session.addMarker
-                  markRange
-                  "readonly-highlight"
-                  "string"
-                  false
-                  session
+  let
+    rerenderMarker _ = do
+      Ref.read markerRef >>= flip Session.removeMarker session
+      Ace.Position { row: startRow, column: startColumn } <- Anchor.getPosition startAnchor
+      Ace.Position { row: endRow, column: endColumn } <- Anchor.getPosition endAnchor
+      markRange <- Range.create
+        startRow
+        (startColumn - one)
+        endRow
+        (endColumn + one)
+      newMId <- Session.addMarker
+        markRange
+        "readonly-highlight"
+        "string"
+        false
+        session
 
-        Ref.write newMId markerRef
-        pure unit
+      Ref.write newMId markerRef
+      pure unit
 
   Anchor.onChange startAnchor rerenderMarker
   Anchor.onChange endAnchor rerenderMarker
 
   Editor.getKeyBinding editor
     >>= KeyBinding.addKeyboardHandler \handler hs kstring kcode _ -> do
-      if hs == -1 || (kcode <= 40 && kcode >= 37)
-        then pure Nothing
-        else do
-        Ace.Position { row: startRow, column: startColumn }
-          <- Anchor.getPosition startAnchor
-        Ace.Position { row: endRow, column: endColumn }
-          <- Anchor.getPosition endAnchor
+      if hs == -1 || (kcode <= 40 && kcode >= 37) then pure Nothing
+      else do
+        Ace.Position { row: startRow, column: startColumn } <- Anchor.getPosition startAnchor
+        Ace.Position { row: endRow, column: endColumn } <- Anchor.getPosition endAnchor
         selectedRange <- Editor.getSelectionRange handler.editor
         newRange <-
-          if kstring == "backspace"
-          then Range.create startRow startColumn endRow (endColumn + 1)
-          else if kstring == "delete" || (kstring == "d" && hs == 1)
-               then Range.create startRow (startColumn - 1) endRow endColumn
-               else Range.create startRow startColumn endRow endColumn
+          if kstring == "backspace" then Range.create startRow startColumn endRow (endColumn + 1)
+          else if kstring == "delete" || (kstring == "d" && hs == 1) then Range.create startRow (startColumn - 1) endRow endColumn
+          else Range.create startRow startColumn endRow endColumn
         intersected <- Range.intersects newRange selectedRange
-        pure if intersected
-             then Just { command: Ace.Null, passEvent: false }
-             else Nothing
+        pure
+          if intersected then Just { command: Ace.Null, passEvent: false }
+          else Nothing
 
   -- Set the theme
   Editor.setTheme "ace/theme/chrome" editor
@@ -108,7 +102,6 @@ main = onLoad $ do
 
   -- Get the editor session
 
-
   -- Set the mode
   Session.setMode "ace/mode/javascript" session
   -- Get the mode
@@ -117,7 +110,7 @@ main = onLoad $ do
   _ <- Ace.createEditSession "" mode Ace.ace
 
   -- Get the document for the session
-  document `Document.onChange` \(Ace.DocumentEvent {action: ty}) ->
+  document `Document.onChange` \(Ace.DocumentEvent { action: ty }) ->
     log ("Document changed: " <> Ace.showDocumentEventType ty)
   Document.setNewLineMode Ace.Windows document
 
@@ -127,19 +120,19 @@ main = onLoad $ do
   position <- Anchor.getPosition anchor
 
   log $ "Initial anchor position: "
-      <> show (Ace.getRow position)
-      <> ", "
-      <> show (Ace.getColumn position)
-      <> ". Should be 0, 0"
+    <> show (Ace.getRow position)
+    <> ", "
+    <> show (Ace.getColumn position)
+    <> ". Should be 0, 0"
 
   -- Update the anchor position
   Anchor.setPosition 0 1 true anchor
   -- Listen for anchor position changes
   anchor `Anchor.onChange` \e -> do
     log $ "New anchor position: "
-       <> show (Ace.getRow e.value)
-       <> ", "
-       <> show (Ace.getColumn e.value)
+      <> show (Ace.getRow e.value)
+      <> ", "
+      <> show (Ace.getColumn e.value)
     -- Unlisten
     Anchor.detach anchor
 
@@ -161,14 +154,16 @@ main = onLoad $ do
 
   -- Create a search class
   search <- Search.create
-  _ <- Search.set { needle: "boo"
-             , backwards: false
-             , wrap: false
-             , caseSensitive: false
-             , wholeWord: true
-             , regExp: false
-             , skipCurrent: false
-             } search
+  _ <- Search.set
+    { needle: "boo"
+    , backwards: false
+    , wrap: false
+    , caseSensitive: false
+    , wholeWord: true
+    , regExp: false
+    , skipCurrent: false
+    }
+    search
   range' <- Search.find session search
   for_ range' \r -> Session.addFold "fold" r session
 
@@ -184,31 +179,31 @@ main = onLoad $ do
   -- Move the cursor
   Editor.moveCursorTo 0 Nothing Nothing editor
 
-
   Session.setMode "ace/mode/text" session
   languageTools <- LanguageTools.languageTools
   Editor.setEnableBasicAutocompletion true editor
   completer <-
     Completer.mkCompleter
-    (\_ _ _ inp cb -> do
-        cb $ pure [ { value: inp <> "!!"
-                    , score: 100.0
-                    , caption: pure "???"
-                    , meta: "!!"
-                    }
-                  , { value: "abcde"
-                    , score: 200.0
-                    , caption: Nothing
-                    , meta: "abcde"
-                    } ] )
+      ( \_ _ _ inp cb -> do
+          cb $ pure
+            [ { value: inp <> "!!"
+              , score: 100.0
+              , caption: pure "???"
+              , meta: "!!"
+              }
+            , { value: "abcde"
+              , score: 200.0
+              , caption: Nothing
+              , meta: "abcde"
+              }
+            ]
+      )
   LanguageTools.addCompleter completer languageTools
-
 
   -- Misc. Tests
   -- miscTests
 
   pure unit
-
 
 miscTests :: Effect Unit
 miscTests = void do
@@ -269,7 +264,6 @@ miscTests = void do
   Document.replace range "" document
   _ <- Document.indexToPosition 0 0 document
   _ <- Document.positionToIndex position 0 document
-
 
   undoManager <- UndoManager.create
 

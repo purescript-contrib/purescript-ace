@@ -79,10 +79,10 @@ readPosition e = do
   pure $ Position { row, column }
 
 getRow :: Position -> Int
-getRow (Position {row : row}) = row
+getRow (Position { row: row }) = row
 
 getColumn :: Position -> Int
-getColumn (Position {column : column}) = column
+getColumn (Position { column: column }) = column
 
 type TokenInfo =
   { value :: String
