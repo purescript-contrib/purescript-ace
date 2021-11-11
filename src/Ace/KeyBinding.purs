@@ -9,8 +9,7 @@ import Effect (Effect)
 import Partial.Unsafe (unsafePartial)
 import Web.UIEvent.KeyboardEvent (KeyboardEvent)
 
-type KeyboardHandler
-  =
+type KeyboardHandler =
   { editor :: Editor }
   -> Int
   -> String

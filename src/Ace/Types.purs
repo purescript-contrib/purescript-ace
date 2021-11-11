@@ -22,8 +22,7 @@ showDocumentEventType Remove = "remove"
 readDocumentEventType :: String -> F DocumentEventType
 readDocumentEventType "insert" = pure Insert
 readDocumentEventType "remove" = pure Remove
-readDocumentEventType s =
-  fail $ TypeMismatch ("'" <> s <> "'") " a valid value for the DocumentEventType enum"
+readDocumentEventType s = fail $ TypeMismatch ("'" <> s <> "'") " a valid value for the DocumentEventType enum"
 
 newtype DocumentEvent = DocumentEvent
   { action :: DocumentEventType
@@ -37,9 +36,7 @@ readDocumentEvent e = do
   action <- e ! "action" >>= readString >>= readDocumentEventType
   start <- e ! "start" >>= readPosition
   end <- e ! "end" >>= readPosition
-  lines <- e ! "lines"
-    >>= readArray
-    >>= traverse readString
+  lines <- e ! "lines" >>= readArray >>= traverse readString
   pure $ DocumentEvent { action, start, end, lines }
 
 data PasteEvent
@@ -55,8 +52,7 @@ readNewlineMode :: String -> F NewlineMode
 readNewlineMode "windows" = pure Windows
 readNewlineMode "unix" = pure Unix
 readNewlineMode "auto" = pure Auto
-readNewlineMode s =
-  fail $ TypeMismatch ("'" <> s <> "'") " a valid value for the NewlineMode enum"
+readNewlineMode s = fail $ TypeMismatch ("'" <> s <> "'") " a valid value for the NewlineMode enum"
 
 data Rules
 
@@ -79,14 +75,12 @@ readPosition e = do
   pure $ Position { row, column }
 
 getRow :: Position -> Int
-getRow (Position { row: row }) = row
+getRow (Position { row }) = row
 
 getColumn :: Position -> Int
-getColumn (Position { column: column }) = column
+getColumn (Position { column }) = column
 
-type TokenInfo =
-  { value :: String
-  }
+type TokenInfo = { value :: String }
 
 type SearchOptions =
   { needle :: String
