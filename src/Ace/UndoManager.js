@@ -12,11 +12,11 @@ function effize(method) {
   };
 }
 
-export var undoImpl = effize("undo");
-export var redoImpl = effize("redo");
-export var reset = effize("reset");
-export var hasUndo = effize("hasUndo");
-export var hasRedo = effize("hasRedo");
+export const undoImpl = effize("undo");
+export const redoImpl = effize("redo");
+export const reset = effize("reset");
+export const hasUndo = effize("hasUndo");
+export const hasRedo = effize("hasRedo");
 
 export function create() {
   var UndoManager = ace.require("ace/undomanager").UndoManager;

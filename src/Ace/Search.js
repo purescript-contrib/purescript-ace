@@ -12,7 +12,7 @@ function effize(method) {
   };
 }
 
-export var setImpl = effize("set");
+export const setImpl = effize("set");
 
 export function findImpl(just, nothing, sess, search) {
   return function () {
@@ -21,8 +21,8 @@ export function findImpl(just, nothing, sess, search) {
   };
 }
 
-export var findAllImpl = effize("findAll");
-export var replaceImpl = effize("replace");
+export const findAllImpl = effize("findAll");
+export const replaceImpl = effize("replace");
 
 export function create() {
   var Search = ace.require("ace/search").Search;

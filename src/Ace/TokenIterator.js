@@ -12,11 +12,11 @@ function effize(method) {
   };
 }
 
-export var stepBackward = effize("stepBackward");
-export var stepForward = effize("stepForward");
-export var getCurrentToken = effize("getCurrentToken");
-export var getCurrentTokenRow = effize("getCurrentTokenRow");
-export var getCurrentTokenColumn = effize("getCurrentTokenColumn");
+export const stepBackward = effize("stepBackward");
+export const stepForward = effize("stepForward");
+export const getCurrentToken = effize("getCurrentToken");
+export const getCurrentTokenRow = effize("getCurrentTokenRow");
+export const getCurrentTokenColumn = effize("getCurrentTokenColumn");
 
 export function createImpl(session, initialRow, initialColumn) {
   return function () {
