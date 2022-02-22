@@ -1,10 +1,10 @@
 "use strict";
 
-var ace = require("ace-builds");
+import ace from "ace-builds";
 
-exports.setImpl = function (key, value) {
+export function setImpl(key, value) {
   return function () {
     ace.config.set(key, value);
     return ace;
   };
-};
+}

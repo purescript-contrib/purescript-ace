@@ -1,220 +1,220 @@
 "use strict";
 
-var ace = require("ace-builds");
+import ace from "ace-builds";
 
-exports.getBackgroundTokenizer = function (value) {
+export function getBackgroundTokenizer(value) {
   return function () {
     return value.bgTokenizer;
   };
-};
+}
 
-exports.onImpl = function (event, fn, self) {
+export function onImpl(event, fn, self) {
   return function () {
     return self.on(event, function (e) {
       fn(e)();
     });
   };
-};
+}
 
-exports.findMatchingBracketImpl = function (position, self) {
+export function findMatchingBracketImpl(position, self) {
   return function () {
     return self.findMatchingBracket(position);
   };
-};
+}
 
-exports.addFoldImpl = function (text, range, self) {
+export function addFoldImpl(text, range, self) {
   return function () {
     return self.addFold(text, range);
   };
-};
+}
 
-exports.screenToDocumentColumnImpl = function (row, column, self) {
+export function screenToDocumentColumnImpl(row, column, self) {
   return function () {
     return self.screenToDocumentColumn(row, column);
   };
-};
+}
 
-exports.highlightImpl = function (text, self) {
+export function highlightImpl(text, self) {
   return function () {
     return self.highlight(text);
   };
-};
+}
 
-exports.setDocumentImpl = function (doc, self) {
+export function setDocumentImpl(doc, self) {
   return function () {
     return self.setDocument(doc);
   };
-};
+}
 
-exports.getDocument = function (self) {
+export function getDocument(self) {
   return function () {
     return self.getDocument();
   };
-};
+}
 
-exports.resetRowCacheImpl = function (row, self) {
+export function resetRowCacheImpl(row, self) {
   return function () {
     return self.$resetRowCache(row);
   };
-};
+}
 
-exports.setValueImpl = function (text, self) {
+export function setValueImpl(text, self) {
   return function () {
     return self.setValue(text);
   };
-};
+}
 
-exports.setModeImpl = function (mode, self) {
+export function setModeImpl(mode, self) {
   return function () {
     return self.setMode(mode);
   };
-};
+}
 
-exports.getValue = function (self) {
+export function getValue(self) {
   return function () {
     return self.getValue();
   };
-};
+}
 
-exports.getSelection = function (self) {
+export function getSelection(self) {
   return function () {
     return self.getSelection();
   };
-};
+}
 
-exports.getStateImpl = function (row, self) {
+export function getStateImpl(row, self) {
   return function () {
     return self.getState(row);
   };
-};
+}
 
-exports.getTokensImpl = function (row, self) {
+export function getTokensImpl(row, self) {
   return function () {
     return self.getTokens(row);
   };
-};
+}
 
-exports.getTokenAtImpl = function (row, column, self) {
+export function getTokenAtImpl(row, column, self) {
   return function () {
     return self.getTokenAt(row, column);
   };
-};
+}
 
-exports.setUndoManagerImpl = function (undoManager, self) {
+export function setUndoManagerImpl(undoManager, self) {
   return function () {
     return self.setUndoManager(undoManager);
   };
-};
+}
 
-exports.getUndoManager = function (self) {
+export function getUndoManager(self) {
   return function () {
     return self.getUndoManager();
   };
-};
+}
 
-exports.getTabString = function (self) {
+export function getTabString(self) {
   return function () {
     return self.getTabString();
   };
-};
+}
 
-exports.setUseSoftTabsImpl = function (useSoftTabs, self) {
+export function setUseSoftTabsImpl(useSoftTabs, self) {
   return function () {
     return self.setUseSoftTabs(useSoftTabs);
   };
-};
+}
 
-exports.getUseSoftTabs = function (self) {
+export function getUseSoftTabs(self) {
   return function () {
     return self.getUseSoftTabs();
   };
-};
+}
 
-exports.setTabSizeImpl = function (tabSize, self) {
+export function setTabSizeImpl(tabSize, self) {
   return function () {
     return self.setTabSize(tabSize);
   };
-};
+}
 
-exports.getTabSize = function (self) {
+export function getTabSize(self) {
   return function () {
     return self.getTabSize();
   };
-};
+}
 
-exports.isTabStopImpl = function (position, self) {
+export function isTabStopImpl(position, self) {
   return function () {
     return self.isTabStop(position);
   };
-};
+}
 
-exports.setOverwriteImpl = function (overwrite, self) {
+export function setOverwriteImpl(overwrite, self) {
   return function () {
     return self.setOverwrite(overwrite);
   };
-};
+}
 
-exports.getOverwrite = function (self) {
+export function getOverwrite(self) {
   return function () {
     return self.getOverwrite();
   };
-};
+}
 
-exports.toggleOverwrite = function (self) {
+export function toggleOverwrite(self) {
   return function () {
     return self.toggleOverwrite();
   };
-};
+}
 
-exports.addGutterDecorationImpl = function (row, className, self) {
+export function addGutterDecorationImpl(row, className, self) {
   return function () {
     return self.addGutterDecoration(row, className);
   };
-};
+}
 
-exports.removeGutterDecorationImpl = function (row, className, self) {
+export function removeGutterDecorationImpl(row, className, self) {
   return function () {
     return self.removeGutterDecoration(row, className);
   };
-};
+}
 
-exports.getBreakpoints = function (self) {
+export function getBreakpoints(self) {
   return function () {
     return self.getBreakpoints();
   };
-};
+}
 
-exports.setBreakpointsImpl = function (rows, self) {
+export function setBreakpointsImpl(rows, self) {
   return function () {
     return self.setBreakpoints(rows);
   };
-};
+}
 
-exports.clearBreakpoints = function (self) {
+export function clearBreakpoints(self) {
   return function () {
     return self.clearBreakpoints();
   };
-};
+}
 
-exports.setBreakpointImpl = function (row, className, self) {
+export function setBreakpointImpl(row, className, self) {
   return function () {
     return self.setBreakpoint(row, className);
   };
-};
+}
 
-exports.clearBreakpointImpl = function (row, self) {
+export function clearBreakpointImpl(row, self) {
   return function () {
     return self.clearBreakpoint(row);
   };
-};
+}
 
-exports.addMarkerImpl = function (range, clazz, type, inFront, self) {
+export function addMarkerImpl(range, clazz, type, inFront, self) {
   return function () {
     return self.addMarker(range, clazz, type, inFront);
   };
-};
+}
 
-exports.addDynamicMarkerImpl = function (marker, inFront, self) {
+export function addDynamicMarkerImpl(marker, inFront, self) {
   return function () {
     return self.addDynamicMarker({
       update: function (html, layer) {
@@ -222,319 +222,319 @@ exports.addDynamicMarkerImpl = function (marker, inFront, self) {
       }
     }, inFront);
   };
-};
+}
 
-exports.removeMarkerImpl = function (markerId, self) {
+export function removeMarkerImpl(markerId, self) {
   return function () {
     return self.removeMarker(markerId);
   };
-};
+}
 
-exports.setAnnotationsImpl = function (annotations, self) {
+export function setAnnotationsImpl(annotations, self) {
   return function () {
     return self.setAnnotations(annotations);
   };
-};
+}
 
-exports.getAnnotations = function (self) {
+export function getAnnotations(self) {
   return function () {
     return self.getAnnotations();
   };
-};
+}
 
-exports.clearAnnotations = function (self) {
+export function clearAnnotations(self) {
   return function () {
     return self.clearAnnotations();
   };
-};
+}
 
-exports.detectNewLineImpl = function (text, self) {
+export function detectNewLineImpl(text, self) {
   return function () {
     return self.$detectNewLine(text);
   };
-};
+}
 
-exports.getWordRangeImpl = function (row, column, self) {
+export function getWordRangeImpl(row, column, self) {
   return function () {
     return self.getWordRange(row, column);
   };
-};
+}
 
-exports.getAWordRangeImpl = function (row, column, self) {
+export function getAWordRangeImpl(row, column, self) {
   return function () {
     return self.getAWordRange(row, column);
   };
-};
+}
 
-exports.setNewLineModeImpl = function (newLineMode, self) {
+export function setNewLineModeImpl(newLineMode, self) {
   return function () {
     return self.setNewLineMode(newLineMode);
   };
-};
+}
 
-exports.getNewLineMode = function (self) {
+export function getNewLineMode(self) {
   return function () {
     return self.getNewLineMode();
   };
-};
+}
 
-exports.setUseWorkerImpl = function (useWorker, self) {
+export function setUseWorkerImpl(useWorker, self) {
   return function () {
     return self.setUseWorker(useWorker);
   };
-};
+}
 
-exports.getUseWorker = function (self) {
+export function getUseWorker(self) {
   return function () {
     return self.getUseWorker();
   };
-};
+}
 
-exports.onReloadTokenizer = function (self) {
+export function onReloadTokenizer(self) {
   return function () {
     return self.onReloadTokenizer();
   };
-};
+}
 
-exports.modeImpl = function (mode, self) {
+export function modeImpl(mode, self) {
   return function () {
     return self.$mode(mode);
   };
-};
+}
 
-exports.getMode = function (self) {
+export function getMode(self) {
   return function () {
     return self.getMode();
   };
-};
+}
 
-exports.setScrollTopImpl = function (scrollTop, self) {
+export function setScrollTopImpl(scrollTop, self) {
   return function () {
     return self.setScrollTop(scrollTop);
   };
-};
+}
 
-exports.getScrollTop = function (self) {
+export function getScrollTop(self) {
   return function () {
     return self.getScrollTop();
   };
-};
+}
 
-exports.setScrollLeftImpl = function (scrollLeft, self) {
+export function setScrollLeftImpl(scrollLeft, self) {
   return function () {
     return self.setScrollLeft(scrollLeft);
   };
-};
+}
 
-exports.getScrollLeft = function (self) {
+export function getScrollLeft(self) {
   return function () {
     return self.getScrollLeft();
   };
-};
+}
 
-exports.getScreenWidth = function (self) {
+export function getScreenWidth(self) {
   return function () {
     return self.getScreenWidth();
   };
-};
+}
 
-exports.getLineImpl = function (row, self) {
+export function getLineImpl(row, self) {
   return function () {
     return self.getLine(row);
   };
-};
+}
 
-exports.getLinesImpl = function (firstRow, lastRow, self) {
+export function getLinesImpl(firstRow, lastRow, self) {
   return function () {
     return self.getLines(firstRow, lastRow);
   };
-};
+}
 
-exports.getLength = function (self) {
+export function getLength(self) {
   return function () {
     return self.getLength();
   };
-};
+}
 
-exports.getTextRangeImpl = function (range, self) {
+export function getTextRangeImpl(range, self) {
   return function () {
     return self.getTextRange(range);
   };
-};
+}
 
-exports.insertImpl = function (position, text, self) {
+export function insertImpl(position, text, self) {
   return function () {
     return self.insert(position, text);
   };
-};
+}
 
-exports.removeImpl = function (range, self) {
+export function removeImpl(range, self) {
   return function () {
     return self.remove(range);
   };
-};
+}
 
-exports.setUndoSelectImpl = function (enable, self) {
+export function setUndoSelectImpl(enable, self) {
   return function () {
     return self.setUndoSelect(enable);
   };
-};
+}
 
-exports.replaceImpl = function (range, text, self) {
+export function replaceImpl(range, text, self) {
   return function () {
     return self.replace(range, text);
   };
-};
+}
 
-exports.moveTextImpl = function (fromRange, toPosition, self) {
+export function moveTextImpl(fromRange, toPosition, self) {
   return function () {
     return self.moveText(fromRange, toPosition);
   };
-};
+}
 
-exports.indentRowsImpl = function (startRow, endRow, indentString, self) {
+export function indentRowsImpl(startRow, endRow, indentString, self) {
   return function () {
     return self.indentRows(startRow, endRow, indentString);
   };
-};
+}
 
-exports.outdentRowsImpl = function (range, self) {
+export function outdentRowsImpl(range, self) {
   return function () {
     return self.outdentRows(range);
   };
-};
+}
 
-exports.moveLinesUpImpl = function (firstRow, lastRow, self) {
+export function moveLinesUpImpl(firstRow, lastRow, self) {
   return function () {
     return self.moveLinesUp(firstRow, lastRow);
   };
-};
+}
 
-exports.moveLinesDownImpl = function (firstRow, lastRow, self) {
+export function moveLinesDownImpl(firstRow, lastRow, self) {
   return function () {
     return self.moveLinesDown(firstRow, lastRow);
   };
-};
+}
 
-exports.duplicateLinesImpl = function (firstRow, lastRow, self) {
+export function duplicateLinesImpl(firstRow, lastRow, self) {
   return function () {
     return self.duplicateLines(firstRow, lastRow);
   };
-};
+}
 
-exports.setUseWrapModeImpl = function (useWrapMode, self) {
+export function setUseWrapModeImpl(useWrapMode, self) {
   return function () {
     return self.setUseWrapMode(useWrapMode);
   };
-};
+}
 
-exports.getUseWrapMode = function (self) {
+export function getUseWrapMode(self) {
   return function () {
     return self.getUseWrapMode();
   };
-};
+}
 
-exports.setWrapLimitRangeImpl = function (min, max, self) {
+export function setWrapLimitRangeImpl(min, max, self) {
   return function () {
     return self.setWrapLimitRange(min, max);
   };
-};
+}
 
-exports.adjustWrapLimitImpl = function (desiredLimit, self) {
+export function adjustWrapLimitImpl(desiredLimit, self) {
   return function () {
     return self.adjustWrapLimit(desiredLimit);
   };
-};
+}
 
-exports.getWrapLimit = function (self) {
+export function getWrapLimit(self) {
   return function () {
     return self.getWrapLimit();
   };
-};
+}
 
-exports.getWrapLimitRange = function (self) {
+export function getWrapLimitRange(self) {
   return function () {
     return self.getWrapLimitRange();
   };
-};
+}
 
-exports.getDisplayTokensImpl = function (str, offset, self) {
+export function getDisplayTokensImpl(str, offset, self) {
   return function () {
     return self.$getDisplayTokens(str, offset);
   };
-};
+}
 
-exports.getStringScreenWidthImpl = function (str, maxScreenColumn, screenColumn, self) {
+export function getStringScreenWidthImpl(str, maxScreenColumn, screenColumn, self) {
   return function () {
     return self.$getStringScreenWidth(str, maxScreenColumn, screenColumn);
   };
-};
+}
 
-exports.getRowLengthImpl = function (row, self) {
+export function getRowLengthImpl(row, self) {
   return function () {
     return self.getRowLength(row);
   };
-};
+}
 
-exports.getScreenLastRowColumnImpl = function (screenRow, self) {
+export function getScreenLastRowColumnImpl(screenRow, self) {
   return function () {
     return self.getScreenLastRowColumn(screenRow);
   };
-};
+}
 
-exports.getDocumentLastRowColumnImpl = function (docRow, docColumn, self) {
+export function getDocumentLastRowColumnImpl(docRow, docColumn, self) {
   return function () {
     return self.getDocumentLastRowColumn(docRow, docColumn);
   };
-};
+}
 
-exports.getDocumentLastRowColumnPositionImpl = function (docRow, docColumn, self) {
+export function getDocumentLastRowColumnPositionImpl(docRow, docColumn, self) {
   return function () {
     return self.getDocumentLastRowColumnPosition(docRow, docColumn);
   };
-};
+}
 
-exports.getRowSplitData = function (self) {
+export function getRowSplitData(self) {
   return function () {
     return self.getRowSplitData();
   };
-};
+}
 
-exports.getScreenTabSizeImpl = function (screenColumn, self) {
+export function getScreenTabSizeImpl(screenColumn, self) {
   return function () {
     return self.getScreenTabSize(screenColumn);
   };
-};
+}
 
-exports.screenToDocumentPositionImpl = function (screenRow, screenColumn, self) {
+export function screenToDocumentPositionImpl(screenRow, screenColumn, self) {
   return function () {
     return self.screenToDocumentPosition(screenRow, screenColumn);
   };
-};
+}
 
-exports.documentToScreenPositionImpl = function (docRow, docColumn, self) {
+export function documentToScreenPositionImpl(docRow, docColumn, self) {
   return function () {
     return self.documentToScreenPosition(docRow, docColumn);
   };
-};
+}
 
-exports.documentToScreenColumnImpl = function (row, docColumn, self) {
+export function documentToScreenColumnImpl(row, docColumn, self) {
   return function () {
     return self.documentToScreenColumn(row, docColumn);
   };
-};
+}
 
-exports.documentToScreenRowImpl = function (docRow, docColumn, self) {
+export function documentToScreenRowImpl(docRow, docColumn, self) {
   return function () {
     return self.documentToScreenRow(docRow, docColumn);
   };
-};
+}
 
-exports.getScreenLength = function (self) {
+export function getScreenLength(self) {
   return function () {
     return self.getScreenLength();
   };
-};
+}
 
 function  create(text, mode) {
   return function () {
@@ -543,13 +543,11 @@ function  create(text, mode) {
   };
 }
 
-exports.createWithModeImpl = create;
+export {create as createWithModeImpl};
+export {create as createImpl};
+export {create as createFromLinesImpl};
 
-exports.createImpl = create;
-
-exports.createFromLinesImpl = create;
-
-exports.getMarkers = function (session) {
+export function getMarkers(session) {
   return function () {
     var markerObj = session.getMarkers();
     var ks = Object.getOwnPropertyNames(markerObj);
@@ -559,4 +557,4 @@ exports.getMarkers = function (session) {
     }
     return result;
   };
-};
+}

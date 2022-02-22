@@ -1,41 +1,41 @@
 "use strict";
 
-var ace = require("ace-builds");
+import ace from "ace-builds";
 
-exports.languageTools = function  () {
+export function languageTools() {
   return ace.require("ace/ext/language_tools");
-};
+}
 
-exports.textCompleter = function (lt) {
+export function textCompleter(lt) {
   return function () {
     return lt.textCompleter;
   };
-};
+}
 
-exports.keyWordCompleter = function (lt) {
+export function keyWordCompleter(lt) {
   return function () {
     return lt.keyWordCompleter;
   };
-};
+}
 
-exports.snippetCompleter = function (lt) {
+export function snippetCompleter(lt) {
   return function () {
     return lt.snippetCompleter;
   };
-};
+}
 
-exports.setCompleters = function (completers) {
+export function setCompleters(completers) {
   return function (lt) {
     return function () {
       return lt.setCompleters(completers);
     };
   };
-};
+}
 
-exports.addCompleter = function (completer) {
+export function addCompleter(completer) {
   return function (lt) {
     return function () {
       return lt.addCompleter(completer);
     };
   };
-};
+}

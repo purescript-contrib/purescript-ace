@@ -1,6 +1,6 @@
 "use strict";
 
-var ace = require("ace-builds");
+import ace from "ace-builds";
 
 function effize(method) {
   return function () {
@@ -20,48 +20,48 @@ function effGet(field) {
   };
 }
 
-exports.getStartRow = effGet("startRow");
-exports.getStartColumn = effGet("startColumn");
-exports.getEndRow = effGet("endRow");
-exports.getEndColumn = effGet("endColumn");
-exports.getStart = effGet("start");
-exports.getEnd = effGet("end");
-exports.isEmpty = effize("isEmpty");
-exports.isEqualImpl = effize("isEqual");
-exports.toString = effize("toString");
-exports.containsImpl = effize("contains");
-exports.compareRangeImpl = effize("compareRange");
-exports.comparePointImpl = effize("comparePoint");
-exports.containsRangeImpl = effize("containsRange");
-exports.intersectsImpl = effize("intersects");
-exports.isEndImpl = effize("isEnd");
-exports.isStartImpl = effize("isStart");
-exports.setStartImpl = effize("setStart");
-exports.setEndImpl = effize("setEnd");
-exports.insideImpl = effize("inside");
-exports.insideStartImpl = effize("insideStart");
-exports.insideEndImpl = effize("insideEnd");
-exports.compareImpl = effize("compare");
-exports.compareStartImpl = effize("compareStart");
-exports.compareEndImpl = effize("compareEnd");
-exports.compareInsideImpl = effize("compareInside");
-exports.clipRowsImpl = effize("clipRows");
-exports.extendImpl = effize("extend");
-exports.isMultiLine = effize("isMultiLine");
-exports.clone = effize("clone");
-exports.collapseRows = effize("collapseRows");
-exports.toScreenRangeImpl = effize("toScreenRange");
+export var getStartRow = effGet("startRow");
+export var getStartColumn = effGet("startColumn");
+export var getEndRow = effGet("endRow");
+export var getEndColumn = effGet("endColumn");
+export var getStart = effGet("start");
+export var getEnd = effGet("end");
+export var isEmpty = effize("isEmpty");
+export var isEqualImpl = effize("isEqual");
+export var toString = effize("toString");
+export var containsImpl = effize("contains");
+export var compareRangeImpl = effize("compareRange");
+export var comparePointImpl = effize("comparePoint");
+export var containsRangeImpl = effize("containsRange");
+export var intersectsImpl = effize("intersects");
+export var isEndImpl = effize("isEnd");
+export var isStartImpl = effize("isStart");
+export var setStartImpl = effize("setStart");
+export var setEndImpl = effize("setEnd");
+export var insideImpl = effize("inside");
+export var insideStartImpl = effize("insideStart");
+export var insideEndImpl = effize("insideEnd");
+export var compareImpl = effize("compare");
+export var compareStartImpl = effize("compareStart");
+export var compareEndImpl = effize("compareEnd");
+export var compareInsideImpl = effize("compareInside");
+export var clipRowsImpl = effize("clipRows");
+export var extendImpl = effize("extend");
+export var isMultiLine = effize("isMultiLine");
+export var clone = effize("clone");
+export var collapseRows = effize("collapseRows");
+export var toScreenRangeImpl = effize("toScreenRange");
 
-exports.fromPointsImpl = function (start, end) {
+export function fromPointsImpl(start, end) {
   return function () {
     var Range = ace.require("ace/range").Range;
     return Range.fromPoints(start, end);
   };
-};
+}
 
-exports.createImpl = function (startRow, startColumn, endRow, endColumn) {
+export function createImpl(startRow, startColumn, endRow, endColumn) {
   return function () {
     var Range = ace.require("ace/range").Range;
     return new Range(startRow, startColumn, endRow, endColumn);
   };
-};
+}

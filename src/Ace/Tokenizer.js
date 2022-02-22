@@ -1,16 +1,16 @@
 "use strict";
 
-var ace = require("ace-builds");
+import ace from "ace-builds";
 
-exports.getLineTokens = function (self) {
+export function getLineTokens(self) {
   return function () {
     return self.getLineTokens();
   };
-};
+}
 
-exports.createImpl = function (rules, flag) {
+export function createImpl(rules, flag) {
   return function () {
     var Tokenizer = ace.require("ace/tokenizer").Tokenizer;
     return new Tokenizer(rules, flag);
   };
-};
+}

@@ -1,29 +1,28 @@
 "use strict";
 
-var ace = require("ace-builds");
+import ace from "ace-builds";
+export {ace};
 
-exports.ace = ace;
-
-exports.editImpl = function (el, self) {
+export function editImpl(el, self) {
   return function () {
     return self.edit(el);
   };
-};
+}
 
-exports.editNodeImpl = function (el, self) {
+export function editNodeImpl(el, self) {
   return function () {
     return self.edit(el);
   };
-};
+}
 
-exports.createEditSessionForDocumentImpl = function (text, mode, self) {
+export function createEditSessionForDocumentImpl(text, mode, self) {
   return function () {
     return self.createEditSession(text, mode);
   };
-};
+}
 
-exports.createEditSessionImpl = function (text, mode, self) {
+export function createEditSessionImpl(text, mode, self) {
   return function () {
     return self.createEditSession(text, mode);
   };
-};
+}
