@@ -1,5 +1,3 @@
-"use strict";
-
 import ace from "ace-builds";
 export {ace};
 

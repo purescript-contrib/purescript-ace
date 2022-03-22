@@ -1,5 +1,3 @@
-"use strict";
-
 export function mkCompleterImpl(getCompletionCb, isJust, fromJust) {
   return function () {
     return {

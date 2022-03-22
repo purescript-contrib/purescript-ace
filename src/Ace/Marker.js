@@ -1,5 +1,3 @@
-"use strict";
-
 export function getId(m) {
   return function () {
     return m.id;

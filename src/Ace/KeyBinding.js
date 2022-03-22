@@ -1,5 +1,3 @@
-"use strict";
-
 export function addKeyboardHandlerImpl(commandToString) {
   return function (isJust) {
     return function (fromJust) {
