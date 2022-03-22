@@ -20,10 +20,10 @@ export function onScrollImpl(self, fn) {
   };
 }
 
-export var getWidth = effize("getWidth");
-export var setHeightImpl = effize("setHeight");
-export var setInnerHeightImpl = effize("setInnerHeight");
-export var setScrollTopImpl = effize("setScrollTop");
+export const getWidth = effize("getWidth");
+export const setHeightImpl = effize("setHeight");
+export const setInnerHeightImpl = effize("setInnerHeight");
+export const setScrollTopImpl = effize("setScrollTop");
 
 export function createImpl(parent, vr) {
   return function () {
