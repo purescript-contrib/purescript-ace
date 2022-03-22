@@ -1,6 +1,6 @@
 "use strict";
 
-var ace = require("ace-builds");
+import ace from "ace-builds";
 
 function effize(method) {
   return function () {
@@ -12,15 +12,15 @@ function effize(method) {
   };
 }
 
-exports.stepBackward = effize("stepBackward");
-exports.stepForward = effize("stepForward");
-exports.getCurrentToken = effize("getCurrentToken");
-exports.getCurrentTokenRow = effize("getCurrentTokenRow");
-exports.getCurrentTokenColumn = effize("getCurrentTokenColumn");
+export var stepBackward = effize("stepBackward");
+export var stepForward = effize("stepForward");
+export var getCurrentToken = effize("getCurrentToken");
+export var getCurrentTokenRow = effize("getCurrentTokenRow");
+export var getCurrentTokenColumn = effize("getCurrentTokenColumn");
 
-exports.createImpl = function (session, initialRow, initialColumn) {
+export function createImpl(session, initialRow, initialColumn) {
   return function () {
     var TokenIterator = ace.require("ace/token_iterator").TokenIterator;
     return new TokenIterator(session, initialRow, initialColumn);
   };
-};
+}

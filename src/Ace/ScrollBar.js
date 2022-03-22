@@ -1,6 +1,6 @@
 "use strict";
 
-var ace = require("ace-builds");
+import ace from "ace-builds";
 
 function  effize(method) {
   return function () {
@@ -12,22 +12,22 @@ function  effize(method) {
   };
 }
 
-exports.onScrollImpl = function (self, fn) {
+export function onScrollImpl(self, fn) {
   return function () {
     return self.on("scroll", function () {
       fn();
     });
   };
-};
+}
 
-exports.getWidth = effize("getWidth");
-exports.setHeightImpl = effize("setHeight");
-exports.setInnerHeightImpl = effize("setInnerHeight");
-exports.setScrollTopImpl = effize("setScrollTop");
+export var getWidth = effize("getWidth");
+export var setHeightImpl = effize("setHeight");
+export var setInnerHeightImpl = effize("setInnerHeight");
+export var setScrollTopImpl = effize("setScrollTop");
 
-exports.createImpl = function (parent, vr) {
+export function createImpl(parent, vr) {
   return function () {
     var ScrollBar = ace.require("ace/scrollbar").ScrollBar;
     return new ScrollBar(parent, vr);
   };
-};
+}
