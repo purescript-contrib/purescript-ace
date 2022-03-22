@@ -11,7 +11,6 @@
   , "nullable"
   , "partial"
   , "prelude"
-  , "psci-support"
   , "refs"
   , "st"
   , "transformers"
