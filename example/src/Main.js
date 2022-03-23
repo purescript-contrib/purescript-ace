@@ -1,11 +1,8 @@
-/* global window */
-"use strict";
-
-exports.rules = {
+export const rules = {
   "start": [{ token: "example", regex: "[a-z]*" }]
 };
 
-exports.onLoad = function (action) {
+export const onLoad = function (action) {
   return function () {
     window.addEventListener("load", function () {
       action();

@@ -1,6 +1,4 @@
-"use strict";
-
-exports.mkCompleterImpl = function (getCompletionCb, isJust, fromJust) {
+export function mkCompleterImpl(getCompletionCb, isJust, fromJust) {
   return function () {
     return {
       getCompletions: function (editor, session, pos, prefix, callback) {
@@ -26,4 +24,4 @@ exports.mkCompleterImpl = function (getCompletionCb, isJust, fromJust) {
       }
     };
   };
-};
+}

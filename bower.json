@@ -19,17 +19,17 @@
     "package.json"
   ],
   "dependencies": {
-    "purescript-arrays": "^6.0.0",
-    "purescript-effect": "^3.0.0",
-    "purescript-foreign": "^6.0.0",
-    "purescript-nullable": "^5.0.0",
-    "purescript-prelude": "^5.0.0",
-    "purescript-web-html": "^3.0.0",
-    "purescript-web-uievents": "^3.0.0"
+    "purescript-arrays": "master",
+    "purescript-effect": "master",
+    "purescript-foreign": "master",
+    "purescript-nullable": "main",
+    "purescript-prelude": "master",
+    "purescript-web-html": "master",
+    "purescript-web-uievents": "master"
   },
   "devDependencies": {
     "ace-builds": "^1.2.6",
-    "purescript-console": "^5.0.0",
-    "purescript-refs": "^5.0.0"
+    "purescript-console": "master",
+    "purescript-refs": "master"
   }
 }

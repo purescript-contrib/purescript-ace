@@ -1,60 +1,58 @@
-"use strict";
+import ace from "ace-builds";
 
-var ace = require("ace-builds");
-
-exports.onUpdateImpl = function (self, fn) {
+export function onUpdateImpl(self, fn) {
   return function () {
     return self.on("update", function (e) {
       fn(e)();
     });
   };
-};
+}
 
-exports.setTokenizerImpl = function (tokenizer, self) {
+export function setTokenizerImpl(tokenizer, self) {
   return function () {
     return self.setTokenizer(tokenizer);
   };
-};
+}
 
-exports.setDocumentImpl = function (doc, self) {
+export function setDocumentImpl(doc, self) {
   return function () {
     return self.setDocument(doc);
   };
-};
+}
 
-exports.fireUpdateEventImpl = function (firstRow, lastRow, self) {
+export function fireUpdateEventImpl(firstRow, lastRow, self) {
   return function () {
     return self.fireUpdateEvent(firstRow, lastRow);
   };
-};
+}
 
-exports.startImpl = function (startRow, self) {
+export function startImpl(startRow, self) {
   return function () {
     return self.start(startRow);
   };
-};
+}
 
-exports.stop = function (self) {
+export function stop(self) {
   return function () {
     return self.stop();
   };
-};
+}
 
-exports.getTokensImpl = function (row, self) {
+export function getTokensImpl(row, self) {
   return function () {
     return self.getTokens(row);
   };
-};
+}
 
-exports.getStateImpl = function (row, self) {
+export function getStateImpl(row, self) {
   return function () {
     return self.getState(row);
   };
-};
+}
 
-exports.createImpl = function (tokenizer, editor) {
+export function createImpl(tokenizer, editor) {
   return function () {
     var BackgroundTokenizer = ace.require("ace/background_tokenizer").BackgroundTokenizer;
     return new BackgroundTokenizer(tokenizer, editor);
   };
-};
+}

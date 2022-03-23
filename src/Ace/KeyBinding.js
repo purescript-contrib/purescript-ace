@@ -1,6 +1,4 @@
-"use strict";
-
-exports.addKeyboardHandlerImpl = function (commandToString) {
+export function addKeyboardHandlerImpl(commandToString) {
   return function (isJust) {
     return function (fromJust) {
       return function (curriedEffHandler) {
@@ -25,4 +23,4 @@ exports.addKeyboardHandlerImpl = function (commandToString) {
       };
     };
   };
-};
+}

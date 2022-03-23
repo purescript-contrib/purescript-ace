@@ -1,163 +1,161 @@
-"use strict";
+import ace from "ace-builds";
 
-var ace = require("ace-builds");
-
-exports.onChangeImpl = function (self, fn) {
+export function onChangeImpl(self, fn) {
   return function () {
     return self.on("change", function (e) {
       fn(e)();
     });
   };
-};
+}
 
-exports.setValueImpl = function (text, self) {
+export function setValueImpl(text, self) {
   return function () {
     return self.setValue(text);
   };
-};
+}
 
-exports.getValue = function (self) {
+export function getValue(self) {
   return function () {
     return self.getValue();
   };
-};
+}
 
-exports.createAnchorImpl = function (row, column, self) {
+export function createAnchorImpl(row, column, self) {
   return function () {
     return self.createAnchor(row, column);
   };
-};
+}
 
-exports.getNewLineCharacter = function (self) {
+export function getNewLineCharacter(self) {
   return function () {
     return self.getNewLineCharacter();
   };
-};
+}
 
-exports.setNewLineModeImpl = function (newLineMode, self) {
+export function setNewLineModeImpl(newLineMode, self) {
   return function () {
     return self.setNewLineMode(newLineMode);
   };
-};
+}
 
-exports.getNewLineMode = function (self) {
+export function getNewLineMode(self) {
   return function () {
     return self.getNewLineMode();
   };
-};
+}
 
-exports.isNewLineImpl = function (text, self) {
+export function isNewLineImpl(text, self) {
   return function () {
     return self.isNewLine(text);
   };
-};
+}
 
-exports.getLineImpl = function (row, self) {
+export function getLineImpl(row, self) {
   return function () {
     return self.getLine(row);
   };
-};
+}
 
-exports.getLinesImpl = function (firstRow, lastRow, self) {
+export function getLinesImpl(firstRow, lastRow, self) {
   return function () {
     return self.getLines(firstRow, lastRow);
   };
-};
+}
 
-exports.getAllLines = function (self) {
+export function getAllLines(self) {
   return function () {
     return self.getAllLines();
   };
-};
+}
 
-exports.getLength = function (self) {
+export function getLength(self) {
   return function () {
     return self.getLength();
   };
-};
+}
 
-exports.getTextRangeImpl = function (range, self) {
+export function getTextRangeImpl(range, self) {
   return function () {
     return self.getTextRange(range);
   };
-};
+}
 
-exports.insertImpl = function (position, text, self) {
+export function insertImpl(position, text, self) {
   return function () {
     self.insert(position, text);
   };
-};
+}
 
-exports.insertLinesImpl = function (row, lines, self) {
+export function insertLinesImpl(row, lines, self) {
   return function () {
     return self.insertLines(row, lines);
   };
-};
+}
 
-exports.insertNewLineImpl = function (position, self) {
+export function insertNewLineImpl(position, self) {
   return function () {
     return self.insertNewLine(position);
   };
-};
+}
 
-exports.insertInLineImpl = function (position, text, self) {
+export function insertInLineImpl(position, text, self) {
   return function () {
     return self.insertInLine(position, text);
   };
-};
+}
 
-exports.removeImpl = function (range, self) {
+export function removeImpl(range, self) {
   return function () {
     return self.remove(range);
   };
-};
+}
 
-exports.removeInLineImpl = function (row, startColumn, endColumn, self) {
+export function removeInLineImpl(row, startColumn, endColumn, self) {
   return function () {
     return self.removeInLine(row, startColumn, endColumn);
   };
-};
+}
 
-exports.removeLinesImpl = function (firstRow, lastRow, self) {
+export function removeLinesImpl(firstRow, lastRow, self) {
   return function () {
     return self.removeLines(firstRow, lastRow);
   };
-};
+}
 
-exports.removeNewLineImpl = function (row, self) {
+export function removeNewLineImpl(row, self) {
   return function () {
     return self.removeNewLine(row);
   };
-};
+}
 
-exports.replaceImpl = function (range, text, self) {
+export function replaceImpl(range, text, self) {
   return function () {
     return self.replace(range, text);
   };
-};
+}
 
-exports.indexToPositionImpl = function (index, startRow, self) {
+export function indexToPositionImpl(index, startRow, self) {
   return function () {
     return self.indexToPosition(index, startRow);
   };
-};
+}
 
-exports.positionToIndexImpl = function (pos, startRow, self) {
+export function positionToIndexImpl(pos, startRow, self) {
   return function () {
     return self.positionToIndex(pos, startRow);
   };
-};
+}
 
-exports.create = function (text) {
+export function create(text) {
   return function () {
     var Document = ace.require("ace/document").Document;
     return new Document(text);
   };
-};
+}
 
-exports.createFromLines = function (text) {
+export function createFromLines(text) {
   return function () {
     var Document = ace.require("ace/document").Document;
     return new Document(text);
   };
-};
+}

@@ -1,6 +1,4 @@
-"use strict";
-
-var ace = require("ace-builds");
+import ace from "ace-builds";
 
 function effize(method) {
   return function () {
@@ -12,13 +10,13 @@ function effize(method) {
   };
 }
 
-exports.undoImpl = effize("undo");
-exports.redoImpl = effize("redo");
-exports.reset = effize("reset");
-exports.hasUndo = effize("hasUndo");
-exports.hasRedo = effize("hasRedo");
+export const undoImpl = effize("undo");
+export const redoImpl = effize("redo");
+export const reset = effize("reset");
+export const hasUndo = effize("hasUndo");
+export const hasRedo = effize("hasRedo");
 
-exports.create = function () {
+export function create() {
   var UndoManager = ace.require("ace/undomanager").UndoManager;
   return new UndoManager();
-};
+}

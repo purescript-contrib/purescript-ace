@@ -1,6 +1,4 @@
-"use strict";
-
-var ace = require("ace-builds");
+import ace from "ace-builds";
 
 function effize(method) {
   return function () {
@@ -12,66 +10,66 @@ function effize(method) {
   };
 }
 
-exports.onImpl = function (ev, fn, self) {
+export function onImpl(ev, fn, self) {
   return function () {
     return self.on(ev, function () {
       fn();
     });
   };
-};
+}
 
-exports.moveCursorWordLeft = effize("moveCursorWordLeft");
-exports.moveCursorWordRight = effize("moveCursorWordRight");
-exports.fromOrientedRangeImpl = effize("fromOrientedRange");
-exports.setSelectionRangeImpl = effize("setSelectionRange");
-exports.getAllRanges = effize("getAllRanges");
-exports.addRangeImpl = effize("addRange");
-exports.isEmpty = effize("isEmpty");
-exports.isMultiLine = effize("isMultiLine");
-exports.getCursor = effize("getCursor");
-exports.setSelectionAnchorImpl = effize("setSelectionAnchor");
-exports.getSelectionAnchor = effize("getSelectionAnchor");
-exports.getSelectionLead = effize("getSelectionLead");
-exports.shiftSelectionImpl = effize("shiftSelection");
-exports.isBackwards = effize("isBackwards");
-exports.getRange = effize("getRange");
-exports.clearSelection = effize("clearSelection");
-exports.selectAll = effize("selectAll");
-exports.setRangeImpl = effize("setRange");
-exports.selectToImpl = effize("selectTo");
-exports.selectToPositionImpl = effize("selectToPosition");
-exports.selectUp = effize("selectUp");
-exports.selectDown = effize("selectDown");
-exports.selectRight = effize("selectRight");
-exports.selectLeft = effize("selectLeft");
-exports.selectLineStart = effize("selectLineStart");
-exports.selectLineEnd = effize("selectLineEnd");
-exports.selectFileEnd = effize("selectFileEnd");
-exports.selectFileStart = effize("selectFileStart");
-exports.selectWordRight = effize("selectWordRight");
-exports.selectWordLeft = effize("selectWordLeft");
-exports.getWordRange = effize("getWordRange");
-exports.selectWord = effize("selectWord");
-exports.selectAWord = effize("selectAWord");
-exports.selectLine = effize("selectLine");
-exports.moveCursorUp = effize("moveCursorUp");
-exports.moveCursorDown = effize("moveCursorDown");
-exports.moveCursorLeft = effize("moveCursorLeft");
-exports.moveCursorRight = effize("moveCursorRight");
-exports.moveCursorLineStart = effize("moveCursorLineStart");
-exports.moveCursorLineEnd = effize("moveCursorLineEnd");
-exports.moveCursorFileEnd = effize("moveCursorFileEnd");
-exports.moveCursorFileStart = effize("moveCursorFileStart");
-exports.moveCursorLongWordRight = effize("moveCursorLongWordRight");
-exports.moveCursorLongWordLeft = effize("moveCursorLongWordLeft");
-exports.moveCursorByImpl = effize("moveCursorBy");
-exports.moveCursorToImpl = effize("moveCursorTo");
-exports.moveCursorToPositionImpl = effize("moveCursorToPosition");
-exports.moveCursorToScreenImpl = effize("moveCursorToScreen");
+export const moveCursorWordLeft = effize("moveCursorWordLeft");
+export const moveCursorWordRight = effize("moveCursorWordRight");
+export const fromOrientedRangeImpl = effize("fromOrientedRange");
+export const setSelectionRangeImpl = effize("setSelectionRange");
+export const getAllRanges = effize("getAllRanges");
+export const addRangeImpl = effize("addRange");
+export const isEmpty = effize("isEmpty");
+export const isMultiLine = effize("isMultiLine");
+export const getCursor = effize("getCursor");
+export const setSelectionAnchorImpl = effize("setSelectionAnchor");
+export const getSelectionAnchor = effize("getSelectionAnchor");
+export const getSelectionLead = effize("getSelectionLead");
+export const shiftSelectionImpl = effize("shiftSelection");
+export const isBackwards = effize("isBackwards");
+export const getRange = effize("getRange");
+export const clearSelection = effize("clearSelection");
+export const selectAll = effize("selectAll");
+export const setRangeImpl = effize("setRange");
+export const selectToImpl = effize("selectTo");
+export const selectToPositionImpl = effize("selectToPosition");
+export const selectUp = effize("selectUp");
+export const selectDown = effize("selectDown");
+export const selectRight = effize("selectRight");
+export const selectLeft = effize("selectLeft");
+export const selectLineStart = effize("selectLineStart");
+export const selectLineEnd = effize("selectLineEnd");
+export const selectFileEnd = effize("selectFileEnd");
+export const selectFileStart = effize("selectFileStart");
+export const selectWordRight = effize("selectWordRight");
+export const selectWordLeft = effize("selectWordLeft");
+export const getWordRange = effize("getWordRange");
+export const selectWord = effize("selectWord");
+export const selectAWord = effize("selectAWord");
+export const selectLine = effize("selectLine");
+export const moveCursorUp = effize("moveCursorUp");
+export const moveCursorDown = effize("moveCursorDown");
+export const moveCursorLeft = effize("moveCursorLeft");
+export const moveCursorRight = effize("moveCursorRight");
+export const moveCursorLineStart = effize("moveCursorLineStart");
+export const moveCursorLineEnd = effize("moveCursorLineEnd");
+export const moveCursorFileEnd = effize("moveCursorFileEnd");
+export const moveCursorFileStart = effize("moveCursorFileStart");
+export const moveCursorLongWordRight = effize("moveCursorLongWordRight");
+export const moveCursorLongWordLeft = effize("moveCursorLongWordLeft");
+export const moveCursorByImpl = effize("moveCursorBy");
+export const moveCursorToImpl = effize("moveCursorTo");
+export const moveCursorToPositionImpl = effize("moveCursorToPosition");
+export const moveCursorToScreenImpl = effize("moveCursorToScreen");
 
-exports.create = function (session) {
+export function create(session) {
   return function () {
     var Selection = ace.require("ace/selection").Selection;
     return new Selection(session);
   };
-};
+}

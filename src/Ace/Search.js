@@ -1,6 +1,4 @@
-"use strict";
-
-var ace = require("ace-builds");
+import ace from "ace-builds";
 
 function effize(method) {
   return function () {
@@ -12,19 +10,19 @@ function effize(method) {
   };
 }
 
-exports.setImpl = effize("set");
+export const setImpl = effize("set");
 
-exports.findImpl = function (just, nothing, sess, search) {
+export function findImpl(just, nothing, sess, search) {
   return function () {
     var result = search.find(sess);
     return result === null ? nothing : just(result);
   };
-};
+}
 
-exports.findAllImpl = effize("findAll");
-exports.replaceImpl = effize("replace");
+export const findAllImpl = effize("findAll");
+export const replaceImpl = effize("replace");
 
-exports.create = function () {
+export function create() {
   var Search = ace.require("ace/search").Search;
   return new Search();
-};
+}

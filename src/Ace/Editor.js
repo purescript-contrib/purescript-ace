@@ -1,6 +1,4 @@
-"use strict";
-
-var ace = require("ace-builds");
+import ace from "ace-builds";
 
 function effize(method) {
   return function () {
@@ -28,129 +26,129 @@ function effSet(field) {
   };
 }
 
-exports.onImpl = function (event, fn, self) {
+export function onImpl(event, fn, self) {
   return function () {
     return self.on(event, function (e) {
       fn(e)();
     });
   };
-};
+}
 
-exports.getPasteEventText = effGet("text");
-exports.setPasteEventTextImpl = effSet("text");
-exports.getRenderer = effGet("renderer");
-exports.isInMultiSelectMode = effGet("inMultiSelectMode");
-exports.selectMoreLinesImpl = effize("selectMoreLines");
-exports.getContainer = effGet("container");
-exports.setKeyboardHandlerImpl = effize("setKeyboardHandler");
-exports.getKeyboardHandler = effize("getKeyboardHandler");
-exports.setSessionImpl = effize("setSession");
-exports.getSession = effize("getSession");
-exports.setValueImpl = effize("setValue");
-exports.getValue = effize("getValue");
-exports.getSelection = effize("getSelection");
-exports.resizeImpl = effize("resize");
-exports.setThemeImpl = effize("setTheme");
-exports.getTheme = effize("getTheme");
-exports.setStyleImpl = effize("setStyle");
-exports.unsetStyle = effize("unsetStyle");
-exports.setFontSizeImpl = effize("setFontSize");
-exports.focus = effize("focus");
-exports.isFocused = effize("isFocused");
-exports.blur = effize("blur");
-exports.getCopyText = effize("getCopyText");
-exports.insertImpl = effize("insert");
-exports.setOverwriteImpl = effize("setOverwrite");
-exports.getOverwrite = effize("getOverwrite");
-exports.toggleOverwrite = effize("toggleOverwrite");
-exports.setScrollSpeedImpl = effize("setScrollSpeed");
-exports.getScrollSpeed = effize("getScrollSpeed");
-exports.setDragDelayImpl = effize("setDragDelay");
-exports.getDragDelay = effize("getDragDelay");
-exports.setSelectionStyleImpl = effize("setSelectionStyle");
-exports.getSelectionStyle = effize("getSelectionStyle");
-exports.setHighlightActiveLineImpl = effize("setHighlightActiveLine");
-exports.getHighlightActiveLine = effize("getHighlightActiveLine");
-exports.setHighlightSelectedWordImpl = effize("setHighlightSelectedWord");
-exports.getHighlightSelectedWord = effize("getHighlightSelectedWord");
-exports.setShowInvisiblesImpl = effize("setShowInvisibles");
-exports.getShowInvisibles = effize("getShowInvisibles");
-exports.setShowPrintMarginImpl = effize("setShowPrintMargin");
-exports.getShowPrintMargin = effize("getShowPrintMargin");
-exports.setPrintMarginColumnImpl = effize("setPrintMarginColumn");
-exports.getPrintMarginColumn = effize("getPrintMarginColumn");
-exports.setReadOnlyImpl = effize("setReadOnly");
-exports.getReadOnly = effize("getReadOnly");
-exports.setBehavioursEnabledImpl = effize("setBehavioursEnabled");
-exports.getBehavioursEnabled = effize("getBehavioursEnabled");
-exports.setWrapBehavioursEnabledImpl = effize("setWrapBehavioursEnabled");
-exports.getWrapBehavioursEnabled = effize("getWrapBehavioursEnabled");
-exports.setShowFoldWidgetsImpl = effize("setShowFoldWidgets");
-exports.getShowFoldWidgets = effize("getShowFoldWidgets");
-exports.removeImpl = effize("remove");
-exports.removeWordRight = effize("removeWordRight");
-exports.removeWordLeft = effize("removeWordLeft");
-exports.removeToLineStart = effize("removeToLineStart");
-exports.removeToLineEnd = effize("removeToLineEnd");
-exports.splitLine = effize("splitLine");
-exports.transposeLetters = effize("transposeLetters");
-exports.toLowerCase = effize("toLowerCase");
-exports.toUpperCase = effize("toUpperCase");
-exports.indent = effize("indent");
-exports.blockIndent = effize("blockIndent");
-exports.blockOutdentImpl = effize("blockOutdent");
-exports.toggleCommentLines = effize("toggleCommentLines");
-exports.getNumberAt = effize("getNumberAt");
-exports.modifyNumberImpl = effize("modifyNumber");
-exports.removeLines = effize("removeLines");
-exports.moveLinesDown = effize("moveLinesDown");
-exports.moveLinesUp = effize("moveLinesUp");
-exports.copyLinesUp = effize("copyLinesUp");
-exports.copyLinesDown = effize("copyLinesDown");
-exports.getFirstVisibleRow = effize("getFirstVisibleRow");
-exports.getLastVisibleRow = effize("getLastVisibleRow");
-exports.isRowVisibleImpl = effize("isRowVisible");
-exports.isRowFullyVisibleImpl = effize("isRowFullyVisible");
-exports.selectPageDown = effize("selectPageDown");
-exports.selectPageUp = effize("selectPageUp");
-exports.gotoPageDown = effize("gotoPageDown");
-exports.gotoPageUp = effize("gotoPageUp");
-exports.scrollPageDown = effize("scrollPageDown");
-exports.scrollPageUp = effize("scrollPageUp");
-exports.scrollToRow = effize("scrollToRow");
-exports.scrollToLineImpl = effize("scrollToLine");
-exports.centerSelection = effize("centerSelection");
-exports.getCursorPosition = effize("getCursorPosition");
-exports.getCursorPositionScreen = effize("getCursorPositionScreen");
-exports.getSelectionRange = effize("getSelectionRange");
-exports.selectAll = effize("selectAll");
-exports.clearSelection = effize("clearSelection");
-exports.moveCursorToImpl = effize("moveCursorTo");
-exports.moveCursorToPositionImpl = effize("moveCursorToPosition");
-exports.jumpToMatching = effize("jumpToMatching");
-exports.gotoLineImpl = effize("gotoLine");
-exports.navigateToImpl = effize("navigateTo");
-exports.navigateUpImpl = effize("navigateUp");
-exports.navigateDownImpl = effize("navigateDown");
-exports.navigateLeftImpl = effize("navigateLeft");
-exports.navigateRightImpl = effize("navigateRight");
-exports.navigateLineStart = effize("navigateLineStart");
-exports.navigateLineEnd = effize("navigateLineEnd");
-exports.navigateFileEnd = effize("navigateFileEnd");
-exports.navigateFileStart = effize("navigateFileStart");
-exports.navigateWordRight = effize("navigateWordRight");
-exports.navigateWordLeft = effize("navigateWordLeft");
-exports.replaceImpl = effize("replace");
-exports.replaceAllImpl = effize("replaceAll");
-exports.getLastSearchOptions = effize("getLastSearchOptions");
-exports.findImpl = effize("find");
-exports.findNextImpl = effize("findNext");
-exports.findPreviousImpl = effize("findPrevious");
-exports.undo = effize("undo");
-exports.redo = effize("redo");
-exports.destroy = effize("destroy");
+export const getPasteEventText = effGet("text");
+export const setPasteEventTextImpl = effSet("text");
+export const getRenderer = effGet("renderer");
+export const isInMultiSelectMode = effGet("inMultiSelectMode");
+export const selectMoreLinesImpl = effize("selectMoreLines");
+export const getContainer = effGet("container");
+export const setKeyboardHandlerImpl = effize("setKeyboardHandler");
+export const getKeyboardHandler = effize("getKeyboardHandler");
+export const setSessionImpl = effize("setSession");
+export const getSession = effize("getSession");
+export const setValueImpl = effize("setValue");
+export const getValue = effize("getValue");
+export const getSelection = effize("getSelection");
+export const resizeImpl = effize("resize");
+export const setThemeImpl = effize("setTheme");
+export const getTheme = effize("getTheme");
+export const setStyleImpl = effize("setStyle");
+export const unsetStyle = effize("unsetStyle");
+export const setFontSizeImpl = effize("setFontSize");
+export const focus = effize("focus");
+export const isFocused = effize("isFocused");
+export const blur = effize("blur");
+export const getCopyText = effize("getCopyText");
+export const insertImpl = effize("insert");
+export const setOverwriteImpl = effize("setOverwrite");
+export const getOverwrite = effize("getOverwrite");
+export const toggleOverwrite = effize("toggleOverwrite");
+export const setScrollSpeedImpl = effize("setScrollSpeed");
+export const getScrollSpeed = effize("getScrollSpeed");
+export const setDragDelayImpl = effize("setDragDelay");
+export const getDragDelay = effize("getDragDelay");
+export const setSelectionStyleImpl = effize("setSelectionStyle");
+export const getSelectionStyle = effize("getSelectionStyle");
+export const setHighlightActiveLineImpl = effize("setHighlightActiveLine");
+export const getHighlightActiveLine = effize("getHighlightActiveLine");
+export const setHighlightSelectedWordImpl = effize("setHighlightSelectedWord");
+export const getHighlightSelectedWord = effize("getHighlightSelectedWord");
+export const setShowInvisiblesImpl = effize("setShowInvisibles");
+export const getShowInvisibles = effize("getShowInvisibles");
+export const setShowPrintMarginImpl = effize("setShowPrintMargin");
+export const getShowPrintMargin = effize("getShowPrintMargin");
+export const setPrintMarginColumnImpl = effize("setPrintMarginColumn");
+export const getPrintMarginColumn = effize("getPrintMarginColumn");
+export const setReadOnlyImpl = effize("setReadOnly");
+export const getReadOnly = effize("getReadOnly");
+export const setBehavioursEnabledImpl = effize("setBehavioursEnabled");
+export const getBehavioursEnabled = effize("getBehavioursEnabled");
+export const setWrapBehavioursEnabledImpl = effize("setWrapBehavioursEnabled");
+export const getWrapBehavioursEnabled = effize("getWrapBehavioursEnabled");
+export const setShowFoldWidgetsImpl = effize("setShowFoldWidgets");
+export const getShowFoldWidgets = effize("getShowFoldWidgets");
+export const removeImpl = effize("remove");
+export const removeWordRight = effize("removeWordRight");
+export const removeWordLeft = effize("removeWordLeft");
+export const removeToLineStart = effize("removeToLineStart");
+export const removeToLineEnd = effize("removeToLineEnd");
+export const splitLine = effize("splitLine");
+export const transposeLetters = effize("transposeLetters");
+export const toLowerCase = effize("toLowerCase");
+export const toUpperCase = effize("toUpperCase");
+export const indent = effize("indent");
+export const blockIndent = effize("blockIndent");
+export const blockOutdentImpl = effize("blockOutdent");
+export const toggleCommentLines = effize("toggleCommentLines");
+export const getNumberAt = effize("getNumberAt");
+export const modifyNumberImpl = effize("modifyNumber");
+export const removeLines = effize("removeLines");
+export const moveLinesDown = effize("moveLinesDown");
+export const moveLinesUp = effize("moveLinesUp");
+export const copyLinesUp = effize("copyLinesUp");
+export const copyLinesDown = effize("copyLinesDown");
+export const getFirstVisibleRow = effize("getFirstVisibleRow");
+export const getLastVisibleRow = effize("getLastVisibleRow");
+export const isRowVisibleImpl = effize("isRowVisible");
+export const isRowFullyVisibleImpl = effize("isRowFullyVisible");
+export const selectPageDown = effize("selectPageDown");
+export const selectPageUp = effize("selectPageUp");
+export const gotoPageDown = effize("gotoPageDown");
+export const gotoPageUp = effize("gotoPageUp");
+export const scrollPageDown = effize("scrollPageDown");
+export const scrollPageUp = effize("scrollPageUp");
+export const scrollToRow = effize("scrollToRow");
+export const scrollToLineImpl = effize("scrollToLine");
+export const centerSelection = effize("centerSelection");
+export const getCursorPosition = effize("getCursorPosition");
+export const getCursorPositionScreen = effize("getCursorPositionScreen");
+export const getSelectionRange = effize("getSelectionRange");
+export const selectAll = effize("selectAll");
+export const clearSelection = effize("clearSelection");
+export const moveCursorToImpl = effize("moveCursorTo");
+export const moveCursorToPositionImpl = effize("moveCursorToPosition");
+export const jumpToMatching = effize("jumpToMatching");
+export const gotoLineImpl = effize("gotoLine");
+export const navigateToImpl = effize("navigateTo");
+export const navigateUpImpl = effize("navigateUp");
+export const navigateDownImpl = effize("navigateDown");
+export const navigateLeftImpl = effize("navigateLeft");
+export const navigateRightImpl = effize("navigateRight");
+export const navigateLineStart = effize("navigateLineStart");
+export const navigateLineEnd = effize("navigateLineEnd");
+export const navigateFileEnd = effize("navigateFileEnd");
+export const navigateFileStart = effize("navigateFileStart");
+export const navigateWordRight = effize("navigateWordRight");
+export const navigateWordLeft = effize("navigateWordLeft");
+export const replaceImpl = effize("replace");
+export const replaceAllImpl = effize("replaceAll");
+export const getLastSearchOptions = effize("getLastSearchOptions");
+export const findImpl = effize("find");
+export const findNextImpl = effize("findNext");
+export const findPreviousImpl = effize("findPrevious");
+export const undo = effize("undo");
+export const redo = effize("redo");
+export const destroy = effize("destroy");
 
-exports.setOption = function (s) {
+export function setOption(s) {
   return function (a) {
     return function (editor) {
       return function () {
@@ -158,17 +156,17 @@ exports.setOption = function (s) {
       };
     };
   };
-};
+}
 
-exports.createImpl = function (renderer, session) {
+export function createImpl(renderer, session) {
   return function () {
     var Editor = ace.require("ace/editor");
     return new Editor(renderer, session);
   };
-};
+}
 
-exports.getKeyBinding = function (editor) {
+export function getKeyBinding(editor) {
   return function () {
     return editor.keyBinding;
   };
-};
+}
