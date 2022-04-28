@@ -5,6 +5,16 @@ Notable changes to this project are documented in this file. The format is based
 ## [Unreleased]
 
 Breaking changes:
+
+New features:
+
+Bugfixes:
+
+Other improvements:
+
+## [v9.0.0](https://github.com/purescript-contrib/purescript-ace/releases/tag/v9.0.0) - 2022-04-28
+
+Breaking changes:
 - Migrate FFI to ES modules (#48 by @JordanMartinez)
 
 New features:
