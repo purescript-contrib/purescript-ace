@@ -8,6 +8,8 @@ Breaking changes:
 
 New features:
 
+* Added bindings for the options `navigateWithinSoftTabs` and `placeholder`.
+
 Bugfixes:
 
 Other improvements:

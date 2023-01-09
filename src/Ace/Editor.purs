@@ -125,6 +125,8 @@ module Ace.Editor
   , setEnableLiveAutocompletion
   , setEnableBasicAutocompletion
   , setEnableSnippets
+  , setNavigateWithinSoftTabs
+  , setPlaceholder
   , getKeyBinding
   ) where
 
@@ -664,6 +666,14 @@ setEnableLiveAutocompletion = setOption "enableLiveAutocompletion"
 setEnableSnippets
   :: Boolean -> Editor -> Effect Unit
 setEnableSnippets = setOption "enableSnippets"
+
+setNavigateWithinSoftTabs
+  :: Boolean -> Editor -> Effect Unit
+setNavigateWithinSoftTabs = setOption "navigateWithinSoftTabs"
+
+setPlaceholder
+  :: String -> Editor -> Effect Unit
+setPlaceholder = setOption "placeholder"
 
 foreign import getKeyBinding
   :: Editor -> Effect KeyBinding
