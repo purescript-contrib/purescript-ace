@@ -8,11 +8,14 @@ Breaking changes:
 
 New features:
 
-* Added bindings for the options `navigateWithinSoftTabs` and `placeholder`.
-
 Bugfixes:
 
 Other improvements:
+
+## [v9.1.0](https://github.com/purescript-contrib/purescript-ace/releases/tag/v9.1.0) - 2023-01-09
+
+New features:
+- Added bindings for the options `navigateWithinSoftTabs` and `placeholder` (#50 by @amesgen)
 
 ## [v9.0.0](https://github.com/purescript-contrib/purescript-ace/releases/tag/v9.0.0) - 2022-04-28
 
