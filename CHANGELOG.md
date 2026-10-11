@@ -11,6 +11,7 @@ New features:
 Bugfixes:
 
 Other improvements:
+- Migrate to registry Spago, preserving the published dependency bounds and example build.
 
 ## [v9.1.0](https://github.com/purescript-contrib/purescript-ace/releases/tag/v9.1.0) - 2023-01-09
 

@@ -1,5 +1,5 @@
 ```
-spago bundle-app -m Example.Main -t example/example.js
+spago bundle -p ace-example --module Example.Main --outfile example.js
 npm i -g parcel
 parcel serve example/index.html --open
 ```
