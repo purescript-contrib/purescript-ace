@@ -1,0 +1,11 @@
+package:
+  name: ace-example
+  dependencies:
+    - ace
+    - arrays
+    - console
+    - effect
+    - foldable-traversable
+    - maybe
+    - prelude
+    - refs

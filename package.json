@@ -1,8 +1,8 @@
 {
   "private": true,
   "scripts": {
-    "build": "eslint src && spago build --purs-args '--censor-lib --strict'",
-    "test": "spago test --no-install"
+    "build": "eslint src && spago build --strict",
+    "test": "spago test -p ace --offline"
   },
   "devDependencies": {
     "eslint": "^7.15.0"
