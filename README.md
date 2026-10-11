@@ -7,8 +7,6 @@
 
 PureScript bindings for the [Ace code editor](http://ace.c9.io).
 
-Originally authored by John A. De Goes <john@degoes.net> (http://degoes.net) and Maxim Zimaliev <zimaliev@gmail.com>.
-
 ## Installation
 
 Install `ace` with [Spago](https://github.com/purescript/spago):
