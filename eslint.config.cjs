@@ -1,8 +1,15 @@
-{
-  "env": { "browser": true },
-  "extends": "eslint:recommended",
-  "parserOptions": { "ecmaVersion": 6, "sourceType": "module" },
+const js = require("@eslint/js");
+const globals = require("globals");
+
+module.exports = [{
+  files: ["src/**/*.js"],
+  languageOptions: {
+    ecmaVersion: 2015,
+    sourceType: "module",
+    globals: globals.browser
+  },
   "rules": {
+    ...js.configs.recommended.rules,
     "block-scoped-var": "error",
     "consistent-return": "error",
     "eqeqeq": "error",
@@ -26,4 +33,4 @@
     "semi": ["error", "always"],
     "strict": ["error", "global"]
   }
-}
+}];
